@@ -1,0 +1,38 @@
+Laravel/node_modules
+Laravel/public/hot
+Laravel/public/storage
+Laravel/storage/*.key
+Laravel/vendor
+Laravel/.env
+Laravel/.env.backup
+Laravel/.phpunit.result.cache
+Laravel/docker-compose.override.yml
+Laravel/Homestead.json
+Laravel/Homestead.yaml
+Laravel/npm-debug.log
+Laravel/yarn-error.log
+Laravel/.idea
+Laravel/.vscode
+
+vue/.DS_Store
+vue/node_modules
+vue/dist
+
+vue/# local env files
+vue/.env.local
+vue/.env.*.local
+
+vue/# Log files
+vue/npm-debug.log*
+vue/yarn-debug.log*
+vue/yarn-error.log*
+vue/pnpm-debug.log*
+
+vue/# Editor directories and files
+vue/.idea
+vue/.vscode
+vue/*.suo
+vue/*.ntvs*
+vue/*.njsproj
+vue/*.sln
+vue/*.sw?
