@@ -4,9 +4,39 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-
-window.Vue = require('vue').default;
+ import Vuelidate from 'vuelidate'
+ require('./bootstrap');
+ require('../sass/app.scss');
+ import Vue from 'vue';
+ import router from './routes.js';
+ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+ import VueSidebarMenu from 'vue-sidebar-menu'
+ import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+ import '@fortawesome/fontawesome-free/css/all.css'
+ import 'bootstrap/dist/css/bootstrap.css'
+ import Vuetify from 'vuetify';
+ // import '../css/style.css'
+ import 'bootstrap-vue/dist/bootstrap-vue.css'
+ import DataTable from "@andresouzaabreu/vue-data-table";
+ import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
+ import VueScreen from 'vue-screen';
+ // import "../css/index.scss"
+ import VueMaterial from 'vue-material'
+ import 'vue-material/dist/vue-material.min.css'
+ import 'mdb-vue-ui-kit/css/mdb.min.css';
+ Vue.use(VueMaterial)
+ Vue.config.productionTip = false;
+ const vuetify = new Vuetify();
+ Vue.use(vuetify);
+ Vue.use(VueSidebarMenu)
+ Vue.use(BootstrapVue)
+ Vue.use(IconsPlugin)
+ Vue.use(Vuelidate)
+ Vue.use(VueScreen);
+ window.Vue = require('vue');
+ window.router=router;
+ window.Fire = new Vue();
+ import 'boxicons'
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,4 +59,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router,
+    vuetify,
 });
