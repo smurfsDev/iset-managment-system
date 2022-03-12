@@ -23,7 +23,7 @@
                             <label>Nom du club:</label>
                             <input
                                 type="text"
-                                class="border-0 form-control"
+                                class="border-0 dcc form-control"
                                 placeholder="Nom club"
                                 v-model="oldDemande.nomClub"
                                 required="required"
@@ -31,7 +31,7 @@
                             <label>Logo:</label>
                             <input
                                 type="text"
-                                class="border-0 form-control"
+                                class="border-0 dcc  form-control"
                                 placeholder="Logo"
                                 v-model="oldDemande.logo"
                                 required="required"
@@ -39,7 +39,7 @@
                             <label>Date création</label>
                             <input
                                 type="date"
-                                class="border-0 form-control"
+                                class="border-0 dcc form-control"
                                 placeholder=""
                                 v-model="oldDemande.dateCreation"
                                 required="required"
@@ -47,7 +47,7 @@
                             <label>Activité:</label>
                             <input
                                 type="text"
-                                class="border-0 form-control"
+                                class="border-0 dcc form-control"
                                 placeholder="activite"
                                 v-model="oldDemande.activite"
                                 required="required"
@@ -55,7 +55,7 @@
                             <label>President:</label>
                             <input
                                 type="text"
-                                class="border-0 form-control"
+                                class="border-0 dcc form-control"
                                 placeholder="president"
                                 v-model="oldDemande.president"
                                 required="required"
@@ -63,7 +63,7 @@
                             <label>Vice president:</label>
                             <input
                                 type="text"
-                                class="border-0 form-control"
+                                class="border-0 dcc form-control"
                                 placeholder="Vice president"
                                 v-model="oldDemande.vicePresident"
                                 required="required"
@@ -94,20 +94,23 @@ export default {
     emits: ['addDemande']
     ,
     mounted() {
+
     }
     ,
     methods: {
-        addEntreprise() {
+        addDemande() {
             $('#exampleModal').hide();
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
+            // $('body').removeAttr('style');
+            $('body').css("overflow", "");
+            $('body').css("padding-right", "");
             this.$emit('addDemande', this.oldDemande);
             this.resetModal1();
         },
-        resetModal1() {
-            // document.querySelectorAll('input').forEach(e => e.value = "");
-        },
-
+        resetModal1(){
+                $('.dcc').val('');
+        }
     }
 }
 </script>
