@@ -41,7 +41,7 @@
                     <showDemandes
                         @deleteDemande="deleteDemande"
                         :demandes="DemandeCreationClub"
-                        @fetchDemandeCreationClub="fetchDemandeCreationClub"
+                        @fetchDemande="fetchDemandeCreationClub"
                         @updateDemande="updateDemande"
                         :pagination="pagination"
                     />
@@ -138,7 +138,6 @@ export default {
                         this.alert.variant = "danger";
                         this.alert.msg = "Demande suprimée avec succès"
                         this.alert.dismissCountDown = 5;
-
                     })
                     .then(data => {
                     })
@@ -166,10 +165,10 @@ export default {
                             this.alert.variant = "danger";
                             let err = '';
                             for (const property in data.data) {
-                                err += `${data.data[property]}
-                                `;
+                                err += data.data[property]+'\n\n';
                             }
-                            this.alert.msg = `Employé existant :
+                            console.log(err);
+                            this.alert.msg = `
                             ${err}`;
                             this.alert.dismissCountDown = 5;
 

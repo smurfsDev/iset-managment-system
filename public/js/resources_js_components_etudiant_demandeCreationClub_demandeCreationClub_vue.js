@@ -191,10 +191,11 @@ __webpack_require__.r(__webpack_exports__);
             var err = '';
 
             for (var property in data.data) {
-              err += "".concat(data.data[property], "\n                                ");
+              err += data.data[property] + '\n\n';
             }
 
-            _this3.alert.msg = "Employ\xE9 existant :\n                            ".concat(err);
+            console.log(err);
+            _this3.alert.msg = "\n                            ".concat(err);
             _this3.alert.dismissCountDown = 5;
           } else {
             _this3.alert.variant = "success";
@@ -826,7 +827,7 @@ var render = function () {
                     },
                     on: {
                       deleteDemande: _vm.deleteDemande,
-                      fetchDemandeCreationClub: _vm.fetchDemandeCreationClub,
+                      fetchDemande: _vm.fetchDemandeCreationClub,
                       updateDemande: _vm.updateDemande,
                     },
                   }),
