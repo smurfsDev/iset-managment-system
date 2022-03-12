@@ -78,7 +78,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      entreprises: [],
       DemandeCreationClub: [],
       demande: {},
       pagination: {},
@@ -89,7 +88,8 @@ __webpack_require__.r(__webpack_exports__);
         dismissCountDown: 0,
         variant: "",
         msg: ""
-      }
+      },
+      myid: 1
     };
   },
   created: function created() {
@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchDemandeCreationClub: function fetchDemandeCreationClub() {
       var _this = this;
 
-      var page_url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "/api/dcc";
+      var page_url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "/api/dcc/" + this.myid;
       var vm = this;
       var headersi = new Headers(); // headersi.append('auth', 5);
 
@@ -123,7 +123,12 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.DemandeCreationClub = res.data;
+        if (res.constructor !== Array) {
+          _this.DemandeCreationClub = res.data;
+        } else {
+          _this.DemandeCreationClub = [];
+        }
+
         _this.show = false;
         vm.makePagination(res);
       })["catch"](function (err) {
@@ -139,7 +144,7 @@ __webpack_require__.r(__webpack_exports__);
         prev_page_url: meta.prev_page_url
       };
     },
-    deleteEmploye: function deleteEmploye(id) {
+    deleteDemande: function deleteDemande(id) {
       var _this2 = this;
 
       var headersi = new Headers();
@@ -147,14 +152,14 @@ __webpack_require__.r(__webpack_exports__);
 
       if (confirm('Delete employe ' + id)) {
         this.show = true;
-        fetch('api/employe/' + id, {
+        fetch('api/dcc/' + id, {
           method: 'delete',
           headers: headersi
         }).then(function (res) {
           _this2.fetchDemandeCreationClub();
 
           _this2.alert.variant = "danger";
-          _this2.alert.msg = "Employé suprimée avec succès";
+          _this2.alert.msg = "Demande suprimée avec succès";
           _this2.alert.dismissCountDown = 5;
         }).then(function (data) {})["catch"](function (err) {
           return console.log(err);
@@ -164,18 +169,19 @@ __webpack_require__.r(__webpack_exports__);
     resetModal1: function resetModal1() {
       this.employe = {};
     },
-    addEmploye: function addEmploye(employe) {
+    addDemande: function addDemande(demande) {
       var _this3 = this;
 
       var headersi = new Headers();
       headersi.append('auth', 5);
       headersi.append('Content-Type', 'application/json');
+      demande.responsableClubId = 1;
       this.show = true;
 
       if (!this.edit) {
-        fetch('api/employe/add', {
+        fetch('api/dcc/', {
           method: 'post',
-          body: JSON.stringify(employe),
+          body: JSON.stringify(demande),
           headers: headersi
         }).then(function (res) {
           return res.json();
@@ -201,9 +207,9 @@ __webpack_require__.r(__webpack_exports__);
           return console.log(err);
         });
       } else {
-        fetch('api/employe/' + this.employe.id, {
+        fetch('api/dcc/' + demande.id, {
           method: 'put',
-          body: JSON.stringify(employe),
+          body: JSON.stringify(demande),
           headers: headersi
         }).then(function (res) {
           return res.json();
@@ -226,18 +232,6 @@ __webpack_require__.r(__webpack_exports__);
     searchEmploye: function searchEmploye(search) {
       this.search = search;
       this.fetchDemandeCreationClub();
-    },
-    entrepriseById: function entrepriseById(id) {
-      var ent = '';
-      var found = false;
-
-      for (var i = 0; i < this.entreprises.length && !found; i++) {
-        if (this.entreprises[i].id == id) {
-          ent = this.entreprises[i].titre;
-        }
-      }
-
-      return ent;
     }
   }
 });
@@ -349,14 +343,18 @@ __webpack_require__.r(__webpack_exports__);
   emits: ['addDemande'],
   mounted: function mounted() {},
   methods: {
-    addEntreprise: function addEntreprise() {
+    addDemande: function addDemande() {
       $('#exampleModal').hide();
       $('body').removeClass('modal-open');
-      $('.modal-backdrop').remove();
+      $('.modal-backdrop').remove(); // $('body').removeAttr('style');
+
+      $('body').css("overflow", "");
+      $('body').css("padding-right", "");
       this.$emit('addDemande', this.oldDemande);
       this.resetModal1();
     },
-    resetModal1: function resetModal1() {// document.querySelectorAll('input').forEach(e => e.value = "");
+    resetModal1: function resetModal1() {
+      $('.dcc').val('');
     }
   }
 });
@@ -373,73 +371,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -812,7 +743,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _c("div", { staticClass: "content" }, [
+    _c("div", { staticClass: "content container" }, [
       _c(
         "div",
         { staticClass: "pt-3 pb-3 container-fluid" },
@@ -847,6 +778,11 @@ var render = function () {
                                   "data-bs-toggle": "modal",
                                   "data-bs-target": "#exampleModal",
                                 },
+                                on: {
+                                  click: function ($event) {
+                                    _vm.demande = {}
+                                  },
+                                },
                               },
                               [_vm._v("Nouvelle demande")]
                             ),
@@ -879,11 +815,8 @@ var render = function () {
                   ),
                   _vm._v(" "),
                   _c("formDemande", {
-                    attrs: {
-                      entreprises: _vm.entreprises,
-                      oldDemande: _vm.demande,
-                    },
-                    on: { addEmploye: _vm.addEmploye },
+                    attrs: { oldDemande: _vm.demande },
+                    on: { addDemande: _vm.addDemande },
                   }),
                   _vm._v(" "),
                   _c("showDemandes", {
@@ -892,7 +825,7 @@ var render = function () {
                       pagination: _vm.pagination,
                     },
                     on: {
-                      deleteEmploye: _vm.deleteEmploye,
+                      deleteDemande: _vm.deleteDemande,
                       fetchDemandeCreationClub: _vm.fetchDemandeCreationClub,
                       updateDemande: _vm.updateDemande,
                     },
@@ -970,7 +903,7 @@ var render = function () {
                         expression: "oldDemande.nomClub",
                       },
                     ],
-                    staticClass: "border-0 form-control",
+                    staticClass: "border-0 dcc form-control",
                     attrs: {
                       type: "text",
                       placeholder: "Nom club",
@@ -998,7 +931,7 @@ var render = function () {
                         expression: "oldDemande.logo",
                       },
                     ],
-                    staticClass: "border-0 form-control",
+                    staticClass: "border-0 dcc  form-control",
                     attrs: {
                       type: "text",
                       placeholder: "Logo",
@@ -1026,7 +959,7 @@ var render = function () {
                         expression: "oldDemande.dateCreation",
                       },
                     ],
-                    staticClass: "border-0 form-control",
+                    staticClass: "border-0 dcc form-control",
                     attrs: {
                       type: "date",
                       placeholder: "",
@@ -1058,7 +991,7 @@ var render = function () {
                         expression: "oldDemande.activite",
                       },
                     ],
-                    staticClass: "border-0 form-control",
+                    staticClass: "border-0 dcc form-control",
                     attrs: {
                       type: "text",
                       placeholder: "activite",
@@ -1090,7 +1023,7 @@ var render = function () {
                         expression: "oldDemande.president",
                       },
                     ],
-                    staticClass: "border-0 form-control",
+                    staticClass: "border-0 dcc form-control",
                     attrs: {
                       type: "text",
                       placeholder: "president",
@@ -1122,7 +1055,7 @@ var render = function () {
                         expression: "oldDemande.vicePresident",
                       },
                     ],
-                    staticClass: "border-0 form-control",
+                    staticClass: "border-0 dcc form-control",
                     attrs: {
                       type: "text",
                       placeholder: "Vice president",
@@ -1218,14 +1151,14 @@ var render = function () {
     [
       _vm.demandes.length == 0
         ? _c("div", { staticClass: "card card-body my-5 py-5 text-center" }, [
-            _c("h3", [_vm._v("il y'a aucun demande")]),
+            _c("h3", [_vm._v("il y'a aucune demande")]),
           ])
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.demandes, function (demande) {
         return _c(
           "b-card",
-          { key: demande.id },
+          { key: demande.id, staticClass: "my-2" },
           [
             _c(
               "md-tabs",
@@ -1326,77 +1259,81 @@ var render = function () {
         )
       }),
       _vm._v(" "),
-      _c("nav", { staticClass: "row" }, [
-        _c("ul", { staticClass: "pagination w-auto mx-auto" }, [
-          _c(
-            "li",
-            {
-              staticClass: "page-item",
-              class: [{ disabled: !_vm.pagination.prev_page_url }],
-            },
-            [
+      _vm.demandes.length != 0
+        ? _c("nav", { staticClass: "row" }, [
+            _c("ul", { staticClass: "pagination w-auto mx-auto" }, [
               _c(
-                "a",
+                "li",
                 {
-                  staticClass: "btn page-link",
-                  class: [
-                    !_vm.pagination.prev_page_url
-                      ? "disabled"
-                      : "link-primary btun",
-                  ],
-                  on: {
-                    click: function ($event) {
-                      return _vm.fetchDemande(_vm.pagination.prev_page_url)
-                    },
-                  },
+                  staticClass: "page-item",
+                  class: [{ disabled: !_vm.pagination.prev_page_url }],
                 },
-                [_vm._v("Precedent")]
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn page-link",
+                      class: [
+                        !_vm.pagination.prev_page_url
+                          ? "disabled"
+                          : "link-primary btun",
+                      ],
+                      on: {
+                        click: function ($event) {
+                          return _vm.fetchDemande(_vm.pagination.prev_page_url)
+                        },
+                      },
+                    },
+                    [_vm._v("Precedent")]
+                  ),
+                ]
               ),
-            ]
-          ),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c(
-              "a",
-              { staticClass: "page-link text-dark", attrs: { href: "#" } },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm.pagination.current_page + "/" + _vm.pagination.last_page
-                  )
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item" }, [
+                _c(
+                  "a",
+                  { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm.pagination.current_page +
+                          "/" +
+                          _vm.pagination.last_page
+                      )
+                    ),
+                  ]
                 ),
-              ]
-            ),
-          ]),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              staticClass: "page-item",
-              class: [{ disabled: !_vm.pagination.next_page_url }],
-            },
-            [
+              ]),
+              _vm._v(" "),
               _c(
-                "a",
+                "li",
                 {
-                  staticClass: "btn page-link",
-                  class: [
-                    !_vm.pagination.next_page_url
-                      ? "disabled"
-                      : "link-primary btun",
-                  ],
-                  on: {
-                    click: function ($event) {
-                      return _vm.fetchDemande(_vm.pagination.next_page_url)
-                    },
-                  },
+                  staticClass: "page-item",
+                  class: [{ disabled: !_vm.pagination.next_page_url }],
                 },
-                [_vm._v("Suivant")]
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn page-link",
+                      class: [
+                        !_vm.pagination.next_page_url
+                          ? "disabled"
+                          : "link-primary btun",
+                      ],
+                      on: {
+                        click: function ($event) {
+                          return _vm.fetchDemande(_vm.pagination.next_page_url)
+                        },
+                      },
+                    },
+                    [_vm._v("Suivant")]
+                  ),
+                ]
               ),
-            ]
-          ),
-        ]),
-      ]),
+            ]),
+          ])
+        : _vm._e(),
     ],
     2
   )
