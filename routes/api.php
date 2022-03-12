@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::group(['prefix'=>'/dcc'],function(){
     Route::get('/',[DemandeCreationClubController::class,'show']);
+    Route::get('/{id}',[DemandeCreationClubController::class,'showMyDemandes']);
     Route::post('/',[DemandeCreationClubController::class,'create']);
     Route::put('/{id}',[DemandeCreationClubController::class,'update']);
     Route::delete('/{id}',[DemandeCreationClubController::class,'delete']);
