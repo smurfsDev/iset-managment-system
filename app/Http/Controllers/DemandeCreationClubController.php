@@ -21,6 +21,18 @@ class DemandeCreationClubController extends Controller
                 "aucune demande"
             ], 404);
     }
+    public function showMyDemandes($id)
+    {
+        $demandes = DemandeCreationClub::where('responsableClubId','=',$id)->paginate();
+        if (sizeof($demandes)>0)
+            return response()->json(
+                $demandes,
+                200
+            );
+        else
+            return response()->json([
+            ], 404);
+    }
     public function create(DemandeCreationClubRequest $request){
         $nomClub = $request->input('nomClub');
         $logo = $request->input('logo');
