@@ -10,7 +10,7 @@ class DemandeCreationClubController extends Controller
 {
     public function show()
     {
-        $demandes = DemandeCreationClub::paginate();
+        $demandes = DemandeCreationClub::paginate(5);
         if (sizeof($demandes)>0)
             return response()->json(
                 $demandes,
@@ -23,7 +23,7 @@ class DemandeCreationClubController extends Controller
     }
     public function showMyDemandes($id)
     {
-        $demandes = DemandeCreationClub::where('responsableClubId','=',$id)->paginate();
+        $demandes = DemandeCreationClub::where('responsableClubId','=',$id)->paginate(5);
         if (sizeof($demandes)>0)
             return response()->json(
                 $demandes,
