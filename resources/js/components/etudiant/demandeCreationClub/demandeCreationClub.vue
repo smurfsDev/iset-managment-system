@@ -1,6 +1,6 @@
 <template>
     <div style>
-        <div class="content">
+        <div class="content container">
             <div class="pt-3 pb-3 container-fluid">
                 <b-overlay
                     v-if="show"
@@ -16,6 +16,7 @@
                                     type="button"
                                     class="btn btn-primary mx-1 float-start"
                                     data-bs-toggle="modal"
+                                    @click="demande={}"
                                     data-bs-target="#exampleModal"
                                 >Nouvelle demande</button>
                             </b-col>
@@ -33,14 +34,13 @@
                     </b-alert>
 
                     <formDemande
-                        @addEmploye="addEmploye"
-                        :entreprises="entreprises"
+                        @addDemande="addDemande"
                         :oldDemande="demande"
                     />
                     <!-- <b-card> -->
                     <showDemandes
+                        @deleteDemande="deleteDemande"
                         :demandes="DemandeCreationClub"
-                        @deleteEmploye="deleteEmploye"
                         @fetchDemandeCreationClub="fetchDemandeCreationClub"
                         @updateDemande="updateDemande"
                         :pagination="pagination"
@@ -65,7 +65,6 @@ export default {
     },
     data() {
         return {
-            entreprises: [],
             DemandeCreationClub: [],
             demande: {},
             pagination: {},
@@ -76,7 +75,8 @@ export default {
                 dismissCountDown: 0,
                 variant: "",
                 msg: "",
-            }
+            },
+            myid:1
         }
     },
     created() {
@@ -98,7 +98,7 @@ export default {
         }
     },
     methods: {
-        fetchDemandeCreationClub(page_url = "/api/dcc") {
+        fetchDemandeCreationClub(page_url = "/api/dcc/"+this.myid) {
             let vm = this;
             let headersi = new Headers();
             // headersi.append('auth', 5);
@@ -107,7 +107,12 @@ export default {
             })
                 .then(res => res.json())
                 .then(res => {
-                    this.DemandeCreationClub = res.data;
+                    if(res.constructor!==Array){
+                        this.DemandeCreationClub = res.data;
+                    }
+                    else{
+                        this.DemandeCreationClub = [];
+                    }
                     this.show = false;
                     vm.makePagination(res);
                 })
@@ -122,16 +127,16 @@ export default {
                 prev_page_url: meta.prev_page_url
             };
         },
-        deleteEmploye(id) {
+        deleteDemande(id) {
             let headersi = new Headers();
             headersi.append('auth', 5);
             if (confirm('Delete employe ' + id)) {
                 this.show = true;
-                fetch('api/employe/' + id, { method: 'delete', headers: headersi })
+                fetch('api/dcc/' + id, { method: 'delete', headers: headersi })
                     .then(res => {
                         this.fetchDemandeCreationClub();
                         this.alert.variant = "danger";
-                        this.alert.msg = "Employé suprimée avec succès"
+                        this.alert.msg = "Demande suprimée avec succès"
                         this.alert.dismissCountDown = 5;
 
                     })
@@ -143,16 +148,16 @@ export default {
         resetModal1() {
             this.employe = {};
         },
-        addEmploye(employe) {
+        addDemande(demande) {
             let headersi = new Headers();
             headersi.append('auth', 5);
             headersi.append('Content-Type', 'application/json');
-
+            demande.responsableClubId=1;
             this.show = true;
             if (!this.edit) {
-                fetch('api/employe/add', {
+                fetch('api/dcc/', {
                     method: 'post',
-                    body: JSON.stringify(employe),
+                    body: JSON.stringify(demande),
                     headers: headersi
                 })
                     .then(res => res.json())
@@ -179,9 +184,9 @@ export default {
                     )
                     .catch(err => console.log(err))
             } else {
-                fetch('api/employe/' + this.employe.id, {
+                fetch('api/dcc/' + demande.id, {
                     method: 'put',
-                    body: JSON.stringify(employe),
+                    body: JSON.stringify(demande),
                     headers: headersi
                 })
                     .then(res => res.json())
@@ -204,17 +209,7 @@ export default {
         searchEmploye(search) {
             this.search = search;
             this.fetchDemandeCreationClub();
-        },
-        entrepriseById(id) {
-            let ent = '';
-            let found = false;
-            for (let i = 0; i < this.entreprises.length && !found; i++) {
-                if (this.entreprises[i].id == id) {
-                    ent = this.entreprises[i].titre;
-                }
-            }
-            return ent;
-        },
+        }
 
     }
 }
