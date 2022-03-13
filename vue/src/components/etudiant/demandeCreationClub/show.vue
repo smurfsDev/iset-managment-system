@@ -9,7 +9,7 @@
     <b-card class="my-2" v-for="demande in demandes" :key="demande.id">
       <md-tabs>
         <md-tab id="tab-home" md-label="demande">
-          <b-container class="bv-example-row text-center">
+          <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
                 <b-col
@@ -33,7 +33,7 @@
             <b-button variant="warning" v-on:click="Update(demande)"
               >Update</b-button
             >
-          </b-container>
+          </div>
         </md-tab>
       </md-tabs>
     </b-card>
@@ -45,10 +45,10 @@
         >
           <a
             @click="fetchDemande(pagination.prev_page_url)"
+            class="btn btun page-link"
             :class="[
               !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
             ]"
-            class="btn page-link"
             >Precedent</a
           >
         </li>
@@ -66,7 +66,7 @@
             :class="[
               !pagination.next_page_url ? 'disabled' : 'link-primary btun',
             ]"
-            class="btn page-link"
+            class="btun btn page-link"
             >Suivant</a
           >
         </li>
@@ -93,7 +93,7 @@ export default {
     },
     Update(demande) {
       this.$emit("updateDemande", demande);
-      $("#exampleModal").modal("show");
+      this.showModal("demandeModal");
     },
     fetchDemande(url) {
       this.$emit("fetchDemande", url);

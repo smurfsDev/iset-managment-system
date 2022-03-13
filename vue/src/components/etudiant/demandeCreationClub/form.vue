@@ -1,20 +1,21 @@
 <template>
   <div
     class="modal fade"
-    id="exampleModal"
+    id="demandeModal"
     tabindex="-1"
-    aria-labelledby="exampleModalLabel"
+    aria-labelledby="demandeModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Créer une demande</h5>
+          <h5 class="modal-title" id="demandeModalLabel">Créer une demande</h5>
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            @click="hideModal('demandeModal')"
           ></button>
         </div>
         <form class="mb-3" @submit.prevent="addDemande">
@@ -40,7 +41,7 @@
               <input
                 type="date"
                 class="border-0 dcc form-control"
-                placeholder=""
+                placeholder
                 v-model="oldDemande.dateCreation"
                 required="required"
               />
@@ -75,9 +76,8 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-            >
-              Fermer
-            </button>
+              @click="hideModal('demandeModal')"
+            >Fermer</button>
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
           </div>
         </form>
@@ -93,17 +93,12 @@ export default {
     edit: Boolean,
   },
   emits: ["addDemande"],
-  mounted() {},
+  mounted() { },
   methods: {
     addDemande() {
-      $("#exampleModal").hide();
-      $("body").removeClass("modal-open");
-      $(".modal-backdrop").remove();
-      // $('body').removeAttr('style');
-      $("body").css("overflow", "");
-      $("body").css("padding-right", "");
       this.$emit("addDemande", this.oldDemande);
       this.resetModal1();
+      this.hideModal("demandeModal");
     },
     resetModal1() {
       $(".dcc").val("");

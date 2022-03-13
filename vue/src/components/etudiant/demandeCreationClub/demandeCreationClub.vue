@@ -1,8 +1,6 @@
 <template>
-  <div 
-  >
-  
-          <formDemande @addDemande="addDemande" :oldDemande="demande" />
+  <div>
+    <formDemande @addDemande="addDemande" :oldDemande="demande" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay
@@ -19,8 +17,8 @@
                   type="button"
                   class="btn btn-primary mx-1 float-start"
                   data-bs-toggle="modal"
-                  @click="demande = {}"
-                  data-bs-target="#exampleModal"
+                  @click="initModal()"
+                  data-bs-target="#demandeModal"
                 >
                   Nouvelle demande
                 </button>
@@ -99,7 +97,9 @@ export default {
     }
   },
   methods: {
-    fetchDemandeCreationClub(page_url = "http://127.0.0.1:8000/api/dcc/" + this.myid) {
+    fetchDemandeCreationClub(
+      page_url = "http://127.0.0.1:8000/api/dcc/" + this.myid
+    ) {
       let vm = this;
       // let headersi = new Headers();
       // headersi.append('auth', 5);
@@ -133,7 +133,7 @@ export default {
       headersi.append("auth", 5);
       if (confirm("Delete document " + id)) {
         this.show = true;
-        fetch("api/dcc/" + id, { method: "delete", headers: headersi })
+        fetch("http://localhost:8000/api/dcc/" + id, { method: "delete", headers: headersi })
           .then(() => {
             this.fetchDemandeCreationClub();
             this.alert.variant = "danger";
@@ -153,8 +153,9 @@ export default {
       headersi.append("Content-Type", "application/json");
       demande.responsableClubId = 1;
       this.show = true;
+      console.log(demande.id);
       if (!this.edit) {
-        fetch("api/dcc/", {
+        fetch("http://localhost:8000/api/dcc/", {
           method: "post",
           body: JSON.stringify(demande),
           headers: headersi,
@@ -180,7 +181,7 @@ export default {
           })
           .catch((err) => console.log(err));
       } else {
-        fetch("api/dcc/" + demande.id, {
+        fetch("http://localhost:8000/api/dcc/" + demande.id, {
           method: "put",
           body: JSON.stringify(demande),
           headers: headersi,
@@ -204,6 +205,10 @@ export default {
       this.search = search;
       this.fetchDemandeCreationClub();
     },
+    initModal(){
+      this.demande={};
+      this.showModal('demandeModal');
+    }
   },
 };
 </script>
