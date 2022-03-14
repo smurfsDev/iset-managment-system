@@ -1,0 +1,33 @@
+Spring/HELP.md
+Spring/target/
+Spring/!.mvn/wrapper/maven-wrapper.jar
+Spring/!**/src/main/**/target/
+Spring/!**/src/test/**/target/
+
+### STS ###
+Spring/.apt_generated
+Spring/.classpath
+Spring/.factorypath
+Spring/.project
+Spring/.settings
+Spring/.springBeans
+Spring/.sts4-cache
+
+### IntelliJ IDEA ###
+Spring/.idea
+Spring/*.iws
+Spring/*.iml
+Spring/*.ipr
+
+### NetBeans ###
+Spring/nbproject/private/
+Spring/nbbuild/
+Spring/dist/
+Spring/nbdist/
+Spring/.nb-gradle/
+Spring/build/
+Spring/!**/src/main/**/build/
+Spring/!**/src/test/**/build/
+
+### VS Code ###
+Spring/.vscode/
