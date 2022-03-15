@@ -133,7 +133,10 @@ export default {
       headersi.append("auth", 5);
       if (confirm("Delete document " + id)) {
         this.show = true;
-        fetch("http://localhost:8000/api/dcc/" + id, { method: "delete", headers: headersi })
+        fetch("http://localhost:8000/api/dcc/" + id, {
+          method: "delete",
+          headers: headersi,
+        })
           .then(() => {
             this.fetchDemandeCreationClub();
             this.alert.variant = "danger";
@@ -205,10 +208,10 @@ export default {
       this.search = search;
       this.fetchDemandeCreationClub();
     },
-    initModal(){
-      this.demande={};
-      this.showModal('demandeModal');
-    }
+    initModal() {
+      this.demande = {};
+      this.showModal("demandeModal");
+    },
   },
 };
 </script>

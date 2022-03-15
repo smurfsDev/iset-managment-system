@@ -77,7 +77,9 @@
               class="btn btn-secondary"
               data-bs-dismiss="modal"
               @click="hideModal('demandeModal')"
-            >Fermer</button>
+            >
+              Fermer
+            </button>
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
           </div>
         </form>
@@ -93,7 +95,7 @@ export default {
     edit: Boolean,
   },
   emits: ["addDemande"],
-  mounted() { },
+  mounted() {},
   methods: {
     addDemande() {
       this.$emit("addDemande", this.oldDemande);
