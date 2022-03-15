@@ -20,7 +20,7 @@ public class DemandeCreationClubService {
 
 	public DemandeCreationClub updateProduit(Long id, DemandeCreationClub p) {
 		if (DemandeCreationClubRepository.existsById(id)) {
-			DemandeCreationClub a = DemandeCreationClubRepository.getById(id);
+			DemandeCreationClub a = DemandeCreationClubRepository.findById(id).get();
 			a.setNomClub(p.getNomClub() != null ? p.getNomClub() : a.getNomClub());
 			a.setActivite(p.getActivite() != null ? p.getActivite() : a.getActivite());
 			a.setSujet(p.getSujet() != null ? p.getSujet() : a.getSujet());
