@@ -1,4 +1,4 @@
-package com.projetIntegraion.spring.demandeCreationClub;
+package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 import java.util.List;
 

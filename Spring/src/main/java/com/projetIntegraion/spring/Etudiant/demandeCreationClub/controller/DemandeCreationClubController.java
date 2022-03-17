@@ -1,11 +1,16 @@
 // TODO: Fix responses 
 // TODO: Fix api call uri 
-package com.projetIntegraion.spring.demandeCreationClub;
+package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.text.ParseException;
 // import java.util.List;
+
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.ResponsePagination;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeCreationClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

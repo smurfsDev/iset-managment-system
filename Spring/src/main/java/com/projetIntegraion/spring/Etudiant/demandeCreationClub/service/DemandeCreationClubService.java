@@ -1,6 +1,9 @@
-package com.projetIntegraion.spring.demandeCreationClub;
+package com.projetIntegraion.spring.Etudiant.demandeCreationClub.service;
 
 import java.util.List;
+
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
