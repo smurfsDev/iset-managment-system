@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class DemandeCreationClubController {
@@ -33,20 +34,20 @@ public class DemandeCreationClubController {
 	@Autowired
 	DemandeCreationClubRepository dccr;
 
-	@RequestMapping(value = "/dcc", method = RequestMethod.GET)
-	public ResponsePagination employeesPageable(Pageable pageable) {
-		Page <DemandeCreationClub> d = dccr.findAll(pageable);
+	@RequestMapping(value = "/dcc/{id}", method = RequestMethod.GET)
+	public ResponsePagination employeesPageable(
+		@PathVariable(name = "id", required = false) String id,
+		Pageable pageable) {
+		Page <DemandeCreationClub> d = dccr.findByresponsableClubId(Long.parseLong(id),pageable);
 		ResponsePagination res = new ResponsePagination();
 		res.setData(d.getContent());
 		res.setCurrent_page(d.getPageable().getPageNumber()+1);
 		res.setLast_page(d.getTotalPages());
-		// res.setNext_page_url(d.hasNext()+"");
-		// res.setPrev_page_url(d.hasPrevious()+"");
-		res.setNext_page_url(d.hasNext()?"http://localhost:8000/api/dcc?page="+d.getPageable().next().getPageNumber()+"":null);
-		res.setPrev_page_url(d.hasPrevious()?"http://localhost:8000/api/dcc?page="+d.getPageable().previousOrFirst().getPageNumber()+"":null);
+		res.setNext_page_url(d.hasNext()?"http://localhost:8000/api/dcc/"+id+"?page="+d.getPageable().next().getPageNumber()+"":null);
+		res.setPrev_page_url(d.hasPrevious()?"http://localhost:8000/api/dcc/"+id+"?page="+d.getPageable().previousOrFirst().getPageNumber()+"":null);
 		return res;
 	}
-	
+
 	@PostMapping("/dcc")
 	public DemandeCreationClub save(@RequestBody DemandeCreationClub DemandeCreationClub)
 			throws ParseException {
@@ -62,12 +63,14 @@ public class DemandeCreationClubController {
 		DemandeCreationClub saveProduit = DemandeCreationClubService.saveDemandeCreationClub(dcc);
 		return saveProduit;
 	}
-//
-//	@GetMapping("/dcc")
-//	public ResponseEntity<List<DemandeCreationClub>> getAll() {
-//		List<DemandeCreationClub> prods = DemandeCreationClubService.getAllDemandeCreationClub();
-//		return prods.size() != 0 ? ResponseEntity.ok().body(prods) : ResponseEntity.notFound().build();
-//	}
+	//
+	// @GetMapping("/dcc")
+	// public ResponseEntity<List<DemandeCreationClub>> getAll() {
+	// List<DemandeCreationClub> prods =
+	// DemandeCreationClubService.getAllDemandeCreationClub();
+	// return prods.size() != 0 ? ResponseEntity.ok().body(prods) :
+	// ResponseEntity.notFound().build();
+	// }
 
 	@DeleteMapping("/dcc/{id}")
 	public ResponseEntity<String> supprimerDemandeCreationClub(@PathVariable(name = "id", required = false) String id) {
