@@ -154,7 +154,7 @@ export default {
       let headersi = new Headers();
       headersi.append("auth", 5);
       headersi.append("Content-Type", "application/json");
-      demande.responsableClubId = 1;
+      demande.responsableClubId = this.myid;
       this.show = true;
       console.log(demande.id);
       if (!this.edit) {
