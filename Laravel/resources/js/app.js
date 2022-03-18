@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
  import Vuelidate from 'vuelidate'
  require('./bootstrap');
  require('../sass/app.scss');
