@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import blogClub from "./routes/blogClub";
 import demandeCreationClub from "./routes/demandeCreationClub";
 
 Vue.use(VueRouter);
@@ -21,6 +22,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   ...demandeCreationClub,
+  ...blogClub,
 ];
 
 const router = new VueRouter({
