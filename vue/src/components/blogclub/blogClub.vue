@@ -1,5 +1,18 @@
 <template>
-  <div class="about">
-    <h1>This is a blog club page</h1>
+  <div class="container">
+    
+    <navbar />
+    <acceuil />
   </div>
 </template>
+
+<script>
+import navbar from "./blocs/navbar.vue" 
+import acceuil from "./blocs/acceuil.vue"
+export default {
+  name: "blogClub",
+  components:{
+      navbar,acceuil
+  }
+};
+</script>

@@ -11,9 +11,8 @@
 </template>
 
 <style>
-* {
-  font-size: 14px !important;
-}
+
+
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
