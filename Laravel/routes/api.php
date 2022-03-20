@@ -3,6 +3,7 @@
 use App\Http\Controllers\DemandeCreationClubController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DemandeMaterielController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,10 @@ Route::group(['prefix'=>'/dcc'],function(){
     Route::put('/{id}',[DemandeCreationClubController::class,'update']);
     Route::delete('/{id}',[DemandeCreationClubController::class,'delete']);
 });
-
+Route::group(['prefix'=>'/dm'],function(){
+    Route::get('/',[DemandeMaterielController::class,'show']);
+    // Route::get('/{id}',[DemandeMaterielController::class,'showMyDemandes']);
+    Route::post('/',[DemandeMaterielController::class,'create']);
+    Route::put('/{id}',[DemandeMaterielController::class,'update']);
+    Route::delete('/{id}',[DemandeMaterielController::class,'delete']);
+});
