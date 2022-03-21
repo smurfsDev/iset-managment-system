@@ -11,3 +11,10 @@
 
     </div>
 </template>
+<script>
+
+export default{
+    name : "QuiSommesNous"
+}
+
+</script>
