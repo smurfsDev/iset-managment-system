@@ -2,7 +2,9 @@
   <div class="container">
     
     <navbar />
-    <acceuil />
+    <main class="container">
+      <acceuil />
+    </main>
   </div>
 </template>
 
