@@ -1,40 +1,29 @@
 <template>
-    <div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" aria-label="Twelfth navbar example">
-      <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
-          <ul class="navbar-nav">
-            
-            <li class="nav-item">
-              <a class="nav-link" href="#">Accueil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Activités</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Projets et formations</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="#">Membres de bureau</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="#">Actualités</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="#">Statistiques</a>
-            </li>
-          </ul>
+  <div>
+    <header class="blog-header py-3">
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        
+        <div class="col-4 text-center">
+          <a class="blog-header-logo text-dark" href="#">Notre club</a>
         </div>
-      </div>
-    </nav>
-</div>
-  
-   
     
+      </div>
+    </header>
+    <br>
+    <div class="nav-scroller py-1 mb-2">
+    <nav class="nav d-flex justify-content-between">
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Qui sommes-nous?</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Nos activités</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Notre équipe</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Nos projets</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Nos actualités</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Statistiques</a>
+    </nav>
+  </div>
+
+
+  </div>
+      
 </template>
 <script>
 
@@ -46,5 +35,5 @@ export default {
 };
 </script>
 <style scoped>
-
+  
 </style>

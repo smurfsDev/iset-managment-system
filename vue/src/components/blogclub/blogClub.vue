@@ -9,6 +9,7 @@
 <script>
 import navbar from "./blocs/navbar.vue" 
 import acceuil from "./blocs/acceuil.vue"
+
 export default {
   name: "blogClub",
   components:{
@@ -16,3 +17,10 @@ export default {
   }
 };
 </script>
+<style>
+ @import '../../assets/css/blog.css';
+ 
+   
+ 
+   
+</style>
