@@ -12,6 +12,7 @@
       </h3>
       <QuiSommesNous />
       <activites />
+      <projets />
     </div><br> <br>
     
     <historique />
@@ -26,17 +27,19 @@ import acceuil from "./blocs/acceuil.vue"
 import QuiSommesNous from "./blocs/QuiSommesNous.vue"
 import historique from "./blocs/historique.vue"
 import activites from "./blocs/activites.vue"
+import projets from "./blocs/projets.vue"
 
 export default {
   name: "blogClub",
   components:{
-      navbar,acceuil,QuiSommesNous, historique, activites
+      navbar,acceuil,QuiSommesNous, historique, activites, projets
   }
 };
 </script>
 <style>
  @import '../../assets/css/blog.css';
  
+ @import '../../assets/css/features.css';
    
  
    
