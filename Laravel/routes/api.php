@@ -24,5 +24,7 @@ Route::group(['prefix'=>'/dcc'],function(){
     Route::post('/',[DemandeCreationClubController::class,'create']);
     Route::put('/{id}',[DemandeCreationClubController::class,'update']);
     Route::delete('/{id}',[DemandeCreationClubController::class,'delete']);
+    Route::put('/a/{id}',[DemandeCreationClubController::class,'accept']);
+    Route::put('/d/{id}',[DemandeCreationClubController::class,'decline']);
 });
 
