@@ -4,11 +4,36 @@
       <h3>il y'a aucune demande</h3>
     </div>
     <b-card class="my-2" v-for="demande in demandes" :key="demande.id">
+                <b-icon
+                  class="float-end"
+                  v-b-tooltip.hover="{ variant: 'success', title: 'Demande accepted', placement: 'topright' }"
+                  v-if="demande.status==1"
+                  icon="check-square"
+                  scale="2"
+                  variant="success"
+                ></b-icon>
+                <b-icon
+                  class="float-end"
+                  v-b-tooltip.hover="{ variant: 'danger', title: 'Demande not accepted', placement: 'topright' }"
+                  v-if="demande.status==2"
+                  icon="x-square"
+                  scale="2"
+                  variant="danger"
+                ></b-icon>
+                <b-icon
+                  class="float-end"
+                  v-b-tooltip.hover="{ variant: 'warning', title: 'Demande pending', placement: 'topright' }"
+                  v-if="demande.status==0"
+                  icon="x-square"
+                  scale="2"
+                  variant="warning"
+                ></b-icon>
       <md-tabs>
         <md-tab id="tab-home" md-label="demande">
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
+
                 <b-col>
                   Nom du club : {{ demande.nomClub }} Date création :
                   {{ demande.dateCreation }}
