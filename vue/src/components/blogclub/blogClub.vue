@@ -11,7 +11,9 @@
         
       </h3>
       <QuiSommesNous />
-    </div>
+      
+    </div><br> <br>
+    <historique />
       </div>
     </main>
   </div>
@@ -21,11 +23,12 @@
 import navbar from "./blocs/navbar.vue" 
 import acceuil from "./blocs/acceuil.vue"
 import QuiSommesNous from "./blocs/QuiSommesNous.vue"
+import historique from "./blocs/historique.vue"
 
 export default {
   name: "blogClub",
   components:{
-      navbar,acceuil,QuiSommesNous
+      navbar,acceuil,QuiSommesNous, historique
   }
 };
 </script>
