@@ -31,8 +31,8 @@ class DemandeMaterielController extends Controller
         return "Success";
     }
     public function show(){
-        $DemandeMateriel = DemandeMateriel::all();
-        if(sizeof($DemandeMateriel)<0){
+        $DemandeMateriel = DemandeMateriel::paginate(5);
+        if(sizeof($DemandeMateriel)>0){
         return response()->json($DemandeMateriel, 200);
         }
         else

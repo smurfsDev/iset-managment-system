@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\DemandeCreationClubController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MaterielController;
 use App\Http\Controllers\DemandeMaterielController;
+use App\Http\Controllers\DemandeCreationClubController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,8 @@ Route::group(['prefix'=>'/dm'],function(){
     Route::post('/',[DemandeMaterielController::class,'create']);
     Route::put('/{id}',[DemandeMaterielController::class,'update']);
     Route::delete('/{id}',[DemandeMaterielController::class,'delete']);
+});
+Route::group(['prefix'=>'/m'],function(){
+    Route::get('/',[MaterielController::class,'show']);
+
 });

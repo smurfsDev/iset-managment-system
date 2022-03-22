@@ -9,7 +9,7 @@ class DemandeMateriel extends Model
 {
     use HasFactory;
 
-    // protected $table='DemandeMateriel';
+    protected $table='demande_materiels';
     protected $fillable = [
         "idResponsableClub",
         "idDestinataire",
