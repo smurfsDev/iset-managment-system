@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DemandeCreationClub extends Model
-{
+{    use HasFactory;
     protected $table='demandeCreationClub';
     protected $fillable = [
         "nomClub",
@@ -15,7 +15,9 @@ class DemandeCreationClub extends Model
         "activite",
         "president",
         "vicePresident",
-        "responsableClubId"
+        "responsableClubId",
+        "adminId",
+        "status"
     ];
     public function responsableClub(){
         return $this->belongsTo(User::class,'id');
