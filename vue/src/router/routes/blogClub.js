@@ -1,7 +1,4 @@
-const blogClub = () =>
-  import(
-    "../../components/blogclub/blogClub.vue"
-  );
+const blogClub = () => import("../../components/blogclub/blogClub.vue");
 
 export default [
   {
