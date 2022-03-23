@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="activites">
          <article class="blog-post">
             <h2 class="blog-post-title">Nos activités</h2>
         <br>

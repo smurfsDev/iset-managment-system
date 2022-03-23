@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="actualites">
 
         <div class="p-4 mb-3  rounded">
           <div class="dropdown-menu p-2 shadow rounded-3" style="width: 340px" id="dropdownCalendar">

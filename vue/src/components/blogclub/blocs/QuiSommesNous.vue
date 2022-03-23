@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="quisommesnous">
          <article class="blog-post">
             <h2 class="blog-post-title">Qui sommes-nous ?(hedhii description détaillée lel club)</h2>
            <br >

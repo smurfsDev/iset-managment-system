@@ -1,5 +1,5 @@
 <template>
-    <article>
+    <article id="bureau">
 
     <!-- Three columns of text below the carousel -->
      <h2 class="pb-2 border-bottom">Nos membres de bureau</h2>

@@ -1,5 +1,5 @@
 <template>
-<article>
+<article id="projets">
   
 <div class="blog-post" id="custom-cards">
     <h2 class="pb-2 border-bottom">Nos projets</h2>

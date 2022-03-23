@@ -12,12 +12,12 @@
     <br>
     <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Qui sommes-nous?</a>
-      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Nos activités</a>
-      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Notre équipe</a>
-      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Nos projets</a>
-      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Nos actualités</a>
-      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#">Statistiques</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#quisommesnous">Qui sommes-nous?</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#activites">Nos activités</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#bureau">Notre équipe</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#projets">Nos projets</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#actualites">Nos actualités</a>
+      <a class="p-2 link-dark " style="font-family: Playfair Display;font-size:20px" href="#statistiques">Statistiques</a>
     </nav>
   </div>
 
