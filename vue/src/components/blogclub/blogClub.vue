@@ -12,12 +12,20 @@
       </h3>
       <QuiSommesNous />
       <activites />
+       <bureau />
       <projets />
+      <statistiques />
     </div><br> <br>
-    
-    <historique />
+    <div class="col-md-4">
+        <br> <br>
+      <div class="position-sticky" style="top: 2rem;">
+          <historique />
+          <actualites />
+      </div>
+    </div>
       </div>
     </main>
+    <footerBlog />
   </div>
 </template>
 
@@ -28,11 +36,16 @@ import QuiSommesNous from "./blocs/QuiSommesNous.vue"
 import historique from "./blocs/historique.vue"
 import activites from "./blocs/activites.vue"
 import projets from "./blocs/projets.vue"
+import bureau from "./blocs/bureau.vue"
+import statistiques from "./blocs/statistiques.vue"
+import actualites from "./blocs/actualites.vue"
+import footerBlog from "./blocs/footerBlog.vue"
+
 
 export default {
   name: "blogClub",
   components:{
-      navbar,acceuil,QuiSommesNous, historique, activites, projets
+      navbar,acceuil,QuiSommesNous, historique, activites, projets, bureau, statistiques, actualites, footerBlog
   }
 };
 </script>
@@ -41,5 +54,6 @@ export default {
 
  @import '../../assets/css/features.css';   
  
+ @import '../../assets/css/dropdowns.css';
    
 </style>
