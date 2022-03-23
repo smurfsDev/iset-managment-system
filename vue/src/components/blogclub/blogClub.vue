@@ -38,9 +38,8 @@ export default {
 </script>
 <style>
  @import '../../assets/css/blog.css';
- 
- @import '../../assets/css/features.css';
-   
+
+ @import '../../assets/css/features.css';   
  
    
 </style>
