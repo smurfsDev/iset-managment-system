@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import demandeCreationClub from "./routes/demandeCreationClub";
+import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
 import demandeMateriel from "./routes/demandeMateriels";
 
 Vue.use(VueRouter);
@@ -22,6 +23,8 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   ...demandeCreationClub,
+  ...blogClub,
+  ...demandeCreationClubAdmin,
   ...demandeMateriel,
 ];
 
