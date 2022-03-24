@@ -12,11 +12,14 @@ class DemandeMaterielController extends Controller
         $dateDeRemise = $request->input('dateDeRemise');
         $idResponsableClub = $request->input('idResponsableClub');
         $idDestinataire = $request->input('idDestinataire');
+        $idCategorie = $request->input('idCategorie');
         $data = array(
             "idResponsableClub"=> $idResponsableClub,
             "idDestinataire"=> $idDestinataire,
             "dateEmploi"=> $dateEmploi,
             "dateDeRemise"=> $dateDeRemise,
+            "idCategorie"=> $idCategorie,
+
         );
         $DemandeMateriel = DemandeMateriel::create($data);
         if ($DemandeMateriel) {
@@ -46,6 +49,7 @@ class DemandeMaterielController extends Controller
             $DemandeMateriel->idDestinataire= $request->input('idDestinataire')?$request->input('idDestinataire'):$DemandeMateriel->idDestinataire;
             $DemandeMateriel->dateEmploi= $request->input('dateEmploi')?$request->input('dateEmploi'):$DemandeMateriel->dateEmploi;
             $DemandeMateriel->dateDeRemise= $request->input('dateDeRemise')?$request->input('dateDeRemise'):$DemandeMateriel->dateDeRemise;
+            $DemandeMateriel->idCategorie= $request->input('idCategorie')?$request->input('idCategorie'):$DemandeMateriel->idCategorie;
             $DemandeMateriel->save();
             return response()->json([
                 'message' => 'Update Success',

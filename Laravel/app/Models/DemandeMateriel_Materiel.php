@@ -9,10 +9,14 @@ class DemandeMateriel_Materiel extends Model
 {
     use HasFactory;
 
-    protected $table='DemandeMateriel_Materiel';
+    protected $table='demande_materiel__materiels';
     protected $fillable = [
         "idDemande",
         "idMateriel",
         "quantité",
     ];
+    public function materiel(){
+        return $this->hasOne(Materiel::class);
+    }
+
 }

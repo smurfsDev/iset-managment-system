@@ -15,7 +15,16 @@ class DemandeMateriel extends Model
         "idDestinataire",
         "dateEmploi",
         "dateDeRemise",
+        "idCategorie",
         "status",
         "reponse",
     ];
+    public function materiel(){
+        return $this->belongsToMany(
+            Materiel::class,
+            'demande_materiel__materiels',
+            'idDemande',
+            'idMateriel')->withPivot(['quantité'])
+            ;
+    }
 }
