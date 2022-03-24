@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home </router-link> |
-      <router-link to="/about">About </router-link>|
+  <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
       <router-link to="/etudiant/demandeCreationClub">Demande création club</router-link>
       <router-link to="/blogClub">Blog club</router-link>
       <router-link to="/admin/demandeCreationClub">Demande création club Admin</router-link>
