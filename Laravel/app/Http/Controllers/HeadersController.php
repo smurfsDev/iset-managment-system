@@ -68,14 +68,8 @@ class HeadersController extends Controller
     public function updateHeader($idClub, $idHeader, HeadersRequest $request){
 
         $header = Header::find($idHeader);
-       if ($header) {
-       /*     if ( $request->input('petiteDescription') == null) {
-
-               $header->petiteDescription = $request->input('petiteDescription');
-            }
-            if ( $request->input('backgroudImage') != null) {
-                $header->backgroudImage = $request->input('backgroudImage');
-            }*/
+        if ($header) {
+      
             $header->petiteDescription = $request->input('petiteDescription') ? $request->input('petiteDescription') : $header->petiteDescription;
             $header->backgroudImage = $request->input('backgroudImage') ? $request->input('backgroudImage') : $header->backgroudImage;
             $header->idClub = $idClub;
