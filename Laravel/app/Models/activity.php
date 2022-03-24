@@ -5,12 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class about extends Model
+class activity extends Model
 {
     use HasFactory;
-    protected $table = 'abouts';
-    protected $fillable = [
-        "longDescription",
-        "idClub"
-    ];
+    protected $table = 'activities';
 }

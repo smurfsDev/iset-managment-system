@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class header extends Model
 {
     use HasFactory;
-    protected $table = 'header';
+    protected $table = 'headers';
     protected $fillable = [
         "petiteDescription",
         "backgroundImage",

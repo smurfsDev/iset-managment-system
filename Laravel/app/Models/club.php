@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class club extends Model
 {
     use HasFactory;
-    protected $table = 'club';
+    protected $table = 'clubs';
     protected $fillable = [
         "nom",
         "dateCreation",
