@@ -1,6 +1,6 @@
 <template>
   <div>
-    <formDemandeMateriel @addDemande="addDemande" :oldDemande="demande" :Materiels="Materiels"/>
+    <formDemandeMateriel @addDemande="addDemande" :oldDemande="demande" :categories="categories"/>
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay
@@ -37,7 +37,6 @@
           </b-alert>
 
           <!-- <b-card> -->
-              {{Materiels.length}}
           <Demandemateriels
             @deleteDemande="deleteDemande"
             :demandes="DemandeMater"
@@ -66,26 +65,30 @@ export default {
   },
   data() {
     return {
+        categories:[],
+        DemandeMater: [],
         Materiels: [],
-      DemandeMater: [],
-      demande: {},
-      pagination: {},
-      edit: false,
-      search: "",
-      show: true,
-      alert: {
-        dismissCountDown: 0,
-        variant: "",
-        msg: "",
-      },
-      myid: 1,
+        demande: {},
+        pagination: {},
+        edit: false,
+        search: "",
+        show: true,
+        alert: {
+            dismissCountDown: 0,
+            variant: "",
+            msg: "",
+        },
+        myid: 1,
+        idCategorie: "",
     };
   },
   created() {
     // console.log(typeof $);
     document.title = "Demande";
     this.fetchDemandeMateriels();
-    this.fetchMateriels();
+    // this.fetchMateriels();
+    this.fetchCategories();
+
     if (this.$route.params.add == 1) {
       this.alert.variant = "success";
       this.alert.msg = "materiel ajouté avec succès";
@@ -213,18 +216,15 @@ export default {
       this.demande = {};
       this.showModal("demandeMaterielModal");
     },
-    fetchMateriels(page_url = "http://127.0.0.1:8000/api/m") {
+    
+    
+     fetchCategories(page_url = "http://127.0.0.1:8000/api/c") {
       fetch(page_url, {
         method: "GET",
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res.constructor !== Array) {
-            this.Materiels = res.data;
-          } else {
-            this.Materiels = [];
-          }
-
+            this.categories = res.data;
         })
         .catch((err) => console.log(err));
     },
