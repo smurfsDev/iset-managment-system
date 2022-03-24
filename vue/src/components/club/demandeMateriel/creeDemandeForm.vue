@@ -18,6 +18,7 @@
             @click="hideModal('demandeMaterielModal')"
           ></button>
         </div>
+        
         <form class="mb-3" @submit.prevent="addDemande">
           <div class="modal-body">
             <div class="form-group mb-2">
@@ -39,7 +40,7 @@
               />
               <label>Date Emploi :</label>
               <input
-                type="date"
+                type="datetime-local"
                 class="border-0 dcc form-control"
                 placeholder
                 v-model="oldDemande.dateEmploi"
@@ -47,22 +48,18 @@
               />
               <label>Date de Remise :</label>
               <input
-                type="date"
+                type="datetime-local"
                 class="border-0 dcc form-control"
                 placeholder
                 v-model="oldDemande.dateDeRemise"
                 required="required"
                />
-                 <label>Materiels :</label>
 
-                <div 
-                class="form-check"
-                v-for="materiel in Materiels"
-                :key="materiel.id">
-                    <input class="form-check-input" type="checkbox" :value="materiel.titre" :id="materiel.id">
-                    <label class="form-check-label">
-                        {{materiel.titre}}
-                    </label>
+                 <label>Categorie :</label>
+                <div class="form-group">
+                    <select name="idCategorie" v-model="oldDemande.idCategorie">
+                    <option v-for="categorie in categories" :key="categorie.id" :value="categorie.id" >{{categorie.titre}}</option>
+                    </select>
                 </div>
 
             </div>
@@ -87,9 +84,9 @@
 <script>
 export default {
   props: {
-    Materiels: Array,
-    oldDemande: Object,
-    edit: Boolean,
+        categories: Array,
+        oldDemande: Object,
+        edit: Boolean,
   },
   emits: ["addDemande"],
   mounted() {},
