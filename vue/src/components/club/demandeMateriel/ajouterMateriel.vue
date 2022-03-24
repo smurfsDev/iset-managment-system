@@ -22,8 +22,14 @@
         <form class="mb-3" @submit.prevent="sendMat()">
           <div class="modal-body">
             <div class="form-group mb-2">
-             {{M}}
                 <label>Materiels :</label>
+                <button
+              type="button"
+              class="btn btn-secondary"
+              @click="deleteMateriels(idDemande)"
+            >
+              clean
+            </button>
                 <div 
                 class="form-check"
                 v-for="materiel in materiels"
@@ -114,12 +120,10 @@ export default {
     this.$emit("Mat",this.Mat)
     },
     sendMat(){
-      this.delete(this.idDemande);
       this.$emit("add",true);
       this.hideModal("MaterielModal");
-
     },
-    delete(id){
+    deleteMateriels(id){
         fetch("http://localhost:8000/api/m/" + id, {
           method: "delete",
         })
