@@ -11,7 +11,7 @@ class header extends Model
     protected $table = 'headers';
     protected $fillable = [
         "petiteDescription",
-        "backgroundImage",
+        "backgroudImage",
         "idClub"
     ];
    

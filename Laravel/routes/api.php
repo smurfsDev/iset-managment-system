@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\DemandeCreationClubController;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\HeadersController;
+use App\Http\Controllers\DemandeCreationClubController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +31,7 @@ Route::group(['prefix'=>'/dcc'],function(){
     Route::put('/d/{id}',[DemandeCreationClubController::class,'decline']);
 });
 
+Route::get('{idClub}/header/getAll',[HeadersController::class,'getHeaders']);
+Route::post('{idClub}/header/create',[HeadersController::class,'createHeader']);
+Route::delete('{idClub}/header/delete/{id}',[HeadersController::class,'deleteHeader']);
+Route::put('{idClub}/header/update/{id}',[HeadersController::class,'updateHeader']);
