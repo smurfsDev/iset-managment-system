@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MaterielController;
+use App\Http\Controllers\DemandeMaterielController;
+use App\Http\Controllers\CategorieMaterielController;
+use App\Http\Controllers\DemandeCreationClubController;
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BoardController;
@@ -34,6 +38,23 @@ Route::group(['prefix'=>'/dcc'],function(){
     Route::put('/a/{id}',[DemandeCreationClubController::class,'accept']);
     Route::put('/d/{id}',[DemandeCreationClubController::class,'decline']);
 });
+Route::group(['prefix'=>'/dm'],function(){
+    Route::get('/',[DemandeMaterielController::class,'show']);
+    // Route::get('/{id}',[DemandeMaterielController::class,'showMyDemandes']);
+    Route::post('/',[DemandeMaterielController::class,'create']);
+    Route::put('/{id}',[DemandeMaterielController::class,'update']);
+    Route::delete('/{id}',[DemandeMaterielController::class,'delete']);
+});
+Route::group(['prefix'=>'/m'],function(){
+    Route::get('/M/{id}',[MaterielController::class,'show']);
+    Route::get('/{id}',[MaterielController::class,'showMaterialsOfCategory']);
+    Route::post('/{idM}/{idD}',[MaterielController::class,'addMateriel']);
+    Route::put('/{idM}/{idD}',[MaterielController::class,'update']);
+    Route::delete('/{id}',[MaterielController::class,'delete']);
+});
+Route::group(['prefix'=>'/c'],function(){
+    Route::get('/',[CategorieMaterielController::class,'show']);
+});
 
 Route::get('{idClub}/header/getAll',[HeadersController::class,'getHeaders']);
 Route::post('{idClub}/header/create',[HeadersController::class,'createHeader']);
@@ -60,3 +81,5 @@ Route::get('{idClub}/projects/getAll',[ProjectsController::class,'getProjects'])
 Route::post('{idClub}/projects/create',[ProjectsController::class,'createProject']);
 Route::delete('{idClub}/projects/delete/{id}',[ProjectsController::class,'deleteProject']);
 Route::put('{idClub}/projects/update/{id}',[ProjectsController::class,'updateProject']);
+
+
