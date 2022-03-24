@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import blogClub from "./routes/blogClub";
 import demandeCreationClub from "./routes/demandeCreationClub";
 import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
+import demandeMateriel from "./routes/demandeMateriels";
 
 Vue.use(VueRouter);
 
@@ -24,8 +25,9 @@ const routes = [
   },
   ...demandeCreationClub,
   ...blogClub,
-  ...demandeCreationClubAdmin
-  
+  ...demandeCreationClubAdmin,
+  ...demandeMateriel,
+
 ];
 
 const router = new VueRouter({
