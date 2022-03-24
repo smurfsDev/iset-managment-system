@@ -114,10 +114,18 @@ export default {
     this.$emit("Mat",this.Mat)
     },
     sendMat(){
+      this.delete(this.idDemande);
       this.$emit("add",true);
       this.hideModal("MaterielModal");
 
-    }
+    },
+    delete(id){
+        fetch("http://localhost:8000/api/m/" + id, {
+          method: "delete",
+        })
+          .then(() => {})
+          .catch((err) => console.log(err));
+      }
   },
 };
 </script>

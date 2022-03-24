@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import blogClub from "./routes/blogClub";
 import demandeCreationClub from "./routes/demandeCreationClub";
 import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
 import demandeMateriel from "./routes/demandeMateriels";
