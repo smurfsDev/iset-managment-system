@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MaterielController;
 use App\Http\Controllers\DemandeMaterielController;
+use App\Http\Controllers\CategorieMaterielController;
 use App\Http\Controllers\DemandeCreationClubController;
 
 /*
@@ -35,6 +36,13 @@ Route::group(['prefix'=>'/dm'],function(){
     Route::delete('/{id}',[DemandeMaterielController::class,'delete']);
 });
 Route::group(['prefix'=>'/m'],function(){
-    Route::get('/',[MaterielController::class,'show']);
+    Route::get('/M/{id}',[MaterielController::class,'show']);
+    Route::get('/{id}',[MaterielController::class,'showMaterialsOfCategory']);
+    Route::post('/{idM}/{idD}',[MaterielController::class,'addMateriel']);
+    Route::put('/{idM}/{idD}',[MaterielController::class,'update']);
 
+
+});
+Route::group(['prefix'=>'/c'],function(){
+    Route::get('/',[CategorieMaterielController::class,'show']);
 });
