@@ -70,4 +70,17 @@ class MaterielController extends Controller
         }
         return "Success";
     }
+    public function delete($id){
+        $Materiel = DemandeMateriel_Materiel::where('idDemande','=',$id);
+        if ($Materiel) {
+            $Materiel->delete();
+            return response()->json([
+            ], 204);
+        } else {
+            return response()->json([
+                'type' => 'Materiel',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
 }

@@ -40,6 +40,7 @@ Route::group(['prefix'=>'/m'],function(){
     Route::get('/{id}',[MaterielController::class,'showMaterialsOfCategory']);
     Route::post('/{idM}/{idD}',[MaterielController::class,'addMateriel']);
     Route::put('/{idM}/{idD}',[MaterielController::class,'update']);
+    Route::delete('/{id}',[MaterielController::class,'delete']);
 
 
 });
