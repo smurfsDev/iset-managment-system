@@ -9,4 +9,8 @@ class activity extends Model
 {
     use HasFactory;
     protected $table = 'activities';
+    protected $fillable = [
+        "paragraphe",
+        "idClub"
+    ];
 }
