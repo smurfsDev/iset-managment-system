@@ -7,7 +7,6 @@
       <router-link to="/blogClub">Blog club</router-link>
       <router-link to="/admin/demandeCreationClub">Demande création club Admin</router-link>
       <router-link to="/demandeMateriel"> demandeMateriel</router-link>
-
     </div>
     <router-view />
   </div>
@@ -17,6 +16,7 @@
 * {
   font-size: 14px !important;
 }
+
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
