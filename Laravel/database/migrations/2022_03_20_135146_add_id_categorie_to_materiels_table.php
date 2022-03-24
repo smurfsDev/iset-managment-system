@@ -18,6 +18,10 @@ class AddIdCategorieToMaterielsTable extends Migration
             $table->foreign('idCategorie')->references('id')->on('categorie_materiels')
                            ->onDelete('cascade');
         });
+        Schema::table('demande_materiels', function (Blueprint $table) {
+            $table->foreign('idCategorie')->references('id')->on('categorie_materiels')
+                           ->onDelete('cascade');
+        });
 
     }
 
