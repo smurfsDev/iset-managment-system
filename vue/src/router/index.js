@@ -6,6 +6,7 @@ import demandeCreationClub from "./routes/demandeCreationClub";
 import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
 import demandeMateriel from "./routes/demandeMateriels";
 import dashboard from "./routes/dashboardclub";
+import headerDash from "./routes/headerDash";
 
 
 
@@ -30,7 +31,9 @@ const routes = [
   ...blogClub,
   ...demandeCreationClubAdmin,
   ...demandeMateriel,
-  ...dashboard
+  ...dashboard,
+  ...headerDash
+  
 
 
 ];
