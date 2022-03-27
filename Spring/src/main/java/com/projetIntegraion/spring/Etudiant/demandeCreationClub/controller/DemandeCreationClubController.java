@@ -83,7 +83,7 @@ public class DemandeCreationClubController {
 	public ResponseEntity<DemandeCreationClub> editerDemandeCreationClubService(
 			@PathVariable(name = "id", required = false) String id,
 			@RequestBody DemandeCreationClub DemandeCreationClub) {
-		DemandeCreationClub p = DemandeCreationClubService.updateProduit(Long.parseLong(id), DemandeCreationClub);
+		DemandeCreationClub p = DemandeCreationClubService.updateDemandeCreationClub(Long.parseLong(id), DemandeCreationClub);
 		return p != null ? ResponseEntity.ok().body(p) : ResponseEntity.notFound().build();
 	}
 }
