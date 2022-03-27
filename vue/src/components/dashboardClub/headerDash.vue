@@ -24,9 +24,19 @@
         </div>
         
       </div>    
-            <form>
-              <input type="text" class="form-control">
-          </form>
+            <form @submit.prevent="createHeader">
+              <div class="mb-3">
+                <label for="petiteDesc" class="form-label">Saisir une petite description</label>
+                <input type="text" class="form-control" v-model="petiteDescription" >
+               
+              </div>
+              <div class="mb-3">
+                <label for="bgImg" class="form-label" >Image d'arrière plan pour l'entete du blog</label>
+                <input type="file" class="form-control" name="backgroundImage"  @change="convert64" ref="file" >
+              </div>
+              
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
       <h2>Section title</h2>
@@ -44,6 +54,36 @@ export default{
     name:"headerDash",
     components: {
         sidebarDash
+    },
+    data() {
+        return {
+          petiteDescription : '',
+          backgroundImage : ''
+        }
+    },
+    methods: {
+      convert64(e){
+        //console.log(this.$refs.file.files[0]);
+        //this.backgroundImage = this.$refs.file.files[0];
+        
+          var file = e.target.files[0];
+          var reader = new FileReader();
+        
+          reader.onloadend = function() {
+          
+             this.backgroundImage = reader.result
+             console.log(this.backgroundImage)
+          }
+          reader.readAsDataURL(file);
+        
+          
+      },
+      createHeader(){
+       
+        console.log(this.petiteDescription);
+        console.log(this.backgroundImage)
+        
+      }
     }
 }
 </script>
