@@ -16,11 +16,12 @@ class CreateHeadersTable extends Migration
         Schema::create('headers', function (Blueprint $table) {
             $table->id();
             $table->string('petiteDescription');
-            $table->string('backgroudImage');
+            $table->string('backgroudImage', 255);
             $table->foreignId('idClub')->references('id')->on('clubs');
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.

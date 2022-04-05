@@ -37,6 +37,7 @@
 
 <script>
 import  sidebarDash from "./sidebarDash.vue";
+
 export default{
     name:"dashboard",
     components: {
@@ -44,3 +45,4 @@ export default{
     }
 }
 </script>
+
