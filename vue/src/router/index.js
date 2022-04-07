@@ -27,11 +27,10 @@ const routes = [
   ...blogClub,
   ...demandeCreationClubAdmin,
   ...demandeMateriel,
-
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes,
 });
 

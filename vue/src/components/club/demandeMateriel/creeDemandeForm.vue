@@ -18,7 +18,7 @@
             @click="hideModal('demandeMaterielModal')"
           ></button>
         </div>
-        
+
         <form class="mb-3" @submit.prevent="addDemande">
           <div class="modal-body">
             <div class="form-group mb-2">
@@ -53,15 +53,20 @@
                 placeholder
                 v-model="oldDemande.dateDeRemise"
                 required="required"
-               />
+              />
 
-                 <label>Categorie :</label>
-                <div class="form-group">
-                    <select name="idCategorie" v-model="oldDemande.idCategorie">
-                    <option v-for="categorie in categories" :key="categorie.id" :value="categorie.id" >{{categorie.titre}}</option>
-                    </select>
-                </div>
-
+              <label>Categorie :</label>
+              <div class="form-group">
+                <select name="idCategorie" v-model="oldDemande.idCategorie">
+                  <option
+                    v-for="categorie in categories"
+                    :key="categorie.id"
+                    :value="categorie.id"
+                  >
+                    {{ categorie.titre }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -84,13 +89,13 @@
 <script>
 export default {
   props: {
-        categories: Array,
-        oldDemande: Object,
-        edit: Boolean,
+    categories: Array,
+    oldDemande: Object,
+    edit: Boolean,
   },
   emits: ["addDemande"],
   mounted() {},
-  methods: { 
+  methods: {
     addDemande() {
       this.$emit("addDemande", this.oldDemande);
       this.resetModal1();
