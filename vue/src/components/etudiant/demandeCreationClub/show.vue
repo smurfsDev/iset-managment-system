@@ -63,10 +63,16 @@
                 </b-col>
               </b-row>
             </b-row>
-            <b-button variant="danger" v-on:click="Delete(demande.id)"
+            <b-button
+              variant="danger"
+              :class="[demande.status != 0 ? 'disabled' : '']"
+              v-on:click="Delete(demande.id)"
               >Delete</b-button
             >
-            <b-button variant="warning" v-on:click="Update(demande)"
+            <b-button
+              variant="warning"
+              :class="[demande.status != 0 ? 'disabled' : '']"
+              v-on:click="Update(demande)"
               >Update</b-button
             >
           </div>
@@ -89,9 +95,9 @@
           >
         </li>
         <li class="page-item">
-          <a class="page-link text-dark" href="#">
-            {{ pagination.current_page + "/" + pagination.last_page }}
-          </a>
+          <a class="page-link text-dark" href="#">{{
+            pagination.current_page + "/" + pagination.last_page
+          }}</a>
         </li>
         <li
           :class="[{ disabled: !pagination.next_page_url }]"
