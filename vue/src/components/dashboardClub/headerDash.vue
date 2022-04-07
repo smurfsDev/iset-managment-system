@@ -249,6 +249,7 @@ export default {
             idClub : 1
       }
 
+
       this.$http.put("http://localhost:8000/api/1/header/update/"+this.id,updateHeader).then(response => {
         console.log(response)
         alert('Header modifié! ')
