@@ -24,9 +24,7 @@
                   création : {{ demande.created_at }}</b-col
                 >
               </b-row>
-              <!-- <b-row > Materiels :
-                <b-col v-for="materiel in Mteriels" :key="materiel.id">{{materiel.titre}}</b-col>
-              </b-row> -->
+              
               <b-row>
                 <b-col
                   >Date d'emploi : {{ demande.dateEmploi }} Date de remise :
@@ -34,6 +32,45 @@
                 >
               </b-row>
             </b-row>
+            <b-row > Materiels :
+                <b-row v-for="mat in demande.materiel" :key="mat.id">
+                  <div>
+                      <div role="group" class="row" style="align-items: center">
+                        <div class="col-md-4  row" >
+                          <div class="col-9">
+                            <p class="text-left"><strong>{{mat.titre}}</strong> </p> 
+                          </div>
+                          <div class="col-3">
+                            <span style="text-align:centre" >Qt</span>
+                          </div>
+                        </div>
+                        <div class="col-md-5">
+                          <input type="number" min="0" class="form-control"  v-model="mat.pivot.quantité" name="quantité" style="background-color: rgb(236, 239, 241); border: 0px !important;"> 
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group-append" >
+                              <b-button type="button" variant="success" @click="setQuantity(mat.id,demande.id,mat.pivot.quantité)">
+                                <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="check" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-check b-icon bi">
+                                  <g transform="translate(8 8) scale(2 2) translate(-8 -8)">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                                  </g>
+                                </svg>
+                              </b-button> 
+                              <b-button type="button" variant="danger" @click="deleteMateriel(mat.id,demande.id)">
+                                <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="trash fill" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-trash-fill b-icon bi">
+                                  <g>
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"></path>
+                                  </g>
+                                </svg>
+                              </b-button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </b-row>
+            </b-row>
+
+
             <b-button @click="ajouterMateriel(demande.id,demande.idCategorie)" variant="success"
               >Ajouter materiels</b-button
             >
@@ -106,6 +143,7 @@ export default {
       add:false,
       Mteriels: [],
       reAjouter:false,
+      quantite:1
     };
   },
   created() {
@@ -119,8 +157,8 @@ export default {
     Matt(value){
       this.Mat=value;
     },
-    attachMateriel(idMateriel,idDemande) {
-      fetch('http://127.0.0.1:8000/api/m/'+idMateriel+'/'+idDemande, {
+    attachMateriel(idMateriel) {
+      fetch('http://127.0.0.1:8000/api/m/'+idMateriel+'/'+this.idDemande, {
           method: 'post',
       }).then(res => res.json())
           .then(data => {
@@ -141,7 +179,7 @@ export default {
       this.add=value;
       if (this.add==true){
         for (var i = 0; i <this.Mat.length; i++){
-          this.attachMateriel(this.Mat[i],this.idDemande);
+          this.attachMateriel(this.Mat[i]);
           console.log("tess"+this.Mat[i]);
         }this.Mat=[];
         }
@@ -188,6 +226,47 @@ export default {
         })
         .catch((err) => console.log(err));
         console.log("adzdazedazedazed")
+    },
+    setQuantity(idMateriel,idDemande,quantite){
+      let headersi = new Headers();
+      headersi.append("Content-Type", "application/json");
+      fetch("http://127.0.0.1:8000/api/m/Q/"+idMateriel+"/"+idDemande, {
+        method: "put",
+        body : JSON.stringify({ "quantité": quantite }),
+        headers:headersi
+      })
+        .then(res => res.json())
+          .then(data => {
+              if (data.attached == true) {
+                  this.alert.variant = "success";
+                  this.alert.msg = "quantité attachée avec succès"
+                  this.alert.dismissCountDown = 5;
+              } else {
+                  this.alert.variant = "danger";
+                  this.alert.msg = "quantité détachée avec succès"
+                  this.alert.dismissCountDown = 5;
+              }
+        })
+        .catch((err) => console.log(err));
+    },
+    //delete materiel
+    deleteMateriel(idMateriel,idDemande){
+      fetch("http://127.0.0.1:8000/api/m/"+idMateriel+"/"+idDemande, {
+        method: "delete",
+      })
+        .then(res => res.json())
+          .then(data => {
+              if (data.attached == true) {
+                  this.alert.variant = "success";
+                  this.alert.msg = "Materiel attachée avec succès"
+                  this.alert.dismissCountDown = 5;
+              } else {
+                  this.alert.variant = "danger";
+                  this.alert.msg = "Materiel détachée avec succès"
+                  this.alert.dismissCountDown = 5;
+              }
+        })
+        .catch((err) => console.log(err));
     },
     //   addDemande(idMateriel,idDemande) {
     //   if (!this.reAjouter) {

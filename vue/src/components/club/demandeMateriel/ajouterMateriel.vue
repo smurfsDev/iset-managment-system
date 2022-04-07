@@ -23,13 +23,6 @@
           <div class="modal-body">
             <div class="form-group mb-2">
                 <label>Materiels :</label>
-                <button
-              type="button"
-              class="btn btn-secondary"
-              @click="deleteMateriels(idDemande)"
-            >
-              clean
-            </button>
                 <div 
                 class="form-check"
                 v-for="materiel in materiels"
@@ -58,7 +51,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -123,13 +115,7 @@ export default {
       this.$emit("add",true);
       this.hideModal("MaterielModal");
     },
-    deleteMateriels(id){
-        fetch("http://localhost:8000/api/m/" + id, {
-          method: "delete",
-        })
-          .then(() => {})
-          .catch((err) => console.log(err));
-      }
+    
   },
 };
 </script>
