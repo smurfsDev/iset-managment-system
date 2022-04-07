@@ -1,6 +1,10 @@
 <template>
   <div>
-    <formDemandeMateriel @addDemande="addDemande" :oldDemande="demande" :categories="categories"/>
+    <formDemandeMateriel
+      @addDemande="addDemande"
+      :oldDemande="demande"
+      :categories="categories"
+    />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay
@@ -43,7 +47,6 @@
             @fetchDemande="fetchDemandeMateriels"
             @updateDemande="updateDemande"
             :pagination="pagination"
-            
           />
           <!-- </b-card> -->
         </div>
@@ -65,21 +68,21 @@ export default {
   },
   data() {
     return {
-        categories:[],
-        DemandeMater: [],
-        Materiels: [],
-        demande: {},
-        pagination: {},
-        edit: false,
-        search: "",
-        show: true,
-        alert: {
-            dismissCountDown: 0,
-            variant: "",
-            msg: "",
-        },
-        myid: 1,
-        idCategorie: "",
+      categories: [],
+      DemandeMater: [],
+      Materiels: [],
+      demande: {},
+      pagination: {},
+      edit: false,
+      search: "",
+      show: true,
+      alert: {
+        dismissCountDown: 0,
+        variant: "",
+        msg: "",
+      },
+      myid: 1,
+      idCategorie: "",
     };
   },
   created() {
@@ -104,8 +107,7 @@ export default {
     }
   },
   methods: {
-    fetchDemandeMateriels(
-      page_url = "http://127.0.0.1:8000/api/dm") {
+    fetchDemandeMateriels(page_url = "http://127.0.0.1:8000/api/dm") {
       let vm = this;
       fetch(page_url, {
         method: "GET",
@@ -216,15 +218,14 @@ export default {
       this.demande = {};
       this.showModal("demandeMaterielModal");
     },
-    
-    
-     fetchCategories(page_url = "http://127.0.0.1:8000/api/c") {
+
+    fetchCategories(page_url = "http://127.0.0.1:8000/api/c") {
       fetch(page_url, {
         method: "GET",
       })
         .then((res) => res.json())
         .then((res) => {
-            this.categories = res.data;
+          this.categories = res.data;
         })
         .catch((err) => console.log(err));
     },

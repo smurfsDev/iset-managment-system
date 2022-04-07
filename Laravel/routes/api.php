@@ -13,7 +13,6 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\HeadersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
-use App\Http\Controllers\DemandeCreationClubController;
 
 /*
 |--------------------------------------------------------------------------

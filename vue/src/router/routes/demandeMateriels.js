@@ -1,7 +1,5 @@
 const demandeMateriel = () =>
-  import(
-    "../../components/club/demandeMateriel/demandeMateriel.vue"
-  );
+  import("../../components/club/demandeMateriel/demandeMateriel.vue");
 
 export default [
   {
