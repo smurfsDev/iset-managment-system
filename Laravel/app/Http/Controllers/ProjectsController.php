@@ -8,6 +8,7 @@ use App\Http\Requests\ProjectsRequest;
 
 class ProjectsController extends Controller
 {
+
     public function getProjects($id){
 
         $project = project::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
@@ -45,9 +46,9 @@ class ProjectsController extends Controller
     }
 
     public function deleteProject($idClub,$idProject){
-      
+
         $project = project::find($idProject);
-       
+
         if ($project){
             $project->delete();
             return response()->json([
@@ -67,8 +68,8 @@ class ProjectsController extends Controller
 
         $project = project::find($idProject);
         if ($project) {
-      
-            $project->affiche = $request->input('affiche') ? $request->input('affiche') : $header->affiche;
+
+            $project->affiche = $request->input('affiche') ? $request->input('affiche') : $project->affiche;
             $project->idClub = $idClub;
             $project->save();
             return response()->json([
@@ -82,4 +83,5 @@ class ProjectsController extends Controller
             ], 404);
         }
     }
+
 }
