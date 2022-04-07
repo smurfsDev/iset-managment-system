@@ -18,8 +18,8 @@ class HeadersController extends Controller
             );
         else
             return response()->json([
-                "Aucun header"
-            ], 404);
+                null
+            ], 200);
     }
     public function createHeader($id, HeadersRequest $request){
         $petiteDescription = $request->input('petiteDescription');

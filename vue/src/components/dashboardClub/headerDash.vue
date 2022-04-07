@@ -30,11 +30,11 @@
               border-bottom
             "
           >
-            <h1 class="h2">En tete</h1>
+            <h1 class="h2">Ajouter En tete</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
-          <form @submit.prevent="createHeader">
+          <form @submit.prevent="createHeader" v-if="ajout==false">
             <div class="mb-3">
               <label for="petiteDesc" class="form-label"
                 >Saisir une petite description</label
@@ -43,6 +43,8 @@
                 type="text"
                 class="form-control"
                 v-model="petiteDescription"
+                required
+                :disabled="ajout"
               />
             </div>
             <div class="mb-3">
@@ -55,22 +57,72 @@
                 name="backgroundImage"
                 @change="convert64"
                 ref="file"
+                required
+                :disabled="ajout"
               />
             </div>
 
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button :disabled="ajout" type="submit" class="btn btn-success">Submit</button>
           </form>
+          
+          
+          <form @submit.prevent="submitEdit" v-if="update==true">
+            <div class="mb-3">
+              <label for="petiteDesc" class="form-label"
+                >Saisir une petite description</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                v-model="petiteDescription"
+                required
+                
+              />
+            </div>
+            <div class="mb-3">
+              <label for="bgImg" class="form-label"
+                >Image d'arrière plan pour l'entete du blog</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                name="backgroundImage"
+                @change="convert64"
+                ref="file"
+                required
+                
+              />
+            </div>
+
+            <button type="submit" class="btn btn-success">Edit</button>
+          </form>
+
+          <br /> <br />
+          <div class="card" style="width: 18rem;" v-if="ajout==true || update==true">
+            <img v-bind:src="backgroundImage" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">{{petiteDescription}}</p>
+              <button  class="btn btn-danger" @click="deleteHeader(id)">Delete</button>
+              <button  class="btn btn-warning" @click="updateHeader(id)">Update</button>
+            </div>
+        </div>
+          
           <canvas
             class="my-4 w-100"
             id="myChart"
             width="900"
             height="380"
           ></canvas>
+          <div>
+      
+    </div>
          <getHeader /> 
           <h2>Section title</h2>
         </main>
       </div>
     </div>
+    
   </div>
 </template>
 
@@ -78,27 +130,43 @@
 
 import sidebarDash from "./sidebarDash.vue";
 
+
 export default {
   name: "headerDash",
   components: {
-    sidebarDash,
+    sidebarDash, 
   },
+
+
   data() {
     return {
+      id: null,
       petiteDescription: "",
       backgroundImage: "",
       srcImage: "",
+      ajout: false,
+      update: false,
+     
     };
+  },
+  created(){
+    this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
+      
+      if (response.data.data!=undefined){
+        console.log("Vous avez déjà un header")
+        this.petiteDescription = response.data.data[0].petiteDescription
+        this.backgroundImage = response.data.data[0].backgroudImage
+        console.log(response.data.data)
+        this.ajout=true
+        this.id = response.data.data[0].id
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
   },
   methods: {
     convert64(e) {
-      //console.log(this.$refs.file.files[0]);
-      //this.backgroundImage = this.$refs.file.files[0];
-
-      /*var file = e.target.files[0];
-          var bitmap = fs.readFileSync(file);
-
-          console.log(new Buffer(bitmap).toString('base64'));*/
 
       var file = e.target.files[0];
       this.srcImage = file;
@@ -119,29 +187,78 @@ export default {
     createHeader() {
       
 
+       
       var reader = new FileReader();
       console.log(1);
       reader.onloadend = () => {
        
-        this.backgroundImage = reader.result;
-        let newHeader = {
-        petiteDescription: this.petiteDescription,
-        backgroudImage: this.backgroundImage,
-        idClub : 1
-      }
-     
-      this.$http.post("http://localhost:8000/api/1/header/create",newHeader)
-      .then (response => {
-        console.log(response)
-        alert('Header ajouté! ')
-      })
-      .catch(error => {
-      console.log('error', error);
-      })
-      };
-      reader.readAsDataURL(this.srcImage);
+        this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
 
-    },
+         if (response.data.data!=undefined){
+           alert('Vous avez déjà un header')
+            console.log("Vous avez déjà un header")
+            console.log(response.data.data)
+            this.ajout=true
+            this.id = response.data.data[0].id
+         } else {
+          this.backgroundImage = reader.result;
+            let newHeader = {
+            petiteDescription: this.petiteDescription,
+            backgroudImage: this.backgroundImage,
+            idClub : 1
+          }
+          // this.$emit("header-submitted", newHeader);
+        
+          this.$http.post("http://localhost:8000/api/1/header/create",newHeader)
+          .then (response => {
+            console.log(response)
+             this.ajout=true
+            alert('Header ajouté! ')
+          })
+          .catch(error => {
+          console.log('error', error);
+          })
+            }
+        
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      
+      
+         }
+         reader.readAsDataURL(this.srcImage);
   },
+  deleteHeader(id){
+    this.$http.delete("http://localhost:8000/api/1/header/delete/"+id).then(response => {
+      console.log(response)
+      alert('Header supprimé! ')
+      this.ajout=false
+      this.update=false
+    })
+  },
+  updateHeader(id){
+    this.update=true
+    this.id = id
+    console.log(id)
+  },
+  submitEdit(){
+
+    
+    let updateHeader = {
+            petiteDescription: this.petiteDescription,
+            backgroudImage: this.backgroundImage,
+            idClub : 1
+      }
+
+      this.$http.put("http://localhost:8000/api/1/header/update/"+this.id,updateHeader).then(response => {
+        console.log(response)
+        alert('Header modifié! ')
+       
+      })
+
+  }
+  
+  }
 };
 </script>
