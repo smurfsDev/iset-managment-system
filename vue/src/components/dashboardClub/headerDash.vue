@@ -175,19 +175,16 @@ export default {
       var reader = new FileReader();
       console.log(1);
       reader.onloadend = () => {
-        //  let test = reader.result
+       
         this.backgroundImage = reader.result;
         
         console.log(this.backgroundImage);
       };
       reader.readAsDataURL(file);
-      
-      
+ 
     },
     createHeader() {
-      
-
-       
+    
       var reader = new FileReader();
       console.log(1);
       reader.onloadend = () => {
@@ -207,7 +204,7 @@ export default {
             backgroudImage: this.backgroundImage,
             idClub : 1
           }
-          // this.$emit("header-submitted", newHeader);
+        
         
           this.$http.post("http://localhost:8000/api/1/header/create",newHeader)
           .then (response => {
@@ -225,6 +222,7 @@ export default {
           console.log(error)
         })
       
+
       
          }
          reader.readAsDataURL(this.srcImage);
