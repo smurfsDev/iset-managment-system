@@ -13,4 +13,8 @@ class CategorieMateriel extends Model
     protected $fillable = [
         "titre",
     ];
+    // relation this Category has many Materiels
+    public function materiels(){
+        return $this->hasMany(Materiel::class,'categorie_materiel_id');
+    }
 }

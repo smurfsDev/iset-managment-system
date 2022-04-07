@@ -17,4 +17,5 @@ class CategorieMaterielController extends Controller
                 "aucune Categorie"
             ], 404);
     }
+
 }
