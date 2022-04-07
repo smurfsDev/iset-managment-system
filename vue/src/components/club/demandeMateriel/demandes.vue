@@ -5,18 +5,23 @@
       :oldDemande="demande"
       :Materiels="Materiels"
     /> -->
-    <ajouterMateriel :idDemande="idDemande" :materiels="materiels" v-on:Mat="Matt"  v-on:add="addMateriels" />
+    <ajouterMateriel
+      :idDemande="idDemande"
+      :materiels="materiels"
+      v-on:Mat="Matt"
+      v-on:add="addMateriels"
+    />
     <div
       class="card card-body my-5 py-5 text-center"
       v-if="demandes.length == 0"
     >
       <h3>il y'a aucune demande</h3>
     </div>
-    <b-card class="my-2" v-for="demande in demandes" :key="demande.id"  >
+    <b-card class="my-2" v-for="demande in demandes" :key="demande.id">
       <md-tabs>
         <md-tab id="tab-home" md-label="demande">
           <div class="bv-example-row text-center">
-        <!-- <b-button variant="warning" v-on:click="fetchMaterielDemande(demande.id)">fetch</b-button> -->
+            <!-- <b-button variant="warning" v-on:click="fetchMaterielDemande(demande.id)">fetch</b-button> -->
             <b-row class="mb-2">
               <b-row>
                 <b-col
@@ -34,7 +39,9 @@
                 >
               </b-row>
             </b-row>
-            <b-button @click="ajouterMateriel(demande.id,demande.idCategorie)" variant="success"
+            <b-button
+              @click="ajouterMateriel(demande.id, demande.idCategorie)"
+              variant="success"
               >Ajouter materiels</b-button
             >
             <b-button variant="danger" v-on:click="Delete(demande.id)"
@@ -99,53 +106,52 @@ export default {
   data() {
     return {
       id: "",
-      idDemande:0,
-      idCategorie:0,
-      materiels:[],
-      Mat:[],
-      add:false,
+      idDemande: 0,
+      idCategorie: 0,
+      materiels: [],
+      Mat: [],
+      add: false,
       Mteriels: [],
-      reAjouter:false,
+      reAjouter: false,
     };
   },
   created() {
     // console.log(typeof $);
     this.fetchMateriels();
   },
-  
 
-  emits: ["deleteDemande", "updateDemande", "fetchDemande","ajouterMateriel"],
+  emits: ["deleteDemande", "updateDemande", "fetchDemande", "ajouterMateriel"],
   methods: {
-    Matt(value){
-      this.Mat=value;
+    Matt(value) {
+      this.Mat = value;
     },
-    attachMateriel(idMateriel,idDemande) {
-      fetch('http://127.0.0.1:8000/api/m/'+idMateriel+'/'+idDemande, {
-          method: 'post',
-      }).then(res => res.json())
-          .then(data => {
-              if (data.attached == true) {
-                  this.alert.variant = "success";
-                  this.alert.msg = "Materiel attachée avec succès"
-                  this.alert.dismissCountDown = 5;
-              } else {
-                  this.alert.variant = "danger";
-                  this.alert.msg = "Materiel détachée avec succès"
-                  this.alert.dismissCountDown = 5;
-              }
+    attachMateriel(idMateriel, idDemande) {
+      fetch("http://127.0.0.1:8000/api/m/" + idMateriel + "/" + idDemande, {
+        method: "post",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.attached == true) {
+            this.alert.variant = "success";
+            this.alert.msg = "Materiel attachée avec succès";
+            this.alert.dismissCountDown = 5;
+          } else {
+            this.alert.variant = "danger";
+            this.alert.msg = "Materiel détachée avec succès";
+            this.alert.dismissCountDown = 5;
           }
-        )
-        .catch(err => console.log(err));  
+        })
+        .catch((err) => console.log(err));
     },
-    addMateriels(value){
-      this.add=value;
-      if (this.add==true){
-        for (var i = 0; i <this.Mat.length; i++){
-          this.attachMateriel(this.Mat[i],this.idDemande);
-          console.log("tess"+this.Mat[i]);
-        }this.Mat=[];
+    addMateriels(value) {
+      this.add = value;
+      if (this.add == true) {
+        for (var i = 0; i < this.Mat.length; i++) {
+          this.attachMateriel(this.Mat[i], this.idDemande);
+          console.log("tess" + this.Mat[i]);
         }
-      else console.log("zedz"+this.add)
+        this.Mat = [];
+      } else console.log("zedz" + this.add);
     },
     initModal() {
       this.demande = {};
@@ -158,36 +164,37 @@ export default {
       this.$emit("updateDemande", demande);
       this.showModal("demandeMaterielModal");
     },
-    ajouterMateriel(id,idCategorie){
-      this.idDemande=id;
-      this.idCategorie=idCategorie;
+    ajouterMateriel(id, idCategorie) {
+      this.idDemande = id;
+      this.idCategorie = idCategorie;
       this.fetchMateriels();
       this.showModal("MaterielModal");
     },
     fetchDemande(url) {
       this.$emit("fetchDemande", url);
     },
-    fetchMateriels(page_url = "http://127.0.0.1:8000/api/m/"+this.idCategorie) {
+    fetchMateriels(
+      page_url = "http://127.0.0.1:8000/api/m/" + this.idCategorie
+    ) {
       fetch(page_url, {
         method: "GET",
       })
         .then((res) => res.json())
         .then((res) => {
-            this.materiels = res.data;
+          this.materiels = res.data;
         })
         .catch((err) => console.log(err));
     },
     fetchMaterielDemande(id) {
-      fetch("http://127.0.0.1:8000/api/m/M/"+id, {
+      fetch("http://127.0.0.1:8000/api/m/M/" + id, {
         method: "GET",
       })
         .then((res) => res.json())
         .then((res) => {
-            this.Mteriels = res.data;
-
+          this.Mteriels = res.data;
         })
         .catch((err) => console.log(err));
-        console.log("adzdazedazedazed")
+      console.log("adzdazedazedazed");
     },
     //   addDemande(idMateriel,idDemande) {
     //   if (!this.reAjouter) {
@@ -229,7 +236,6 @@ export default {
       this.reAjouter = true;
       this.demande = demande;
     },
-
   },
 };
 </script>

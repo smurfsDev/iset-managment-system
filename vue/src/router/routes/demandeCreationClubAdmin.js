@@ -1,7 +1,5 @@
 const demandeCreationClub = () =>
-  import(
-    "../../components/admin/demandeCreationClub/demandeCreationClub.vue"
-  );
+  import("../../components/admin/demandeCreationClub/demandeCreationClub.vue");
 
 export default [
   {
