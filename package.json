@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "axios": "^0.26.1",
-    "vue-axios": "^3.4.1"
-  }
-}
