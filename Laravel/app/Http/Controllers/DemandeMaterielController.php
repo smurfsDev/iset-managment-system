@@ -34,7 +34,7 @@ class DemandeMaterielController extends Controller
         return "Success";
     }
     public function show(){
-        $DemandeMateriel = DemandeMateriel::paginate(5);
+        $DemandeMateriel = DemandeMateriel::with('materiel')->paginate(5);
         if(sizeof($DemandeMateriel)>0){
         return response()->json($DemandeMateriel, 200);
         }
@@ -43,6 +43,7 @@ class DemandeMaterielController extends Controller
                 "aucune demande"
             ], 404);
     }
+
     public function update(Request $request ,$id){
         $DemandeMateriel = DemandeMateriel::find($id);
         if($DemandeMateriel){
@@ -75,4 +76,5 @@ class DemandeMaterielController extends Controller
             ], 404);
         }
     }
+
 }

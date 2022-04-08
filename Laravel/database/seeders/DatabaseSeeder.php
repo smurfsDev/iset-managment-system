@@ -14,15 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(1)->create();
-        \App\Models\DemandeCreationClub::create([
-                "nomClub"=> "test",
-                "logo"=> "test",
-                "dateCreation"=> "2022-03-16",
-                "activite"=> "test",
-                "president"=> "test",
-                "vicePresident"=> "test",
-                "responsableClubId"=> "1"]
-        );
+        $this->call(DemandeCreationClubSeeder::class);
 
     }
 }

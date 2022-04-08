@@ -19,6 +19,8 @@ class DemandeMateriel extends Model
         "status",
         "reponse",
     ];
+
+    // this demandeMateriel belongstomany Materiel
     public function materiel(){
         return $this->belongsToMany(
             Materiel::class,
@@ -27,4 +29,6 @@ class DemandeMateriel extends Model
             'idMateriel')->withPivot(['quantité'])
             ;
     }
+
+
 }

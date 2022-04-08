@@ -18,28 +18,28 @@
             @click="hideModal('MaterielModal')"
           ></button>
         </div>
-        
+
         <form class="mb-3" @submit.prevent="sendMat()">
           <div class="modal-body">
             <div class="form-group mb-2">
                 <label>Materiels :</label>
-                <button
-              type="button"
-              class="btn btn-secondary"
-              @click="deleteMateriels(idDemande)"
-            >
-              clean
-            </button>
                 <div 
+
                 class="form-check"
                 v-for="materiel in materiels"
-                :key="materiel.id">
-                    <input class="form-check-input" type="checkbox" :value="materiel.titre" :id="materiel.id" @change="ajoutMateriel(materiel.id)">
-                    <label class="form-check-label">
-                        {{materiel.titre}}
-                    </label>
-                </div>
-
+                :key="materiel.id"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :value="materiel.titre"
+                  :id="materiel.id"
+                  @change="ajoutMateriel(materiel.id)"
+                />
+                <label class="form-check-label">
+                  {{ materiel.titre }}
+                </label>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -58,44 +58,41 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
-      add:false,
-      Materiels:[],
+      add: false,
+      Materiels: [],
       id: "",
-      Mat:[],
+      Mat: [],
       fiche: {
-          rebriques: [],
-          titre: '',
-          id: '',
+        rebriques: [],
+        titre: "",
+        id: "",
       },
       alert: {
-          dismissCountDown: 0,
-          variant: "",
-          msg: "",
-          }
+        dismissCountDown: 0,
+        variant: "",
+        msg: "",
+      },
     };
   },
   props: {
-        ajouterMateriel: Object,
-        categories: Array,
-        oldDemande: Object,
-        edit: Boolean,
-        idDemande: Number,
-        idCategorie: Number,
-        materiels : Array,
-        M : Array
+    ajouterMateriel: Object,
+    categories: Array,
+    oldDemande: Object,
+    edit: Boolean,
+    idDemande: Number,
+    idCategorie: Number,
+    materiels: Array,
+    M: Array,
   },
-  
-  created() {
 
-  },
+  created() {},
   emits: ["addDemande"],
   mounted() {},
-  methods: { 
+  methods: {
     addDemande() {
       this.$emit("addMateriel", this.oldDemande);
       this.resetModal1();
@@ -104,32 +101,26 @@ export default {
     resetModal1() {
       $(".m").val("");
     },
-    ajoutMateriel(id){
-      let x=-1;
-      console.log("test"+id);
-      for (var i = 0; i<this.Mat.length; i++){
-        if(this.Mat[i]==id){
-           x=i;
-        }  
+    ajoutMateriel(id) {
+      let x = -1;
+      console.log("test" + id);
+      for (var i = 0; i < this.Mat.length; i++) {
+        if (this.Mat[i] == id) {
+          x = i;
+        }
       }
-      if(x!=(-1)){
-      this.Mat.splice(x,1);
-      }else if(x==(-1)){
-      this.Mat.push(id);}
-    console.log(this.Mat)
-    this.$emit("Mat",this.Mat)
+      if (x != -1) {
+        this.Mat.splice(x, 1);
+      } else if (x == -1) {
+        this.Mat.push(id);
+      }
+      console.log(this.Mat);
+      this.$emit("Mat", this.Mat);
     },
-    sendMat(){
-      this.$emit("add",true);
+    sendMat() {
+      this.$emit("add", true);
       this.hideModal("MaterielModal");
     },
-    deleteMateriels(id){
-        fetch("http://localhost:8000/api/m/" + id, {
-          method: "delete",
-        })
-          .then(() => {})
-          .catch((err) => console.log(err));
-      }
   },
 };
 </script>

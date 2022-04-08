@@ -49,6 +49,8 @@ Route::group(['prefix'=>'/m'],function(){
     Route::get('/M/{id}',[MaterielController::class,'show']);
     Route::get('/{id}',[MaterielController::class,'showMaterialsOfCategory']);
     Route::post('/{idM}/{idD}',[MaterielController::class,'addMateriel']);
+    Route::put('/Q/{idM}/{idD}',[MaterielController::class,'setQuantity']);
+    Route::delete('/{idM}/{idD}',[MaterielController::class,'deleteMateriel']);
     Route::put('/{idM}/{idD}',[MaterielController::class,'update']);
     Route::delete('/{id}',[MaterielController::class,'delete']);
 });

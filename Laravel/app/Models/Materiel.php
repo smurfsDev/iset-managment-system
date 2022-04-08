@@ -25,12 +25,14 @@ class Materiel extends Model
     // public function demande(){
     //     return $this->hasMany(De::class,'')
     // }
-    public function DemandeMateriel(){
+    // this Materiel belongsToMany DemandeMateriel
+    public function demande(){
         return $this->belongsToMany(
             DemandeMateriel::class,
             'demande_materiel__materiels',
             'idMateriel',
-            'idDemande');
+            'idDemande')->withPivot(['quantité'])
+            ;
     }
 
 
