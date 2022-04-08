@@ -8,6 +8,7 @@ import demandeMateriel from "./routes/demandeMateriels";
 import dashboard from "./routes/dashboardclub";
 import headerDash from "./routes/headerDash";
 import aboutDash from "./routes/aboutDash";
+import activitiesDash from "./routes/activitiesDash";
 
 
 
@@ -34,7 +35,8 @@ const routes = [
   ...demandeMateriel,
   ...dashboard,
   ...headerDash,
-  ...aboutDash
+  ...aboutDash,
+  ...activitiesDash
   
 
 
