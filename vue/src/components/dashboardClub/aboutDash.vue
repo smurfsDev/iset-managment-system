@@ -70,7 +70,7 @@
 
           <div v-if="created==true">
             <h2>Longue description</h2>
-            <ol class="list-group list-group-numbered" v-for="(item, index) in abouts" :key="index">
+            <ol class="list-group list-group" v-for="(item, index) in abouts" :key="index">
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-0 me-auto">
                   <div class="fw-bold">Subheading</div>
