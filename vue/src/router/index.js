@@ -35,6 +35,7 @@ const routes = [
   ...blogClub,
   ...demandeCreationClubAdmin,
   ...demandeMateriel,
+
   ...dashboard,
   ...headerDash,
   ...aboutDash,
@@ -44,10 +45,11 @@ const routes = [
   
 
 
+
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes,
 });
 
