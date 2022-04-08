@@ -10,6 +10,7 @@ import headerDash from "./routes/headerDash";
 import aboutDash from "./routes/aboutDash";
 import activitiesDash from "./routes/activitiesDash";
 import boardDash from "./routes/boardDash";
+import projectsDash from "./routes/projectsDash";
 
 
 
@@ -38,7 +39,8 @@ const routes = [
   ...headerDash,
   ...aboutDash,
   ...activitiesDash,
-  ...boardDash
+  ...boardDash,
+  ...projectsDash
   
 
 
