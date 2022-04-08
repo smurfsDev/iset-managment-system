@@ -22,7 +22,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/aboutDash">
               <span data-feather="users"></span>
               Qui sommes-nous ?
             </a>
