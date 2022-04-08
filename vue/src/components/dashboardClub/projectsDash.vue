@@ -242,6 +242,9 @@ export default {
         alert('Projet modifié! ')
        this.projects = this.projects.filter(item => item.id != this.id)
         this.projects.push(updateProject)
+        
+        this.update=false
+        this.ajout=true
       
       })
 

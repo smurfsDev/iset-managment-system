@@ -292,6 +292,11 @@ export default {
         alert('Membre de bureau modifié! ')
        this.boards = this.boards.filter(item => item.id != this.id)
         this.boards.push(updateBoard)
+        this.update=false
+        this.ajout=true
+        this.nom="" 
+        this.post=""
+        
       
       })
 
