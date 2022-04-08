@@ -34,7 +34,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/boardDash">
               <span data-feather="layers"></span>
               Membres de bureau 
             </a>

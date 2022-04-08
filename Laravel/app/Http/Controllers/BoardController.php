@@ -18,8 +18,8 @@ class BoardController extends Controller
             );
         else
             return response()->json([
-                "Aucun membre de bureau"
-            ], 404);
+                null
+            ], 200);
     }
     public function createBoard($id, BoardsRequest $request){
         $nom = $request->input('nom');

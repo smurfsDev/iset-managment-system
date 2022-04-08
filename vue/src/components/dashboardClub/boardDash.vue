@@ -30,63 +30,87 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter En tete</h1>
+            <h1 class="h2">Ajouter un membre de bureau</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
-          <form @submit.prevent="createHeader" v-if="ajout==false">
+          <form @submit.prevent="createMember" v-if="ajout == true">
             <div class="mb-3">
-              <label for="petiteDesc" class="form-label"
-                >Saisir une petite description</label
+              <label for="name" class="form-label"
+                >Saisir le nom</label
               >
               <input
                 type="text"
                 class="form-control"
-                v-model="petiteDescription"
+                v-model="nom"
                 required
-                :disabled="ajout"
+                
+              />
+            </div>
+             <div class="mb-3">
+              <label for="post" class="form-label"
+                >Saisir le poste</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                v-model="post"
+                required
+                
               />
             </div>
             <div class="mb-3">
               <label for="bgImg" class="form-label"
-                >Image d'arrière plan pour l'entete du blog</label
+                >Un photo</label
               >
               <input
                 type="file"
                 class="form-control"
-                name="backgroundImage"
+                name="image"
                 @change="convert64"
                 ref="file"
                 required
-                :disabled="ajout"
+                
               />
             </div>
 
-            <button :disabled="ajout" type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success">Submit</button>
           </form>
           
           
           <form @submit.prevent="submitEdit" v-if="update==true">
             <div class="mb-3">
-              <label for="petiteDesc" class="form-label"
-                >Saisir une petite description</label
+              <label for="nom" class="form-label"
+                >Saisir un nom</label
               >
               <input
                 type="text"
                 class="form-control"
-                v-model="petiteDescription"
+                v-model="nom"
                 required
                 
               />
             </div>
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
-                >Image d'arrière plan pour l'entete du blog</label
+              <label for="post" class="form-label"
+                >Saisir un post</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                v-model="post"
+                required
+                
+              />
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label"
+                >Photo</label
               >
               <input
                 type="file"
                 class="form-control"
-                name="backgroundImage"
+                name="image"
                 @change="convert64"
                 ref="file"
                 required
@@ -94,18 +118,22 @@
               />
             </div>
 
-            <button type="submit" class="btn btn-success">Edit</button>
+            <button type="submit" class="btn btn-warning">Edit</button>
           </form>
 
           <br /> <br />
-          <div class="card" style="width: 18rem;" v-if="ajout==true || update==true">
-            <img v-bind:src="backgroundImage" class="card-img-top" alt="...">
+          <div class="row">
+          <div class="card column" style="width: 18rem;"  v-for="(item, index) in boards" :key="index" >
+            <img v-bind:src="item.image" class="card-img-top" alt="...">
             <div class="card-body">
-             
-              <p class="card-text">{{petiteDescription}}</p>
-              <button  class="btn btn-danger" @click="deleteHeader(id)"><b-icon-trash></b-icon-trash></button>
-              <button  class="btn btn-warning" @click="updateHeader(id)"><b-icon-pen></b-icon-pen></button>
+              <h5 class="card-title">{{item.nom}}</h5>
+              
+                <p class="card-text">{{item.post}}</p>
+                
+              <button  class="btn btn-danger" @click="deleteBoard(item.id)"><b-icon-trash></b-icon-trash></button>
+              <button  class="btn btn-warning" @click="updateBoard(item.id)"><b-icon-pen></b-icon-pen></button>
             </div>
+        </div>
         </div>
           
           <canvas
@@ -132,7 +160,7 @@ import sidebarDash from "./sidebarDash.vue";
 
 
 export default {
-  name: "headerDash",
+  name: "boardDash",
   components: {
     sidebarDash, 
   },
@@ -141,25 +169,26 @@ export default {
   data() {
     return {
       id: null,
-      petiteDescription: "",
-      backgroundImage: "",
+      nom: "",
+      post: "",
+      image: "",
       srcImage: "",
       ajout: false,
       update: false,
+      boards:[],
      
     };
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
       
-      if (response.data.data!=undefined){
-        console.log("Vous avez déjà un header")
-        this.petiteDescription = response.data.data[0].petiteDescription
-        this.backgroundImage = response.data.data[0].backgroudImage
-        console.log(response.data.data)
-        this.ajout=true
-        this.id = response.data.data[0].id
+      if (response.data!=null){
+        this.boards = response.data.data;
+        console.log(this.boards)
+        this.ajout = true;
       }
+        
+    
     })
     .catch(error => {
       console.log(error)
@@ -176,46 +205,43 @@ export default {
       console.log(1);
       reader.onloadend = () => {
        
-        this.backgroundImage = reader.result;
+        this.image = reader.result;
         
-        console.log(this.backgroundImage);
+        console.log(this.image);
       };
       reader.readAsDataURL(file);
  
     },
-    createHeader() {
+    createMember() {
     
       var reader = new FileReader();
       console.log(1);
       reader.onloadend = () => {
        
-        this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
+        this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
 
-         if (response.data.data!=undefined){
-           alert('Vous avez déjà un header')
-            console.log("Vous avez déjà un header")
-            console.log(response.data.data)
-            this.ajout=true
-            this.id = response.data.data[0].id
-         } else {
-          this.backgroundImage = reader.result;
-            let newHeader = {
-            petiteDescription: this.petiteDescription,
-            backgroudImage: this.backgroundImage,
+          console.log(response.data);
+          this.board = response.data.data
+            this.image = reader.result;
+            let newBoard = {
+            nom: this.nom,
+            post: this.post,
+            image: this.image,
             idClub : 1
           }
         
         
-          this.$http.post("http://localhost:8000/api/1/header/create",newHeader)
+          this.$http.post("http://localhost:8000/api/1/boards/create",newBoard)
           .then (response => {
             console.log(response)
              this.ajout=true
-            alert('Header ajouté! ')
+             this.boards.push(newBoard)
+            alert('Membre de bureau ajouté! ')
           })
           .catch(error => {
           console.log('error', error);
           })
-            }
+          
         
         })
         .catch(error => {
@@ -227,33 +253,46 @@ export default {
          }
          reader.readAsDataURL(this.srcImage);
   },
-  deleteHeader(id){
-    this.$http.delete("http://localhost:8000/api/1/header/delete/"+id).then(response => {
+  deleteBoard(id){
+    console.log(id)
+    this.$http.delete("http://localhost:8000/api/1/boards/delete/"+id).then(response => {
       console.log(response)
-      alert('Header supprimé! ')
+      alert('Membre de bureau supprimé! ')
+      this.boards = this.boards.filter(item => item.id != id)
       this.ajout=false
       this.update=false
     })
   },
-  updateHeader(id){
+  updateBoard(id){
     this.update=true
+    this.ajout=false
     this.id = id
     console.log(id)
+    for (let i = 0; i < this.boards.length; i++) {
+      if (this.boards[i].id == id) {
+        this.nom = this.boards[i].nom
+        this.post = this.boards[i].post
+        this.image = this.boards[i].image
+      }
+    }
   },
   submitEdit(){
 
     
-    let updateHeader = {
-            petiteDescription: this.petiteDescription,
-            backgroudImage: this.backgroundImage,
+    let updateBoard = {
+            nom: this.nom,
+            post: this.post,
+            image: this.image,
             idClub : 1
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/header/update/"+this.id,updateHeader).then(response => {
+      this.$http.put("http://localhost:8000/api/1/boards/update/"+this.id,updateBoard).then(response => {
         console.log(response)
-        alert('Header modifié! ')
-       
+        alert('Membre de bureau modifié! ')
+       this.boards = this.boards.filter(item => item.id != this.id)
+        this.boards.push(updateBoard)
+      
       })
 
   }

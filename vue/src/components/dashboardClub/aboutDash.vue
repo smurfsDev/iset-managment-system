@@ -73,7 +73,7 @@
             <ol class="list-group list-group" v-for="(item, index) in abouts" :key="index">
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-0 me-auto">
-                  <div class="fw-bold">Subheading</div>
+                  
                   <p>{{item.longDescription}}</p>
                   
                 </div><br>
