@@ -17,7 +17,7 @@ class CreateDemandeCreationClub extends Migration
             $table->id();
             $table->string('sujet')->default('creation club');
             $table->string('nomClub');
-            $table->string('logo');
+            $table->text('logo');
             $table->date('dateCreation');
             $table->string('activite');
             $table->string('president');
