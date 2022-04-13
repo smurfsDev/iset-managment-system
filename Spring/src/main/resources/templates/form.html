@@ -46,6 +46,8 @@
                                     <label class="control-label">Vice president :</label> <input type="text"
                                         name="vicePresident" class="form-control" th:value="${Dcc.vicePresident}" /> 
 								<input type="hidden" name="id" th:value="${Dcc.id}" />
+								<input type="hidden" name="page" th:value="${param.page}" />
+								<input type="hidden" name="size" th:value="${param.size}" />
 								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
 								type="submit" >
 

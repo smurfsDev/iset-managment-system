@@ -15,7 +15,8 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des DemandeCreationClub</h1>
-                    <a href="showCreateDcc" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
+                    <a th:href="@{showCreateDcc(
+                    page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
                     </a>
                 </div>
             </div>
@@ -46,15 +47,15 @@
                         <td th:text="${demande.president}"></td>
                         <td th:text="${demande.vicePresident}"></td>
 						<td  ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDcc(id=${demande.id},
-								page=${currentPage},size=${size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierDcc(id=${demande.id},
-								page=${currentPage},size=${size})}"><i class="fa-solid fa-pen"></i></a></td>
+								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierDcc(id=${demande.id},
+								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a></td>
 					</tr>
 				</table>
 				<ul class="nav nav-pills">
 					<li th:each="page,status:${pages}"><a
 							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
-							th:href="@{ listeDcc(page=${status.index}, size=${size} ) }" 
-							th:text="${status.index }"></a></li>
+							th:href="@{ listeDcc(page=${status.index}, size=${param.size} ) }" 
+							th:text="${status.index+1 }"></a></li>
 				</ul>
 			</div>
 		</div>
