@@ -11,39 +11,11 @@
 <body>
 
     <div layout:fragment="Mycontent">
-        <!-- <div class="container">
-            <div th:each="demande:${dccs}" class=" row mb-2">
-                <div class="row">
-                    <div class="col">
-                        Nom du club :
-                        <span th:text="${demande.nomClub}"></span>
-                        Date création :
-                        <span th:text="${demande.dateCreation}"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">Activité :
-                        <span th:text="${demande.activite}"></span>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            President : Vice president :
-                            <span th:text="${demande.president}"></span>
-                            <br />
-                        </div>
-                    </div>
-                </div>
-                <button>
-                    Delete</button>
-                <button>
-                    Update</button>
-            </div>
-        </div> -->
         <div class="container">
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des DemandeCreationClub</h1>
-                    <a href="showCreate" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
+                    <a href="showCreateDcc" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
                     </a>
                 </div>
             </div>
@@ -74,7 +46,7 @@
                         <td th:text="${demande.president}"></td>
                         <td th:text="${demande.vicePresident}"></td>
 						<td  ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDcc(id=${demande.id},
-								page=${currentPage},size=${size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierProduit(id=${demande.id},
+								page=${currentPage},size=${size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierDcc(id=${demande.id},
 								page=${currentPage},size=${size})}"><i class="fa-solid fa-pen"></i></a></td>
 					</tr>
 				</table>
