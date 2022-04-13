@@ -18,6 +18,7 @@ public class DemandeCreationClub {
 	private String nomClub;
 	@Column(nullable = true, length = 64)
 	private String logo;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateCreation;
 	private String activite;
 	private String president;
