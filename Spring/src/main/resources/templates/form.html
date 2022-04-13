@@ -20,7 +20,7 @@
 							<h3 th:text="${edit}?'Modifier Demande':'Créer Demande'" class="mb-0"></h3>
 						</div>
 						<div class="card-body">
-							<form th:action="saveDcc"  enctype="multipart/form-data" class="form" id="formLogin" name="formLogin" role="form" action="saveDcc"
+							<form th:action="${edit}?'updateDcc':'saveDcc'"  enctype="multipart/form-data" class="form" id="formLogin" name="formLogin" role="form" action="saveDcc"
 								method="post">
 								<div class="form-group">
 									<label class="control-label">Nom Dcc :</label> <input type="text"
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Date création :</label> <input type="date"
-                                        name="dateCreation" class="form-control" th:value="${Dcc.dateCreation}" /> 
+                                        name="dateCreation" class="form-control" th:value="${#dates.format(Dcc.dateCreation, 'yyyy-MM-dd')}" /> 
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Activité :</label> <input type="text"
@@ -46,7 +46,7 @@
                                     <label class="control-label">Vice president :</label> <input type="text"
                                         name="vicePresident" class="form-control" th:value="${Dcc.vicePresident}" /> 
 								
-								<input th:value="ajouter" class="btn btn-success my-3 btn-lg float-right"
+								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
 								type="submit" >
 
 									
