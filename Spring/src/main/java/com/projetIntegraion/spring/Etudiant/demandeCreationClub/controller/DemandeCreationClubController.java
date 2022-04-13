@@ -88,4 +88,31 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("edit", true);
         return "form";
     }
+
+    @RequestMapping("/updateDcc")
+    public String updateDcc(ModelMap modelMap,
+            @RequestParam(name="image") MultipartFile multipartFile,
+            @ModelAttribute("Dcc") DemandeCreationClub dcc,
+            HttpServletRequest request) throws IOException {
+        DemandeCreationClub dc = new DemandeCreationClub();
+        dc.setId(dcc.getId());
+        dc.setNomClub(dcc.getNomClub());
+        dc.setDateCreation(dcc.getDateCreation());
+        dc.setActivite(dcc.getActivite());
+        dc.setPresident(dcc.getPresident());
+        dc.setVicePresident(dcc.getVicePresident());
+        if(multipartFile.getSize()!=0){
+            dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
+        }else{
+            dc.setLogo(DemandeCreationClubService.getDemandeCreationClub(dcc.getId()).getLogo());
+        }
+        dc = DemandeCreationClubService.save(dc);
+
+            modelMap.addAttribute("type", "warning");
+            modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
+
+        return this.showList(modelMap, 0, 2);
+
+    }
+
 }
