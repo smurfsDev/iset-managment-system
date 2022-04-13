@@ -45,7 +45,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Vice president :</label> <input type="text"
                                         name="vicePresident" class="form-control" th:value="${Dcc.vicePresident}" /> 
-								
+								<input type="hidden" name="id" th:value="${Dcc.id}" />
 								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
 								type="submit" >
 
