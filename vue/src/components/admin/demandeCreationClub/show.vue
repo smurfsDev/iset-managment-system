@@ -60,6 +60,8 @@
                 <b-col>
                   President : {{ demande.president }} Vice president :
                   {{ demande.vicePresident }}
+                  <br>
+                  <img :src="demande.logo" alt="logo" width="50" />
                 </b-col>
               </b-row>
             </b-row>
