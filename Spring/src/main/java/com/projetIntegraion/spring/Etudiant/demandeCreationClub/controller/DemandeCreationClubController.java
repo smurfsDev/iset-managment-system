@@ -63,60 +63,25 @@ public class DemandeCreationClubController {
         dc.setActivite(dcc.getActivite());
         dc.setPresident(dcc.getPresident());
         dc.setVicePresident(dcc.getVicePresident());
-        // dc.setStatus(dcc.getStatus());
-        // dc.setResponsableClub(dcc.getResponsableClub());
-        // dc.setAdmin(dcc.getAdmin());
         dc = DemandeCreationClubService.save(dc);
         String uploadDir = "user-photos/" + dc.getId();
     
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-        // this.doUpload(request, dcc);
         return "redirect:/listeDcc";
     }
 
-
-
-
-
-    // private void doUpload(HttpServletRequest request, DemandeCreationClub dcc) {
-
-    // // Root Directory.
-    // String uploadRootPath = request.getServletContext().getRealPath("upload");
-
-    // File uploadRootDir = new File(uploadRootPath);
-    // // Create directory if it not exists.
-    // if (!uploadRootDir.exists()) {
-    // uploadRootDir.mkdirs();
-    // }
-    // MultipartFile[] fileDatas = dcc.getLogo();
-    // //
-    // List<File> uploadedFiles = new ArrayList<File>();
-    // List<String> failedFiles = new ArrayList<String>();
-
-    // for (MultipartFile fileData : fileDatas) {
-
-    // // Client File Name
-    // String name = fileData.getOriginalFilename();
-    // if (name != null && name.length() > 0) {
-    // try {
-    // // Create the file at server
-    // File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator +
-    // name);
-
-    // BufferedOutputStream stream = new BufferedOutputStream(new
-    // FileOutputStream(serverFile));
-    // stream.write(fileData.getBytes());
-    // stream.close();
-    // //
-    // uploadedFiles.add(serverFile);
-    // System.out.println("Write file: " + serverFile);
-    // } catch (Exception e) {
-    // System.out.println("Error Write file: " + name);
-    // failedFiles.add(name);
-    // }
-    // }
-    // }
-    // }
-
+    @RequestMapping("/deleteDcc")
+    public String deleteDcc(@RequestParam("id") Long id,ModelMap modelMap) {
+        
+        if(DemandeCreationClubService.deleteById(id)){
+            modelMap.addAttribute("type","danger");
+            modelMap.addAttribute("msg", "Demande de creation de club supprimée avec succès");
+        }else{
+            modelMap.addAttribute("type","danger");
+            modelMap.addAttribute("msg", "Demande de creation de club non supprimée : Id non trouvé");
+        }
+        return this.showList(modelMap, 0, 2);
+        
+    }
 }
