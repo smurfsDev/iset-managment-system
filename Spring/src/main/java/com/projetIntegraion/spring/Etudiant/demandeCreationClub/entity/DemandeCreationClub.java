@@ -1,22 +1,22 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
+import java.beans.Transient;
 import java.text.ParseException;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class DemandeCreationClub {
 	private @Id @GeneratedValue Long id;
 	private String nomClub;
-	@Column(nullable = true, length = 64)
+	@Lob
 	private String logo;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateCreation;
