@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.apache.tomcat.util.codec.binary.Base64;
 import javax.servlet.http.HttpServletRequest;
 
 import com.projetIntegraion.spring.FileUploadUtil;
@@ -47,7 +47,7 @@ public class DemandeCreationClubController {
         DemandeCreationClub dcc = new DemandeCreationClub();
         modelMap.addAttribute("Dcc", dcc);
         modelMap.addAttribute("dcc", new DemandeCreationClub());
-        return "create";
+        return "form";
     }
 
     @RequestMapping("/saveDcc")
@@ -56,17 +56,13 @@ public class DemandeCreationClubController {
     @ModelAttribute("Dcc") DemandeCreationClub dcc,
             HttpServletRequest request) throws IOException {
         DemandeCreationClub dc = new DemandeCreationClub();
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         dc.setNomClub(dcc.getNomClub());
-        dc.setLogo(fileName);
         dc.setDateCreation(dcc.getDateCreation());
         dc.setActivite(dcc.getActivite());
         dc.setPresident(dcc.getPresident());
         dc.setVicePresident(dcc.getVicePresident());
+        dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
         dc = DemandeCreationClubService.save(dc);
-        String uploadDir = "user-photos/" + dc.getId();
-    
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
         return "redirect:/listeDcc";
     }
