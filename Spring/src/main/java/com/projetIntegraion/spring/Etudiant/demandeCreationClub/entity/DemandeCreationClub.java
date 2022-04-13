@@ -9,19 +9,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class DemandeCreationClub {
 	private @Id @GeneratedValue Long id;
+	@NotNull
+	@Size(min = 3, max = 30)
 	private String nomClub;
 	@Lob
 	private String logo;
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	@PastOrPresent
 	private Date dateCreation;
+	@NotNull
+	@Size(min = 3, max = 30)
 	private String activite;
+	@NotNull
+	@Size(min = 3, max = 50)
 	private String president;
+	@NotNull
+	@Size(min = 3, max = 50)
 	private String vicePresident;
 	private int status;
 	@ManyToOne
