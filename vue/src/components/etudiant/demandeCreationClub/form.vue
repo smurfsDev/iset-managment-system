@@ -31,6 +31,14 @@
               />
               <label>Logo:</label>
               <input
+                type="file"
+                class="form-control"
+                name="backgroundImage"
+                @change="convert64"
+                ref="file"
+                required
+              />
+              <input
                 type="text"
                 class="border-0 dcc form-control"
                 placeholder="Logo"
@@ -104,6 +112,17 @@ export default {
     },
     resetModal1() {
       $(".dcc").val("");
+    },
+    convert64(e) {
+      var file = e.target.files[0];
+      this.srcImage = file;
+      var reader = new FileReader();
+      reader.onloadend = () => {
+       
+        this.oldDemande.logo = reader.result;
+      };
+      reader.readAsDataURL(file);
+ 
     },
   },
 };
