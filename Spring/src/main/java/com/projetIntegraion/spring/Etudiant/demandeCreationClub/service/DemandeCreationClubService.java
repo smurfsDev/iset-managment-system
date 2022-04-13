@@ -27,11 +27,11 @@ public class DemandeCreationClubService {
 		return null;
 	}
 
-	public void deleteDemandeCreationClub(DemandeCreationClub p) {
+	public void delete(DemandeCreationClub p) {
 		DemandeCreationClubRepository.delete(p);
 	}
 
-	public Boolean deleteDemandeCreationClub(Long id) {
+	public Boolean deleteById(Long id) {
 		if (DemandeCreationClubRepository.existsById(id)) {
 			DemandeCreationClubRepository.deleteById(id);
 			return true;
