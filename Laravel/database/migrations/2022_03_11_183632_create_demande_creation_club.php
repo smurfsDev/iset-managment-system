@@ -13,7 +13,7 @@ class CreateDemandeCreationClub extends Migration
      */
     public function up()
     {
-        Schema::create('demandeCreationClub', function (Blueprint $table) {
+        Schema::create('demande_creation_clubs', function (Blueprint $table) {
             $table->id();
             $table->string('sujet')->default('creation club');
             $table->string('nomClub');
