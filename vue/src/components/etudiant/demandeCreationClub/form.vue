@@ -111,11 +111,9 @@ export default {
       this.srcImage = file;
       var reader = new FileReader();
       reader.onloadend = () => {
-       
         this.oldDemande.logo = reader.result;
       };
       reader.readAsDataURL(file);
- 
     },
   },
 };
