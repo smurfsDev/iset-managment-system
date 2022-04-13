@@ -3,15 +3,20 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 import java.text.ParseException;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
 public class DemandeCreationClub {
 	private @Id @GeneratedValue Long id;
 	private String nomClub;
+	@Column(nullable = true, length = 64)
 	private String logo;
 	private Date dateCreation;
 	private String activite;
