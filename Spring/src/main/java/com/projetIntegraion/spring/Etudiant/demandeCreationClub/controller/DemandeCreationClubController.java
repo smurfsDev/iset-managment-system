@@ -52,8 +52,8 @@ public class DemandeCreationClubController {
 
     @RequestMapping("/saveDcc")
     public String saveDcc(ModelMap modelMap,
-    @RequestParam("image") MultipartFile multipartFile,
-    @ModelAttribute("Dcc") DemandeCreationClub dcc,
+            @RequestParam("image") MultipartFile multipartFile,
+            @ModelAttribute("Dcc") DemandeCreationClub dcc,
             HttpServletRequest request) throws IOException {
         DemandeCreationClub dc = new DemandeCreationClub();
         dc.setNomClub(dcc.getNomClub());
@@ -68,16 +68,24 @@ public class DemandeCreationClubController {
     }
 
     @RequestMapping("/deleteDcc")
-    public String deleteDcc(@RequestParam("id") Long id,ModelMap modelMap) {
-        
-        if(DemandeCreationClubService.deleteById(id)){
-            modelMap.addAttribute("type","danger");
+    public String deleteDcc(@RequestParam("id") Long id, ModelMap modelMap) {
+
+        if (DemandeCreationClubService.deleteById(id)) {
+            modelMap.addAttribute("type", "danger");
             modelMap.addAttribute("msg", "Demande de creation de club supprimée avec succès");
-        }else{
-            modelMap.addAttribute("type","danger");
+        } else {
+            modelMap.addAttribute("type", "danger");
             modelMap.addAttribute("msg", "Demande de creation de club non supprimée : Id non trouvé");
         }
         return this.showList(modelMap, 0, 2);
-        
+
+    }
+
+    @RequestMapping("/modifierDcc")
+    public String showUpdateDcc(@RequestParam("id") Long id, ModelMap modelMap) {
+        DemandeCreationClub dcc = DemandeCreationClubService.getDemandeCreationClub(id);
+        modelMap.addAttribute("Dcc", dcc);
+        modelMap.addAttribute("edit", true);
+        return "form";
     }
 }
