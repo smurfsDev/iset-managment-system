@@ -38,13 +38,6 @@
                 ref="file"
                 required
               />
-              <input
-                type="text"
-                class="border-0 dcc form-control"
-                placeholder="Logo"
-                v-model="oldDemande.logo"
-                required="required"
-              />
               <label>Date création</label>
               <input
                 type="date"
