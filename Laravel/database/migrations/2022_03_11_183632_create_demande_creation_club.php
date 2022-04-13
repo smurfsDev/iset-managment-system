@@ -17,12 +17,19 @@ class CreateDemandeCreationClub extends Migration
             $table->id();
             $table->string('sujet')->default('creation club');
             $table->string('nomClub');
-            $table->text('logo');
+            $table->longText('logo');
             $table->date('dateCreation');
             $table->string('activite');
             $table->string('president');
             $table->string('vicePresident');
             $table->timestamps();
+            $table->foreignId('responsableClubId');
+            $table->foreign('responsableClubId')->references('id')->on('users')
+                ->onDelete('cascade');
+            $table->tinyInteger('status')->default(0);
+            $table->foreignId('adminId')->nullable();
+            $table->foreign('adminId')->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
