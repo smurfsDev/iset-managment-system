@@ -10,7 +10,7 @@ class DemandeCreationClubController extends Controller
 {
     public function show()
     {
-        $demandes = DemandeCreationClub::orderBy('updated_at')->paginate(5);
+        $demandes = DemandeCreationClub::orderBy('updated_at', 'desc')->paginate(5);
         if (sizeof($demandes) > 0)
             return response()->json(
                 $demandes,
@@ -24,7 +24,7 @@ class DemandeCreationClubController extends Controller
     public function showMyDemandes($id)
     {
         if ($id=="admin"){
-            $demandes = DemandeCreationClub::orderBy('updated_at')->paginate(5);
+            $demandes = DemandeCreationClub::orderBy('updated_at', 'desc')->paginate(5);
             if (sizeof($demandes) > 0)
                 return response()->json(
                     $demandes,
@@ -33,7 +33,7 @@ class DemandeCreationClubController extends Controller
             else
                 return response()->json([], 404);
         }else{
-            $demandes = DemandeCreationClub::where('responsableClubId', '=', $id)->orderBy('updated_at')->paginate(5);
+            $demandes = DemandeCreationClub::where('responsableClubId', '=', $id)->orderBy('updated_at','desc')->paginate(5);
             if (sizeof($demandes) > 0)
                 return response()->json(
                     $demandes,
