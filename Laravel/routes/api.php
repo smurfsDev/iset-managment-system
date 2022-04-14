@@ -85,7 +85,7 @@ Route::delete('{idClub}/projects/delete/{id}',[ProjectsController::class,'delete
 Route::put('{idClub}/projects/update/{id}',[ProjectsController::class,'updateProject']);
 
 Route::group(['prefix'=>'/members'],function(){
-    Route::get('/',[MemberController::class,'getMembers']);
+    Route::get('/{id}',[MemberController::class,'getMembers']);
     Route::delete('/{id}',[MemberController::class,'deleteMember']);
 });
 
