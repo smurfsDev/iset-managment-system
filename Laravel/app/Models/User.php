@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     public function club(){
-        return $this->belongsTo('App\Models\Club', 'id');
+        return $this->belongsTo('App\Models\club', 'id');
     }
 
 
