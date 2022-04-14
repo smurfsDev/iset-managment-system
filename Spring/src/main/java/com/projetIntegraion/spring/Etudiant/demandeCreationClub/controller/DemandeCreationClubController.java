@@ -155,4 +155,19 @@ public class DemandeCreationClubController {
         return this.showList(modelMap, page, size);
     }
 
+    @RequestMapping("/decline")
+    public String declineDcc(@RequestParam("id") Long id, ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeCreationClub dc = DemandeCreationClubService.getDemandeCreationClub(id);
+        dc.setStatus(2);
+        DemandeCreationClubService.save(dc);
+        modelMap.addAttribute("Dcc", new DemandeCreationClub());
+        modelMap.addAttribute("pages",
+                new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande de creation de club refusée avec succès");
+        return this.showList(modelMap, page, size);
+    }
+
 }
