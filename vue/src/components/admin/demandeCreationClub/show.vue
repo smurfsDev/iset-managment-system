@@ -43,8 +43,12 @@
         scale="2"
         variant="warning"
       ></b-icon>
-      <md-tabs>
-        <md-tab id="tab-home" md-label="demande">
+      <md-tabs style="height: auto;!important">
+        <md-tab
+          style="height: auto;!important"
+          id="tab-home"
+          md-label="demande"
+        >
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
@@ -60,6 +64,8 @@
                 <b-col>
                   President : {{ demande.president }} Vice president :
                   {{ demande.vicePresident }}
+                  <br />
+                  <img :src="demande.logo" alt="logo" width="250" />
                 </b-col>
               </b-row>
             </b-row>
