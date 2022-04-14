@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -12,9 +13,10 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getMembers()
+    public function getMembers($id)
     {
-        $members = Member::with('user')->with('club')->paginate(5);
+        $responsableClub = User::with('club')->find($id);
+        $members = Member::with('user')->with('club')->where('club_id','=',$responsableClub->club->id)->paginate(5);
         if (!empty($members)) {
             $response = [
                 'success' => true,
