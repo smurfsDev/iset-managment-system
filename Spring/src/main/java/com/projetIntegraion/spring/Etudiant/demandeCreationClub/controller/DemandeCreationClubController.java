@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,9 +38,8 @@ public class DemandeCreationClubController {
     public String createDcc(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        DemandeCreationClub Dcc = new DemandeCreationClub();
-        modelMap.addAttribute("Dcc", Dcc);
         modelMap.addAttribute("Dcc", new DemandeCreationClub());
+        modelMap.addAttribute("edit", false);
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
@@ -56,11 +54,11 @@ public class DemandeCreationClubController {
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
-                if (bindingResult.hasErrors()) {
-                    modelMap.addAttribute("Dcc", Dcc);
-                    modelMap.addAttribute("edit", false);
-                    return "form";
-                } else {
+        if (bindingResult.hasErrors()) {
+            modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
+            modelMap.addAttribute("Dcc", Dcc);
+            return "form";
+        } else {
             DemandeCreationClub dc = new DemandeCreationClub();
             dc.setNomClub(Dcc.getNomClub());
             dc.setDateCreation(Dcc.getDateCreation());
@@ -109,30 +107,36 @@ public class DemandeCreationClubController {
     @RequestMapping("/updateDcc")
     public String updateDcc(ModelMap modelMap,
             @RequestParam(name = "image") MultipartFile multipartFile,
-            @ModelAttribute("Dcc") DemandeCreationClub Dcc,
+            @Valid DemandeCreationClub Dcc,
+            BindingResult bindingResult,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             HttpServletRequest request) throws IOException {
-        DemandeCreationClub dc = new DemandeCreationClub();
-        dc.setId(Dcc.getId());
-        dc.setNomClub(Dcc.getNomClub());
-        dc.setDateCreation(Dcc.getDateCreation());
-        dc.setActivite(Dcc.getActivite());
-        dc.setPresident(Dcc.getPresident());
-        dc.setVicePresident(Dcc.getVicePresident());
-        if (multipartFile.getSize() != 0) {
-            dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
+        if (bindingResult.hasErrors()) {
+            modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
+            modelMap.addAttribute("Dcc", Dcc);
+            return "form";
         } else {
-            dc.setLogo(DemandeCreationClubService.getDemandeCreationClub(Dcc.getId()).getLogo());
+            DemandeCreationClub dc = new DemandeCreationClub();
+            dc.setId(Dcc.getId());
+            dc.setNomClub(Dcc.getNomClub());
+            dc.setDateCreation(Dcc.getDateCreation());
+            dc.setActivite(Dcc.getActivite());
+            dc.setPresident(Dcc.getPresident());
+            dc.setVicePresident(Dcc.getVicePresident());
+            if (multipartFile.getSize() != 0) {
+                dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
+            } else {
+                dc.setLogo(DemandeCreationClubService.getDemandeCreationClub(Dcc.getId()).getLogo());
+            }
+            dc = DemandeCreationClubService.save(dc);
+            modelMap.addAttribute("Dcc", new DemandeCreationClub());
+            modelMap.addAttribute("pages",
+                    new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
+            modelMap.addAttribute("type", "warning");
+            modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
+            return this.showList(modelMap, page, size);
         }
-        dc = DemandeCreationClubService.save(dc);
-        modelMap.addAttribute("Dcc", new DemandeCreationClub());
-        modelMap.addAttribute("pages",
-                new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
-        modelMap.addAttribute("type", "warning");
-        modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
-        return this.showList(modelMap, page, size);
-
     }
 
 }
