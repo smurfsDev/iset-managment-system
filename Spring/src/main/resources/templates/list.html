@@ -15,15 +15,16 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des DemandeCreationClub</h1>
-                    <a th:href="@{showCreateDcc(
-                    page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
+                    <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateDcc(
+                    page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
+                            class="fa-solid fa-plus"></i> Ajouter
                     </a>
                 </div>
             </div>
             <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
-            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert" >Demande Creation Club deleted</div>
+            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Creation Club deleted</div>
             <div class="row my-4">
                 <table class="table table-dark table-striped">
                     <thead>
@@ -34,7 +35,7 @@
                         <th>Activité</th>
                         <th>President</th>
                         <th>Vice president</th>
-                        <th>Actions</th>
+                        <th sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(Dccs.content)}">
 						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
@@ -46,9 +47,17 @@
                         <td th:text="${demande.activite}"></td>
                         <td th:text="${demande.president}"></td>
                         <td th:text="${demande.vicePresident}"></td>
-						<td  ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDcc(id=${demande.id},
+						<td  sec:authorize="hasRole('STUDENT')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDcc(id=${demande.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierDcc(id=${demande.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a></td>
+                        <td  sec:authorize="hasRole('ADMIN')" >
+                        <a th:class="${demande.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{accept(id=${demande.id},page=${currentPage},size=${param.size})}">
+                        <i class="fa fa-check"></i>
+                        </a>
+                        <a th:class="${demande.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{decline(id=${demande.id},page=${currentPage},size=${param.size})}">
+                        <i class="fa fa-times"></i>
+                        </a>
+                        </td>
 					</tr>
 				</table>
 				<ul class="nav nav-pills">

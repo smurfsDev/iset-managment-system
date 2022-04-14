@@ -26,7 +26,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Demande Creation Club
 				</button>
 				<div class="dropdown-menu">
-					<a class="dropdown-item"  th:href="@{showCreateDcc}">Ajouter</a> <a class="dropdown-item"
+					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateDcc}">Ajouter</a> <a class="dropdown-item"
 						th:href="@{listeDcc}">Lister</a>
 				</div>
 			</li>
@@ -42,8 +42,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<span sec:authentication="name"></span>
 				</a>
 				<div class="dropdown-menu">
-					<a  class="dropdown-item" th:href="@{login}">login</a>
-					<a  class="dropdown-item" th:href="@{logout}">logout</a>
+					<a sec:authorize="!isAuthenticated()" class="dropdown-item" th:href="@{login}">login</a>
+					<a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{logout}">logout</a>
 					<a class="dropdown-item" href="@{login}">Profile</a>
 				</div>
 			</li>
