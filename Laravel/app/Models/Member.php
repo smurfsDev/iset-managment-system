@@ -11,7 +11,7 @@ class Member extends Model
 
     public function club()
     {
-        return $this->belongsTo(Club::class);
+        return $this->belongsTo(club::class);
     }
 
     public function user()
