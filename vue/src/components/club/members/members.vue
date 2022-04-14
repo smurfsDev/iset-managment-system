@@ -45,14 +45,14 @@ export default {
         variant: "",
         msg: "",
       },
-      myid: 1,
+      myid: 5,
     };
   },
   created() {
     this.fetchMembers();
   },
   methods: {
-    fetchMembers(page_url = "http://127.0.0.1:8000/api/members/") {
+    fetchMembers(page_url = "http://127.0.0.1:8000/api/members/"+this.myid+"/") {
       let vm = this;
       fetch(page_url, {
         method: "GET",
@@ -69,7 +69,7 @@ export default {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/members?page=" + meta.current_page,
+          "http://localhost:8000/api/members/"+this.myid+"/?page=" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
