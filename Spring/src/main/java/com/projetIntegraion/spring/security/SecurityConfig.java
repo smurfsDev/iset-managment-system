@@ -19,20 +19,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder passwordEncoder = passwordEncoder();
         auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("123")).roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("youssef").password(passwordEncoder.encode("admin")).roles("AGENT",
+        auth.inMemoryAuthentication().withUser("youssef").password(passwordEncoder.encode("admin")).roles("STUDENT",
                 "USER");
         auth.inMemoryAuthentication().withUser("user").password(passwordEncoder.encode("youssef")).roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().defaultSuccessUrl("/ListeProduits", true);
-        http.authorizeRequests().antMatchers("/showCreate", "/saveProduit").hasAnyRole("ADMIN", "AGENT");
-        http.authorizeRequests().antMatchers("/ListeProduits")
-                .hasAnyRole("ADMIN", "AGENT", "USER");
+        http.formLogin().defaultSuccessUrl("/listeDcc", true);
+        http.authorizeRequests().antMatchers("/showCreateDcc", "/saveDcc", "/modifierDcc", "/updateDcc").hasAnyRole("STUDENT");
+        http.authorizeRequests().antMatchers("/listeDcc")
+                .hasAnyRole("ADMIN", "STUDENT", "USER");
         http.authorizeRequests()
-                .antMatchers("/supprimerProduit", "/modifierProduit", "/updateProduit")
-                .hasAnyRole("ADMIN");
+                .antMatchers("/deleteDcc")
+                .hasAnyRole("ADMIN","STUDENT");
         http.exceptionHandling().accessDeniedPage("/accessDenied");
         http.authorizeRequests().anyRequest().authenticated();
         http.formLogin();
