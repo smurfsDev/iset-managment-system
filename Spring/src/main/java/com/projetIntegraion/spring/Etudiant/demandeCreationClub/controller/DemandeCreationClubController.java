@@ -170,4 +170,17 @@ public class DemandeCreationClubController {
         return this.showList(modelMap, page, size);
     }
 
+    @RequestMapping("/searchProduit")
+    public String searchProduit(@RequestParam("name") String name, ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+                
+        Page<DemandeCreationClub> prods = DemandeCreationClubService.getDemandeCreationClubParNom(name, page, size);
+        modelMap.addAttribute("Dccs", prods);
+        modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        modelMap.addAttribute("name", name);
+        return "list";
+    }
+
 }
