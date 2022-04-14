@@ -11,6 +11,7 @@
         >Demande création club Admin</router-link
       >
       <router-link to="/demandeMateriel"> demandeMateriel</router-link>
+      <router-link to="/members"> members</router-link>
     </div>
     <router-view />
   </div>
