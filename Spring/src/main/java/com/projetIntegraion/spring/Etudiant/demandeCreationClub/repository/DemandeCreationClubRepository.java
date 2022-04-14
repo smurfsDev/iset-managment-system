@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface DemandeCreationClubRepository extends JpaRepository<DemandeCreationClub, Long>{
     Page<DemandeCreationClub> findByresponsableClubId(Long id,Pageable pageable);
+    Page<DemandeCreationClub> findByNomClubContains(String nomClub,Pageable pageable);
 }
