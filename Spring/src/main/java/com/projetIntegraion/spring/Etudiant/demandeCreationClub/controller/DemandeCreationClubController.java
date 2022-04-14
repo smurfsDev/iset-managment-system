@@ -115,6 +115,7 @@ public class DemandeCreationClubController {
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
             modelMap.addAttribute("Dcc", Dcc);
+            modelMap.addAttribute("edit", true);
             return "form";
         } else {
             DemandeCreationClub dc = new DemandeCreationClub();
@@ -137,6 +138,21 @@ public class DemandeCreationClubController {
             modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
             return this.showList(modelMap, page, size);
         }
+    }
+
+    @RequestMapping("/accept")
+    public String acceptDcc(@RequestParam("id") Long id, ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeCreationClub dc = DemandeCreationClubService.getDemandeCreationClub(id);
+        dc.setStatus(1);
+        DemandeCreationClubService.save(dc);
+        modelMap.addAttribute("Dcc", new DemandeCreationClub());
+        modelMap.addAttribute("pages",
+                new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande de creation de club acceptée avec succès");
+        return this.showList(modelMap, page, size);
     }
 
 }
