@@ -51,4 +51,7 @@ public class DemandeCreationClubService {
 		return DemandeCreationClubRepository.findAll(PageRequest.of(page, size));
 	};
 
+	public Page<DemandeCreationClub> getDemandeCreationClubParNom(String nom, int page, int size){
+		return DemandeCreationClubRepository.findByNomClubContains(nom, PageRequest.of(page, size));
+	};
 }
