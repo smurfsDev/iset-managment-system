@@ -1,6 +1,5 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
-import java.beans.Transient;
 import java.text.ParseException;
 import java.util.Date;
 

@@ -36,9 +36,9 @@
                         <th>Vice president</th>
                         <th>Actions</th>
                     </thead>
-                    <tr th:if="${#arrays.isEmpty(dccs.content)}">
+                    <tr th:if="${#arrays.isEmpty(Dccs.content)}">
 						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
-					<tr th:each="demande:${dccs.content}">
+					<tr th:each="demande:${Dccs.content}">
                         <td th:text="${demande.id}"></td>
                         <td th:text="${demande.nomClub}"></td>
                         <td ><img th:src="'data:image/jpg;base64,'+${demande.logo}" width="50px"/></td>
