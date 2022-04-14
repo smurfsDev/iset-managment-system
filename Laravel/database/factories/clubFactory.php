@@ -17,7 +17,7 @@ class clubFactory extends Factory
         return [
             "nom"=>$this->faker->name,
             "dateCreation"=>$this->faker->date,
-            "responsableClub"=>$this->faker->firstName().' '.$this->faker->lastName,
+            "responsableClub"=>User::get('id')->random(),
             "president"=>$this->faker->firstName().' '.$this->faker->lastName,
             "vicePresident"=>$this->faker->firstName().' '.$this->faker->lastName,
         ];
