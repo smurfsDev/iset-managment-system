@@ -6,6 +6,8 @@ import demandeCreationClub from "./routes/demandeCreationClub";
 import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
 import demandeMateriel from "./routes/demandeMateriels";
 import members from "./routes/members";
+import login from "./routes/login";
+import register from "./routes/register";
 
 Vue.use(VueRouter);
 
@@ -29,6 +31,8 @@ const routes = [
   ...demandeCreationClubAdmin,
   ...demandeMateriel,
   ...members,
+  ...login,
+  ...register
 ];
 
 const router = new VueRouter({
