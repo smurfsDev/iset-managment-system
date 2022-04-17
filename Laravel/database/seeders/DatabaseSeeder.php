@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(1)->create();
         $this->call(DemandeCreationClubSeeder::class);
+        $this->call(CategoryMaterielsSeeder::class);
+        $this->call(MaterielsSeeder::class);
+        $this->call(DemandeMaterielsSeeder::class);
 
     }
 }
