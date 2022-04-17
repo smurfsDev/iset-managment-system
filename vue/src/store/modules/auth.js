@@ -41,6 +41,12 @@ const actions = {
           console.log("jawna behi nai");
         }
       });
+  },
+  async LogOut({ commit }) {
+    localStorage.removeItem("token");
+    commit("setUser", null);
+    commit("setToken", null);
+
   }
 };
 const mutations = {
