@@ -13,6 +13,7 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\HeadersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\MemberController;
 
 /*
@@ -26,9 +27,7 @@ use App\Http\Controllers\MemberController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 Route::group(['prefix'=>'/dcc'],function(){
     Route::get('/',[DemandeCreationClubController::class,'show']);
     Route::get('/{id}',[DemandeCreationClubController::class,'showMyDemandes']);
@@ -89,4 +88,7 @@ Route::group(['prefix'=>'/members'],function(){
     Route::delete('/{id}',[MemberController::class,'deleteMember']);
 });
 
+
+Route::post('login', [AuthController::class, 'signin']);
+Route::post('register', [AuthController::class, 'signup']);
 
