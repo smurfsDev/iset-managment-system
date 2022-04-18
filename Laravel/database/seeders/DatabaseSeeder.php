@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DemandeCreationClubSeeder::class);
         $this->call(clubSeeder::class);
         $this->call(MemberSeeder::class);
+        $this->call(RolesSeeder::class);
 
     }
 }
