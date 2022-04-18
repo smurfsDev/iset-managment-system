@@ -41,6 +41,7 @@ import Axios from 'axios'
 
 Vue.prototype.$http = Axios; 
 
+Vue.component("top-nav", require("./components/layout/topnav.vue").default);
 
 Vue.mixin({
   methods: {
