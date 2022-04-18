@@ -14,9 +14,10 @@ class AuthController extends BaseController
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $authUser = Auth::user();
+            $user = User::where('id','=', $authUser->id)->with('roles')->first();
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
-            $success['user'] = $authUser;
+            $success['user'] = $user;
 
             return $this->sendResponse($success, 'User signed in');
         } else {
@@ -41,6 +42,7 @@ class AuthController extends BaseController
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
         $success['name'] =  $user->name;
+        $success['user'] = $user;
 
         return $this->sendResponse($success, 'User created successfully.');
     }
