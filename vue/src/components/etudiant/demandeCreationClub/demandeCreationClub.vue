@@ -3,47 +3,27 @@
     <formDemande @addDemande="addDemande" :oldDemande="demande" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
-        <b-overlay
-          v-if="show"
-          :show="show"
-          class="d-inline-block"
-          style="height: 500px; width: 100%"
-        ></b-overlay>
+        <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
         <div v-if="!show">
           <b-container class="bv-example-row py-0">
             <b-row class="text-center">
               <b-col cols="8">
-                <button
-                  type="button"
-                  class="btn btn-primary mx-1 float-start"
-                  data-bs-toggle="modal"
-                  @click="initModal()"
-                  data-bs-target="#demandeModal"
-                >
+                <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
+                  @click="initModal()" data-bs-target="#demandeModal">
                   Nouvelle demande
                 </button>
               </b-col>
               <b-col></b-col>
             </b-row>
           </b-container>
-          <b-alert
-            class="mt-4"
-            :show="alert.dismissCountDown"
-            dismissible
-            :variant="alert.variant"
-            @dismissed="alert.dismissCountDown = 0"
-          >
+          <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
+            @dismissed="alert.dismissCountDown = 0">
             <p>{{ alert.msg }}</p>
           </b-alert>
 
           <!-- <b-card> -->
-          <showDemandes
-            @deleteDemande="deleteDemande"
-            :demandes="DemandeCreationClub"
-            @fetchDemande="fetchDemandeCreationClub"
-            @updateDemande="updateDemande"
-            :pagination="pagination"
-          />
+          <showDemandes @deleteDemande="deleteDemande" :demandes="DemandeCreationClub"
+            @fetchDemande="fetchDemandeCreationClub" @updateDemande="updateDemande" :pagination="pagination" />
           <!-- </b-card> -->
         </div>
       </div>
@@ -98,25 +78,19 @@ export default {
   },
   methods: {
     fetchDemandeCreationClub(
-      page_url = "http://127.0.0.1:8000/api/dcc/" + this.myid
+      page_url = "http://127.0.0.1:8000/api/dcc/"
     ) {
       let vm = this;
-      // let headersi = new Headers();
-      // headersi.append('auth', 5);
-      fetch(page_url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.constructor !== Array) {
-            this.DemandeCreationClub = res.data;
-          } else {
-            this.DemandeCreationClub = [];
-          }
-          this.show = false;
-          vm.makePagination(res);
-        })
-        .catch((err) => console.log(err));
+      this.$http.get(page_url, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      },
+      ).then((res)=> {
+        this.DemandeCreationClub = res.data.data;
+        this.show = false;
+        vm.makePagination(res.data);
+      });
     },
     makePagination(meta) {
       this.pagination = {
@@ -129,43 +103,38 @@ export default {
       };
     },
     deleteDemande(id) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
       if (confirm("Delete document " + id)) {
         this.show = true;
-        fetch("http://localhost:8000/api/dcc/" + id, {
-          method: "delete",
-          headers: headersi,
-        })
-          .then(() => {
-            this.fetchDemandeCreationClub();
+        this.$http.delete("http://localhost:8000/api/dcc/" + id, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        },
+        ).then(() => {
+          this.fetchDemandeCreationClub();
             this.alert.variant = "danger";
             this.alert.msg = "Demande suprimée avec succès";
             this.alert.dismissCountDown = 5;
-          })
-          .then(() => {})
-          .catch((err) => console.log(err));
+        });
       }
     },
     resetModal1() {
       this.document = {};
     },
     addDemande(demande) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
-      headersi.append("Content-Type", "application/json");
-      demande.responsableClubId = this.myid;
+      
       this.show = true;
       console.log(demande.id);
       if (!this.edit) {
-        fetch("http://localhost:8000/api/dcc/", {
-          method: "post",
-          body: JSON.stringify(demande),
-          headers: headersi,
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.success == false) {
+       this.$http.post('http://localhost:8000/api/dcc',
+        (demande), {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        },
+        ).then((data) => {
+          data = data.data;
+          if (data.success == false) {
               this.alert.variant = "danger";
               let err = "";
               for (const property in data.data) {
@@ -181,23 +150,21 @@ export default {
               this.alert.dismissCountDown = 5;
             }
             this.fetchDemandeCreationClub();
-          })
-          .catch((err) => console.log(err));
+        });
       } else {
-        fetch("http://localhost:8000/api/dcc/" + demande.id, {
-          method: "put",
-          body: JSON.stringify(demande),
-          headers: headersi,
-        })
-          .then((res) => res.json())
-          .then(() => {
-            this.fetchDemandeCreationClub();
+        this.$http.put("http://localhost:8000/api/dcc/" + demande.id,
+        (demande), {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        },
+        ).then(() => {
+          this.fetchDemandeCreationClub();
             this.edit = false;
             this.alert.variant = "warning";
             this.alert.msg = "Employé modifié avec succès";
             this.alert.dismissCountDown = 5;
-          })
-          .catch((err) => console.log(err));
+        });
       }
     },
     updateDemande(demande) {
