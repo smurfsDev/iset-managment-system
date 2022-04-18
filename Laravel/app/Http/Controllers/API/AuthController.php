@@ -18,6 +18,14 @@ class AuthController extends BaseController
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
             $success['user'] = $user;
+            $success['isStudent'] = false;
+            $success['isAdmin'] = false;
+
+            if ($user->roles->contains('name', "student")) {
+                $success['isStudent'] = true;
+            } else if ($user->roles->contains('name', "admin")) {
+                $success['isAdmin'] = true;
+            }
 
             return $this->sendResponse($success, 'User signed in');
         } else {
