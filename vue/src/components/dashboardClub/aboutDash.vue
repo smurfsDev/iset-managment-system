@@ -133,7 +133,7 @@ export default {
         // console.log(response.data.data);
         if (response.data.data!=undefined){
           this.abouts = response.data.data
-          console.log(this.abouts)
+         
           this.created=true
         }
           
@@ -145,34 +145,36 @@ export default {
         longDescription: this.longDescription,
         idClub: 1
       }
-      this.$http.post("http://localhost:8000/api/1/about/create", newAbout).then(response => {
-        //this.longDescription = "";
-        console.log("post")
-        console.log(response.data)
+      this.$http.post("http://localhost:8000/api/1/about/create", newAbout).then( ()=> {
+       
         this.created = true;
         
-        this.abouts.push(newAbout)
+       this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
+       
+          this.abouts = response.data.data
+          
+        })
         
        alert("Description ajoutée");
       });
       
   },
   deleteDescription(id){
-    console.log(id)
-    this.$http.delete("http://localhost:8000/api/1/about/delete/"+id).then(response => {
-      console.log(response.data)
+    
+    this.$http.delete("http://localhost:8000/api/1/about/delete/"+id).then(() => {
+     
       this.abouts = this.abouts.filter(item => item.id != id)
       alert("Description supprimée");
     })
     this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
        
           this.abouts = response.data.data
-          console.log(this.abouts)
+          
         })
  
   },
   updateDescription(id){
-    console.log(id)
+   
     this.update = true;
     this.id = id;
     for (var i = 0; i < this.abouts.length; i++) {
@@ -180,18 +182,18 @@ export default {
         this.longDescription = this.abouts[i].longDescription;
       }
     }
-    console.log(this.longDescription)
+    
     
   },
   submitEdit(){
     let newAbout = {
+      id: this.id,
       longDescription: this.longDescription,
       idClub: 1
     }
-    this.$http.put("http://localhost:8000/api/1/about/update/"+this.id, newAbout).then(response => {
-      //this.longDescription = "";
-      console.log("post")
-      console.log(response.data)
+    this.$http.put("http://localhost:8000/api/1/about/update/"+this.id, newAbout).then(() => {
+      
+    
       this.created = true;
       
       this.abouts = this.abouts.filter(item => item.id != this.id)
@@ -200,6 +202,7 @@ export default {
      alert("Description modifiée");
      this.update = false;
      this.longDescription = "";
+    
     });
     
   

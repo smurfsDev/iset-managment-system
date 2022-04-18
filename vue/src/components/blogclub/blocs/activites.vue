@@ -24,7 +24,7 @@ export default {
         // console.log(response.data.data);
         
           this.tasks = response.data.data
-          console.log(this.tasks)
+         
       
           
         })

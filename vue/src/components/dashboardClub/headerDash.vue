@@ -117,7 +117,7 @@
           <div>
       
     </div>
-         <getHeader /> 
+         
           <h2>Section title</h2>
         </main>
       </div>
@@ -153,10 +153,8 @@ export default {
     this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
       
       if (response.data.data!=undefined){
-        console.log("Vous avez déjà un header")
-        this.petiteDescription = response.data.data[0].petiteDescription
+         this.petiteDescription = response.data.data[0].petiteDescription
         this.backgroundImage = response.data.data[0].backgroudImage
-        console.log(response.data.data)
         this.ajout=true
         this.id = response.data.data[0].id
       }
@@ -170,15 +168,15 @@ export default {
 
       var file = e.target.files[0];
       this.srcImage = file;
-      console.log(this.srcImage);
+     
       
       var reader = new FileReader();
-      console.log(1);
+      
       reader.onloadend = () => {
        
         this.backgroundImage = reader.result;
         
-        console.log(this.backgroundImage);
+       
       };
       reader.readAsDataURL(file);
  
@@ -186,15 +184,13 @@ export default {
     createHeader() {
     
       var reader = new FileReader();
-      console.log(1);
-      reader.onloadend = () => {
+       reader.onloadend = () => {
        
         this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
 
          if (response.data.data!=undefined){
            alert('Vous avez déjà un header')
-            console.log("Vous avez déjà un header")
-            console.log(response.data.data)
+           
             this.ajout=true
             this.id = response.data.data[0].id
          } else {
@@ -207,12 +203,13 @@ export default {
         
         
           this.$http.post("http://localhost:8000/api/1/header/create",newHeader)
-          .then (response => {
-            console.log(response)
+          .then (() => {
+            
              this.ajout=true
             alert('Header ajouté! ')
           })
           .catch(error => {
+            alert("Une erreur c'est produite ! Veuillez réessayer s'il vous plait !")
           console.log('error', error);
           })
             }
@@ -228,33 +225,36 @@ export default {
          reader.readAsDataURL(this.srcImage);
   },
   deleteHeader(id){
-    this.$http.delete("http://localhost:8000/api/1/header/delete/"+id).then(response => {
-      console.log(response)
+    this.$http.delete("http://localhost:8000/api/1/header/delete/"+id).then(() => {
+      
       alert('Header supprimé! ')
       this.ajout=false
       this.update=false
+      this.petiteDescription=""
+      this.backgroundImage=""
     })
   },
   updateHeader(id){
     this.update=true
     this.id = id
-    console.log(id)
+    
   },
   submitEdit(){
 
     
     let updateHeader = {
+            id: this.id,
             petiteDescription: this.petiteDescription,
             backgroudImage: this.backgroundImage,
             idClub : 1
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/header/update/"+this.id,updateHeader).then(response => {
-        console.log(response)
+      this.$http.put("http://localhost:8000/api/1/header/update/"+this.id,updateHeader).then(
+       
         alert('Header modifié! ')
        
-      })
+      )
 
   }
   

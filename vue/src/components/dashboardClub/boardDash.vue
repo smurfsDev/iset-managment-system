@@ -145,7 +145,7 @@
           <div>
       
     </div>
-         <getHeader /> 
+        
           <h2>Section title</h2>
         </main>
       </div>
@@ -180,13 +180,13 @@ export default {
     };
   },
   created(){
+     this.ajout = true;
     this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
       
-      if (response.data!=null){
+      
         this.boards = response.data.data;
-        console.log(this.boards)
-        this.ajout = true;
-      }
+         this.ajout = true;
+     
         
     
     })
@@ -199,15 +199,13 @@ export default {
 
       var file = e.target.files[0];
       this.srcImage = file;
-      console.log(this.srcImage);
       
       var reader = new FileReader();
-      console.log(1);
-      reader.onloadend = () => {
+       reader.onloadend = () => {
        
         this.image = reader.result;
         
-        console.log(this.image);
+        
       };
       reader.readAsDataURL(file);
  
@@ -215,13 +213,12 @@ export default {
     createMember() {
     
       var reader = new FileReader();
-      console.log(1);
+     
       reader.onloadend = () => {
        
-        this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+      //  this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
 
-          console.log(response.data);
-          this.board = response.data.data
+           //this.board = response.data.data
             this.image = reader.result;
             let newBoard = {
             nom: this.nom,
@@ -232,10 +229,17 @@ export default {
         
         
           this.$http.post("http://localhost:8000/api/1/boards/create",newBoard)
-          .then (response => {
-            console.log(response)
+          .then (() => {
+            
              this.ajout=true
-             this.boards.push(newBoard)
+             this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+              this.boards = response.data.data
+             })
+             this.nom = "";
+              this.post = "";
+              this.image = "";
+
+             //this.boards.push(newBoard)
             alert('Membre de bureau ajouté! ')
           })
           .catch(error => {
@@ -243,10 +247,10 @@ export default {
           })
           
         
-        })
+       /* })
         .catch(error => {
           console.log(error)
-        })
+        })*/
       
 
       
@@ -254,12 +258,11 @@ export default {
          reader.readAsDataURL(this.srcImage);
   },
   deleteBoard(id){
-    console.log(id)
-    this.$http.delete("http://localhost:8000/api/1/boards/delete/"+id).then(response => {
-      console.log(response)
+    this.$http.delete("http://localhost:8000/api/1/boards/delete/"+id).then(() => {
+      
       alert('Membre de bureau supprimé! ')
       this.boards = this.boards.filter(item => item.id != id)
-      this.ajout=false
+      this.ajout=true
       this.update=false
     })
   },
@@ -267,7 +270,7 @@ export default {
     this.update=true
     this.ajout=false
     this.id = id
-    console.log(id)
+   
     for (let i = 0; i < this.boards.length; i++) {
       if (this.boards[i].id == id) {
         this.nom = this.boards[i].nom
@@ -287,11 +290,14 @@ export default {
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/boards/update/"+this.id,updateBoard).then(response => {
-        console.log(response)
+      this.$http.put("http://localhost:8000/api/1/boards/update/"+this.id,updateBoard).then(() => {
+       
         alert('Membre de bureau modifié! ')
        this.boards = this.boards.filter(item => item.id != this.id)
-        this.boards.push(updateBoard)
+       this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+              this.boards = response.data.data
+             })
+        //this.boards.push(updateBoard)
         this.update=false
         this.ajout=true
         this.nom="" 

@@ -20,7 +20,7 @@ class ProjectsController extends Controller
         else
             return response()->json([
                 null
-            ], 200);
+            ], 404);
     }
     public function createProject($id, ProjectsRequest $request){
         $affiche = $request->input('affiche');

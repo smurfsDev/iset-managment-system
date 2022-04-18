@@ -97,7 +97,7 @@
           <div>
       
     </div>
-         <getHeader /> 
+       
           <h2>Section title</h2>
         </main>
       </div>
@@ -140,24 +140,22 @@ export default {
         
     
     })
-    .catch(error => {
-      console.log(error)
-    })
+    .catch()
   },
   methods: {
     convert64(e) {
 
       var file = e.target.files[0];
       this.srcImage = file;
-      console.log(this.srcImage);
+      
       
       var reader = new FileReader();
-      console.log(1);
+      
       reader.onloadend = () => {
        
         this.affiche = reader.result;
         
-        console.log(this.affiche);
+        
       };
       reader.readAsDataURL(file);
  
@@ -165,40 +163,58 @@ export default {
     createProject() {
     
       var reader = new FileReader();
-      console.log(1);
+      
       reader.onloadend = () => {
-       
-        this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
-
-            if (response.data.data!=null){
-                this.projects = response.data.data;
-                console.log(this.projects)
-                this.ajout = true;
-            }
-
-          
-            let newProject = {
-              affiche: this.affiche,
-               idClub : 1
-          }
-        
-        
-          this.$http.post("http://localhost:8000/api/1/projects/create",newProject)
-          .then (response => {
-            console.log(response)
+        let newProject = {
+             affiche: this.affiche,
+                idClub : 1
+         }
+       this.$http.post("http://localhost:8000/api/1/projects/create",newProject)
+          .then (() => {
+            
              this.ajout=true
-             this.projects.push(newProject)
+             this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
+               this.projects = response.data.data;
+             })
+             
             alert('Projet ajouté! ')
+            this.affiche = ""
           })
           .catch(error => {
+            alert('Erreur! ')
           console.log('error', error);
           })
+        // this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
+
+        //     if (response.data.data!=null){
+        //         this.projects = response.data.data;
+                
+        //         this.ajout = true;
+        //     }
+
+          
+        //     let newProject = {
+        //       affiche: this.affiche,
+        //        idClub : 1
+        //   }
+        
+        
+        //   this.$http.post("http://localhost:8000/api/1/projects/create",newProject)
+        //   .then (response => {
+        //     console.log(response)
+        //      this.ajout=true
+        //      this.projects.push(newProject)
+        //     alert('Projet ajouté! ')
+        //   })
+        //   .catch(error => {
+        //   console.log('error', error);
+        //   })
           
         
-        })
-        .catch(error => {
-          console.log(error)
-        })
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        // })
       
 
       
@@ -206,9 +222,9 @@ export default {
          reader.readAsDataURL(this.srcImage);
   },
   deleteProject(id){
-    console.log(id)
-    this.$http.delete("http://localhost:8000/api/1/projects/delete/"+id).then(response => {
-      console.log(response)
+    
+    this.$http.delete("http://localhost:8000/api/1/projects/delete/"+id).then(() => {
+   
       alert('Projet supprimé! ')
       this.projects = this.projects.filter(item => item.id != id)
       this.ajout=false
@@ -219,7 +235,8 @@ export default {
     this.update=true
     this.ajout=false
     this.id = id
-    console.log(id)
+    
+   
     for (let i = 0; i < this.projects.length; i++) {
       if (this.projects[i].id == id) {
        
@@ -232,13 +249,14 @@ export default {
 
     
     let updateProject = {
+            id: this.id,
             affiche: this.affiche,
             idClub : 1
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/projects/update/"+this.id,updateProject).then(response => {
-        console.log(response)
+      this.$http.put("http://localhost:8000/api/1/projects/update/"+this.id,updateProject).then(() => {
+      
         alert('Projet modifié! ')
        this.projects = this.projects.filter(item => item.id != this.id)
         this.projects.push(updateProject)

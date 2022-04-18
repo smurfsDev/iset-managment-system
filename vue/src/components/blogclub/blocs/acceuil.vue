@@ -27,14 +27,13 @@ export default {
   },
   created() {
     
-      console.log("created")
-      //console.log(this.header)
+    
+      
       this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
-        console.log(response.data.data[0].backgroudImage)
+        
         this.header.petiteDescription = response.data.data[0].petiteDescription;
         this.header.backgroundImage = response.data.data[0].backgroudImage;
-        console.log(this.header.petiteDescription)
-        console.log(this.header.backgroundImage)
+       
       });
     
   }

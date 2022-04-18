@@ -30,7 +30,7 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter une longue description</h1>
+            <h1 class="h2">Ajouter une activité</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
@@ -130,10 +130,10 @@ export default {
   },
   created(){
     this.$http.get('http://localhost:8000/api/1/activities/getAll').then(response => {
-        // console.log(response.data.data);
+       
         if (response.data.data!=undefined){
           this.activities = response.data.data
-          console.log(this.activities)
+         
           this.created=true
         }
           
@@ -145,34 +145,41 @@ export default {
         paragraphe: this.paragraphe,
         idClub: 1
       }
-      this.$http.post("http://localhost:8000/api/1/activities/create", newActivity).then(response => {
-        //this.longDescription = "";
-        console.log("post")
-        console.log(response.data)
-        this.created = true;
+      this.$http.post("http://localhost:8000/api/1/activities/create", newActivity).then(() => {
         
-        this.activities.push(newActivity)
+        this.created = true;
+        this.$http.get('http://localhost:8000/api/1/activities/getAll').then(response => {
+       
+          this.activities = response.data.data
+         
+        })
+        
         
        alert("Activité ajouté");
+       this.paragraphe = "";
       });
       
   },
   deleteParagraphe(id){
-    console.log(id)
-    this.$http.delete("http://localhost:8000/api/1/activities/delete/"+id).then(response => {
-      console.log(response.data)
+   
+   
+    this.$http.delete("http://localhost:8000/api/1/activities/delete/"+id).then(() => {
+      
       this.activities = this.activities.filter(item => item.id != id)
+      this.paragraphe = "";
+      this.update= false;
+      this.create= true;
       alert("Activité supprimée");
     })
     this.$http.get('http://localhost:8000/api/1/activities/getAll').then(response => {
        
           this.activities = response.data.data
-          console.log(this.activities)
+         
         })
  
   },
   updateParagraphe(id){
-    console.log(id)
+   
     this.update = true;
     this.id = id;
     for (var i = 0; i < this.activities.length; i++) {
@@ -180,20 +187,19 @@ export default {
         this.paragraphe = this.activities[i].paragraphe;
       }
     }
-    console.log(this.paragraphe)
+   
     
   },
   submitEdit(){
     let newActivity = {
+      id: this.id,
       paragraphe: this.paragraphe,
       idClub: 1
     }
-    this.$http.put("http://localhost:8000/api/1/activities/update/"+this.id, newActivity).then(response => {
-      //this.longDescription = "";
-      console.log("post")
-      console.log(response.data)
-      this.created = true;
+    this.$http.put("http://localhost:8000/api/1/activities/update/"+this.id, newActivity).then(() => {
       
+       this.created = true;
+     
       this.activities = this.activities.filter(item => item.id != this.id)
       this.activities.push(newActivity)
       

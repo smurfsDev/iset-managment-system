@@ -19,7 +19,7 @@ class HeadersController extends Controller
         else
             return response()->json([
                 null
-            ], 200);
+            ], 404);
     }
     public function createHeader($id, HeadersRequest $request){
         $petiteDescription = $request->input('petiteDescription');

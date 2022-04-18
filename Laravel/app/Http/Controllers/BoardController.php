@@ -19,7 +19,7 @@ class BoardController extends Controller
         else
             return response()->json([
                 null
-            ], 200);
+            ], 404);
     }
     public function createBoard($id, BoardsRequest $request){
         $nom = $request->input('nom');
