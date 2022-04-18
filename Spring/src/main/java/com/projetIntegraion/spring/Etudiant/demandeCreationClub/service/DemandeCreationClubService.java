@@ -6,6 +6,8 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCr
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +15,7 @@ public class DemandeCreationClubService {
 	@Autowired
 	DemandeCreationClubRepository DemandeCreationClubRepository;
 
-	public DemandeCreationClub saveDemandeCreationClub(DemandeCreationClub p) {
+	public DemandeCreationClub save(DemandeCreationClub p) {
 		return DemandeCreationClubRepository.save(p);
 	}
 
@@ -22,26 +24,14 @@ public class DemandeCreationClubService {
 	}
 
 	public DemandeCreationClub updateDemandeCreationClub(Long id, DemandeCreationClub p) {
-		if (DemandeCreationClubRepository.existsById(id)) {
-			DemandeCreationClub a = DemandeCreationClubRepository.findById(id).get();
-			a.setNomClub(p.getNomClub() != null ? p.getNomClub() : a.getNomClub());
-			a.setActivite(p.getActivite() != null ? p.getActivite() : a.getActivite());
-			a.setSujet(p.getSujet() != null ? p.getSujet() : a.getSujet());
-			a.setLogo(p.getLogo() != null ? p.getLogo() : a.getLogo());
-			a.setDateCreation(p.getDateCreation() != null ? p.getDateCreation() : a.getDateCreation());
-			a.setPresident(p.getPresident() != null ? p.getPresident() : a.getPresident());
-			a.setVicePresident(p.getVicePresident() != null ? p.getVicePresident() : a.getVicePresident());
-			this.saveDemandeCreationClub(a);
-			return a;
-		}
 		return null;
 	}
 
-	public void deleteDemandeCreationClub(DemandeCreationClub p) {
+	public void delete(DemandeCreationClub p) {
 		DemandeCreationClubRepository.delete(p);
 	}
 
-	public Boolean deleteDemandeCreationClub(Long id) {
+	public Boolean deleteById(Long id) {
 		if (DemandeCreationClubRepository.existsById(id)) {
 			DemandeCreationClubRepository.deleteById(id);
 			return true;
@@ -56,4 +46,12 @@ public class DemandeCreationClubService {
 	public List<DemandeCreationClub> getAllDemandeCreationClub() {
 		return DemandeCreationClubRepository.findAll();
 	}
+
+	public Page<DemandeCreationClub> getAllDemandeCreationClubParPage(int page, int size){
+		return DemandeCreationClubRepository.findAll(PageRequest.of(page, size));
+	};
+
+	public Page<DemandeCreationClub> getDemandeCreationClubParNom(String nom, int page, int size){
+		return DemandeCreationClubRepository.findByNomClubContains(nom, PageRequest.of(page, size));
+	};
 }

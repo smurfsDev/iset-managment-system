@@ -43,8 +43,12 @@
         scale="2"
         variant="warning"
       ></b-icon>
-      <md-tabs>
-        <md-tab id="tab-home" md-label="demande">
+      <md-tabs style="height: auto;!important">
+        <md-tab
+          id="tab-home"
+          style="height: auto;!important"
+          md-label="demande"
+        >
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
@@ -60,6 +64,8 @@
                 <b-col>
                   President : {{ demande.president }} Vice president :
                   {{ demande.vicePresident }}
+                  <br />
+                  <img :src="demande.logo" alt="logo" width="250" />
                 </b-col>
               </b-row>
             </b-row>
@@ -67,13 +73,15 @@
               variant="danger"
               :class="[demande.status != 0 ? 'disabled' : '']"
               v-on:click="Delete(demande.id)"
-              >Delete</b-button
+            >
+              Delete</b-button
             >
             <b-button
               variant="warning"
               :class="[demande.status != 0 ? 'disabled' : '']"
               v-on:click="Update(demande)"
-              >Update</b-button
+            >
+              Update</b-button
             >
           </div>
         </md-tab>

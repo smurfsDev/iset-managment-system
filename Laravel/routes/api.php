@@ -13,6 +13,7 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\HeadersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\MemberController;
 
 
 /*
@@ -83,5 +84,10 @@ Route::get('{idClub}/projects/getAll',[ProjectsController::class,'getProjects'])
 Route::post('{idClub}/projects/create',[ProjectsController::class,'createProject']);
 Route::delete('{idClub}/projects/delete/{id}',[ProjectsController::class,'deleteProject']);
 Route::put('{idClub}/projects/update/{id}',[ProjectsController::class,'updateProject']);
+
+Route::group(['prefix'=>'/members'],function(){
+    Route::get('/{id}',[MemberController::class,'getMembers']);
+    Route::delete('/{id}',[MemberController::class,'deleteMember']);
+});
 
 

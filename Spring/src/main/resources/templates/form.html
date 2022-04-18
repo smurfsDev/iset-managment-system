@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template">
+
+<head>
+	<meta charset="utf-8">
+	<title>Create Dcc</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container my-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<span class="anchor" id="formLogin"></span>
+					<!-- form card login -->
+					<div class="card card-outline-secondary">
+						<div class="card-header">
+
+							<h3 th:text="${edit}?'Modifier Demande':'Créer Demande'" class="mb-0"></h3>
+						</div>
+						<div class="card-body">
+							<form th:action="${edit}?'updateDcc':'saveDcc'" enctype="multipart/form-data" class="form"
+								id="formLogin" name="formLogin" role="form" action="saveDcc" method="post">
+								<div class="form-group">
+									<label class="control-label">Nom Dcc :</label> <input type="text" name="nomClub"
+										class="form-control" th:value="${Dcc.nomClub}" />
+									<span th:errors=${Dcc.nomClub} class="text-danger">
+									</span>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Date création :</label> <input type="file" name="image"
+										class="form-control" th:value="${Dcc.logo}" />
+									<span th:errors=${Dcc.logo} class="text-danger">
+								</div>
+								<div class="form-group">
+									<label class="control-label">Date création :</label> <input type="date"
+										name="dateCreation" class="form-control" th:value="${#dates.format(Dcc.dateCreation, 'yyyy-MM-dd')}" /> 
+									<span th:errors=${Dcc.dateCreation} class="text-danger">
+								</div>
+                                <div class="form-group">
+                                    <label class="control-label">Activité :</label> <input type="text"
+                                        name="activite" class="form-control" th:value="${Dcc.activite}" /> 
+									<span th:errors=${Dcc.activite} class="text-danger">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">president :</label> <input type="text"
+                                        name="president" class="form-control" th:value="${Dcc.president}" /> 
+									<span th:errors=${Dcc.president} class="text-danger">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Vice president :</label> <input type="text"
+                                        name="vicePresident" class="form-control" th:value="${Dcc.vicePresident}" />
+									<span th:errors=${Dcc.vicePresident} class="text-danger">
+								</div>
+								<input type="hidden" name="id" th:value="${Dcc.id}" />
+								<input type="hidden" name="page" th:value="${param.page}" />
+								<input type="hidden" name="size" th:value="${param.size}" />
+								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
+								type="submit" >
+							</form>
+							
+						</div>
+						<!--/card-block-->
+					</div>
+					<!-- /form card login -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
