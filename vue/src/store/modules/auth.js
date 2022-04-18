@@ -15,23 +15,8 @@ const state = {
 const getters = {
   isAuthenticated: (state) => state.user !== null,
   StateUser: (state) => state.user,
-  isAdmin : (state,getters) => {
-    if(getters.isAuthenticated){
-      if( state.user.roles.length > 0 )
-        return state.user.roles[0].name === 'admin';
-      
-    }
-    return false;
-  },
-  isStudent : (state,getters) =>{
-    if(getters.isAuthenticated){
-      if( state.user.roles.length > 0 )
-        return state.user.roles[0].name === 'student';
-      
-    }
-    return false;
-  }
-
+  isAdmin : (state) => state.isAdmin,
+  isStudent : (state) => state.isStudent,
 };
 const actions = {
   async LogIn({ commit }, User) {
@@ -52,6 +37,8 @@ const actions = {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
           localStorage.setItem("token", this.tkn);
+          commit('setAdmin',response.data.data.isAdmin);
+          commit('setStudent',response.data.data.isStudent);
           commit("setUser", response.data.data.user);
           commit("setToken", response.data.data.token);
         } else {
@@ -94,6 +81,12 @@ const mutations = {
   setToken(state, token) {
     state.token = token;
   },
+  setAdmin(state, isAdmin) {
+    state.isAdmin = isAdmin;
+  },
+  setStudent(state, isStudent) {
+    state.isStudent = isStudent;
+  }
 };
 export default {
   state,
