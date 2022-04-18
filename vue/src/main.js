@@ -37,6 +37,10 @@ window.router = router;
 window.Fire = new Vue();
 import "boxicons";
 Vue.config.productionTip = false;
+import Axios from 'axios'
+
+Vue.prototype.$http = Axios; 
+
 
 Vue.mixin({
   methods: {
