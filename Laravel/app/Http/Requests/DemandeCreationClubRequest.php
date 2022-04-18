@@ -26,7 +26,7 @@ class DemandeCreationClubRequest extends FormRequest
     public function rules()
     {
         return [
-            "nomClub"=> "required|unique:demandeCreationClub",
+            "nomClub"=> "required|unique:demande_creation_clubs",
             "dateCreation"=> "required|date",
             "activite"=> "required",
             "president"=> "required|min:2",

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClubsTable extends Migration
+class CreateMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateClubsTable extends Migration
      */
     public function up()
     {
-        Schema::create('clubs', function (Blueprint $table) {
+        Schema::create('members', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('nom');
-            $table->date('dateCreation');
-            $table->foreignId('responsableClub');
-            $table->foreign('responsableClub')
+            $table->foreignId('user_id');
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
-            $table->string('president');
-            $table->string('vicePresident'); 
+            $table->foreignId('club_id');
+            $table->foreign('club_id')
+                ->references('id')
+                ->on('clubs')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->timestamps();
         });
     }
@@ -37,6 +38,6 @@ class CreateClubsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clubs');
+        Schema::dropIfExists('members');
     }
 }

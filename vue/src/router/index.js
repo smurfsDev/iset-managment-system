@@ -5,12 +5,14 @@ import blogClub from "./routes/blogClub";
 import demandeCreationClub from "./routes/demandeCreationClub";
 import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
 import demandeMateriel from "./routes/demandeMateriels";
+
 import dashboard from "./routes/dashboardclub";
 import headerDash from "./routes/headerDash";
 import aboutDash from "./routes/aboutDash";
 import activitiesDash from "./routes/activitiesDash";
 import boardDash from "./routes/boardDash";
 import projectsDash from "./routes/projectsDash";
+import members from "./routes/members";
 
 
 
@@ -36,13 +38,15 @@ const routes = [
   ...demandeCreationClubAdmin,
   ...demandeMateriel,
 
+
   ...dashboard,
   ...headerDash,
   ...aboutDash,
   ...activitiesDash,
   ...boardDash,
-  ...projectsDash
-  
+  ...projectsDash,
+   ...members,
+
 
 
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DemandeCreationClub extends Model
 {    use HasFactory;
-    protected $table='demandeCreationClub';
+    protected $table='demande_creation_clubs';
     protected $fillable = [
         "nomClub",
         "logo",
