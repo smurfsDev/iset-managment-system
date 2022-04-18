@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\borad;
+use App\Models\board;
 use Illuminate\Http\Request;
 use App\Http\Requests\BoardsRequest;
 
@@ -10,7 +10,7 @@ class BoardController extends Controller
 {
     public function getBoard($id){
 
-        $boards = borad::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+        $boards = board::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
         if (sizeof($boards) > 0)
             return response()->json(
                 $boards,
@@ -18,7 +18,7 @@ class BoardController extends Controller
             );
         else
             return response()->json([
-                "Aucun membre de bureau"
+                null
             ], 404);
     }
     public function createBoard($id, BoardsRequest $request){
@@ -34,7 +34,7 @@ class BoardController extends Controller
             "idClub" => $idClub
         );
 
-        $createNewBoard = borad::create($newBoard);
+        $createNewBoard = board::create($newBoard);
 
         if ($createNewBoard) {
             return response()->json([
@@ -49,9 +49,9 @@ class BoardController extends Controller
     }
 
     public function deleteBoard($idClub,$idBoard){
-      
-        $board = borad::find($idBoard);
-       
+
+        $board = board::find($idBoard);
+
         if ($board){
             $board->delete();
             return response()->json([
@@ -69,9 +69,9 @@ class BoardController extends Controller
 
     public function updateBoard($idClub, $idBoard, BoardsRequest $request){
 
-        $board = borad::find($idBoard);
+        $board = board::find($idBoard);
         if ($board) {
-      
+
             $board->nom = $request->input('nom') ? $request->input('nom') : $board->nom;
             $board->post = $request->input('post') ? $request->input('post') : $board->post;
             $board->image = $request->input('image') ? $request->input('image') : $board->image;

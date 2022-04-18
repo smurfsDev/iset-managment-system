@@ -15,7 +15,7 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string("affiche");
+            $table->longText("affiche");
             $table->foreignId('idClub')->references('id')->on('clubs');
             $table->timestamps();
         });

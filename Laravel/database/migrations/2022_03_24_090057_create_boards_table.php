@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoradsTable extends Migration
+class CreateboardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateBoradsTable extends Migration
      */
     public function up()
     {
-        Schema::create('borads', function (Blueprint $table) {
+        Schema::create('boards', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->string('post');
-            $table->string('image');
+            $table->longText('image');
             $table->foreignId('idClub')->references('id')->on('clubs');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateBoradsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('borads');
+        Schema::dropIfExists('boards');
     }
 }

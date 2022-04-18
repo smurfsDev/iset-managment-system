@@ -15,6 +15,7 @@ use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\MemberController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
