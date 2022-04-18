@@ -185,9 +185,10 @@ export default {
     
       var reader = new FileReader();
        reader.onloadend = () => {
-       
+      
         this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
-
+        
+          
          if (response.data.data!=undefined){
            alert('Vous avez déjà un header')
            
@@ -200,11 +201,15 @@ export default {
             backgroudImage: this.backgroundImage,
             idClub : 1
           }
+          
         
         
           this.$http.post("http://localhost:8000/api/1/header/create",newHeader)
           .then (() => {
-            
+            this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
+              this.petiteDescription = response.data.data[0].petiteDescription
+              this.backgroundImage = response.data.data[0].backgroudImage
+             })
              this.ajout=true
             alert('Header ajouté! ')
           })
@@ -216,6 +221,7 @@ export default {
         
         })
         .catch(error => {
+          console.log("erreur")
           console.log(error)
         })
       
