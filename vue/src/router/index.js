@@ -47,19 +47,19 @@ router.beforeEach((to, from, next) => {
       next()
       return
     }
-    next('/login')
+    next({name:'login', params: { msg: "You must be logged in" }})
   } else {
     next()
   };
-  if(to.matched.some(record => record.meta.notLoggedIn)) {
-    if (!store.getters.isAuthenticated) {
-      next()
-      return
-    }
-    next('/')
-  } else {
-    next()
-  };
+  // if(to.matched.some(record => record.meta.notLoggedIn)) {
+  //   if (!store.getters.isAuthenticated) {
+  //     next()
+  //     return
+  //   }
+  //   next('/')
+  // } else {
+  //   next()
+  // };
   if (to.matched.some((record) => record.meta.guest)) {
     if (store.getters.isAuthenticated) {
       next("/posts");
@@ -74,7 +74,7 @@ router.beforeEach((to, from, next) => {
       next()
       return
     }
-    next('/login')
+    next({name:'login', params: { msg: "You must be admin" }})
   } else {
     next()
   };
@@ -83,7 +83,7 @@ router.beforeEach((to, from, next) => {
       next()
       return
     }
-    next('/login')
+    next({name:'login', params: { msg: "You must be student" }})
   } else {
     next()
   };

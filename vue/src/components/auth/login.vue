@@ -1,5 +1,8 @@
 <template>
     <div class="login-form">
+        <div v-if="error" class="alert alert-danger">
+            {{ error }}
+        </div>
         <form @submit.prevent="logIn">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -36,6 +39,11 @@ export default {
                 this.showError = true
             }
         },
+    },
+    computed: {
+        error() {
+            return this.$route.params.msg
+        }
     }
 
 }

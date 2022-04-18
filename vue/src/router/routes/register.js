@@ -5,5 +5,7 @@ export default [
     path: "/register",
     component: register,
     name: "register",
+    meta: {notLoggedIn: true}
+
   },
 ];

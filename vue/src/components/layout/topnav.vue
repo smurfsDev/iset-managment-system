@@ -1,5 +1,5 @@
 <template>
-    <sidebar-menu @item-click='onItemClick' :show-one-child="true" @toggle-collapse="collapse = !collapse"
+    <sidebar-menu class="position-fixed" @item-click='onItemClick' :show-one-child="true" @toggle-collapse="collapse = !collapse"
         :width="'200px'" :menu="
             [
                 {
@@ -7,7 +7,7 @@
                     hiddenOnCollapse: true
                 },
                 {
-                    title: 'User',
+                    title: this.$store.getters.userName,
                     icon: 'fas fa-user',
                     child: [
                         {
@@ -151,6 +151,11 @@ export default {
     },
     created() {
         window.document.body.style.marginLeft = this.collapse ? '200px' : '50px'
+    },
+    watch: {
+        collapse(val) {
+            window.document.body.style.marginLeft = val ? '200px' : '50px'
+        }
     },
     computed: {
         ...mapGetters({
