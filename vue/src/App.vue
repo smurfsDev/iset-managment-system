@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" style="max-height: 100vh;
+overflow-y: scroll;">
     <top-nav/>
     <div id="nav">
       <router-link to="/">Home</router-link> |
