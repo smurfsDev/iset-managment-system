@@ -59,6 +59,3 @@ new Vue({
   router,
   render: (h) => h(App),
 }).$mount("#app");
-import Axios from 'axios'
-
-Vue.prototype.$http = Axios;
