@@ -20,12 +20,7 @@ class Materiel extends Model
 
     public function categorie(){
         return $this->hasOne(CategorieMateriel::class,'idCategorie');
-        // hasMany(CategorieMateriel::class,'idCategorie');
     }
-    // public function demande(){
-    //     return $this->hasMany(De::class,'')
-    // }
-    // this Materiel belongsToMany DemandeMateriel
     public function demande(){
         return $this->belongsToMany(
             DemandeMateriel::class,
