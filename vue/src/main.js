@@ -40,7 +40,7 @@ Vue.config.productionTip = false;
 import Axios from 'axios'
 
 Vue.prototype.$http = Axios; 
-
+Vue.prototype.$http.defaults.withCredentials = true;
 Vue.component("top-nav", require("./components/layout/topnav.vue").default);
 
 Vue.mixin({

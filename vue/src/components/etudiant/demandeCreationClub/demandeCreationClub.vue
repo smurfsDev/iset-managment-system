@@ -81,12 +81,8 @@ export default {
       page_url = "http://127.0.0.1:8000/api/dcc/"
     ) {
       let vm = this;
-      this.$http.get(page_url, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      },
-      ).then((res)=> {
+      this.$http.get(page_url)
+      .then((res)=> {
         this.DemandeCreationClub = res.data.data;
         this.show = false;
         vm.makePagination(res.data);
@@ -105,12 +101,8 @@ export default {
     deleteDemande(id) {
       if (confirm("Delete document " + id)) {
         this.show = true;
-        this.$http.delete("http://localhost:8000/api/dcc/" + id, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
-        },
-        ).then(() => {
+        this.$http.delete("http://localhost:8000/api/dcc/" + id)
+        .then(() => {
           this.fetchDemandeCreationClub();
             this.alert.variant = "danger";
             this.alert.msg = "Demande suprimée avec succès";
@@ -127,12 +119,8 @@ export default {
       console.log(demande.id);
       if (!this.edit) {
        this.$http.post('http://localhost:8000/api/dcc',
-        (demande), {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
-        },
-        ).then((data) => {
+        (demande))
+        .then((data) => {
           data = data.data;
           if (data.success == false) {
               this.alert.variant = "danger";
@@ -153,12 +141,8 @@ export default {
         });
       } else {
         this.$http.put("http://localhost:8000/api/dcc/" + demande.id,
-        (demande), {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
-        },
-        ).then(() => {
+        (demande))
+        .then(() => {
           this.fetchDemandeCreationClub();
             this.edit = false;
             this.alert.variant = "warning";

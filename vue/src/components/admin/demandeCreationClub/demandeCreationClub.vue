@@ -50,12 +50,8 @@ export default {
   methods: {
     fetchDemandeCreationClub(page_url = "http://127.0.0.1:8000/api/dcc/") {
       let vm = this;
-      this.$http.get(page_url, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      },
-      ).then((res) => {
+      this.$http.get(page_url)
+      .then((res) => {
         this.DemandeCreationClub = res.data.data;
         this.show = false;
         vm.makePagination(res.data);
@@ -72,14 +68,9 @@ export default {
       };
     },
     deleteDemande(id) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
       if (confirm("Delete document " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/dcc/" + id, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
         },
         ).then(() => {
           this.fetchDemandeCreationClub();
@@ -93,12 +84,8 @@ export default {
       this.document = {};
     },
     acceptDemande(id) {
-      this.$http.put("http://localhost:8000/api/dcc/a/" + id, null, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      },
-      ).then(() => {
+      this.$http.put("http://localhost:8000/api/dcc/a/" + id)
+      .then(() => {
         this.fetchDemandeCreationClub();
         this.edit = false;
         this.alert.variant = "warning";
@@ -107,12 +94,8 @@ export default {
       });
     },
     declineDemande(id) {
-      this.$http.put("http://localhost:8000/api/dcc/d/" + id, null, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      },
-      ).then(() => {
+      this.$http.put("http://localhost:8000/api/dcc/d/" + id)
+      .then(() => {
         this.fetchDemandeCreationClub();
         this.edit = false;
         this.alert.variant = "warning";
