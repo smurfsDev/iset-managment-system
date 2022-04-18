@@ -15,6 +15,7 @@ const state = {
 const getters = {
   isAuthenticated: (state) => state.user !== null,
   StateUser: (state) => state.user,
+  userName: (state) =>  state.user !== null ? state.user.name : "User",
   isAdmin : (state) => state.isAdmin,
   isStudent : (state) => state.isStudent,
 };
