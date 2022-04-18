@@ -19,7 +19,7 @@ class ProjectsController extends Controller
             );
         else
             return response()->json([
-                "Aucun projet"
+                null
             ], 404);
     }
     public function createProject($id, ProjectsRequest $request){

@@ -16,6 +16,7 @@
     "@popperjs/core": "^2.11.3",
     "axios": "^0.26.1",
     "bootstrap": "^3.4.1",
+    "bootstrap-icons": "^1.8.1",
     "bootstrap-vue": "^2.21.2",
     "boxicons": "^2.1.2",
     "chart.js": "^3.7.1",
