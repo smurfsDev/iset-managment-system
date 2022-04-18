@@ -15,7 +15,22 @@ const state = {
 const getters = {
   isAuthenticated: (state) => state.user !== null,
   StateUser: (state) => state.user,
-  
+  isAdmin : (state,getters) => {
+    if(getters.isAuthenticated){
+      if( state.user.roles.length > 0 )
+        return state.user.roles[0].name === 'admin';
+      
+    }
+    return false;
+  },
+  isStudent : (state,getters) =>{
+    if(getters.isAuthenticated){
+      if( state.user.roles.length > 0 )
+        return state.user.roles[0].name === 'student';
+      
+    }
+    return false;
+  }
 
 };
 const actions = {
