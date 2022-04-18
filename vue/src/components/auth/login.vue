@@ -16,7 +16,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import { mapActions } from "vuex";
 
 export default {
@@ -31,13 +30,11 @@ export default {
     methods: {
         ...mapActions(["LogIn"]),
          logIn() {
-            this.LogIn(this.form);
             try {
                  this.LogIn(this.form)
             } catch (error) {
                 this.showError = true
             }
-
         },
     }
 
