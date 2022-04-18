@@ -13,6 +13,7 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\HeadersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\MemberController;
 
 
@@ -27,18 +28,8 @@ use App\Http\Controllers\MemberController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::group(['prefix'=>'/dcc'],function(){
-    Route::get('/',[DemandeCreationClubController::class,'show']);
-    Route::get('/{id}',[DemandeCreationClubController::class,'showMyDemandes']);
-    Route::post('/',[DemandeCreationClubController::class,'create']);
-    Route::put('/{id}',[DemandeCreationClubController::class,'update']);
-    Route::delete('/{id}',[DemandeCreationClubController::class,'delete']);
-    Route::put('/a/{id}',[DemandeCreationClubController::class,'accept']);
-    Route::put('/d/{id}',[DemandeCreationClubController::class,'decline']);
-});
+
+
 Route::group(['prefix'=>'/dm'],function(){
     Route::get('/',[DemandeMaterielController::class,'show']);
     // Route::get('/{id}',[DemandeMaterielController::class,'showMyDemandes']);
@@ -90,4 +81,22 @@ Route::group(['prefix'=>'/members'],function(){
     Route::delete('/{id}',[MemberController::class,'deleteMember']);
 });
 
+
+Route::post('login', [AuthController::class, 'signin']);
+Route::post('register', [AuthController::class, 'signup']);
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::group(['prefix'=>'/dcc'],function(){
+        Route::get('/',[DemandeCreationClubController::class,'show']);
+        Route::get('/{id}',[DemandeCreationClubController::class,'showMyDemandes']);
+        Route::post('/',[DemandeCreationClubController::class,'create']);
+        Route::put('/{id}',[DemandeCreationClubController::class,'update']);
+        Route::delete('/{id}',[DemandeCreationClubController::class,'delete']);
+        Route::put('/a/{id}',[DemandeCreationClubController::class,'accept']);
+        Route::put('/d/{id}',[DemandeCreationClubController::class,'decline']);
+    });
+    // Route::apiResource('secrets', SecretsController::class);
+    Route::get('/test', [DemandeCreationClubController::class, 'test']);
+    // Route::get('/dcc', [DemandeCreationClubController::class, 'get']);
+});
 

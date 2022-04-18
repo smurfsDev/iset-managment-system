@@ -30,8 +30,7 @@ class DemandeCreationClubRequest extends FormRequest
             "dateCreation"=> "required|date",
             "activite"=> "required",
             "president"=> "required|min:2",
-            "vicePresident"=> "required|min:2",
-            "responsableClubId" => "required|exists:users,id"
+            "vicePresident"=> "required|min:2"
         ];
     }
     public function failedValidation(Validator $validator)

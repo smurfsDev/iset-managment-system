@@ -5,5 +5,7 @@ export default [
     path: "/members",
     component: members,
     name: "members",
+    meta: { requiresAuth: true },
+
   },
 ];

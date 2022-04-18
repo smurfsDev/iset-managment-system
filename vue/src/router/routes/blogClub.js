@@ -5,5 +5,6 @@ export default [
     path: "/blogClub",
     component: blogClub,
     name: "blogClub",
+    meta: { requiresAuth: true },
   },
 ];

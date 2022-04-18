@@ -1,6 +1,8 @@
 import "mdb-vue-ui-kit/css/mdb.min.css";
 import Vue from "vue";
 import router from "./router";
+import store from './store';
+
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -35,6 +37,11 @@ window.router = router;
 window.Fire = new Vue();
 import "boxicons";
 Vue.config.productionTip = false;
+import Axios from 'axios'
+
+Vue.prototype.$http = Axios; 
+Vue.prototype.$http.defaults.withCredentials = true;
+Vue.component("top-nav", require("./components/layout/topnav.vue").default);
 
 Vue.mixin({
   methods: {
@@ -48,6 +55,7 @@ Vue.mixin({
 });
 
 new Vue({
+  store,
   router,
   render: (h) => h(App),
 }).$mount("#app");
