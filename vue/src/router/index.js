@@ -29,6 +29,15 @@ const routes = [
   ...blogClub,
   ...demandeCreationClubAdmin,
   ...demandeMateriel,
+  ...dashboard,
+  ...headerDash,
+  ...aboutDash,
+  ...activitiesDash,
+  ...boardDash,
+  ...projectsDash,
+  ...members,
+  ...login,
+  ...register,
   ...demandeSalle,
 ];
 
