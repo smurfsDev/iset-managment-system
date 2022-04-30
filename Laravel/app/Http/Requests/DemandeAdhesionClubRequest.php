@@ -27,7 +27,6 @@ class DemandeAdhesionClubRequest extends FormRequest
     {
         return [
             "club_id"=> "required|exists:clubs,id",
-            "user_id"=> "required|exists:users,id",
             "message"=> "required|min:2"
         ];
     }
@@ -37,6 +36,6 @@ class DemandeAdhesionClubRequest extends FormRequest
             'success'   => false,
             'message'   => 'Validation errors',
             'data'      => $validator->errors()
-        ]));
+        ],400));
     }
 }
