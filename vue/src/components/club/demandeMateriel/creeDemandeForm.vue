@@ -40,7 +40,7 @@
               />
               <label>Date Emploi :</label>
               <input
-                type="datetime-local"
+                type="date"
                 class="border-0 dcc form-control"
                 placeholder
                 v-model="oldDemande.dateEmploi"
@@ -48,7 +48,7 @@
               />
               <label>Date de Remise :</label>
               <input
-                type="datetime-local"
+                type="date"
                 class="border-0 dcc form-control"
                 placeholder
                 v-model="oldDemande.dateDeRemise"
