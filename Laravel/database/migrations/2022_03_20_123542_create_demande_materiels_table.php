@@ -17,8 +17,8 @@ class CreateDemandeMaterielsTable extends Migration
             $table->id();
             $table->foreignId("idResponsableClub");
             $table->foreignId("idDestinataire");
-            $table->dateTime("dateEmploi");
-            $table->dateTime("dateDeRemise");
+            $table->date("dateEmploi");
+            $table->date("dateDeRemise");
             $table->foreignId("idCategorie");
             $table->integer("status")->default(0);
             $table->string("reponse")->nullable();
