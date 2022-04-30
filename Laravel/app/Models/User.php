@@ -54,4 +54,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Role');
     }
 
+    public function demandeAdhesionClub(){
+        return $this->HasMany('App\Models\DemandeAdhesionClub', 'user_id');
+    }
+
 }
