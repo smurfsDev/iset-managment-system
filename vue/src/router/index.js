@@ -5,6 +5,8 @@ import blogClub from "./routes/blogClub";
 import demandeCreationClub from "./routes/demandeCreationClub";
 import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
 import demandeMateriel from "./routes/demandeMateriels";
+import demandeSalle from "./routes/demandeSalle";
+
 
 Vue.use(VueRouter);
 
@@ -27,6 +29,7 @@ const routes = [
   ...blogClub,
   ...demandeCreationClubAdmin,
   ...demandeMateriel,
+  ...demandeSalle,
 ];
 
 const router = new VueRouter({
