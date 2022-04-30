@@ -13,6 +13,9 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\HeadersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\SalleController;
+use App\Http\Controllers\DemandeSalleController;
+use App\Http\Controllers\DepartementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,3 +87,16 @@ Route::delete('{idClub}/projects/delete/{id}',[ProjectsController::class,'delete
 Route::put('{idClub}/projects/update/{id}',[ProjectsController::class,'updateProject']);
 
 
+Route::group(['prefix'=>'/Salle'],function(){
+    Route::get('/{id}',[SalleController::class,'index']);
+});
+Route::group(['prefix'=>'/Departement'],function(){
+    Route::get('/',[DepartementController::class,'index']);
+});
+Route::group(['prefix'=>'/DemandeSalle'],function(){
+    Route::get('/',[DemandeSalleController::class,'index']);
+    Route::post('/',[DemandeSalleController::class,'store']);
+    Route::put('/{id}',[DemandeSalleController::class,'update']);
+    Route::delete('/{id}',[DemandeSalleController::class,'destroy']);
+
+});
