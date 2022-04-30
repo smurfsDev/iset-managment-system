@@ -54,6 +54,18 @@
                     icon: 'fas fa-building',
                     hidden: !this.isAdmin
                 },
+                {
+                    href: '/etudiant/listeClubs',
+                    title: 'Clubs',
+                    icon: 'fas fa-building',
+                    child: [
+                        {
+                            href: '/etudiant/demandeAdhesionClub',
+                            title: 'Mes Demandes d\'adhesion',
+                            hidden: !this.isStudent
+                        }
+                    ]
+                }
         
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
