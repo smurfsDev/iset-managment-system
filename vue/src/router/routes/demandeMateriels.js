@@ -6,5 +6,7 @@ export default [
     path: "/demandeMateriel",
     component: demandeMateriel,
     name: "demandeMateriel",
+    meta: { requiresAuth: true },
+
   },
 ];

@@ -31,11 +31,12 @@
               />
               <label>Logo:</label>
               <input
-                type="text"
-                class="border-0 dcc form-control"
-                placeholder="Logo"
-                v-model="oldDemande.logo"
-                required="required"
+                type="file"
+                class="form-control"
+                name="backgroundImage"
+                @change="convert64"
+                ref="file"
+                required
               />
               <label>Date création</label>
               <input
@@ -104,6 +105,15 @@ export default {
     },
     resetModal1() {
       $(".dcc").val("");
+    },
+    convert64(e) {
+      var file = e.target.files[0];
+      this.srcImage = file;
+      var reader = new FileReader();
+      reader.onloadend = () => {
+        this.oldDemande.logo = reader.result;
+      };
+      reader.readAsDataURL(file);
     },
   },
 };

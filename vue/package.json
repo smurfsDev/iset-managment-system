@@ -16,6 +16,7 @@
     "@popperjs/core": "^2.11.3",
     "axios": "^0.26.1",
     "bootstrap": "^3.4.1",
+    "bootstrap-icons": "^1.8.1",
     "bootstrap-vue": "^2.21.2",
     "boxicons": "^2.1.2",
     "chart.js": "^3.7.1",
@@ -43,7 +44,9 @@
     "vue-sidebar-menu-akahon": "^0.1.4",
     "vuelidate": "^0.7.7",
     "vuetify": "^2.6.4",
-    "vuetify-loader": "^1.7.3"
+    "vuetify-loader": "^1.7.3",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.15",

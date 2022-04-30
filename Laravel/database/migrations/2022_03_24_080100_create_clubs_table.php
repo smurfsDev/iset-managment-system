@@ -18,7 +18,12 @@ class CreateClubsTable extends Migration
             
             $table->string('nom');
             $table->date('dateCreation');
-            $table->string('responsableClub');
+            $table->foreignId('responsableClub');
+            $table->foreign('responsableClub')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->string('president');
             $table->string('vicePresident'); 
             $table->timestamps();

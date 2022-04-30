@@ -22,9 +22,8 @@
         <form class="mb-3" @submit.prevent="sendMat()">
           <div class="modal-body">
             <div class="form-group mb-2">
-                <label>Materiels :</label>
-                <div 
-
+              <label>Materiels :</label>
+              <div
                 class="form-check"
                 v-for="materiel in materiels"
                 :key="materiel.id"

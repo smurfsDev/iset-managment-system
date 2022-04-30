@@ -2,31 +2,16 @@
   <div>
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
-        <b-overlay
-          v-if="show"
-          :show="show"
-          class="d-inline-block"
-          style="height: 500px; width: 100%"
-        ></b-overlay>
+        <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
         <div class="pt-4 mt-4" v-if="!show">
-          <b-alert
-            class="mt-4"
-            :show="alert.dismissCountDown"
-            dismissible
-            :variant="alert.variant"
-            @dismissed="alert.dismissCountDown = 0"
-          >
+          <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
+            @dismissed="alert.dismissCountDown = 0">
             <p>{{ alert.msg }}</p>
           </b-alert>
 
           <!-- <b-card> -->
-          <showDemandes
-            @acceptDemande="acceptDemande"
-            :demandes="DemandeCreationClub"
-            @fetchDemande="fetchDemandeCreationClub"
-            @declineDemande="declineDemande"
-            :pagination="pagination"
-          />
+          <showDemandes @acceptDemande="acceptDemande" :demandes="DemandeCreationClub"
+            @fetchDemande="fetchDemandeCreationClub" @declineDemande="declineDemande" :pagination="pagination" />
           <!-- </b-card> -->
         </div>
       </div>
@@ -63,24 +48,14 @@ export default {
     this.fetchDemandeCreationClub();
   },
   methods: {
-    fetchDemandeCreationClub(page_url = "http://127.0.0.1:8000/api/dcc/admin") {
+    fetchDemandeCreationClub(page_url = "http://127.0.0.1:8000/api/dcc/") {
       let vm = this;
-      // let headersi = new Headers();
-      // headersi.append('auth', 5);
-      fetch(page_url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.constructor !== Array) {
-            this.DemandeCreationClub = res.data;
-          } else {
-            this.DemandeCreationClub = [];
-          }
-          this.show = false;
-          vm.makePagination(res);
-        })
-        .catch((err) => console.log(err));
+      this.$http.get(page_url)
+      .then((res) => {
+        this.DemandeCreationClub = res.data.data;
+        this.show = false;
+        vm.makePagination(res.data);
+      });
     },
     makePagination(meta) {
       this.pagination = {
@@ -93,64 +68,40 @@ export default {
       };
     },
     deleteDemande(id) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
       if (confirm("Delete document " + id)) {
         this.show = true;
-        fetch("http://localhost:8000/api/dcc/" + id, {
-          method: "delete",
-          headers: headersi,
-        })
-          .then(() => {
-            this.fetchDemandeCreationClub();
-            this.alert.variant = "danger";
-            this.alert.msg = "Demande suprimée avec succès";
-            this.alert.dismissCountDown = 5;
-          })
-          .then(() => {})
-          .catch((err) => console.log(err));
+        this.$http.delete("http://localhost:8000/api/dcc/" + id, {
+        },
+        ).then(() => {
+          this.fetchDemandeCreationClub();
+          this.alert.variant = "danger";
+          this.alert.msg = "Demande suprimée avec succès";
+          this.alert.dismissCountDown = 5;
+        });
       }
     },
     resetModal1() {
       this.document = {};
     },
     acceptDemande(id) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
-      headersi.append("Content-Type", "application/json");
-      fetch("http://localhost:8000/api/dcc/a/" + id, {
-        method: "put",
-        body: JSON.stringify({ adminId: this.myid }),
-        headers: headersi,
-      })
-        .then((res) => res.json())
-        .then(() => {
-          this.fetchDemandeCreationClub();
-          this.edit = false;
-          this.alert.variant = "warning";
-          this.alert.msg = "Demande acceptée avec succès";
-          this.alert.dismissCountDown = 5;
-        })
-        .catch((err) => console.log(err));
+      this.$http.put("http://localhost:8000/api/dcc/a/" + id)
+      .then(() => {
+        this.fetchDemandeCreationClub();
+        this.edit = false;
+        this.alert.variant = "warning";
+        this.alert.msg = "Demande acceptée avec succès";
+        this.alert.dismissCountDown = 5;
+      });
     },
     declineDemande(id) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
-      headersi.append("Content-Type", "application/json");
-      fetch("http://localhost:8000/api/dcc/d/" + id, {
-        method: "put",
-        body: JSON.stringify({ adminId: this.myid }),
-        headers: headersi,
-      })
-        .then((res) => res.json())
-        .then(() => {
-          this.fetchDemandeCreationClub();
-          this.edit = false;
-          this.alert.variant = "warning";
-          this.alert.msg = "Demande non acceptée avec succès";
-          this.alert.dismissCountDown = 5;
-        })
-        .catch((err) => console.log(err));
+      this.$http.put("http://localhost:8000/api/dcc/d/" + id)
+      .then(() => {
+        this.fetchDemandeCreationClub();
+        this.edit = false;
+        this.alert.variant = "warning";
+        this.alert.msg = "Demande non acceptée avec succès";
+        this.alert.dismissCountDown = 5;
+      });
     },
   },
 };

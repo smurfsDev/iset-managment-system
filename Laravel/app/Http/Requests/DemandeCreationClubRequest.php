@@ -26,12 +26,11 @@ class DemandeCreationClubRequest extends FormRequest
     public function rules()
     {
         return [
-            "nomClub"=> "required|unique:demandeCreationClub",
+            "nomClub"=> "required|unique:demande_creation_clubs",
             "dateCreation"=> "required|date",
             "activite"=> "required",
             "president"=> "required|min:2",
-            "vicePresident"=> "required|min:2",
-            "responsableClubId" => "required|exists:users,id"
+            "vicePresident"=> "required|min:2"
         ];
     }
     public function failedValidation(Validator $validator)

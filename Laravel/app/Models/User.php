@@ -41,4 +41,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function club(){
+        return $this->belongsTo('App\Models\club', 'id');
+    }
+
+    public function demandeCreationClubs(){
+        return $this->HasMany('App\Models\DemandeCreationClub', 'responsableClubId');
+    }
+
+    public function roles(){
+        return $this->belongsToMany('App\Models\Role');
+    }
+
 }
