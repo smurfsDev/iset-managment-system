@@ -13,6 +13,8 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\HeadersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\DepartementController;
