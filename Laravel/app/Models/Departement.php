@@ -14,8 +14,8 @@ class Departement extends Model
 
     ];
 
-    public function classes(){
-        return $this->hasMany(Classe::class);
+    public function salles(){
+        return $this->hasMany(Salle::class);
     }
 
     public function user(){
