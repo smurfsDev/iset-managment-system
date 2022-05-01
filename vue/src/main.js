@@ -53,18 +53,13 @@ Vue.mixin({
     },
   },
 });
-import VueResource from 'vue-resource';
-
-// telling vue.js to use this package
-Vue.use(VueResource);
-
-Vue.http.interceptors.push((request, next) => {
-  request.headers.set('Authorization', 'Bearer ' + store.getters.token);
-  request.headers.set('Accept', 'application/json');
-  next()
-})
 
 
+// importing the helper
+import interceptorsSetup from './helpers/interceptors';
+
+// and running it somewhere here
+interceptorsSetup()
 new Vue({
   store,
   router,

@@ -4,6 +4,7 @@ import router from "../../router/index";
 const state = {
   user: null,
   token: null,
+  csrfToken: null,
   secrets: null,
   isAuthenticated: false,
   isAdmin: false,
@@ -11,6 +12,7 @@ const state = {
   isSuperAdmin: false,
   message: null
 };
+
 
 const getters = {
   isAuthenticated: (state) => state.user !== null,
@@ -38,6 +40,8 @@ const actions = {
       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
+          // Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.tkn;
+
           localStorage.setItem("token", this.tkn);
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
@@ -66,6 +70,7 @@ const actions = {
       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
+
           localStorage.setItem("token", this.tkn);
           commit("setUser", response.data.data.user);
           commit("setToken", response.data.data.token);
