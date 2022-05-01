@@ -100,6 +100,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/', [ClubController::class, 'show']);
         Route::get('/a', [ClubController::class, 'getDemandeAdhesion']);
+        Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
     // Route::apiResource('secrets', SecretsController::class);
     Route::get('/test', [DemandeCreationClubController::class, 'test']);
