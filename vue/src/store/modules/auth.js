@@ -9,6 +9,7 @@ const state = {
   isAuthenticated: false,
   isAdmin: false,
   isStudent: false,
+  isResponsableClub: false,
   isSuperAdmin: false,
   message: null
 };
@@ -20,6 +21,7 @@ const getters = {
   userName: (state) =>  state.user !== null ? state.user.name : "User",
   isAdmin : (state) => state.isAdmin,
   isStudent : (state) => state.isStudent,
+  isResponsableClub : (state) => state.isResponsableClub,
   token: (state) => state.token,
 };
 const actions = {
@@ -45,6 +47,7 @@ const actions = {
           localStorage.setItem("token", this.tkn);
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
+          commit('setResponsableClub',response.data.data.isResponsableClub);
           commit("setUser", response.data.data.user);
           commit("setToken", response.data.data.token);
         } else {
@@ -100,6 +103,9 @@ const mutations = {
   },
   setStudent(state, isStudent) {
     state.isStudent = isStudent;
+  },
+  setResponsableClub(state, isResponsableClub) {
+    state.isResponsableClub = isResponsableClub;
   }
 };
 export default {
