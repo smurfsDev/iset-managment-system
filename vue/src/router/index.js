@@ -19,6 +19,7 @@ import register from "./routes/register";
 import listeClubs from "./routes/listeClubs";
 import demandeAdhesionForm from "./routes/demandeAdhesionForm";
 import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
+import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
 
 
 Vue.use(VueRouter);
@@ -54,6 +55,7 @@ const routes = [
   ...listeClubs,
   ...demandeAdhesionForm,
   ...deemandeAdhesioClub,
+  ...demandeAdhesionResponsable,
 
 ];
 

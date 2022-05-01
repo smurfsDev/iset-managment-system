@@ -63,6 +63,11 @@
                             href: '/etudiant/demandeAdhesionClub',
                             title: 'Mes Demandes d\'adhesion',
                             hidden: !this.isStudent
+                        },
+                        {
+                            href: '/club/demandeAdhesionResponsable',
+                            title: 'Demandes d\'adhesion',
+                            hidden: !this.isStudent
                         }
                     ]
                 }
