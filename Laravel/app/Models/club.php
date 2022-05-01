@@ -16,4 +16,8 @@ class club extends Model
         "president",
         "vicePresident"
     ];
+
+    public function demandeAdhesionClub(){
+        return $this->HasMany('App\Models\DemandeAdhesionClub', 'club_id');
+    }
 }
