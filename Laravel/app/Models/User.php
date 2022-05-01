@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     public function club(){
-        return $this->belongsTo('App\Models\club', 'id');
+        return $this->HasOne('App\Models\club', 'id');
     }
 
     public function demandeCreationClubs(){
@@ -57,5 +57,6 @@ class User extends Authenticatable
     public function demandeAdhesionClub(){
         return $this->HasMany('App\Models\DemandeAdhesionClub', 'user_id');
     }
+
 
 }
