@@ -16,5 +16,9 @@ class DemandeAdhesionClub extends Model
         "status"
     ];
 
+    public function club(){
+        return $this->belongsTo('App\Models\club');
+    }
+
 
 }
