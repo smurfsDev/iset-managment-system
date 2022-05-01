@@ -20,6 +20,9 @@ class RolesSeeder extends Seeder
         Role::create([
             'name' => 'student',
         ]);
+        Role::create([
+            'name' => 'responsableClub',
+        ]);
 
     }
 }
