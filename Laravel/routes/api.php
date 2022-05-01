@@ -97,6 +97,11 @@ Route::middleware('auth:sanctum')->group( function () {
     });
 
     Route::group(['prefix'=>'/dac'],function(){
+        Route::prefix('/responsable')->group(function () {
+            Route::get('/',[ClubController::class,'getDemandeAdhesionByClub']);
+            Route::put('/a/{id}',[ClubController::class,'acceptDemandeAdhesion']);
+            Route::put('/d/{id}',[ClubController::class,'refuserDemandeAdhesion']);
+        });
         Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/', [ClubController::class, 'show']);
         Route::get('/a', [ClubController::class, 'getDemandeAdhesion']);
