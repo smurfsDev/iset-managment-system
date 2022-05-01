@@ -19,7 +19,6 @@ class ClubController extends Controller
         }
     }
 
-
     public function DemandeeAdhesion(DemandeAdhesionClubRequest $request){
         $user_id = $request->user_id;
         $club_id = $request->input('club_id');
@@ -52,4 +51,16 @@ class ClubController extends Controller
             return response()->json(['success'=>'Demande supprimée avec succès']);
         }
     }
+
+    public function getDemandeAdhesionByClub(Request $request){
+        $demandes = $request->user()->club()->with('DemandeAdhesionClub')->with('DemandeAdhesionClub.user')->paginate(5);
+        return $demandes;
+        if (empty($demandes)) {
+            return response()->json(['message' => 'No demande found'], 404);
+        }else{
+            return response()->json($demandes, 200);
+        }
+    }
+
+
 }
