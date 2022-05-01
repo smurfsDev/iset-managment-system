@@ -14,17 +14,21 @@ class AuthController extends BaseController
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $authUser = Auth::user();
-            $user = User::where('id','=', $authUser->id)->with('roles')->first();
+            $user = User::where('id', '=', $authUser->id)->with('roles')->first();
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
             $success['user'] = $user;
             $success['isStudent'] = false;
             $success['isAdmin'] = false;
+            $success['isResponsableClub'] = false;
 
             if ($user->roles->contains('name', "student")) {
                 $success['isStudent'] = true;
             } else if ($user->roles->contains('name', "admin")) {
                 $success['isAdmin'] = true;
+            }
+            if ($user->roles->contains('name', "responsableClub")) {
+                $success['isResponsableClub'] = true;
             }
 
             return $this->sendResponse($success, 'User signed in');
