@@ -1,6 +1,5 @@
 import axios from "axios";
 // import store from "..";
-import Vue from "vue";
 import router from "../../router/index";
 const state = {
   user: null,
@@ -39,8 +38,6 @@ const actions = {
       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
-          Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.tkn;
-
           localStorage.setItem("token", this.tkn);
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
