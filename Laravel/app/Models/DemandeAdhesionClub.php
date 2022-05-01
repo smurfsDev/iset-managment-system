@@ -20,5 +20,9 @@ class DemandeAdhesionClub extends Model
         return $this->belongsTo('App\Models\club');
     }
 
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
+
 
 }
