@@ -62,5 +62,16 @@ class ClubController extends Controller
         }
     }
 
+    public function acceptDemandeAdhesion(Request $request,$id){
+        $demande = DemandeAdhesionClub::find($id);
+        if (empty($demande)) {
+            return response()->json(['message' => 'No demande found'], 404);
+        }else{
+            $demande->status = 1;
+            $demande->admin_id = $request->user()->id;
+            $demande->save();
+            return response()->json(['success'=>'Demande acceptée avec succès']);
+        }
+    }
 
 }
