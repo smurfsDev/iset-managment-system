@@ -1,7 +1,5 @@
 <template>
   <div class="container w-100 py-4">
-    {{ $route.params }}
-
     <!-- form containing one field for messages -->
     <div class="row">
       <div class="col-md-12">
@@ -16,8 +14,12 @@
               <form class="w-100" @submit.prevent="send">
                 <!-- one input for message bootstrap -->
                 <div class="form-group">
+                  <label for="club">Nom club</label>
+                  <input type="text" class="form-control" style="width:90%!important" id="club" disabled :value="$route.params.nomClub">
+                </div>
+                <div class="form-group">
                   <label for="message">Message</label>
-                  <textarea class="form-control" v-model="message" style="width:80%!important" id="message" rows="3"></textarea>
+                  <textarea class="form-control" v-model="message" style="width:90%!important" id="message" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
@@ -42,7 +44,16 @@ export default {
         user_id : this.$store.getters.StateUser.id,
         club_id : this.$route.params.id,
         message: this.message,
-      });
+      })
+      .then((result) => {
+        if (result.status == "200") {
+          this.$router.push({ name:"demandeAdhesionClub", params:{
+            nomClub: this.$route.params.nomClub,
+          }});
+        }
+
+      })
+      ;
       this.message = "";
     },
   },
