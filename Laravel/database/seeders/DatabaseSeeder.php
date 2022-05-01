@@ -30,6 +30,21 @@ class DatabaseSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ]);
+        \App\Models\User::create([
+            'name' => "responsableClub",
+            'email' => "responsableClub@example.com",
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
+
+        \App\Models\User::create([
+            'name' => "studentetresponsable",
+            'email' => "sr@example.com",
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
         // \App\Models\User::factory(10)->create();
 
         $this->call(DemandeCreationClubSeeder::class);
@@ -38,6 +53,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesSeeder::class);
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [1, 1]);
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [2, 2]);
+        DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [3, 3]);
+        DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [4, 3]);
+        DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [4, 2]);
 
     }
 }
