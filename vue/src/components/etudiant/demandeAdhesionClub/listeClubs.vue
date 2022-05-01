@@ -27,7 +27,7 @@
                             </b-row>
                         </b-row>
                         <b-button variant="info" 
-                            @click="demandeAdhesion(club.id)"
+                            @click="demandeAdhesion(club.id,club.nom)"
                         >
                             S'inscrire</b-button>
                     </div>
@@ -96,11 +96,12 @@ export default {
                 prev_page_url: meta.prev_page_url,
             };
         },
-        demandeAdhesion(id){
+        demandeAdhesion(id,nomClub){
             this.$router.push({
                 name: 'demandeAdhesionForm',
                 params: {
-                    id: id
+                    id: id,
+                    nomClub: nomClub  
                 }
             });
         }
