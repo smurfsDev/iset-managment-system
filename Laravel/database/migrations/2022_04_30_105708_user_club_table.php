@@ -18,8 +18,10 @@ class UserClubTable extends Migration
             $table->smallInteger('status');
             $table->foreignId('user_id');
             $table->foreignId('club_id');
+            $table->foreignId('admin_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('club_id')->references('id')->on('clubs');
+            $table->foreign('admin_id')->references('id')->on('users');
             $table->text('message');
             $table->timestamps();
         });

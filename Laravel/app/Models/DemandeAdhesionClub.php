@@ -12,6 +12,7 @@ class DemandeAdhesionClub extends Model
     protected $fillable = [
         "user_id",
         "club_id",
+        "admin_id",
         "message",
         "status"
     ];
