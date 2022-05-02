@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\club;
 
+use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class MemberController extends Controller
                 'message' => 'List of members could not be retrieved.'
             ];
             return response()->json($response, 404);
-        }	
+        }
     }
 
     /**
