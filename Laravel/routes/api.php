@@ -114,6 +114,14 @@ Route::middleware('auth:sanctum')->group( function () {
     // Route::apiResource('secrets', SecretsController::class);
     Route::get('/test', [DemandeCreationClubController::class, 'test']);
     // Route::get('/dcc', [DemandeCreationClubController::class, 'get']);
+
+    Route::group(['prefix'=>'/DemandeSalle'],function(){
+        Route::get('/',[DemandeSalleController::class,'index']);
+        Route::post('/',[DemandeSalleController::class,'store']);
+        Route::put('/{id}',[DemandeSalleController::class,'update']);
+        Route::delete('/{id}',[DemandeSalleController::class,'destroy']);
+
+    });
 });
 
 Route::group(['prefix'=>'/Salle'],function(){
@@ -122,10 +130,4 @@ Route::group(['prefix'=>'/Salle'],function(){
 Route::group(['prefix'=>'/Departement'],function(){
     Route::get('/',[DepartementController::class,'index']);
 });
-Route::group(['prefix'=>'/DemandeSalle'],function(){
-    Route::get('/',[DemandeSalleController::class,'index']);
-    Route::post('/',[DemandeSalleController::class,'store']);
-    Route::put('/{id}',[DemandeSalleController::class,'update']);
-    Route::delete('/{id}',[DemandeSalleController::class,'destroy']);
 
-});
