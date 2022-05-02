@@ -70,6 +70,12 @@
                             hidden: !this.isStudent
                         }
                     ]
+                },
+                {
+                    href :'demandeSalle',
+                    title :'Demande salle',
+                    icon : 'fa fa-file',
+                    hidden: !this.isStudent && !this.isResponsableClub, 
                 }
         
             ]
@@ -82,59 +88,6 @@ export default {
     data() {
         return {
             collapse: true,
-            menu: [
-                {
-                    header: 'Main Navigation',
-                    hiddenOnCollapse: true
-                },
-                {
-                    title: 'User',
-                    icon: 'fas fa-user',
-                    child: [
-                        {
-                            href: '/login',
-                            title: 'Login',
-                            hidden: this.isAuth
-                        },
-                        {
-                            href: '/register',
-                            title: 'Register',
-                            hidden: this.isAuth
-                        },
-                        {
-                            href: '/logout',
-                            title: 'Logout',
-                            hidden: !this.isAuth
-                        },
-                    ]
-                },
-                {
-                    href: '/login',
-                    title: 'Login',
-                    hidden: this.isAuth
-                },
-                {
-                    href: '/register',
-                    title: 'Register',
-                    hidden: this.isAuth
-                },
-                {
-                    href: '/logout',
-                    title: 'Logout',
-                    hidden: !this.isAuth
-                },
-                {
-                    href: '/',
-                    title: 'Home',
-                    icon: 'fas fa-home',
-                },
-                {
-                    href: '/Entreprise',
-                    title: 'Entreprise',
-                    icon: 'fas fa-building',
-                },
-
-            ]
         }
     },
     updated() {
@@ -179,6 +132,7 @@ export default {
             auth: 'isAuthenticated',
             admin: 'isAdmin',
             student : 'isStudent',
+            responsable : 'isResponsableClub'
         }),
         isAuth: function () {
             return this.auth;
@@ -188,6 +142,9 @@ export default {
         },
         isStudent: function () {
             return this.student;
+        },
+        isResponsableClub: function () {
+            return this.responsable;
         },
 
     }
