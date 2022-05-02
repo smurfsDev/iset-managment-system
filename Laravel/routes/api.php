@@ -8,14 +8,15 @@ use App\Http\Controllers\DemandeMaterielController;
 use App\Http\Controllers\CategorieMaterielController;
 use App\Http\Controllers\DemandeCreationClubController;
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\BoardController;
-use App\Http\Controllers\HeadersController;
-use App\Http\Controllers\ProjectsController;
-use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\club\pageClub\AboutController;
+use App\Http\Controllers\club\pageClub\BoardController;
+use App\Http\Controllers\club\pageClub\HeadersController;
+use App\Http\Controllers\club\pageClub\ProjectsController;
+use App\Http\Controllers\club\pageClub\ActivitiesController;
+
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\ClubController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\club\ClubController;
+use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\DepartementController;
