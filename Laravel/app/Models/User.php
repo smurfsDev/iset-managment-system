@@ -58,5 +58,9 @@ class User extends Authenticatable
         return $this->HasMany('App\Models\DemandeAdhesionClub', 'user_id');
     }
 
+    public function demandeSalle(){
+        return $this->HasMany('App\Models\DemandeSalle', 'idResponsable');
+    }
+
 
 }
