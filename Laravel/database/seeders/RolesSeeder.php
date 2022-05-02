@@ -23,6 +23,9 @@ class RolesSeeder extends Seeder
         Role::create([
             'name' => 'responsableClub',
         ]);
+        Role::create([
+            'name' => 'superAdmin'
+        ]);
 
     }
 }
