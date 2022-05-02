@@ -90,9 +90,9 @@ export default {
       let vm = this;
       this.$http.get(url)
       .then((res)=> {
-        this.demandes = res.data.data;
+        this.demandes = res.data.data.data;
         this.show = false;
-        vm.makePagination(res.data);
+        vm.makePagination(res.data.data);
       });
     },
     Delete(id) {
@@ -126,7 +126,7 @@ export default {
               this.alert.dismissCountDown = 5;
             } else {
               this.alert.variant = "success";
-              this.alert.msg = "Employé ajouté avec succès";
+              this.alert.msg = "Demande ajouté avec succès";
               this.alert.dismissCountDown = 5;
             }
             this.fetchDemandeSalle();
