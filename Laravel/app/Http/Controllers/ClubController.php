@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DemandeAdhesionClubRequest;
+use App\Models\Member;
 use App\Models\club;
 use App\Models\DemandeAdhesionClub;
 use Illuminate\Http\Request;
@@ -67,6 +68,10 @@ class ClubController extends Controller
         if (empty($demande)) {
             return response()->json(['message' => 'No demande found'], 404);
         }else{
+            Member::create([
+                "user_id" => $demande->user_id,
+                "club_id" => $demande->club_id
+            ]);
             $demande->status = 1;
             $demande->admin_id = $request->user()->id;
             $demande->save();
@@ -82,6 +87,8 @@ class ClubController extends Controller
             $demande->status = 2;
             $demande->admin_id = $request->user()->id;
             $demande->save();
+            $membre = Member::where('user_id','=',$demande->user_id)->where('club_id','=',$demande->club_id);
+            $membre->delete();
             return response()->json(['success'=>'Demande refuser']);
         }
     }
