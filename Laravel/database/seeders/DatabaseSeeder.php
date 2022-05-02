@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Seeders;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -56,6 +57,13 @@ class DatabaseSeeder extends Seeder
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [3, 3]);
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [4, 3]);
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [4, 2]);
+        $this->call(CategoryMaterielsSeeder::class);
+        $this->call(MaterielsSeeder::class);
+        $this->call(DemandeMaterielsSeeder::class);
+        $this->call(DepartementSeeder::class);
+        $this->call(SalleSeeder::class);
+        $this->call(DemandeSalleSeeder::class);
+
 
     }
 }

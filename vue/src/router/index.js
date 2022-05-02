@@ -6,6 +6,8 @@ import blogClub from "./routes/blogClub";
 import demandeCreationClub from "./routes/demandeCreationClub";
 import demandeCreationClubAdmin from "./routes/demandeCreationClubAdmin";
 import demandeMateriel from "./routes/demandeMateriels";
+import demandeSalle from "./routes/demandeSalle";
+
 
 import dashboard from "./routes/dashboardclub";
 import headerDash from "./routes/headerDash";
@@ -56,6 +58,8 @@ const routes = [
   ...demandeAdhesionForm,
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
+  ...demandeSalle,
+
 
 ];
 
