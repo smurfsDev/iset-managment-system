@@ -22,7 +22,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "vue-material/dist/vue-material.min.css";
 import "mdbvue/lib/css/mdb.min.css";
 import Vuetify from "vuetify";
-
+import DataTable from "@andresouzaabreu/vue-data-table";
 import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
 import VueScreen from "vue-screen";
 import VueMaterial from "vue-material";
@@ -42,7 +42,7 @@ import Axios from 'axios'
 Vue.prototype.$http = Axios; 
 Vue.prototype.$http.defaults.withCredentials = true;
 Vue.component("top-nav", require("./components/layout/topnav.vue").default);
-
+Vue.component("data-table", DataTable);
 Vue.mixin({
   methods: {
     showModal: function (id) {
@@ -54,6 +54,12 @@ Vue.mixin({
   },
 });
 
+
+// importing the helper
+import interceptorsSetup from './helpers/interceptors';
+
+// and running it somewhere here
+interceptorsSetup()
 new Vue({
   store,
   router,

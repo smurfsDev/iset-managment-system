@@ -14,6 +14,7 @@ use App\Http\Controllers\HeadersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\ClubController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\DemandeSalleController;
@@ -84,7 +85,6 @@ Route::group(['prefix'=>'/members'],function(){
     Route::delete('/{id}',[MemberController::class,'deleteMember']);
 });
 
-
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
 
@@ -97,6 +97,18 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('/{id}',[DemandeCreationClubController::class,'delete']);
         Route::put('/a/{id}',[DemandeCreationClubController::class,'accept']);
         Route::put('/d/{id}',[DemandeCreationClubController::class,'decline']);
+    });
+
+    Route::group(['prefix'=>'/dac'],function(){
+        Route::prefix('/responsable')->group(function () {
+            Route::get('/',[ClubController::class,'getDemandeAdhesionByClub']);
+            Route::put('/a/{id}',[ClubController::class,'acceptDemandeAdhesion']);
+            Route::put('/d/{id}',[ClubController::class,'refuserDemandeAdhesion']);
+        });
+        Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
+        Route::get('/', [ClubController::class, 'show']);
+        Route::get('/a', [ClubController::class, 'getDemandeAdhesion']);
+        Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
     // Route::apiResource('secrets', SecretsController::class);
     Route::get('/test', [DemandeCreationClubController::class, 'test']);

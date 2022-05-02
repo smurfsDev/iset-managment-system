@@ -18,7 +18,10 @@ import projectsDash from "./routes/projectsDash";
 import members from "./routes/members";
 import login from "./routes/login";
 import register from "./routes/register";
-
+import listeClubs from "./routes/listeClubs";
+import demandeAdhesionForm from "./routes/demandeAdhesionForm";
+import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
+import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
 
 
 Vue.use(VueRouter);
@@ -51,7 +54,12 @@ const routes = [
   ...members,
   ...login,
   ...register,
+  ...listeClubs,
+  ...demandeAdhesionForm,
+  ...deemandeAdhesioClub,
+  ...demandeAdhesionResponsable,
   ...demandeSalle,
+
 
 ];
 
