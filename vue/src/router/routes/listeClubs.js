@@ -8,6 +8,5 @@ export default [
     path: "/etudiant/listeClubs",
     component: listeClubs,
     name: "listeClubs",
-    meta: { requiresEtudiant: true},
   },
 ];
