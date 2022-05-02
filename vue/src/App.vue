@@ -8,11 +8,11 @@ overflow-y: scroll;">
       <router-link to="/about">About</router-link>
       <!-- <router-link to="/etudiant/demandeCreationClub"
         >Demande création club</router-link
-      > -->
+      > 
       <router-link to="/blogClub">Blog club</router-link>
-      <!-- <router-link to="/admin/demandeCreationClub"
+       <router-link to="/admin/demandeCreationClub"
         >Demande création club Admin</router-link
-      >
+      >-->
         <router-link to="/demandeMateriel"> demandeMateriel</router-link>
 
       <router-link to="/members"> members</router-link>
