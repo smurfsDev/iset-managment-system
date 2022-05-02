@@ -85,12 +85,16 @@ const actions = {
 };
 const mutations = {
   resetAll(state) {
-    state.user = null;
-    state.token = null;
-    state.isAuthenticated = false;
-    state.isAdmin = false;
-    state.isStudent = false;
-    state.isSuperAdmin = false;
+    state.user= null;
+    state.token= null;
+    state.csrfToken= null;
+    state.secrets= null;
+    state.isAuthenticated= false;
+    state.isAdmin= false;
+    state.isStudent= false;
+    state.isResponsableClub= false;
+    state.isSuperAdmin= false;
+    state.message= null;
   },
   setUser(state, user) {
     state.user = user;
