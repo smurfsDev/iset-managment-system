@@ -88,17 +88,12 @@ export default {
     },
     fetchDemandeSalle(url = "http://127.0.0.1:8000/api/DemandeSalle") {
       let vm = this;
-      fetch(url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          this.demandes = res.data.data;
-          vm.makePagination(res.data);
-          this.show = false;
-
-        })
-        .catch((err) => console.log(err));
+      this.$http.get(url)
+      .then((res)=> {
+        this.demandes = res.data.data;
+        this.show = false;
+        vm.makePagination(res.data);
+      });
     },
     Delete(id) {
       if (confirm("Delete demande " + id)) {
