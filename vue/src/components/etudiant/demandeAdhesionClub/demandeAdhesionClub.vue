@@ -34,7 +34,6 @@ export default {
   methods: {
     getDemandes() {
       this.$http.get("http://localhost:8000/api/dac/a").then(response => {
-        console.log(response.data.data);
         this.demandes = response.data.data
         this.demandes.forEach(demande => {
           demande.nomClub = demande.club.nom;
