@@ -58,31 +58,32 @@
                     //href: '/dashboard',
                     title: 'Dashboard blog club',
                     icon: 'fas fa-dashboard',
+                    hidden: !this.isResponsableClub,
                      child: [
                         {
                             href: '/headerDash',
                             title: 'Entete',
-                            hidden: !this.isStudent
+                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/aboutDash',
                             title: 'Qui sommes nous?',
-                            hidden: !this.isStudent
+                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/activitiesDash',
                             title: 'Activités',
-                            hidden: !this.isStudent
+                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/boardDash',
                             title: 'Membres de bureau',
-                            hidden: !this.isStudent
+                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/projectsDash',
                             title: 'Projets',
-                            hidden: !this.isStudent
+                            hidden:  !this.isResponsableClub,
                         },
 
                     ]
