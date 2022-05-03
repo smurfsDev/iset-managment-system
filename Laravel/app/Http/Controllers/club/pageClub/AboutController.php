@@ -10,8 +10,20 @@ use App\Http\Requests\AboutRequest;
 class AboutController extends Controller
 {
     public function getAbout($id){
-
         $about = about::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+        if (sizeof($about) > 0)
+            return response()->json(
+                $about,
+                200
+            );
+        else
+            return response()->json([
+                "Aucun about"
+            ], 404);
+    }
+
+    public function getClubAbout(Request $request){
+        $about = $request->user()->club()->abouts()->get();
         if (sizeof($about) > 0)
             return response()->json(
                 $about,
