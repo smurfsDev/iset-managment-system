@@ -213,13 +213,13 @@ export default {
              this.ajout=true
             alert('Header ajouté! ')
           })
-          .catch(error => {
+          .catch(() => {
             alert("Une erreur c'est produite ! Veuillez réessayer s'il vous plait !")
           })
             }
         
         })
-        .catch(error => {
+        .catch(() => {
           console.log("erreur")
         })
       

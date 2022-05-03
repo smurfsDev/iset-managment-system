@@ -179,7 +179,7 @@ export default {
             alert('Projet ajouté! ')
             this.affiche = ""
           })
-          .catch(error => {
+          .catch(() => {
             alert('Erreur! ')
           })
         // this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
