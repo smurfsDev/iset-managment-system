@@ -1,6 +1,6 @@
 <template>
-    <sidebar-menu class="position-fixed" @item-click='onItemClick' :show-one-child="true" @toggle-collapse="collapse = !collapse"
-        :width="'200px'" :menu="
+    <sidebar-menu class="position-fixed" @item-click='onItemClick' :show-one-child="true"
+        @toggle-collapse="collapse = !collapse" :width="'200px'" :menu="
             [
                 {
                     header: 'Main Navigation',
@@ -72,16 +72,23 @@
                     ]
                 },
                 {
-                    href :'demandeSalle',
-                    title :'Demande salle',
-                    icon : 'fa fa-file',
-                    hidden: !this.isStudent && !this.isResponsableClub, 
-                },
-                {
-                    href :'demandeMateriel',
-                    title :'Demande materiel',
-                    icon :'fa fa-file',
-                    hidden: !this.isStudent && !this.isResponsableClub, 
+                    title: 'Demandes',
+                    icon: 'fa fa-file',
+                    child: [
+        
+                        {
+                            href: 'demandeSalle',
+                            title: 'Demande salle',
+                            icon: 'fa fa-file',
+                            hidden: !this.isStudent && !this.isResponsableClub,
+                        },
+                        {
+                            href: 'demandeMateriel',
+                            title: 'Demande materiel',
+                            icon: 'fa fa-file',
+                            hidden: !this.isStudent && !this.isResponsableClub,
+                        }
+                    ]
                 }
         
             ]
@@ -100,7 +107,7 @@ export default {
     },
     methods: {
         onItemClick(event, item) {
-            if (item.title=="Logout") {
+            if (item.title == "Logout") {
                 this.$store.dispatch('LogOut');
             }
         },
@@ -137,8 +144,8 @@ export default {
         ...mapGetters({
             auth: 'isAuthenticated',
             admin: 'isAdmin',
-            student : 'isStudent',
-            responsable : 'isResponsableClub'
+            student: 'isStudent',
+            responsable: 'isResponsableClub'
         }),
         isAuth: function () {
             return this.auth;
