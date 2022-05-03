@@ -1,28 +1,12 @@
 <template>
   <div id="app" style="max-height: 100vh;
 overflow-y: scroll;">
-    <top-nav/>
+    <top-nav />
     <div id="nav">
 
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-      <!-- <router-link to="/etudiant/demandeCreationClub"
-        >Demande création club</router-link
-      > 
-      <router-link to="/blogClub">Blog club</router-link>
-       <router-link to="/admin/demandeCreationClub"
-        >Demande création club Admin</router-link
-      >-->
-        <router-link to="/demandeMateriel"> demandeMateriel</router-link>
-
-      <router-link to="/members"> members</router-link>
-      <router-link to="/dashboard"> dashboardClub</router-link>
-      
-      <router-link to="/demandeSalle"> DemandeSalle</router-link>
-
-      > 
       <router-link to="/demandeMateriel"> demandeMateriel</router-link>
-
       <router-link to="/members"> members</router-link>
       <router-link to="/dashboard"> dashboardClub</router-link>
     </div>
