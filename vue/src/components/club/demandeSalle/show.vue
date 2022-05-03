@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="w-100">
         <div class="card card-body my-5 py-5 text-center" v-if="demandes.length == 0">
             <h3>il y'a aucune demande</h3>
         </div>
-        <b-card class="my-2" v-for="demande in demandes" :key="demande.id">
+        <b-card class="my-2 w-100" v-for="demande in demandes" :key="demande.id">
             <md-tabs>
                 <md-tab id="tab-home" md-label="demande">
                     <div class="bv-example-row text-center">
