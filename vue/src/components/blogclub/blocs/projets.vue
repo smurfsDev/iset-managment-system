@@ -26,7 +26,6 @@ export default {
   },
   created(){
     this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
-        // console.log(response.data.data);
         this.projects = response.data.data;
        
     })

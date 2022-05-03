@@ -21,7 +21,6 @@ export default {
   },
   created(){
     this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
-     // console.log(response.data.data);
       this.abouts = response.data.data
      
     })

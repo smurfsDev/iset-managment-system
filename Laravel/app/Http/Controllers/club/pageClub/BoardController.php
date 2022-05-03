@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\club\pageClub;
 
+use App\Http\Controllers\Controller;
 use App\Models\board;
 use Illuminate\Http\Request;
 use App\Http\Requests\BoardsRequest;

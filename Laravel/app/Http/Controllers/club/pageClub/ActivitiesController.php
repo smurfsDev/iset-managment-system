@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\club\pageClub;
 
+use App\Http\Controllers\Controller;
 use App\Models\activity;
 use Illuminate\Http\Request;
 use App\Http\Requests\ActivitiesRequest;
@@ -45,9 +46,9 @@ class ActivitiesController extends Controller
     }
 
     public function deleteActivity($idClub,$idActivity){
-      
+
         $activity = activity::find($idActivity);
-       
+
         if ($activity){
             $activity->delete();
             return response()->json([
@@ -67,7 +68,7 @@ class ActivitiesController extends Controller
 
         $activity = activity::find($idActivity);
         if ($activity) {
-      
+
             $activity->paragraphe = $request->input('paragraphe') ? $request->input('paragraphe') : $activity->paragraphe;
             $activity->idClub = $idClub;
             $activity->save();
