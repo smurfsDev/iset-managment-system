@@ -76,6 +76,12 @@
                     title :'Demande salle',
                     icon : 'fa fa-file',
                     hidden: !this.isStudent && !this.isResponsableClub, 
+                },
+                {
+                    href :'demandeMateriel',
+                    title :'Demande materiel',
+                    icon :'fa fa-file',
+                    hidden: !this.isStudent && !this.isResponsableClub, 
                 }
         
             ]
