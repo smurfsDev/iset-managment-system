@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import Demandemateriels from "./demandes.vue";
+import Demandemateriels from "./show.vue";
 import formDemandeMateriel from "./creeDemandeForm.vue";
 // import search from '../search.vue';
 
@@ -109,11 +109,9 @@ export default {
   methods: {
     fetchDemandeMateriels(page_url = "http://127.0.0.1:8000/api/dm") {
       let vm = this;
-      fetch(page_url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
+      this.$http.get(page_url)
         .then((res) => {
+          res = res.data;
           if (res.constructor !== Array) {
             this.DemandeMater = res.data;
           } else {
@@ -135,14 +133,9 @@ export default {
       };
     },
     deleteDemande(id) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
       if (confirm("Delete demande " + id)) {
         this.show = true;
-        fetch("http://localhost:8000/api/dm/" + id, {
-          method: "delete",
-          headers: headersi,
-        })
+        this.$http.delete("http://localhost:8000/api/dm/" + id)
           .then(() => {
             this.fetchDemandeMateriels();
             this.alert.variant = "danger";
@@ -157,19 +150,10 @@ export default {
       this.document = {};
     },
     addDemande(demande) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
-      headersi.append("Content-Type", "application/json");
-      demande.responsableClubId = this.myid;
       this.show = true;
-      console.log(demande.id);
       if (!this.edit) {
-        fetch("http://localhost:8000/api/dm/", {
-          method: "post",
-          body: JSON.stringify(demande),
-          headers: headersi,
-        })
-          .then((res) => res.json())
+        this.$http.post("http://localhost:8000/api/dm/",demande)
+          .then((res) => res.data)
           .then((data) => {
             if (data.success == false) {
               this.alert.variant = "danger";
@@ -190,12 +174,7 @@ export default {
           })
           .catch((err) => console.log(err));
       } else {
-        fetch("http://localhost:8000/api/dm/" + demande.id, {
-          method: "put",
-          body: JSON.stringify(demande),
-          headers: headersi,
-        })
-          .then((res) => res.json())
+        this.$http.put("http://localhost:8000/api/dm/" + demande.id, demande)
           .then(() => {
             this.fetchDemandeMateriels();
             this.edit = false;
@@ -220,10 +199,8 @@ export default {
     },
 
     fetchCategories(page_url = "http://127.0.0.1:8000/api/c") {
-      fetch(page_url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
+      this.$http.get(page_url)
+        .then((res) => res.data)
         .then((res) => {
           this.categories = res.data;
         })
