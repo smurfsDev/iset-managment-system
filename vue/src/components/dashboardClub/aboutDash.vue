@@ -18,14 +18,14 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter une longue description</h1>
+            <h1 class="h1" style="font-family:monospace">Ajouter une longue description</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
          
           <form @submit.prevent="createDescription" v-if="update==false" >
             <div class="mb-3">
-              <label for="longDesc" class="form-label"
+              <label for="longDesc" class="form-label" style="font-family:monospace"
                 >Saisir une longue description</label
               >
               <input
@@ -36,12 +36,12 @@
                 
               />
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success" >Submit</button>
           </form>
 
           <form @submit.prevent="submitEdit" v-if="update==true" >
             <div class="mb-3">
-              <label for="longDesc" class="form-label"
+              <label for="longDesc" class="form-label" style="font-family:monospace"
                 >Saisir une longue description</label
               >
               <input
@@ -57,12 +57,12 @@
           </form>
 
           <div v-if="created==true">
-            <h2>Longue description</h2>
+            <h2 style="font-family:monospace">Longue description</h2>
             <ol class="list-group list-group" v-for="(item, index) in abouts" :key="index">
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-0 me-auto">
                   
-                  <p>{{item.longDescription}}</p>
+                  <p style="font-family:monospace">{{item.longDescription}}</p>
                   
                 </div><br>
                 <div class="badge bg-warning rounded-pill btn btn-sm" @click="updateDescription(item.id)" ><b-icon-pen></b-icon-pen></div>
@@ -88,7 +88,7 @@
       
         </div>
         
-          <h2>Section title</h2>
+         
         </main>
       </div>
     </div>
