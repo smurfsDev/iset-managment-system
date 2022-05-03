@@ -67,7 +67,7 @@ Spring/.nb-gradle/
 Spring/build/
 Spring/**/src/main/**/build/
 Spring/**/src/test/**/build/
-
+Spring/src/main/resources/application.properties
 ### VS Code ###
 Spring/.vscode/
 
