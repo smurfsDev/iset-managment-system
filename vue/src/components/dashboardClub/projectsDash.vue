@@ -6,6 +6,7 @@
     
       <div class="row">
         <main>
+           
           <div
             class="
               d-flex
@@ -18,7 +19,7 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter un ancien projet</h1>
+            <h1 style="font-family:monospace">Ajouter un ancien projet</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
@@ -26,7 +27,7 @@
            
              
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Une affiche</label
               >
               <input
@@ -46,8 +47,8 @@
           
           <form @submit.prevent="submitEdit" v-if="update==true">
             <div class="mb-3">
-              <label for="image" class="form-label"
-                >Photo</label
+              <label for="image" class="form-label" style="font-family:monospace" 
+                >Affiche</label
               >
               <input
                 type="file"

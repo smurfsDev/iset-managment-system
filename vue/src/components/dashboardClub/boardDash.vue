@@ -18,13 +18,13 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter un membre de bureau</h1>
+            <h1 class="h1" style="font-family:monospace">Ajouter un membre de bureau</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
           <form @submit.prevent="createMember" v-if="ajout == true">
             <div class="mb-3">
-              <label for="name" class="form-label"
+              <label for="name" class="form-label" style="font-family:monospace"
                 >Saisir le nom</label
               >
               <input
@@ -36,7 +36,7 @@
               />
             </div>
              <div class="mb-3">
-              <label for="post" class="form-label"
+              <label for="post" class="form-label" style="font-family:monospace"
                 >Saisir le poste</label
               >
               <input
@@ -48,7 +48,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Un photo</label
               >
               <input
@@ -68,7 +68,7 @@
           
           <form @submit.prevent="submitEdit" v-if="update==true">
             <div class="mb-3">
-              <label for="nom" class="form-label"
+              <label for="nom" class="form-label" style="font-family:monospace"
                 >Saisir un nom</label
               >
               <input
@@ -80,7 +80,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="post" class="form-label"
+              <label for="post" class="form-label" style="font-family:monospace"
                 >Saisir un post</label
               >
               <input
@@ -92,7 +92,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="image" class="form-label"
+              <label for="image" class="form-label" style="font-family:monospace"
                 >Photo</label
               >
               <input
@@ -114,7 +114,7 @@
           <div class="card column" style="width: 18rem;"  v-for="(item, index) in boards" :key="index" >
             <img v-bind:src="item.image" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{item.nom}}</h5>
+              <h5 class="card-title" style="font-family:monospace">{{item.nom}}</h5>
               
                 <p class="card-text">{{item.post}}</p>
                 
@@ -134,7 +134,7 @@
       
     </div>
         
-          <h2>Section title</h2>
+          
         </main>
       </div>
     </div>

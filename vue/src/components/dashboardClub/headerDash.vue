@@ -18,13 +18,13 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter Entete</h1>
+            <h1 class="h1" style="font-family:monospace">Ajouter Entete</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
           <form @submit.prevent="createHeader" v-if="ajout==false">
             <div class="mb-3">
-              <label for="petiteDesc" class="form-label"
+              <label for="petiteDesc" class="form-label" style="font-family:monospace"
                 >Saisir une petite description</label
               >
               <input
@@ -36,7 +36,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Image d'arrière plan pour l'entete du blog</label
               >
               <input
@@ -56,7 +56,7 @@
           
           <form @submit.prevent="submitEdit" v-if="update==true">
             <div class="mb-3">
-              <label for="petiteDesc" class="form-label"
+              <label for="petiteDesc" class="form-label" style="font-family:monospace"
                 >Saisir une petite description</label
               >
               <input
@@ -68,7 +68,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Image d'arrière plan pour l'entete du blog</label
               >
               <input
@@ -90,7 +90,7 @@
             <img v-bind:src="backgroundImage" class="card-img-top" alt="...">
             <div class="card-body">
              
-              <p class="card-text">{{petiteDescription}}</p>
+              <p class="card-text" style="font-family:monospace">{{petiteDescription}}</p>
               <button  class="btn btn-danger" @click="deleteHeader(id)"><b-icon-trash></b-icon-trash></button>
               <button  class="btn btn-warning" @click="updateHeader(id)"><b-icon-pen></b-icon-pen></button>
             </div>
@@ -106,7 +106,7 @@
       
     </div>
          
-          <h2>Section title</h2>
+         
         </main>
       </div>
     </div>

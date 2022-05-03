@@ -17,14 +17,14 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter une activité</h1>
+            <h1 class="h1" style="font-family:monospace">Ajouter une activité</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
          
           <form @submit.prevent="createActivity" v-if="update==false" >
             <div class="mb-3">
-              <label for="longDesc" class="form-label"
+              <label for="longDesc" class="form-label" style="font-family:monospace"
                 >Saisir un activité</label
               >
               <input
@@ -40,7 +40,7 @@
 
           <form @submit.prevent="submitEdit" v-if="update==true" >
             <div class="mb-3">
-              <label for="paragraphe" class="form-label"
+              <label for="paragraphe" class="form-label" style="font-family:monospace"
                 >Saisir un activité</label
               >
               <input
@@ -56,12 +56,12 @@
           </form>
 
           <div v-if="created==true">
-            <h2>Les activités</h2>
+            <h2 style="font-family:monospace">Les activités</h2>
             <ul class="list-group list-group" v-for="(item, index) in activities" :key="index">
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-0 me-auto">
                  
-                  <p>{{item.paragraphe}}</p>
+                  <p style="font-family:monospace">{{item.paragraphe}}</p>
                   
                 </div><br>
                 <div class="badge bg-warning rounded-pill btn btn-sm" @click="updateParagraphe(item.id)" ><b-icon-pen></b-icon-pen></div>
@@ -87,7 +87,7 @@
       
         </div>
         
-          <h2>Section title</h2>
+          
         </main>
       </div>
     </div>
