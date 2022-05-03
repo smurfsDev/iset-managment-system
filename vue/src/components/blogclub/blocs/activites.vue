@@ -21,12 +21,7 @@ export default {
   },
   created(){
     this.$http.get('http://localhost:8000/api/1/activities/getAll').then(response => {
-        // console.log(response.data.data);
-        
           this.tasks = response.data.data
-         
-      
-          
         })
   }
 };

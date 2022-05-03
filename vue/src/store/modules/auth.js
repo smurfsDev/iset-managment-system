@@ -1,17 +1,19 @@
 import axios from "axios";
 // import store from "..";
-import Vue from "vue";
 import router from "../../router/index";
 const state = {
   user: null,
   token: null,
+  csrfToken: null,
   secrets: null,
   isAuthenticated: false,
   isAdmin: false,
   isStudent: false,
+  isResponsableClub: false,
   isSuperAdmin: false,
   message: null
 };
+
 
 const getters = {
   isAuthenticated: (state) => state.user !== null,
@@ -19,6 +21,7 @@ const getters = {
   userName: (state) =>  state.user !== null ? state.user.name : "User",
   isAdmin : (state) => state.isAdmin,
   isStudent : (state) => state.isStudent,
+  isResponsableClub : (state) => state.isResponsableClub,
   token: (state) => state.token,
 };
 const actions = {
@@ -39,11 +42,12 @@ const actions = {
       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
-          Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.tkn;
+          // Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.tkn;
 
           localStorage.setItem("token", this.tkn);
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
+          commit('setResponsableClub',response.data.data.isResponsableClub);
           commit("setUser", response.data.data.user);
           commit("setToken", response.data.data.token);
         } else {
@@ -69,6 +73,7 @@ const actions = {
       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
+
           localStorage.setItem("token", this.tkn);
           commit("setUser", response.data.data.user);
           commit("setToken", response.data.data.token);
@@ -80,12 +85,16 @@ const actions = {
 };
 const mutations = {
   resetAll(state) {
-    state.user = null;
-    state.token = null;
-    state.isAuthenticated = false;
-    state.isAdmin = false;
-    state.isStudent = false;
-    state.isSuperAdmin = false;
+    state.user= null;
+    state.token= null;
+    state.csrfToken= null;
+    state.secrets= null;
+    state.isAuthenticated= false;
+    state.isAdmin= false;
+    state.isStudent= false;
+    state.isResponsableClub= false;
+    state.isSuperAdmin= false;
+    state.message= null;
   },
   setUser(state, user) {
     state.user = user;
@@ -98,6 +107,9 @@ const mutations = {
   },
   setStudent(state, isStudent) {
     state.isStudent = isStudent;
+  },
+  setResponsableClub(state, isResponsableClub) {
+    state.isResponsableClub = isResponsableClub;
   }
 };
 export default {

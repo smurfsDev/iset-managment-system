@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\club\pageClub;
 
+use App\Http\Controllers\Controller;
 use App\Models\about;
 use Illuminate\Http\Request;
 use App\Http\Requests\AboutRequest;
@@ -45,9 +46,9 @@ class AboutController extends Controller
         return "About created";
     }
     public function deleteAbout($idClub,$idAbout){
-      
+
         $about = about::find($idAbout);
-       
+
         if ($about){
             $about->delete();
             return response()->json([
@@ -67,7 +68,7 @@ class AboutController extends Controller
 
         $about = about::find($idAbout);
         if ($about) {
-      
+
             $about->longDescription = $request->input('longDescription') ? $request->input('longDescription') : $about->longDescription;
             $about->idClub = $idClub;
             $about->save();
