@@ -43,7 +43,6 @@ export default {
     };
   },
   created() {
-    // console.log(typeof $);
     document.title = "Demande";
     this.fetchDemandeCreationClub();
   },
