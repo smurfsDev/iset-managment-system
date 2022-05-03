@@ -215,14 +215,12 @@ export default {
           })
           .catch(error => {
             alert("Une erreur c'est produite ! Veuillez réessayer s'il vous plait !")
-          console.log('error', error);
           })
             }
         
         })
         .catch(error => {
           console.log("erreur")
-          console.log(error)
         })
       
 

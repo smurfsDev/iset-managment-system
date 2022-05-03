@@ -134,7 +134,6 @@ export default {
       
       if (response.data.data!=null){
         this.projects = response.data.data;
-        console.log(this.projects)
         this.ajout = true;
       }
         
@@ -182,7 +181,6 @@ export default {
           })
           .catch(error => {
             alert('Erreur! ')
-          console.log('error', error);
           })
         // this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
 

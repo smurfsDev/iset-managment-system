@@ -54,7 +54,6 @@ export default {
     };
   },
   created() {
-    // console.log(typeof $);
     this.fetchDemandeSalle();
     if (this.$route.params.add == 1) {
       this.alert.variant = "success";
