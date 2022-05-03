@@ -63,31 +63,25 @@
                         {
                             href: '/headerDash',
                             title: 'Entete',
-                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/aboutDash',
                             title: 'Qui sommes nous?',
-                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/activitiesDash',
                             title: 'Activités',
-                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/boardDash',
                             title: 'Membres de bureau',
-                            hidden: !this.isResponsableClub,
                         },
                         {
                             href: '/projectsDash',
                             title: 'Projets',
-                            hidden:  !this.isResponsableClub,
                         },
 
                     ]
-                    //hidden: !this.isStudent
                 },
                 {
                     href: '/etudiant/listeClubs',
