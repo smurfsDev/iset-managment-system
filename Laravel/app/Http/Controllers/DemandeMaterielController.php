@@ -34,7 +34,7 @@ class DemandeMaterielController extends Controller
         return "Success";
     }
     public function show(Request $request){
-        $DemandeMateriel = $request->user()->DemandeMateriel()->paginate(5);
+        $DemandeMateriel = $request->user()->DemandeMateriel()->with('materiel')->paginate(5);
         if(!empty($DemandeMateriel)){
         return response()->json($DemandeMateriel, 200);
         }
