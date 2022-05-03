@@ -84,6 +84,7 @@
                             title: 'Projets',
                             hidden: !this.isStudent
                         },
+
                     ]
                     //hidden: !this.isStudent
                 },
