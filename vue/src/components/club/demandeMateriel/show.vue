@@ -266,10 +266,8 @@ export default {
     fetchMateriels(
       page_url = "http://127.0.0.1:8000/api/m/" + this.idCategorie
     ) {
-      fetch(page_url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
+      this.$http.get(page_url)
+        .then((res) => res.data)
         .then((res) => {
           this.materiels = res.data;
         })
@@ -310,10 +308,8 @@ export default {
     },
     //delete materiel
     deleteMateriel(idMateriel, idDemande) {
-      fetch("http://127.0.0.1:8000/api/m/" + idMateriel + "/" + idDemande, {
-        method: "delete",
-      })
-        .then((res) => res.json())
+      this.$http.delete("http://127.0.0.1:8000/api/m/" + idMateriel + "/" + idDemande)
+        .then((res) => res.data)
         .then((data) => {
           if (data.attached == true) {
             this.alert.variant = "success";
