@@ -17,8 +17,7 @@ class CreateDemandeMaterielMaterielsTable extends Migration
             $table->id();
             $table->foreignId("idDemande");
             $table->foreignId("idMateriel");
-            $table->integer("quantité");
-            $table->timestamps();
+            $table->integer("quantité")->default(0);
             $table->foreign('idDemande')->references('id')->on('demande_materiels')->onDelete('cascade');
             $table->foreign('idMateriel')->references('id')->on('materiels')->onDelete('cascade');
 
