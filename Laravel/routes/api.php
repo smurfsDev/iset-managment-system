@@ -34,23 +34,6 @@ use App\Http\Controllers\DepartementController;
 */
 
 
-
-Route::group(['prefix'=>'/dm'],function(){
-    Route::get('/',[DemandeMaterielController::class,'show']);
-    // Route::get('/{id}',[DemandeMaterielController::class,'showMyDemandes']);
-    Route::post('/',[DemandeMaterielController::class,'create']);
-    Route::put('/{id}',[DemandeMaterielController::class,'update']);
-    Route::delete('/{id}',[DemandeMaterielController::class,'delete']);
-});
-Route::group(['prefix'=>'/m'],function(){
-    Route::get('/M/{id}',[MaterielController::class,'show']);
-    Route::get('/{id}',[MaterielController::class,'showMaterialsOfCategory']);
-    Route::post('/{idM}/{idD}',[MaterielController::class,'addMateriel']);
-    Route::put('/Q/{idM}/{idD}',[MaterielController::class,'setQuantity']);
-    Route::delete('/{idM}/{idD}',[MaterielController::class,'deleteMateriel']);
-    Route::put('/{idM}/{idD}',[MaterielController::class,'update']);
-    Route::delete('/{id}',[MaterielController::class,'delete']);
-});
 Route::group(['prefix'=>'/c'],function(){
     Route::get('/',[CategorieMaterielController::class,'show']);
 });
@@ -107,7 +90,6 @@ Route::middleware('auth:sanctum')->group( function () {
             Route::put('/d/{id}',[ClubController::class,'refuserDemandeAdhesion']);
         });
         Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
-        Route::get('/', [ClubController::class, 'show']);
         Route::get('/a', [ClubController::class, 'getDemandeAdhesion']);
         Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
@@ -122,7 +104,28 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('/{id}',[DemandeSalleController::class,'destroy']);
 
     });
+
+
+
+Route::group(['prefix'=>'/dm'],function(){
+    Route::get('/',[DemandeMaterielController::class,'show']);
+    // Route::get('/{id}',[DemandeMaterielController::class,'showMyDemandes']);
+    Route::post('/',[DemandeMaterielController::class,'create']);
+    Route::put('/{id}',[DemandeMaterielController::class,'update']);
+    Route::delete('/{id}',[DemandeMaterielController::class,'delete']);
 });
+Route::group(['prefix'=>'/m'],function(){
+    Route::get('/M/{id}',[MaterielController::class,'show']);
+    Route::get('/{id}',[MaterielController::class,'showMaterialsOfCategory']);
+    Route::post('/{idM}/{idD}',[MaterielController::class,'addMateriel']);
+    Route::put('/Q/{idM}/{idD}',[MaterielController::class,'setQuantity']);
+    Route::delete('/{idM}/{idD}',[MaterielController::class,'deleteMateriel']);
+    Route::put('/{idM}/{idD}',[MaterielController::class,'update']);
+    Route::delete('/{id}',[MaterielController::class,'delete']);
+});
+});
+Route::get('/dac', [ClubController::class, 'show']);
+
 
 Route::group(['prefix'=>'/Salle'],function(){
     Route::get('/{id}',[SalleController::class,'index']);
