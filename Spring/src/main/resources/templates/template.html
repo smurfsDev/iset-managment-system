@@ -30,6 +30,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						th:href="@{listeDcc}">Lister</a>
 				</div>
 			</li>
+			<li class="nav-item dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Blog Club
+				</button>
+				<div class="dropdown-menu">
+					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateBlog}">Gérer</a> 
+					<a class="dropdown-item"
+						th:href="@{blogClub}">Consulter</a>
+				</div>
+			</li>
 			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
 				<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

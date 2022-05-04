@@ -31,6 +31,9 @@ public class About {
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
+    public About() {
+        super();
+    }
     public Long getId() {
         return id;
     }

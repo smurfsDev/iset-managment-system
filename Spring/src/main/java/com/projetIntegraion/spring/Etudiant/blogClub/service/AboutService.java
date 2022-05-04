@@ -4,6 +4,8 @@ import com.projetIntegraion.spring.Etudiant.blogClub.entity.About;
 import com.projetIntegraion.spring.Etudiant.blogClub.repository.AboutRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,7 +37,7 @@ public class AboutService {
 		return false;
 	}
 
-	public About getClub(Long id) {
+	public About getAbout(Long id) {
 		return aboutRepository.existsById(id) == false ? null : aboutRepository.findById(id).get();
 	}
 
@@ -43,9 +45,9 @@ public class AboutService {
 	// 	return clubRepository.findAll();
 	// }
 
-	// public Page<About> getAllDemandeCreationClubParPage(int page, int size){
-	// 	return clubRepository.findAll(PageRequest.of(page, size));
-	// };
+	public Page<About> getAllAboutsParPage(int page, int size){
+		return aboutRepository.findAll(PageRequest.of(page, size));
+	};
 
 	// public Page<Club> getClubParNom(String nom, int page, int size){
 	// 	return clubRepository.findByNomClubContains(nom, page, size); //(nom, PageRequest.of(page, size));
