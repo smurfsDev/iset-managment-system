@@ -2,20 +2,14 @@ package com.projetIntegraion.spring;
 
 import java.util.Date;
 
-import com.projetIntegraion.spring.Etudiant.blogClub.entity.Club;
-import com.projetIntegraion.spring.Etudiant.blogClub.service.ClubService;
-import com.projetIntegraion.spring.Etudiant.blogClub.service.UserService;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
 
-	
+
 
 	// public static void main(String[] args) {
 	// 	SpringApplication.run(Application.class, args);
