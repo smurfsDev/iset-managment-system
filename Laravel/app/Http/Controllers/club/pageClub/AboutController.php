@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\club\pageClub;
 
+use App\Http\Controllers\Controller;
 use App\Models\about;
 use Illuminate\Http\Request;
 use App\Http\Requests\AboutRequest;
@@ -9,8 +10,20 @@ use App\Http\Requests\AboutRequest;
 class AboutController extends Controller
 {
     public function getAbout($id){
-
         $about = about::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+        if (sizeof($about) > 0)
+            return response()->json(
+                $about,
+                200
+            );
+        else
+            return response()->json([
+                "Aucun about"
+            ], 404);
+    }
+
+    public function getClubAbout(Request $request){
+        $about = $request->user()->club()->abouts()->get();
         if (sizeof($about) > 0)
             return response()->json(
                 $about,
@@ -45,9 +58,9 @@ class AboutController extends Controller
         return "About created";
     }
     public function deleteAbout($idClub,$idAbout){
-      
+
         $about = about::find($idAbout);
-       
+
         if ($about){
             $about->delete();
             return response()->json([
@@ -67,7 +80,7 @@ class AboutController extends Controller
 
         $about = about::find($idAbout);
         if ($about) {
-      
+
             $about->longDescription = $request->input('longDescription') ? $request->input('longDescription') : $about->longDescription;
             $about->idClub = $idClub;
             $about->save();

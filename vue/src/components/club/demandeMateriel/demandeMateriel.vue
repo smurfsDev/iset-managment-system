@@ -1,53 +1,30 @@
 <template>
   <div>
-    <formDemandeMateriel
-      @addDemande="addDemande"
-      :oldDemande="demande"
-      :categories="categories"
-    />
+    <formDemandeMateriel @addDemande="addDemande" :oldDemande="demande" :categories="categories" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
-        <b-overlay
-          v-if="show"
-          :show="show"
-          class="d-inline-block"
-          style="height: 500px; width: 100%"
-        ></b-overlay>
+        <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
         <div v-if="!show">
           <b-container class="bv-example-row py-0">
             <b-row class="text-center">
               <b-col cols="8">
-                <button
-                  type="button"
-                  class="btn btn-primary mx-1 float-start"
-                  data-bs-toggle="modal"
-                  @click="initModal()"
-                  data-bs-target="#demandeModal"
-                >
+                <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
+                  @click="initModal()" data-bs-target="#demandeModal">
                   Nouvelle demande
                 </button>
               </b-col>
               <b-col></b-col>
             </b-row>
           </b-container>
-          <b-alert
-            class="mt-4"
-            :show="alert.dismissCountDown"
-            dismissible
-            :variant="alert.variant"
-            @dismissed="alert.dismissCountDown = 0"
-          >
+          <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
+            @dismissed="alert.dismissCountDown = 0">
             <p>{{ alert.msg }}</p>
           </b-alert>
 
           <!-- <b-card> -->
-          <Demandemateriels
-            @deleteDemande="deleteDemande"
-            :demandes="DemandeMater"
-            @fetchDemande="fetchDemandeMateriels"
-            @updateDemande="updateDemande"
-            :pagination="pagination"
-          />
+          <Demandemateriels @deleteDemande="deleteDemande" :demandes="DemandeMater" @deleteMateriel="deleteMateriel"
+            @fetchDemande="fetchDemandeMateriels" @updateDemande="updateDemande" @attachMateriel="attachMateriel"
+            :pagination="pagination" @setQuantity="setQuantity" />
           <!-- </b-card> -->
         </div>
       </div>
@@ -56,7 +33,7 @@
 </template>
 
 <script>
-import Demandemateriels from "./demandes.vue";
+import Demandemateriels from "./show.vue";
 import formDemandeMateriel from "./creeDemandeForm.vue";
 // import search from '../search.vue';
 
@@ -86,10 +63,8 @@ export default {
     };
   },
   created() {
-    // console.log(typeof $);
     document.title = "Demande";
     this.fetchDemandeMateriels();
-    // this.fetchMateriels();
     this.fetchCategories();
 
     if (this.$route.params.add == 1) {
@@ -109,11 +84,9 @@ export default {
   methods: {
     fetchDemandeMateriels(page_url = "http://127.0.0.1:8000/api/dm") {
       let vm = this;
-      fetch(page_url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
+      this.$http.get(page_url)
         .then((res) => {
+          res = res.data;
           if (res.constructor !== Array) {
             this.DemandeMater = res.data;
           } else {
@@ -135,21 +108,16 @@ export default {
       };
     },
     deleteDemande(id) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
       if (confirm("Delete demande " + id)) {
         this.show = true;
-        fetch("http://localhost:8000/api/dm/" + id, {
-          method: "delete",
-          headers: headersi,
-        })
+        this.$http.delete("http://localhost:8000/api/dm/" + id)
           .then(() => {
             this.fetchDemandeMateriels();
             this.alert.variant = "danger";
             this.alert.msg = "Demande suprimée avec succès";
             this.alert.dismissCountDown = 5;
           })
-          .then(() => {})
+          .then(() => { })
           .catch((err) => console.log(err));
       }
     },
@@ -157,19 +125,10 @@ export default {
       this.document = {};
     },
     addDemande(demande) {
-      let headersi = new Headers();
-      headersi.append("auth", 5);
-      headersi.append("Content-Type", "application/json");
-      demande.responsableClubId = this.myid;
       this.show = true;
-      console.log(demande.id);
       if (!this.edit) {
-        fetch("http://localhost:8000/api/dm/", {
-          method: "post",
-          body: JSON.stringify(demande),
-          headers: headersi,
-        })
-          .then((res) => res.json())
+        this.$http.post("http://localhost:8000/api/dm/", demande)
+          .then((res) => res.data)
           .then((data) => {
             if (data.success == false) {
               this.alert.variant = "danger";
@@ -190,12 +149,7 @@ export default {
           })
           .catch((err) => console.log(err));
       } else {
-        fetch("http://localhost:8000/api/dm/" + demande.id, {
-          method: "put",
-          body: JSON.stringify(demande),
-          headers: headersi,
-        })
-          .then((res) => res.json())
+        this.$http.put("http://localhost:8000/api/dm/" + demande.id, demande)
           .then(() => {
             this.fetchDemandeMateriels();
             this.edit = false;
@@ -220,15 +174,67 @@ export default {
     },
 
     fetchCategories(page_url = "http://127.0.0.1:8000/api/c") {
-      fetch(page_url, {
-        method: "GET",
-      })
-        .then((res) => res.json())
+      this.$http.get(page_url)
+        .then((res) => res.data)
         .then((res) => {
           this.categories = res.data;
         })
         .catch((err) => console.log(err));
     },
+    attachMateriel(idMateriel, idDemande) {
+      this.$http
+        .get("http://localhost:8000/sanctum/csrf-cookie", {
+          withCredentials: true
+        })
+        .then(() => { })
+        .catch(() => { }).then(() => {
+
+          this.$http.post("http://127.0.0.1:8000/api/m/" + idMateriel + "/" + idDemande, null)
+            .then((res) => res.data)
+            .then((data) => {
+              if (data.attached == true) {
+                this.alert.variant = "success";
+                this.alert.msg = "Materiel attachée avec succès";
+                this.alert.dismissCountDown = 5;
+              } else {
+                this.alert.variant = "danger";
+                this.alert.msg = "Materiel détachée avec succès";
+                this.alert.dismissCountDown = 5;
+              }
+      this.fetchDemandeMateriels();
+
+            })
+            .catch((err) => console.log(err));
+        });
+    },
+    deleteMateriel(idMateriel, idDemande) {
+      this.$http.delete("http://127.0.0.1:8000/api/m/" + idMateriel + "/" + idDemande)
+        .then((res) => res.data)
+        .then((data) => {
+          this.fetchDemandeMateriels();
+          if (data.attached == true) {
+            this.alert.variant = "success";
+            this.alert.msg = "Materiel attachée avec succès";
+            this.alert.dismissCountDown = 5;
+          } else {
+            this.alert.variant = "danger";
+            this.alert.msg = "Materiel détachée avec succès";
+            this.alert.dismissCountDown = 5;
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    setQuantity(idMateriel, idDemande, quantite){
+      this.$http.put("http://127.0.0.1:8000/api/m/Q/" + idMateriel + "/" + idDemande, { quantité: quantite })
+        .then((res) => res.data)
+        .then(() => {
+            this.alert.variant = "success";
+            this.alert.msg = "quantité modifier avec succès";
+            this.alert.dismissCountDown = 5;
+          }
+        )
+        .catch((err) => console.log(err));
+    }
   },
 };
 </script>

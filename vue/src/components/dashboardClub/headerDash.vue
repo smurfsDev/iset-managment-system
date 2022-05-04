@@ -1,23 +1,11 @@
 <template>
   <div>
-    <header
-      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
-    >
-      <a class="navbar-brand col-md-3 col-lg-9 me-0 px-3" href="/blogClub"
-        >Club name</a
-      >
+    
 
-      <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
-          <a class="nav-link px-3" href="#">Sign out</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="container-fluid">
-      <sidebarDash />
+    <div class="container" style="padding-left: 10vh">
+      
       <div class="row">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main>
           <div
             class="
               d-flex
@@ -30,13 +18,13 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter En tete</h1>
+            <h1 class="h1" style="font-family:monospace">Ajouter Entete</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
           <form @submit.prevent="createHeader" v-if="ajout==false">
             <div class="mb-3">
-              <label for="petiteDesc" class="form-label"
+              <label for="petiteDesc" class="form-label" style="font-family:monospace"
                 >Saisir une petite description</label
               >
               <input
@@ -48,7 +36,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Image d'arrière plan pour l'entete du blog</label
               >
               <input
@@ -68,7 +56,7 @@
           
           <form @submit.prevent="submitEdit" v-if="update==true">
             <div class="mb-3">
-              <label for="petiteDesc" class="form-label"
+              <label for="petiteDesc" class="form-label" style="font-family:monospace"
                 >Saisir une petite description</label
               >
               <input
@@ -80,7 +68,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Image d'arrière plan pour l'entete du blog</label
               >
               <input
@@ -102,7 +90,7 @@
             <img v-bind:src="backgroundImage" class="card-img-top" alt="...">
             <div class="card-body">
              
-              <p class="card-text">{{petiteDescription}}</p>
+              <p class="card-text" style="font-family:monospace">{{petiteDescription}}</p>
               <button  class="btn btn-danger" @click="deleteHeader(id)"><b-icon-trash></b-icon-trash></button>
               <button  class="btn btn-warning" @click="updateHeader(id)"><b-icon-pen></b-icon-pen></button>
             </div>
@@ -118,7 +106,7 @@
       
     </div>
          
-          <h2>Section title</h2>
+         
         </main>
       </div>
     </div>
@@ -128,14 +116,12 @@
 
 <script>
 
-import sidebarDash from "./sidebarDash.vue";
+
 
 
 export default {
   name: "headerDash",
-  components: {
-    sidebarDash, 
-  },
+  
 
 
   data() {
@@ -213,16 +199,14 @@ export default {
              this.ajout=true
             alert('Header ajouté! ')
           })
-          .catch(error => {
+          .catch(() => {
             alert("Une erreur c'est produite ! Veuillez réessayer s'il vous plait !")
-          console.log('error', error);
           })
             }
         
         })
-        .catch(error => {
+        .catch(() => {
           console.log("erreur")
-          console.log(error)
         })
       
 

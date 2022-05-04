@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class DemandeSalleController extends Controller
 {
-    public function index(){
-        $demandeSalle=DemandeSalle::with("salles")->paginate(5);
-          if(sizeof($demandeSalle)>0){
+    public function index(Request $request){
+        $demandeSalle = $request->user()->DemandeSalle()->with('salles')->paginate(5);
+          if(!empty($demandeSalle)){
                return response()->json(["data"=>$demandeSalle], 200);
           }
           else
@@ -24,7 +24,7 @@ class DemandeSalleController extends Controller
         $data = array(
             "dateEmploi"=> $dateEmploi,
             "dateDeRemise"=> $dateDeRemise,
-            "idResponsable"=> "2",
+            "idResponsable"=> $request->user()->id,
             "idSalle"=> $idSalle,
         );
         $demandeSalle=DemandeSalle::create($data);
@@ -43,7 +43,7 @@ class DemandeSalleController extends Controller
         return response()->json(["data"=>$demandeSalle], 200);
     }
     public function update(Request $request, $id){
-        $demandeSalle=DemandeSalle::find($id);
+        $demandeSalle=$request->user()->DemandeSalle()->find($id);
         if(!$demandeSalle)
             return response()->json(["message"=>"aucune demande de salle"], 404);
         $demandeSalle->update($request->all());

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\club\pageClub;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\HeadersRequest;
 use App\Models\header;
 use Illuminate\Http\Request;
@@ -47,9 +48,9 @@ class HeadersController extends Controller
     }
 
     public function deleteHeader($idClub,$idHeader){
-      
+
         $header = Header::find($idHeader);
-       
+
         if ($header){
             $header->delete();
             return response()->json([
@@ -69,7 +70,7 @@ class HeadersController extends Controller
 
         $header = Header::find($idHeader);
         if ($header) {
-      
+
             $header->petiteDescription = $request->input('petiteDescription') ? $request->input('petiteDescription') : $header->petiteDescription;
             $header->backgroudImage = $request->input('backgroudImage') ? $request->input('backgroudImage') : $header->backgroudImage;
             $header->idClub = $idClub;

@@ -1,6 +1,6 @@
 <template>
-    <sidebar-menu class="position-fixed" @item-click='onItemClick' :show-one-child="true" @toggle-collapse="collapse = !collapse"
-        :width="'200px'" :menu="
+    <sidebar-menu class="position-fixed" @item-click='onItemClick' :show-one-child="true"
+        @toggle-collapse="collapse = !collapse" :width="'200px'" :menu="
             [
                 {
                     header: 'Main Navigation',
@@ -55,6 +55,35 @@
                     hidden: !this.isAdmin
                 },
                 {
+                    //href: '/dashboard',
+                    title: 'Dashboard blog club',
+                    icon: 'fas fa-dashboard',
+                    hidden: !this.isResponsableClub,
+                     child: [
+                        {
+                            href: '/headerDash',
+                            title: 'Entete',
+                        },
+                        {
+                            href: '/aboutDash',
+                            title: 'Qui sommes nous?',
+                        },
+                        {
+                            href: '/activitiesDash',
+                            title: 'Activités',
+                        },
+                        {
+                            href: '/boardDash',
+                            title: 'Membres de bureau',
+                        },
+                        {
+                            href: '/projectsDash',
+                            title: 'Projets',
+                        },
+
+                    ]
+                },
+                {
                     href: '/etudiant/listeClubs',
                     title: 'Clubs',
                     icon: 'fas fa-building',
@@ -70,6 +99,25 @@
                             hidden: !this.isStudent
                         }
                     ]
+                },
+                {
+                    title: 'Demandes',
+                    icon: 'fa fa-file',
+                    child: [
+        
+                        {
+                            href: 'demandeSalle',
+                            title: 'Demande salle',
+                            icon: 'fa fa-file',
+                            hidden: !this.isStudent && !this.isResponsableClub,
+                        },
+                        {
+                            href: 'demandeMateriel',
+                            title: 'Demande materiel',
+                            icon: 'fa fa-file',
+                            hidden: !this.isStudent && !this.isResponsableClub,
+                        }
+                    ]
                 }
         
             ]
@@ -82,66 +130,13 @@ export default {
     data() {
         return {
             collapse: true,
-            menu: [
-                {
-                    header: 'Main Navigation',
-                    hiddenOnCollapse: true
-                },
-                {
-                    title: 'User',
-                    icon: 'fas fa-user',
-                    child: [
-                        {
-                            href: '/login',
-                            title: 'Login',
-                            hidden: this.isAuth
-                        },
-                        {
-                            href: '/register',
-                            title: 'Register',
-                            hidden: this.isAuth
-                        },
-                        {
-                            href: '/logout',
-                            title: 'Logout',
-                            hidden: !this.isAuth
-                        },
-                    ]
-                },
-                {
-                    href: '/login',
-                    title: 'Login',
-                    hidden: this.isAuth
-                },
-                {
-                    href: '/register',
-                    title: 'Register',
-                    hidden: this.isAuth
-                },
-                {
-                    href: '/logout',
-                    title: 'Logout',
-                    hidden: !this.isAuth
-                },
-                {
-                    href: '/',
-                    title: 'Home',
-                    icon: 'fas fa-home',
-                },
-                {
-                    href: '/Entreprise',
-                    title: 'Entreprise',
-                    icon: 'fas fa-building',
-                },
-
-            ]
         }
     },
     updated() {
     },
     methods: {
         onItemClick(event, item) {
-            if (item.title=="Logout") {
+            if (item.title == "Logout") {
                 this.$store.dispatch('LogOut');
             }
         },
@@ -178,7 +173,8 @@ export default {
         ...mapGetters({
             auth: 'isAuthenticated',
             admin: 'isAdmin',
-            student : 'isStudent',
+            student: 'isStudent',
+            responsable: 'isResponsableClub'
         }),
         isAuth: function () {
             return this.auth;
@@ -188,6 +184,9 @@ export default {
         },
         isStudent: function () {
             return this.student;
+        },
+        isResponsableClub: function () {
+            return this.responsable;
         },
 
     }

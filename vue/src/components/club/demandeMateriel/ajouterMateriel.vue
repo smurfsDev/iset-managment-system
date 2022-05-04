@@ -102,7 +102,6 @@ export default {
     },
     ajoutMateriel(id) {
       let x = -1;
-      console.log("test" + id);
       for (var i = 0; i < this.Mat.length; i++) {
         if (this.Mat[i] == id) {
           x = i;
@@ -113,7 +112,6 @@ export default {
       } else if (x == -1) {
         this.Mat.push(id);
       }
-      console.log(this.Mat);
       this.$emit("Mat", this.Mat);
     },
     sendMat() {

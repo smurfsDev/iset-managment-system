@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\club;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\DemandeAdhesionClubRequest;
 use App\Models\Member;
 use App\Models\club;
