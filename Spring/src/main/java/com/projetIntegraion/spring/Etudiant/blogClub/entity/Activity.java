@@ -7,13 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Activities {
+public class Activity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     private String paragraphe;
     @ManyToOne
     private Club club;
-    public Activities(Long id, String paragraphe, Club club) {
+    public Activity(Long id, String paragraphe, Club club) {
         this.id = id;
         this.paragraphe = paragraphe;
         this.club = club;
