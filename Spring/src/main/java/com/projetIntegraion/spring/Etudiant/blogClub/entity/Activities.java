@@ -6,19 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
 @Entity
-public class About {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Activities {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+    private String paragraphe;
     @ManyToOne
     private Club club;
-    private String longDescription;
-    public About(Long id, Club club, String longDescription) {
+    public Activities(Long id, String paragraphe, Club club) {
         this.id = id;
+        this.paragraphe = paragraphe;
         this.club = club;
-        this.longDescription = longDescription;
     }
     public Long getId() {
         return id;
@@ -26,23 +24,21 @@ public class About {
     public void setId(Long id) {
         this.id = id;
     }
+    public String getParagraphe() {
+        return paragraphe;
+    }
+    public void setParagraphe(String paragraphe) {
+        this.paragraphe = paragraphe;
+    }
     public Club getClub() {
         return club;
     }
     public void setClub(Club club) {
         this.club = club;
     }
-    public String getLongDescription() {
-        return longDescription;
-    }
-    public void setLongDescription(String longDescription) {
-        this.longDescription = longDescription;
-    }
     @Override
     public String toString() {
-        return "About [club=" + club + ", id=" + id + ", longDescription=" + longDescription + "]";
+        return "Activities [club=" + club + ", id=" + id + ", paragraphe=" + paragraphe + "]";
     }
-
-
 
 }

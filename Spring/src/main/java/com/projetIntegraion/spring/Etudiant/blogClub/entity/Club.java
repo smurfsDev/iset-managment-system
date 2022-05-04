@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -17,7 +18,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Club {
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private  Long id;
     private String nomClub;
     @NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
