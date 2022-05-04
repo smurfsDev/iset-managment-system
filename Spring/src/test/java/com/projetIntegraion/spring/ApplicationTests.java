@@ -1,13 +1,15 @@
-package com.projetIntegraion.sprint;
+package com.projetIntegraion.spring;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+
+
 
 @SpringBootTest
 class ApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+
+
+
 
 }

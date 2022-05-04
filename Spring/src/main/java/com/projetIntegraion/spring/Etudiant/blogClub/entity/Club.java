@@ -39,15 +39,14 @@ public class Club {
     private Timestamp updated_at;
 
     public Club(Long id, String nomClub, @NotNull @PastOrPresent Date dateCreation, User responsableClub,
-            String president, String vicePresident, Timestamp created_at, Timestamp updated_at) {
+            String president, String vicePresident) {
         this.id = id;
         this.nomClub = nomClub;
         this.dateCreation = dateCreation;
         this.responsableClub = responsableClub;
         this.president = president;
         this.vicePresident = vicePresident;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+   
     }
     public Long getId() {
         return id;
