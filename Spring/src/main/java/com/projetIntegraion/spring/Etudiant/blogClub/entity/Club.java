@@ -1,5 +1,6 @@
 package com.projetIntegraion.spring.Etudiant.blogClub.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.validation.constraints.PastOrPresent;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -30,15 +33,21 @@ public class Club {
     @ManyToOne
     private User responsableClub;
     private String president;
-    private String vicePresident;
+    private String vicePresident;@CreationTimestamp
+    private Timestamp created_at;
+    @UpdateTimestamp
+    private Timestamp updated_at;
+
     public Club(Long id, String nomClub, @NotNull @PastOrPresent Date dateCreation, User responsableClub,
-            String president, String vicePresident) {
+            String president, String vicePresident, Timestamp created_at, Timestamp updated_at) {
         this.id = id;
         this.nomClub = nomClub;
         this.dateCreation = dateCreation;
         this.responsableClub = responsableClub;
         this.president = president;
         this.vicePresident = vicePresident;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
     public Long getId() {
         return id;
@@ -76,10 +85,25 @@ public class Club {
     public void setVicePresident(String vicePresident) {
         this.vicePresident = vicePresident;
     }
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
+    }
+    public Timestamp getUpdated_at() {
+        return updated_at;
+    }
+    public void setUpdated_at(Timestamp updated_at) {
+        this.updated_at = updated_at;
+    }
+    public Club() {
+    }
     @Override
     public String toString() {
-        return "Club [dateCreation=" + dateCreation + ", id=" + id + ", nomClub=" + nomClub + ", president=" + president
-                + ", responsableClub=" + responsableClub + ", vicePresident=" + vicePresident + "]";
+        return "Club [id=" + id + ", nomClub=" + nomClub + ", dateCreation=" + dateCreation + ", responsableClub="
+                + responsableClub + ", president=" + president + ", vicePresident=" + vicePresident + ", created_at="
+                + created_at + ", updated_at=" + updated_at + "]";
     }
     
     
