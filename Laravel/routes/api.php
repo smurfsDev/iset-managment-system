@@ -44,11 +44,6 @@ Route::delete('{idClub}/header/delete/{id}', [HeadersController::class, 'deleteH
 Route::put('{idClub}/header/update/{id}', [HeadersController::class, 'updateHeader']);
 
 
-Route::get('{idClub}/about/getAll', [AboutController::class, 'getAbout']);
-Route::post('{idClub}/about/create', [AboutController::class, 'createAbout']);
-Route::delete('{idClub}/about/delete/{id}', [AboutController::class, 'deleteAbout']);
-Route::put('{idClub}/about/update/{id}', [AboutController::class, 'updateAbout']);
-
 Route::get('{idClub}/activities/getAll', [ActivitiesController::class, 'getActivities']);
 Route::post('{idClub}/activities/create', [ActivitiesController::class, 'createActivities']);
 Route::delete('{idClub}/activities/delete/{id}', [ActivitiesController::class, 'deleteActivity']);
@@ -71,8 +66,9 @@ Route::group(['prefix' => '/members'], function () {
 
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
-
+// Sanctum middleware
 Route::middleware('auth:sanctum')->group(function () {
+    // demande creation club routes
     Route::group(['prefix' => '/dcc'], function () {
         Route::get('/', [DemandeCreationClubController::class, 'show']);
         Route::get('/{id}', [DemandeCreationClubController::class, 'showMyDemandes']);
@@ -82,7 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/a/{id}', [DemandeCreationClubController::class, 'accept']);
         Route::put('/d/{id}', [DemandeCreationClubController::class, 'decline']);
     });
-
+    // demande adhesion club routes
     Route::group(['prefix' => '/dac'], function () {
         Route::prefix('/responsable')->group(function () {
             Route::get('/', [ClubController::class, 'getDemandeAdhesionByClub']);
@@ -97,14 +93,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/test', [DemandeCreationClubController::class, 'test']);
     // Route::get('/dcc', [DemandeCreationClubController::class, 'get']);
 
+    // demande salle routes
     Route::group(['prefix' => '/DemandeSalle'], function () {
         Route::get('/', [DemandeSalleController::class, 'index']);
         Route::post('/', [DemandeSalleController::class, 'store']);
         Route::put('/{id}', [DemandeSalleController::class, 'update']);
         Route::delete('/{id}', [DemandeSalleController::class, 'destroy']);
     });
-
-
+    // demande materiel routes
 
     Route::group(['prefix' => '/dm'], function () {
         Route::get('/', [DemandeMaterielController::class, 'show']);
@@ -113,6 +109,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{id}', [DemandeMaterielController::class, 'update']);
         Route::delete('/{id}', [DemandeMaterielController::class, 'delete']);
     });
+
+    // about routes
+
+    Route::get('/about/getAll', [AboutController::class, 'getAbout']);
+    Route::post('/about/create', [AboutController::class, 'createAbout']);
+    Route::delete('/about/delete/{id}', [AboutController::class, 'deleteAbout']);
+    Route::put('/about/update/{id}', [AboutController::class, 'updateAbout']);
 });
 Route::group(['prefix' => '/m'], function () {
     Route::get('/M/{id}', [MaterielController::class, 'show']);
