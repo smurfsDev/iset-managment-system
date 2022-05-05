@@ -1,4 +1,4 @@
-package com.projetIntegraion.spring.Etudiant.blogClub.entity;
+package com.projetIntegraion.spring.blogClub.entity;
 
 import java.sql.Timestamp;
 import java.util.Date;

@@ -23,7 +23,7 @@
 							<form th:action="${edit}?'updateAbout':'saveAbout'" enctype="multipart/form-data" class="form"
 								id="formLogin" name="formLogin" role="form" action="saveAbout" method="post">
 								<div class="form-group">
-									<label class="control-label">Longue description :</label> <input type="text" name="long-description"
+									<label class="control-label">Longue description :</label> <input type="text" name="longDescription"
 										class="form-control" th:value="${About.longDescription}" />
 									<span th:errors=${About.longDescription} class="text-danger">
 									</span>

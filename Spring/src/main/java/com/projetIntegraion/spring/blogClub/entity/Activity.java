@@ -1,4 +1,4 @@
-package com.projetIntegraion.spring.Etudiant.blogClub.entity;
+package com.projetIntegraion.spring.blogClub.entity;
 
 import java.sql.Timestamp;
 
@@ -6,37 +6,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class Board {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String post;
-    @Lob
-    private String photo;
+public class Activity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+    private String paragraphe;
     @ManyToOne
     private Club club;
     @CreationTimestamp
     private Timestamp created_at;
     @UpdateTimestamp
     private Timestamp updated_at;
-    public Board(Long id, String name, String post, String photo, Club club, Timestamp created_at, Timestamp updated_at) {
+    public Activity(Long id, String paragraphe, Club club, Timestamp created_at, Timestamp updated_at) {
         this.id = id;
-        this.name = name;
-        this.post = post;
-        this.photo = photo;
+        this.paragraphe = paragraphe;
         this.club = club;
         this.created_at = created_at;
         this.updated_at = updated_at;
-    }
-    public Board() {
     }
     public Long getId() {
         return id;
@@ -44,23 +35,11 @@ public class Board {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public String getParagraphe() {
+        return paragraphe;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getPost() {
-        return post;
-    }
-    public void setPost(String post) {
-        this.post = post;
-    }
-    public String getPhoto() {
-        return photo;
-    }
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setParagraphe(String paragraphe) {
+        this.paragraphe = paragraphe;
     }
     public Club getClub() {
         return club;
@@ -80,10 +59,9 @@ public class Board {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
-    @Override  
+    @Override 
     public String toString() {
-        return "Board [id=" + id + ", name=" + name + ", post=" + post + ", photo=" + photo + ", club=" + club
-                + ", created_at=" + created_at + ", updated_at=" + updated_at + "]";
+        return "Activity [id=" + id + ", paragraphe=" + paragraphe + ", club=" + club + ", created_at=" + created_at
+                + ", updated_at=" + updated_at + "]";
     }
-
 }

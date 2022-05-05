@@ -1,4 +1,4 @@
-package com.projetIntegraion.spring.Etudiant.blogClub.repository;
+package com.projetIntegraion.spring.blogClub.repository;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 

@@ -1,7 +1,7 @@
-package com.projetIntegraion.spring.Etudiant.blogClub.service;
+package com.projetIntegraion.spring.blogClub.service;
 
-import com.projetIntegraion.spring.Etudiant.blogClub.entity.About;
-import com.projetIntegraion.spring.Etudiant.blogClub.repository.AboutRepository;
+import com.projetIntegraion.spring.blogClub.entity.About;
+import com.projetIntegraion.spring.blogClub.repository.AboutRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,6 +45,9 @@ public class AboutService {
 	// 	return clubRepository.findAll();
 	// }
 
+	// public Page<About> getAboutsClubPagPage(Long id, int page, int size) {
+	// 	return aboutRepository.findByClubId(id, PageRequest.of(page, size));
+	// }
 	public Page<About> getAllAboutsParPage(int page, int size){
 		return aboutRepository.findAll(PageRequest.of(page, size));
 	};

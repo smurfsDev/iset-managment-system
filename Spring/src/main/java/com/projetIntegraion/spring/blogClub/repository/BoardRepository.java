@@ -1,6 +1,6 @@
-package com.projetIntegraion.spring.Etudiant.blogClub.repository;
+package com.projetIntegraion.spring.blogClub.repository;
 
-import com.projetIntegraion.spring.Etudiant.blogClub.entity.Board;
+import com.projetIntegraion.spring.blogClub.entity.Board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

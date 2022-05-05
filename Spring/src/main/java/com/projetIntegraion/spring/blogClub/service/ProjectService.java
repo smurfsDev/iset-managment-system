@@ -1,7 +1,7 @@
-package com.projetIntegraion.spring.Etudiant.blogClub.service;
+package com.projetIntegraion.spring.blogClub.service;
 
-import com.projetIntegraion.spring.Etudiant.blogClub.entity.Project;
-import com.projetIntegraion.spring.Etudiant.blogClub.repository.ProjectRepository;
+import com.projetIntegraion.spring.blogClub.entity.Project;
+import com.projetIntegraion.spring.blogClub.repository.ProjectRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

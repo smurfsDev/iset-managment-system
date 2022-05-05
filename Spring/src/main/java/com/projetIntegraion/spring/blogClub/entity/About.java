@@ -1,4 +1,4 @@
-package com.projetIntegraion.spring.Etudiant.blogClub.entity;
+package com.projetIntegraion.spring.blogClub.entity;
 
 import java.sql.Timestamp;
 
@@ -6,31 +6,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+
 @Entity
-public class Project {
+public class About {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Lob
-    private String affiche;
     @ManyToOne
     private Club club;
+    private String longDescription;
     @CreationTimestamp
     private Timestamp created_at;
     @UpdateTimestamp
     private Timestamp updated_at;
-    public Project(Long id, String affiche, Club club, Timestamp created_at, Timestamp updated_at) {
+    public About(Long id, Club club, String longDescription, Timestamp created_at, Timestamp updated_at) {
         this.id = id;
-        this.affiche = affiche;
         this.club = club;
+        this.longDescription = longDescription;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+    public About() {
+        super();
     }
     public Long getId() {
         return id;
@@ -38,17 +40,17 @@ public class Project {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getAffiche() {
-        return affiche;
-    }
-    public void setAffiche(String affiche) {
-        this.affiche = affiche;
-    }
     public Club getClub() {
         return club;
     }
     public void setClub(Club club) {
         this.club = club;
+    }
+    public String getLongDescription() {
+        return longDescription;
+    }
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
     }
     public Timestamp getCreated_at() {
         return created_at;
@@ -62,9 +64,11 @@ public class Project {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
-    @Override   
+    @Override
     public String toString() {
-        return "Project [id=" + id + ", affiche=" + affiche + ", club=" + club + ", created_at=" + created_at + ", updated_at=" + updated_at + "]";
+        return "About [id=" + id + ", club=" + club + ", longDescription=" + longDescription + ", created_at="
+                + created_at + ", updated_at=" + updated_at + "]";
     }
+
 
 }
