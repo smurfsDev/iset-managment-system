@@ -26,8 +26,7 @@ class ActivitiesRequest extends FormRequest
     public function rules()
     {
         return [
-            "paragraphe"=> "required",
-            "idClub" => "exists:clubs,id"
+            "paragraphe"=> "required"
         ];
     }
     public function failedValidation(Validator $validator)
