@@ -114,7 +114,7 @@ export default {
       }
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/activities/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/activities/getAll').then(response => {
        
         if (response.data.data!=undefined){
           this.activities = response.data.data
@@ -128,12 +128,11 @@ export default {
     createActivity(){
       let newActivity = {
         paragraphe: this.paragraphe,
-        idClub: 1
-      }
-      this.$http.post("http://localhost:8000/api/1/activities/create", newActivity).then(() => {
+        }
+      this.$http.post("http://localhost:8000/api/activities/create", newActivity).then(() => {
         
         this.created = true;
-        this.$http.get('http://localhost:8000/api/1/activities/getAll').then(response => {
+        this.$http.get('http://localhost:8000/api/activities/getAll').then(response => {
        
           this.activities = response.data.data
          
@@ -148,7 +147,7 @@ export default {
   deleteParagraphe(id){
    
    
-    this.$http.delete("http://localhost:8000/api/1/activities/delete/"+id).then(() => {
+    this.$http.delete("http://localhost:8000/api/activities/delete/"+id).then(() => {
       
       this.activities = this.activities.filter(item => item.id != id)
       this.paragraphe = "";
@@ -156,7 +155,7 @@ export default {
       this.create= true;
       alert("Activité supprimée");
     })
-    this.$http.get('http://localhost:8000/api/1/activities/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/activities/getAll').then(response => {
        
           this.activities = response.data.data
          
@@ -179,9 +178,8 @@ export default {
     let newActivity = {
       id: this.id,
       paragraphe: this.paragraphe,
-      idClub: 1
-    }
-    this.$http.put("http://localhost:8000/api/1/activities/update/"+this.id, newActivity).then(() => {
+      }
+    this.$http.put("http://localhost:8000/api/activities/update/"+this.id, newActivity).then(() => {
       
        this.created = true;
      

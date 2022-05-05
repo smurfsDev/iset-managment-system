@@ -44,11 +44,6 @@ Route::delete('{idClub}/header/delete/{id}', [HeadersController::class, 'deleteH
 Route::put('{idClub}/header/update/{id}', [HeadersController::class, 'updateHeader']);
 
 
-Route::get('{idClub}/activities/getAll', [ActivitiesController::class, 'getActivities']);
-Route::post('{idClub}/activities/create', [ActivitiesController::class, 'createActivities']);
-Route::delete('{idClub}/activities/delete/{id}', [ActivitiesController::class, 'deleteActivity']);
-Route::put('{idClub}/activities/update/{id}', [ActivitiesController::class, 'updateActivity']);
-
 Route::get('{idClub}/boards/getAll', [BoardController::class, 'getBoard']);
 Route::post('{idClub}/boards/create', [BoardController::class, 'createBoard']);
 Route::delete('{idClub}/boards/delete/{id}', [BoardController::class, 'deleteBoard']);
@@ -111,11 +106,20 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // about routes
+    Route::group(['prefix' => '/about'], function () {
+        Route::get('getAll', [AboutController::class, 'getAbout']);
+        Route::post('create', [AboutController::class, 'createAbout']);
+        Route::delete('delete/{id}', [AboutController::class, 'deleteAbout']);
+        Route::put('update/{id}', [AboutController::class, 'updateAbout']);
+    });
 
-    Route::get('/about/getAll', [AboutController::class, 'getAbout']);
-    Route::post('/about/create', [AboutController::class, 'createAbout']);
-    Route::delete('/about/delete/{id}', [AboutController::class, 'deleteAbout']);
-    Route::put('/about/update/{id}', [AboutController::class, 'updateAbout']);
+    // activities routes
+    Route::group(['prefix' => '/activities'], function () {
+        Route::get('/getAll', [ActivitiesController::class, 'getActivities']);
+        Route::post('/create', [ActivitiesController::class, 'createActivities']);
+        Route::delete('/delete/{id}', [ActivitiesController::class, 'deleteActivity']);
+        Route::put('/update/{id}', [ActivitiesController::class, 'updateActivity']);
+    });
 });
 Route::group(['prefix' => '/m'], function () {
     Route::get('/M/{id}', [MaterielController::class, 'show']);
