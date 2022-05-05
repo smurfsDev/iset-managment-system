@@ -87,7 +87,6 @@
                 type="text"
                 class="form-control"
                 v-model="post"
-                required
                 
               />
             </div>
@@ -101,7 +100,6 @@
                 name="image"
                 @change="convert64"
                 ref="file"
-                required
                 
               />
             </div>
@@ -166,7 +164,7 @@ export default {
   },
   created(){
      this.ajout = true;
-    this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
       
       
         this.boards = response.data.data;
@@ -201,7 +199,7 @@ export default {
      
       reader.onloadend = () => {
        
-      //  this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+      //  this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
 
            //this.board = response.data.data
             this.image = reader.result;
@@ -213,11 +211,11 @@ export default {
           }
         
         
-          this.$http.post("http://localhost:8000/api/1/boards/create",newBoard)
+          this.$http.post("http://localhost:8000/api/boards/create",newBoard)
           .then (() => {
             
              this.ajout=true
-             this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+             this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
               this.boards = response.data.data
              })
              this.nom = "";
@@ -243,7 +241,7 @@ export default {
          reader.readAsDataURL(this.srcImage);
   },
   deleteBoard(id){
-    this.$http.delete("http://localhost:8000/api/1/boards/delete/"+id).then(() => {
+    this.$http.delete("http://localhost:8000/api/boards/delete/"+id).then(() => {
       
       alert('Membre de bureau supprimé! ')
       this.boards = this.boards.filter(item => item.id != id)
@@ -275,11 +273,11 @@ export default {
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/boards/update/"+this.id,updateBoard).then(() => {
+      this.$http.put("http://localhost:8000/api/boards/update/"+this.id,updateBoard).then(() => {
        
         alert('Membre de bureau modifié! ')
        this.boards = this.boards.filter(item => item.id != this.id)
-       this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+       this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
               this.boards = response.data.data
              })
         //this.boards.push(updateBoard)

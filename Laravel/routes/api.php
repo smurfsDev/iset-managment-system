@@ -44,11 +44,6 @@ Route::delete('{idClub}/header/delete/{id}', [HeadersController::class, 'deleteH
 Route::put('{idClub}/header/update/{id}', [HeadersController::class, 'updateHeader']);
 
 
-Route::get('{idClub}/boards/getAll', [BoardController::class, 'getBoard']);
-Route::post('{idClub}/boards/create', [BoardController::class, 'createBoard']);
-Route::delete('{idClub}/boards/delete/{id}', [BoardController::class, 'deleteBoard']);
-Route::put('{idClub}/boards/update/{id}', [BoardController::class, 'updateBoard']);
-
 Route::get('{idClub}/projects/getAll', [ProjectsController::class, 'getProjects']);
 Route::post('{idClub}/projects/create', [ProjectsController::class, 'createProject']);
 Route::delete('{idClub}/projects/delete/{id}', [ProjectsController::class, 'deleteProject']);
@@ -119,6 +114,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/create', [ActivitiesController::class, 'createActivities']);
         Route::delete('/delete/{id}', [ActivitiesController::class, 'deleteActivity']);
         Route::put('/update/{id}', [ActivitiesController::class, 'updateActivity']);
+    });
+
+    // boards routes
+    Route::group(['prefix' => '/boards'], function () {
+        Route::get('/getAll', [BoardController::class, 'getBoard']);
+        Route::post('/create', [BoardController::class, 'createBoard']);
+        Route::delete('/delete/{id}', [BoardController::class, 'deleteBoard']);
+        Route::put('/update/{id}', [BoardController::class, 'updateBoard']);
     });
 });
 Route::group(['prefix' => '/m'], function () {
