@@ -130,8 +130,7 @@ export default {
   methods: {
     createDescription(){
       let newAbout = {
-        longDescription: this.longDescription,
-        idClub: 1
+        longDescription: this.longDescription
       }
       this.$http.post("http://localhost:8000/api/about/create", newAbout).then( ()=> {
        
@@ -177,7 +176,6 @@ export default {
     let newAbout = {
       id: this.id,
       longDescription: this.longDescription,
-      idClub: 1
     }
     this.$http.put("http://localhost:8000/api/about/update/"+this.id, newAbout).then(() => {
       
