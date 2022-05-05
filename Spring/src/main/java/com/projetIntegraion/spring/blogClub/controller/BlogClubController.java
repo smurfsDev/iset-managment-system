@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.blogClub.entity.About;
+import com.projetIntegraion.spring.blogClub.entity.Activity;
 import com.projetIntegraion.spring.blogClub.service.AboutService;
+import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,20 +22,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BlogClubController {
     @Autowired
     private AboutService aboutService;
-
-    
+   
+    @RequestMapping("/showManageBlog")
+    public String showManageBlog(ModelMap model) {
+        return "ManageBlog";
+    }
 
     @RequestMapping("/showCreateBlog")
     public String showBlog(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "2") int size) {
-                aboutService.getAbout(21L);
+            @RequestParam(name = "size", defaultValue = "2") int size ) {
+               
         Page<About> listDcc = aboutService.getAllAboutsParPage(page, size);
-        modelMap.addAttribute("Dccs", listDcc);
+         modelMap.addAttribute("Dccs", listDcc);
+        
         modelMap.addAttribute("pages", new int[listDcc.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
-        System.out.println("modelMap = " + modelMap.toString());
-        return "ManageBlog";
+        return "ManageAbout";
     }
    @RequestMapping("/createAbout")
     public String createAbout(ModelMap modelMap,

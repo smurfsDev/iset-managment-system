@@ -6,7 +6,9 @@ import com.projetIntegraion.spring.blogClub.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BoardService {
     @Autowired
     private BoardRepository BoardRepository;

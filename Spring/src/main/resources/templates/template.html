@@ -36,7 +36,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Blog Club
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateBlog}">Gérer</a> 
+					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showManageBlog}">Gérer</a> 
 					<a class="dropdown-item"
 						th:href="@{blogClub}">Consulter</a>
 				</div>
