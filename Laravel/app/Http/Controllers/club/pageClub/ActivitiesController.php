@@ -9,9 +9,9 @@ use App\Http\Requests\ActivitiesRequest;
 
 class ActivitiesController extends Controller
 {
-    public function getActivities($id){
-
-        $activities = activity::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+    public function getActivities(Request $request){
+        $club = $request->user()->club()->get('id');
+        $activities = activity::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);
         if (sizeof($activities) > 0)
             return response()->json(
                 $activities,
@@ -22,9 +22,11 @@ class ActivitiesController extends Controller
                 "Aucun activité"
             ], 404);
     }
-    public function createActivities($id, ActivitiesRequest $request){
+    public function createActivities(ActivitiesRequest $request){
         $paragraphe = $request->input('paragraphe');
-        $idClub = $id;
+        $club = $request->user()->club()->get('id');
+
+        $idClub = $club[0]->id;
 
         $newActivity = array(
             "paragraphe" => $paragraphe,
@@ -45,7 +47,7 @@ class ActivitiesController extends Controller
         return "Activity created";
     }
 
-    public function deleteActivity($idClub,$idActivity){
+    public function deleteActivity($idActivity){
 
         $activity = activity::find($idActivity);
 
@@ -64,13 +66,12 @@ class ActivitiesController extends Controller
         }
     }
 
-    public function updateActivity($idClub, $idActivity, ActivitiesRequest $request){
+    public function updateActivity($idActivity, ActivitiesRequest $request){
 
         $activity = activity::find($idActivity);
         if ($activity) {
 
             $activity->paragraphe = $request->input('paragraphe') ? $request->input('paragraphe') : $activity->paragraphe;
-            $activity->idClub = $idClub;
             $activity->save();
             return response()->json([
                 'message' => 'Activity mis à jour',
