@@ -23,10 +23,7 @@ public class AboutClubsController {
     @Autowired
     private AboutService aboutService;
    
-    // @RequestMapping("/showManageBlog")
-    // public String showManageBlog(ModelMap model) {
-    //     return "ManageBlog";
-    // }
+    
 
     @RequestMapping("/showCreateBlog")
     public String showBlog(ModelMap modelMap,
