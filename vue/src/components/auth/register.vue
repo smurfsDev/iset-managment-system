@@ -22,6 +22,16 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="department">Department</label>
+                <select class="form-control" id="department" v-model="form.department">
+                    <option value="1">Informatique</option>
+                    <option value="2">Electronique</option>
+                    <option value="3">Mecanique</option>
+                    <option value="4">Chimie</option>
+                    <option value="5">Gestion</option>
+                </select>   
+            </div>
+            <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" class="form-control" id="confirm_password" v-model="form.confirm_password"
                     placeholder="Confirm Password">
