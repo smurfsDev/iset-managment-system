@@ -52,12 +52,12 @@ export default {
     this.fetchMembers();
   },
   methods: {
-    fetchMembers(page_url = "http://127.0.0.1:8000/api/members/"+this.myid+"/") {
+    fetchMembers(page_url = "http://127.0.0.1:8000/api/members/") {
       let vm = this;
-      fetch(page_url, {
+      this.$http.get(page_url, {
         method: "GET",
       })
-        .then((res) => res.json())
+        .then((res) => res.data)
         .then((res) => {
           this.members = res.data.data;
           this.show = false;
@@ -69,20 +69,16 @@ export default {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/members/"+this.myid+"/?page=" + meta.current_page,
+          "http://localhost:8000/api/members/" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
       };
     },
     deleteMember(id) {
-      let headersi = new Headers();
       if (confirm("Delete document " + id)) {
         this.show = true;
-        fetch("http://localhost:8000/api/members/" + id, {
-          method: "delete",
-          headers: headersi,
-        })
+        this.$http.delete("http://localhost:8000/api/members/" + id)
           .then(() => {
             this.fetchMembers();
             this.alert.variant = "danger";

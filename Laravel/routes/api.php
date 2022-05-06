@@ -40,10 +40,7 @@ Route::group(['prefix' => '/c'], function () {
 
 
 
-Route::group(['prefix' => '/members'], function () {
-    Route::get('/{id}', [MemberController::class, 'getMembers']);
-    Route::delete('/{id}', [MemberController::class, 'deleteMember']);
-});
+
 
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
@@ -125,10 +122,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Projects routes
     Route::group(['prefix' => '/projects'], function () {
-    Route::get('/getAll', [ProjectsController::class, 'getProjects']);
-    Route::post('/create', [ProjectsController::class, 'createProject']);
-    Route::delete('/delete/{id}', [ProjectsController::class, 'deleteProject']);
-    Route::put('/update/{id}', [ProjectsController::class, 'updateProject']);
+        Route::get('/getAll', [ProjectsController::class, 'getProjects']);
+        Route::post('/create', [ProjectsController::class, 'createProject']);
+        Route::delete('/delete/{id}', [ProjectsController::class, 'deleteProject']);
+        Route::put('/update/{id}', [ProjectsController::class, 'updateProject']);
+    });
+
+    Route::group(['prefix' => '/members'], function () {
+        Route::get('/', [MemberController::class, 'getMembers']);
+        Route::delete('/{id}', [MemberController::class, 'deleteMember']);
     });
 });
 Route::group(['prefix' => '/m'], function () {
