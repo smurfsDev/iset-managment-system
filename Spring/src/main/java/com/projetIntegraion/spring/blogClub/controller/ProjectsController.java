@@ -38,7 +38,7 @@ public class ProjectsController {
     public String createDcc(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        modelMap.addAttribute("project", new Project());
+        modelMap.addAttribute("listProjects", new Project());
         modelMap.addAttribute("edit", false);
         modelMap.addAttribute("pages",
                 new int[projectService.getAllProjectsParPage(page, size).getTotalPages()]);
@@ -54,9 +54,11 @@ public class ProjectsController {
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
+                System.out.println("project: "+project.toString());
         if (bindingResult.hasErrors()) {
-            modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
+            modelMap.addAttribute("org.springframework.validation.BindingResult.project", bindingResult);
             modelMap.addAttribute("listProjects", project);
+
             return "createProject";
         } else {
             // Project Project = new Project();
@@ -67,6 +69,8 @@ public class ProjectsController {
             // dc.setVicePresident(Dcc.getVicePresident());
             // dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
             //Project project = new  
+            project.setAffiche(new String(multipartFile.getBytes()));
+            System.out.println("project.getAffiche()" + project.getAffiche());
             Project Project = projectService.save(project);
            //dc = DemandeCreationClubService.save(dc);
            // modelMap.addAttribute("Dcc", new DemandeCreationClub());
@@ -75,7 +79,7 @@ public class ProjectsController {
             modelMap.addAttribute("pages",
                     new int[projectService.getAllProjectsParPage(page, size).getTotalPages()]);
             return this.showCreateProject(modelMap, page, size);
-        }
+       }
     }
 
     @RequestMapping("/deleteProject")
