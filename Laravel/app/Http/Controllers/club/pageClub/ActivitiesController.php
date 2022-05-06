@@ -9,6 +9,14 @@ use App\Http\Requests\ActivitiesRequest;
 
 class ActivitiesController extends Controller
 {
+    public function show($id){
+        $activities = activity::where('idClub', $id)->get();
+        if(empty($activities)){
+            return response()->json(['message' => 'Aucune activité pour ce club'], 404);
+        }
+        return response()->json($activities, 200);
+    }
+
     public function getActivities(Request $request){
         $club = $request->user()->club()->get('id');
         $activities = activity::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);

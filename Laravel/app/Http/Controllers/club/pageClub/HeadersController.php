@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class HeadersController extends Controller
 {
+    public function show($id){
+        $headers = header::where('idClub', $id)->get();
+        if(empty($headers)){
+            return response()->json(['message' => 'Aucun header pour ce club'], 404);
+        }
+        return response()->json($headers, 200);
+    }
+
     public function getHeaders(Request $request)
     {
         $club = $request->user()->club()->get('id');

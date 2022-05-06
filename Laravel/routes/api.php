@@ -133,6 +133,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [MemberController::class, 'deleteMember']);
     });
 });
+
+// page club routes
+Route::group(['prefix' => '/pc'], function () {
+    Route::get('/header/{id}', [HeadersController::class, 'show']);
+    Route::get('/activities/{id}', [ActivitiesController::class, 'show']);
+    Route::get('/projects/{id}', [ProjectsController::class, 'show']);
+    Route::get('/boards/{id}', [BoardController::class, 'show']);
+    Route::get('/about/{id}', [AboutController::class, 'show']);
+    Route::get('/fondator/{id}', [AboutController::class, 'getFondator']);
+});
+
 Route::group(['prefix' => '/m'], function () {
     Route::get('/M/{id}', [MaterielController::class, 'show']);
     Route::get('/{id}', [MaterielController::class, 'showMaterialsOfCategory']);

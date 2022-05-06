@@ -9,6 +9,15 @@ use App\Http\Requests\BoardsRequest;
 
 class BoardController extends Controller
 {
+
+    public function show($id){
+        $boards = board::where('idClub', $id)->get();
+        if(empty($boards)){
+            return response()->json(['message' => 'Aucun board pour ce club'], 404);
+        }
+        return response()->json($boards, 200);
+    }
+
     public function getBoard(Request $request){
         $club = $request->user()->club()->get('id');
         $boards = board::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);
