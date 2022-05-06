@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 
 class HeadersController extends Controller
 {
-    public function getHeaders($id){
-
-        $headers = Header::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+    public function getHeaders(Request $request)
+    {
+        $club = $request->user()->club()->get('id');
+        $headers = Header::where('idClub', '=', $club[0]->id)->orderBy('updated_at')->paginate(5);
         if (sizeof($headers) > 0)
             return response()->json(
                 $headers,
@@ -22,43 +23,50 @@ class HeadersController extends Controller
                 null
             ], 200);
     }
-    public function createHeader($id, HeadersRequest $request){
-        $petiteDescription = $request->input('petiteDescription');
-        $backgroudImage	 = $request->input('backgroudImage');
-        $idClub = $id;
+    public function createHeader(HeadersRequest $request)
+    {
+        $club = $request->user()->club()->get('id');
 
-        $newHeader = array(
-            "petiteDescription" => $petiteDescription,
-            "backgroudImage" => $backgroudImage,
-            "idClub" => $idClub
-        );
+        $header = Header::where('id', $club[0]->id)->first();
+        if (empty($header)) {
 
-        $createNewHeader = Header::create($newHeader);
+            $petiteDescription = $request->input('petiteDescription');
+            $backgroudImage     = $request->input('backgroudImage');
+            $idClub = $club[0]->id;
 
-        if ($createNewHeader) {
-            return response()->json([
-                'data' => [
-                    'message' => 'Header created',
-                    'id' => $createNewHeader->id,
-                    'attributes' => $createNewHeader
-                ]
-            ], 201);
+            $newHeader = array(
+                "petiteDescription" => $petiteDescription,
+                "backgroudImage" => $backgroudImage,
+                "idClub" => $idClub
+            );
+
+            $createNewHeader = Header::create($newHeader);
+
+            if ($createNewHeader) {
+                return response()->json([
+                    'data' => [
+                        'message' => 'Header created',
+                        'id' => $createNewHeader->id,
+                        'attributes' => $createNewHeader
+                    ]
+                ], 201);
+            }
         }
-        return "Header created";
+        return "Header exist";
     }
 
-    public function deleteHeader($idClub,$idHeader){
+    public function deleteHeader($idHeader)
+    {
 
         $header = Header::find($idHeader);
 
-        if ($header){
+        if ($header) {
             $header->delete();
             return response()->json([
                 'type' => 'Header',
                 'message' => 'Header Supprimé! '
             ], 204);
-        }
-        else {
+        } else {
             return response()->json([
                 'type' => 'Header',
                 'message' => 'Header non trouvée'
@@ -66,14 +74,15 @@ class HeadersController extends Controller
         }
     }
 
-    public function updateHeader($idClub, $idHeader, HeadersRequest $request){
-
+    public function updateHeader($idHeader, HeadersRequest $request)
+    {
+        $club = $request->user()->club()->get('id');
         $header = Header::find($idHeader);
         if ($header) {
 
             $header->petiteDescription = $request->input('petiteDescription') ? $request->input('petiteDescription') : $header->petiteDescription;
             $header->backgroudImage = $request->input('backgroudImage') ? $request->input('backgroudImage') : $header->backgroudImage;
-            $header->idClub = $idClub;
+            $header->idClub = $club[0]->id;
             $header->save();
             return response()->json([
                 'message' => 'Header mis à jour',
@@ -86,5 +95,4 @@ class HeadersController extends Controller
             ], 404);
         }
     }
-
 }
