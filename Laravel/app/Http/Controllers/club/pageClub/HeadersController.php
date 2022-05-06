@@ -76,13 +76,11 @@ class HeadersController extends Controller
 
     public function updateHeader($idHeader, HeadersRequest $request)
     {
-        $club = $request->user()->club()->get('id');
         $header = Header::find($idHeader);
         if ($header) {
 
             $header->petiteDescription = $request->input('petiteDescription') ? $request->input('petiteDescription') : $header->petiteDescription;
             $header->backgroudImage = $request->input('backgroudImage') ? $request->input('backgroudImage') : $header->backgroudImage;
-            $header->idClub = $club[0]->id;
             $header->save();
             return response()->json([
                 'message' => 'Header mis à jour',

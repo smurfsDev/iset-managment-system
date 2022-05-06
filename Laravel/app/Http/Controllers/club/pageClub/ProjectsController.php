@@ -10,9 +10,9 @@ use App\Http\Requests\ProjectsRequest;
 class ProjectsController extends Controller
 {
 
-    public function getProjects($id){
-
-        $project = project::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+    public function getProjects(Request $request){
+        $club = $request->user()->club()->get('id');
+        $project = project::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);
         if (sizeof($project) > 0)
             return response()->json(
                 $project,
@@ -23,9 +23,10 @@ class ProjectsController extends Controller
                 null
             ], 404);
     }
-    public function createProject($id, ProjectsRequest $request){
+    public function createProject(ProjectsRequest $request){
+        $club = $request->user()->club()->get('id');
         $affiche = $request->input('affiche');
-         $idClub = $id;
+         $idClub = $club[0]->id;
 
         $newProject = array(
             "affiche" => $affiche,
@@ -46,8 +47,7 @@ class ProjectsController extends Controller
         return "Header created";
     }
 
-    public function deleteProject($idClub,$idProject){
-
+    public function deleteProject($idProject){
         $project = project::find($idProject);
 
         if ($project){
@@ -65,13 +65,12 @@ class ProjectsController extends Controller
         }
     }
 
-    public function updateProject($idClub, $idProject, ProjectsRequest $request){
+    public function updateProject($idProject, ProjectsRequest $request){
 
         $project = project::find($idProject);
         if ($project) {
 
             $project->affiche = $request->input('affiche') ? $request->input('affiche') : $project->affiche;
-            $project->idClub = $idClub;
             $project->save();
             return response()->json([
                 'message' => 'Project mis à jour',
