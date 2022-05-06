@@ -13,6 +13,12 @@
 </template>
 <script>
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   name: "QuiSommesNous",
   data(){
     return {
@@ -20,8 +26,8 @@ export default {
     }
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
-      this.abouts = response.data.data
+    this.$http.get('http://localhost:8000/api/pc/about/'+this.id).then(response => {
+      this.abouts = response.data
      
     })
  

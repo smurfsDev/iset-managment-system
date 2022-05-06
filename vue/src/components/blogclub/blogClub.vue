@@ -2,16 +2,16 @@
   <div class="container">
     <navbar />
     <main class="container">
-      <acceuil />
+      <acceuil :id="id"/>
 
       <div class="row g-5">
         <div class="col-md-8">
           <h3 class="pb-4 mb-4 fst-italic border-bottom"></h3>
-          <QuiSommesNous />
-          <activites />
-          <bureau />
-          <projets />
-          <statistiques />
+          <QuiSommesNous :id="id"/>
+          <activites :id="id"/>
+          <bureau :id="id"/>
+          <projets :id="id"/>
+          <statistiques :id="id"/>
         </div>
         <br />
         <br />
@@ -19,8 +19,8 @@
           <br />
           <br />
           <div class="position-sticky" style="top: 2rem">
-            <historique />
-            <actualites />
+            <historique :id="id"/>
+            <actualites :id="id"/>
           </div>
         </div>
       </div>
@@ -42,6 +42,18 @@ import actualites from "./blocs/actualites.vue";
 import footerBlog from "./blocs/footerBlog.vue";
 
 export default {
+  data() {
+    return {
+      id: 0,
+    };
+  },
+  created() {
+    // check if route have param id
+    if (this.$route.params.id) {
+      this.id = this.$route.params.id;
+    }
+  },
+
   name: "blogClub",
   components: {
     navbar,

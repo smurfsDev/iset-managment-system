@@ -15,6 +15,12 @@
 
 <script>
 export default {
+  props: {
+    id: {
+      type: Number,
+      default: 0,
+    },
+  },
   name: "acceuil",
   data() {
     return {
@@ -29,10 +35,9 @@ export default {
     
     
       
-      this.$http.get('http://localhost:8000/api/1/header/getAll').then(response => {
-        
-        this.header.petiteDescription = response.data.data[0].petiteDescription;
-        this.header.backgroundImage = response.data.data[0].backgroudImage;
+      this.$http.get('http://localhost:8000/api/pc/header/'+this.id).then(response => {
+        this.header.petiteDescription = response.data[0].petiteDescription;
+        this.header.backgroundImage = response.data[0].backgroudImage;
        
       });
     
