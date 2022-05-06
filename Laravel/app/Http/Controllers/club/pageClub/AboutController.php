@@ -9,6 +9,15 @@ use App\Http\Requests\AboutRequest;
 
 class AboutController extends Controller
 {
+
+    public function show($id){
+        $abouts = about::where('idClub', $id)->get();
+        if(empty($abouts)){
+            return response()->json(['message' => 'Aucun about pour ce club'], 404);
+        }
+        return response()->json($abouts, 200);
+    }
+
     public function getAbout(Request $request){
         $club = $request->user()->club()->get('id');
         $about = about::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);

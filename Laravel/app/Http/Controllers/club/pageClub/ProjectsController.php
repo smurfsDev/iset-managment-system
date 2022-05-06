@@ -10,6 +10,16 @@ use App\Http\Requests\ProjectsRequest;
 class ProjectsController extends Controller
 {
 
+    public function show($id)
+    {
+        $projects = project::where('idClub', $id)->get();
+        if(empty($projects)){
+            return response()->json(['message' => 'Aucun projet pour ce club'], 404);
+        }
+        return response()->json($projects, 200);
+    }
+
+
     public function getProjects(Request $request){
         $club = $request->user()->club()->get('id');
         $project = project::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);
