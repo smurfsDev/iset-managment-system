@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AboutService {
     @Autowired
@@ -40,6 +42,11 @@ public class AboutService {
 	public About getAbout(Long id) {
 		return aboutRepository.existsById(id) == false ? null : aboutRepository.findById(id).get();
 	}
+	
+	public List<About> getAllAbouts() {
+	
+	 return aboutRepository.findAll();
+	 }
 
 	// public List<Club> getAllClubs() {
 	// 	return clubRepository.findAll();

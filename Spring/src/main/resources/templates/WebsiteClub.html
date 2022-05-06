@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Liste des Projets</title>
+</head>
+
+<body>
+
+    <div layout:fragment="Mycontent">
+        <div class="container">
+            <section class="py-5 text-center container">
+                <div class="row py-lg-5">
+                  <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">About Club</h1>
+                    <div th:each="About:${Abouts}">
+                        <p class="lead text-muted" th:text="${About.longDescription}"></p>
+                     
+                  </div>
+                </div>
+              </section>
+              <hr class="featurette-divider">
+
+              <div class="row featurette">
+                <div class="col-md-7">
+                  <h2 class="featurette-heading">Club's activities.</h2> 
+                 
+                   <ul th:each="Activity:${Activities}">
+                    <li class="lead" th:text="${Activity.paragraphe}"></li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+          
+                </div>
+              </div>
+              <hr class="featurette-divider">
+              <h2>Club's Board</h2><br>
+              <div class="row">
+                
+                <div th:each="Board:${Boards}" class="col-lg-4">
+                   <img th:src="'data:image/png;base64,'+${Board.photo}" width="140" height="140"/></td>
+                        
+                  <h4 th:text="${Board.name}"></h4>
+                  <p th:text="${Board.post}" ></p>
+                </div><!-- /.col-lg-4 -->
+                         
+            
+		          </div>
+              <hr class="featurette-divider">
+              <h2>Club's projects</h2><br>
+              <div class="row row-cols-1 row-cols-md-3 g-3">
+                <div th:each="Project:${Projects}" class="col">
+                  <div class="card shadow-sm">
+                    <img th:src="'data:image/png;base64,'+${Project.affiche}" width="140" height="140"/></td>
+                
+                  </div>
+                </div>
+    </div>
+</body>
+
+</html>

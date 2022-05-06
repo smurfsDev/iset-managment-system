@@ -1,5 +1,7 @@
 package com.projetIntegraion.spring.blogClub.service;
 
+import java.util.List;
+
 import com.projetIntegraion.spring.blogClub.entity.Board;
 import com.projetIntegraion.spring.blogClub.repository.BoardRepository;
 
@@ -46,6 +48,10 @@ public class BoardService {
 	// }
 	public Board getBoard(Long id) {
 		return BoardRepository.existsById(id) == false ? null : BoardRepository.findById(id).get();
+	}
+	public List<Board> getAllBoards() {
+	
+		return BoardRepository.findAll();
 	}
 	public Page<Board> getAllBoardsParPage(int page, int size){
 		return BoardRepository.findAll(PageRequest.of(page, size));

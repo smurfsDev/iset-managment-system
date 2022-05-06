@@ -1,5 +1,7 @@
 package com.projetIntegraion.spring.blogClub.service;
 
+import java.util.List;
+
 import com.projetIntegraion.spring.blogClub.entity.Activity;
 import com.projetIntegraion.spring.blogClub.repository.ActivitiesRepository;
 
@@ -46,6 +48,10 @@ public class ActivitiesService {
 	// public List<Club> getAllClubs() {
 	// 	return clubRepository.findAll();
 	// }
+	public List<Activity> getAllActivities() {
+	
+		return activitiesRepository.findAll();
+	}
 
 	public Page<Activity> getAllActivitiesParPage(int page, int size){
 		return activitiesRepository.findAll(PageRequest.of(page, size));

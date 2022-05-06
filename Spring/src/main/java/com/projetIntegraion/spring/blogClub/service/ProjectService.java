@@ -1,5 +1,7 @@
 package com.projetIntegraion.spring.blogClub.service;
 
+import java.util.List;
+
 import com.projetIntegraion.spring.blogClub.entity.Project;
 import com.projetIntegraion.spring.blogClub.repository.ProjectRepository;
 
@@ -46,6 +48,10 @@ public class ProjectService {
 	// }
 	public Project getProject(Long id) {
 		return ProjectRepository.existsById(id) == false ? null : ProjectRepository.findById(id).get();
+	}
+	public List<Project> getAllProjects() {
+	
+		return ProjectRepository.findAll();
 	}
 	public Page<Project> getAllProjectsParPage(int page, int size){
 		return ProjectRepository.findAll(PageRequest.of(page, size));
