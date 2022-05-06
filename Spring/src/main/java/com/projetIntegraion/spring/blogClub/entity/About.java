@@ -7,9 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 
 
 @Entity
@@ -19,6 +22,8 @@ public class About {
     private Long id;
     @ManyToOne
     private Club club;
+    @NotNull
+    @Size(min = 3, max =255)
     private String longDescription;
     @CreationTimestamp
     private Timestamp created_at;

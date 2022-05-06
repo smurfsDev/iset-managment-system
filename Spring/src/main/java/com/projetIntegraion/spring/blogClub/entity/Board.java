@@ -8,16 +8,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 
 @Entity
 public class Board {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Size(min = 3, max = 30)
     private String name;
+    @NotNull
+    @Size(min = 3, max = 30)
     private String post;
     @Lob
     private String photo;
