@@ -26,10 +26,8 @@ class ProjectsRequest extends FormRequest
     public function rules()
     {
         return [
-            
-            "affiche"=> "required",
-            "idClub" => "exists:clubs,id"
-            
+
+            "affiche" => "required"
         ];
     }
     public function failedValidation(Validator $validator)
