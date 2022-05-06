@@ -18,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class DemandeCreationClub {
+	
 	private @Id @GeneratedValue Long id;
 	@NotNull
 	@Size(min = 3, max = 30)

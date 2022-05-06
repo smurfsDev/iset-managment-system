@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Liste des Produits</title>
+</head>
+
+<body>
+
+    <div layout:fragment="Mycontent">
+        <div class="container">
+            <div class="row my-4">
+                <div class="col">
+                    <h1 class="text-center">Gestion du blog club</h1>
+                    
+                </div>
+            </div>
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateBlog}" class="float-start btn btn-success"> <i
+                        class="fa-solid fa-plus"></i> Gerer About Club 
+            </a>
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateActivity}" class="float-start btn btn-success"> <i
+                        class="fa-solid fa-plus"></i> Gerer Activities Club
+            </a>
+            
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateBoard}" class="float-start btn btn-success"> <i
+                        class="fa-solid fa-plus"></i> Gerer Bureau Club 
+            </a>
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateProject}" class="float-start btn btn-success"> <i
+                        class="fa-solid fa-plus"></i> Gerer Projects Club 
+            </a>
+            
+        </div>
+</body>
+
+</html>
