@@ -3,6 +3,10 @@
         <div v-if="error" class="alert alert-danger">
             {{ error }}
         </div>
+        <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
+            @dismissed="alert.dismissCountDown = 0">
+            <p>{{ alert.msg }}</p>
+        </b-alert>
         <form @submit.prevent="logIn">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -27,17 +31,30 @@ export default {
             form: {
                 email: '',
                 password: ''
-            }
+            },
+            alert: {
+                dismissCountDown: 0,
+                variant: "",
+                msg: "",
+            },
         }
     },
     methods: {
         ...mapActions(["LogIn"]),
-         logIn() {
+        logIn() {
             try {
-                 this.LogIn(this.form)
-            } catch (error) {
-                this.showError = true
+                this.LogIn(this.form).then(()=>{
+                    if(this.$store.getters.authStatus==2){
+                        this.alert.dismissCountDown = 3;
+                        this.alert.variant = "danger";
+                        this.alert.msg = this.$store.getters.authMessage;
+                    }
+                });
+            }catch (e) {
+                console.log(e);
             }
+
+            
         },
     },
     computed: {
