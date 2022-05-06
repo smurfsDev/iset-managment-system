@@ -1,5 +1,5 @@
 <template>
-    <div class="login-form">
+    <div class="login-form container">
         <form @submit.prevent="register">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -13,6 +13,13 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" v-model="form.password"
                     placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role" v-model="form.role">
+                    <option value="2">Etudiant</option>
+                    <option value="5">Chef departement</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>

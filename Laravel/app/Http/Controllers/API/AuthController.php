@@ -43,6 +43,7 @@ class AuthController extends BaseController
             'email' => 'required|email',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
+            'role' => 'required|exists:roles,id',
         ]);
 
         if ($validator->fails()) {
@@ -52,6 +53,7 @@ class AuthController extends BaseController
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+        $user->roles()->attach($request->role);
         $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
         $success['name'] =  $user->name;
         $success['user'] = $user;
