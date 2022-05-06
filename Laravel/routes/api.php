@@ -15,6 +15,7 @@ use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\ChefDepartmentController;
 use App\Http\Controllers\club\ClubController;
 use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\SalleController;
@@ -38,6 +39,10 @@ Route::group(['prefix' => '/c'], function () {
     Route::get('/', [CategorieMaterielController::class, 'show']);
 });
 
+Route::group(['prefix' => '/cd'], function () {
+    Route::get('/', [ChefDepartmentController::class, 'show']);
+    Route::post('/accept/{id}', [ChefDepartmentController::class, 'accept']);
+});
 
 
 
