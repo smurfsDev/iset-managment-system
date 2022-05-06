@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import antlr.collections.List;
 
 public interface AboutRepository extends JpaRepository<About, Long> {
-    @Query("select a from About a where a.club = ?1")
-    public About findByClubId(Long id);
+    // @Query("select a from About a where a.club = ?1")
+    // public About findByClubId(Long id);
 }

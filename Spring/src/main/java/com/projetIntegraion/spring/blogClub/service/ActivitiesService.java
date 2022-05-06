@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivitiesService {
     @Autowired
-    private ActivitiesRepository activitiesRepository;
+     ActivitiesRepository activitiesRepository;
 
     public Activity save(Activity act) {
 		return activitiesRepository.save(act);
@@ -40,13 +40,15 @@ public class ActivitiesService {
 	public Activity getClub(Long id) {
 		return activitiesRepository.existsById(id) == false ? null : activitiesRepository.findById(id).get();
 	}
-
+	public Activity getActivity(Long id) {
+		return activitiesRepository.existsById(id) == false ? null : activitiesRepository.findById(id).get();
+	}
 	// public List<Club> getAllClubs() {
 	// 	return clubRepository.findAll();
 	// }
 
 	public Page<Activity> getAllActivitiesParPage(int page, int size){
-		return activitiesRepository.findAll(PageRequest.of(page, size));
+		return activitiesRepository.findAll(PageRequest.of(0, 10));
 	};
 
 	// public Page<Club> getClubParNom(String nom, int page, int size){

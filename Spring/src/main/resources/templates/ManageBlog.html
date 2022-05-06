@@ -18,12 +18,10 @@
                     
                 </div>
             </div>
-            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateBlog
-               }" class="float-start btn btn-success"> <i
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateBlog}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Gerer About Club 
             </a>
-            <a sec:authorize="hasRole('STUDENT')" th:href="@{createAbout(
-                pageAbout=${currentPageAbout},sizeAbout=${param.sizeAbout})}" class="float-start btn btn-success"> <i
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateActivity}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Gerer Activities Club
             </a>
             

@@ -2,6 +2,9 @@ package com.projetIntegraion.spring;
 
 
 
+import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,9 +20,12 @@ public class Application {
 	// private ClubService service;
 	// @Autowired
 	// private UserService userSer;
-	
+	@Autowired
+	ActivitiesService service;
 	public static void main(String[] args) {
 	SpringApplication.run(Application.class, args);
+//	System.out.println(service.getAllActivities());
+		//System.out.println("Act"+service.getAllActivitiesParPage(page, size))
 	}
 	// @Override
 	// public void run(String... args) throws Exception {

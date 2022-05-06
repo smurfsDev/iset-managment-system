@@ -35,6 +35,10 @@ public class AboutClubsController {
         
         modelMap.addAttribute("pages", new int[listDcc.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
+        System.out.println("abouts: "+modelMap.toString());
+        System.out.println("page = "+page);
+        System.out.println("currentPage = "+modelMap.get("currentPage").toString());
+        System.out.println("siizee = "+modelMap.get("pages").toString());
         return "ManageAbout";
     }
    @RequestMapping("/createAbout")
@@ -99,7 +103,8 @@ public class AboutClubsController {
         modelMap.addAttribute("edit", true);
         modelMap.addAttribute("pages",
                 new int[aboutService.getAllAboutsParPage(page, size).getTotalPages()]);
-        return "createAbout";
+        
+                return "createAbout";
     }
 
     @RequestMapping("/updateAbout")
