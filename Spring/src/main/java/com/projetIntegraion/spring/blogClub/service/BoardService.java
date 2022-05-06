@@ -44,8 +44,10 @@ public class BoardService {
 	// public List<Club> getAllClubs() {
 	// 	return boardRepository.findAll();
 	// }
-
-	public Page<Board> getAllDemandeCreationClubParPage(int page, int size){
+	public Board getBoard(Long id) {
+		return BoardRepository.existsById(id) == false ? null : BoardRepository.findById(id).get();
+	}
+	public Page<Board> getAllBoardsParPage(int page, int size){
 		return BoardRepository.findAll(PageRequest.of(page, size));
 	};
 

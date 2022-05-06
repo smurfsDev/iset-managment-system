@@ -25,8 +25,7 @@
                         class="fa-solid fa-plus"></i> Gerer Activities Club
             </a>
             
-            <a sec:authorize="hasRole('STUDENT')" th:href="@{createAbout(
-                pageAbout=${currentPageAbout},sizeAbout=${param.sizeAbout})}" class="float-start btn btn-success"> <i
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateBoard}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Gerer Bureau Club 
             </a>
             <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateProject}" class="float-start btn btn-success"> <i

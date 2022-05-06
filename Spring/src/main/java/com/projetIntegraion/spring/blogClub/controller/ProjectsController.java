@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import com.projetIntegraion.spring.blogClub.entity.Project;
 import com.projetIntegraion.spring.blogClub.service.ProjectService;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -55,12 +56,12 @@ public class ProjectsController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
                 System.out.println("project: "+project.toString());
-        if (bindingResult.hasErrors()) {
-            modelMap.addAttribute("org.springframework.validation.BindingResult.project", bindingResult);
-            modelMap.addAttribute("listProjects", project);
+        // if (bindingResult.hasErrors()) {
+        //     modelMap.addAttribute("org.springframework.validation.BindingResult.project", bindingResult);
+        //     modelMap.addAttribute("listProjects", project);
 
-            return "createProject";
-        } else {
+        //     return "createProject";
+        // } else {
             // Project Project = new Project();
             // Project.setAffiche(project.getAffiche());
             // dc.setDateCreation(Dcc.getDateCreation());
@@ -69,9 +70,11 @@ public class ProjectsController {
             // dc.setVicePresident(Dcc.getVicePresident());
             // dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
             //Project project = new  
-            project.setAffiche(new String(multipartFile.getBytes()));
-            System.out.println("project.getAffiche()" + project.getAffiche());
-            Project Project = projectService.save(project);
+            Project p = new Project();
+            p.setAffiche(new String(Base64.encodeBase64(multipartFile.getBytes())));
+           // p.setAffiche(new String(multipartFile.getBytes()));
+            System.out.println("p.getAffiche()" + project.getAffiche());
+             p = projectService.save(p);
            //dc = DemandeCreationClubService.save(dc);
            // modelMap.addAttribute("Dcc", new DemandeCreationClub());
             modelMap.addAttribute("msg", "Demande de création de club enregistrée avec succès");
@@ -79,7 +82,7 @@ public class ProjectsController {
             modelMap.addAttribute("pages",
                     new int[projectService.getAllProjectsParPage(page, size).getTotalPages()]);
             return this.showCreateProject(modelMap, page, size);
-       }
+      // }
     }
 
     @RequestMapping("/deleteProject")
@@ -118,12 +121,12 @@ public class ProjectsController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             HttpServletRequest request) throws IOException {
-        if (bindingResult.hasErrors()) {
-            modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
-            modelMap.addAttribute("listProjects", Project);
-            modelMap.addAttribute("edit", true);
-            return "createProject";
-        } else {
+        // if (bindingResult.hasErrors()) {
+        //     modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
+        //     modelMap.addAttribute("listProjects", Project);
+        //     modelMap.addAttribute("edit", true);
+        //     return "createProject";
+        // } else {
             // Project project = new Project();
             // project.setId(Project.getId());
             // dc.setNomClub(Dcc.getNomClub());
@@ -131,11 +134,12 @@ public class ProjectsController {
             // dc.setActivite(Dcc.getActivite());
             // dc.setPresident(Dcc.getPresident());
             // dc.setVicePresident(Dcc.getVicePresident());
-            // if (multipartFile.getSize() != 0) {
-            //     dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
-            // } else {
-            //     dc.setLogo(DemandeCreationClubService.getDemandeCreationClub(Dcc.getId()).getLogo());
-            // }
+             // Project project = new Project();
+            if (multipartFile.getSize() != 0) {
+                Project.setAffiche(new String(Base64.encodeBase64(multipartFile.getBytes())));
+            } else {
+                Project.setAffiche(projectService.getProject(Project.getId()).getAffiche());
+            }
              projectService.save(Project);
             modelMap.addAttribute("listProjects", new Project());
             modelMap.addAttribute("pages",
@@ -143,7 +147,7 @@ public class ProjectsController {
             modelMap.addAttribute("type", "warning");
             modelMap.addAttribute("msg", "Affiche modifiée avec succès");
             return this.showCreateProject(modelMap, page, size);
-        }
+      //  }
     }
 
     // @RequestMapping("/accept")
