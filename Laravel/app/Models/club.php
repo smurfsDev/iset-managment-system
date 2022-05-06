@@ -24,4 +24,8 @@ class club extends Model
     public function abouts(){
         return $this->HasMany('App\Models\about','idClub');
     }
+
+    public function fondator(){
+        return $this->belongsTo('App\Models\User','id');
+    }
 }

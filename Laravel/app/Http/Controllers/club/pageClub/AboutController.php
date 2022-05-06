@@ -9,6 +9,11 @@ use App\Http\Requests\AboutRequest;
 
 class AboutController extends Controller
 {
+    public function getFondator($id){
+        $club = \App\Models\club::find($id);
+        $fondator = $club->fondator;
+        return response()->json($fondator);
+    }
 
     public function show($id){
         $abouts = about::where('idClub', $id)->get();

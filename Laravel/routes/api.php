@@ -141,6 +141,7 @@ Route::group(['prefix' => '/pc'], function () {
     Route::get('/projects/{id}', [ProjectsController::class, 'show']);
     Route::get('/boards/{id}', [BoardController::class, 'show']);
     Route::get('/about/{id}', [AboutController::class, 'show']);
+    Route::get('/fondator/{id}', [AboutController::class, 'getFondator']);
 });
 
 Route::group(['prefix' => '/m'], function () {
