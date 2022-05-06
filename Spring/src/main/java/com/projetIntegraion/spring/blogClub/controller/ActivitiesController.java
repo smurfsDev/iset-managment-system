@@ -5,9 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.projetIntegraion.spring.blogClub.entity.About;
 import com.projetIntegraion.spring.blogClub.entity.Activity;
-import com.projetIntegraion.spring.blogClub.service.AboutService;
 import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +68,7 @@ public class ActivitiesController {
             System.out.println("About: "+About.toString());
             about.setLongDescription(About.getLongDescription());
             about.setClub(About.getClub());*/
-            Activity newActivity = activitiesService.save(activity);
+           activitiesService.save(activity);
            // modelMapAct.addAttribute("About", newAbout);
             modelMapAct.addAttribute("msg", "About enregistrée avec succès");
             modelMapAct.addAttribute("type", "success");
@@ -126,7 +124,7 @@ public class ActivitiesController {
             activity.setParagraphe(Activity.getParagraphe());
             activity.setClub(Activity.getClub());
             
-            Activity newUpdatedActivity = activitiesService.save(activity);
+             activitiesService.save(activity);
             
             //dc = DemandeCreationClubService.save(dc);
             //modelMapAct.addAttribute("About", newUpdatedAbout);

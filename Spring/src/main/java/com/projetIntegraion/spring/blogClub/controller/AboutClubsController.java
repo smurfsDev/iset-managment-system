@@ -6,9 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.blogClub.entity.About;
-import com.projetIntegraion.spring.blogClub.entity.Activity;
+
 import com.projetIntegraion.spring.blogClub.service.AboutService;
-import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,7 +68,7 @@ public class AboutClubsController {
             System.out.println("About: "+About.toString());
             about.setLongDescription(About.getLongDescription());
             about.setClub(About.getClub());*/
-            About newAbout = aboutService.save(About);
+            aboutService.save(About);
            // modelMap.addAttribute("About", newAbout);
             modelMap.addAttribute("msg", "About enregistrée avec succès");
             modelMap.addAttribute("type", "success");
@@ -125,10 +124,9 @@ public class AboutClubsController {
             about.setId(About.getId());
             about.setLongDescription(About.getLongDescription());
             about.setClub(About.getClub());
-            About newUpdatedAbout = aboutService.save(about);
+             aboutService.save(about);
             
-            //dc = DemandeCreationClubService.save(dc);
-            //modelMap.addAttribute("About", newUpdatedAbout);
+            
             modelMap.addAttribute("pages",
                     new int[aboutService.getAllAboutsParPage(page, size).getTotalPages()]);
             modelMap.addAttribute("type", "warning");

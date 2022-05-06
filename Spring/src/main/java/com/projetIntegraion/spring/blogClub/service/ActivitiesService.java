@@ -48,7 +48,7 @@ public class ActivitiesService {
 	// }
 
 	public Page<Activity> getAllActivitiesParPage(int page, int size){
-		return activitiesRepository.findAll(PageRequest.of(0, 10));
+		return activitiesRepository.findAll(PageRequest.of(page, size));
 	};
 
 	// public Page<Club> getClubParNom(String nom, int page, int size){
