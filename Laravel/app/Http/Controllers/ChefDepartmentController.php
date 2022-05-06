@@ -19,10 +19,18 @@ class ChefDepartmentController extends Controller
 
     public function accept($id){
         $user = User::find($id);
-        $user->roles()->updateExistingPivot(5, ['status' => 1]);
+        if($user){
+            $user->roles()->updateExistingPivot(5, ['status' => 1]);
+            $user->save();
+            return response()->json('ChefDepartement accepted',200);
+        }
+        return response()->json('ChefDepartment not found',404);
+    }
+
+    public function refuse($id){
+        $user = User::find($id);
+        $user->roles()->updateExistingPivot(5, ['status' => 0]);
         $user->save();
-        return response()->json('User accepted');
-
-
+        return response()->json('ChefDepartement refused',200);
     }
 }

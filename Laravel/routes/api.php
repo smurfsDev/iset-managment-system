@@ -42,6 +42,7 @@ Route::group(['prefix' => '/c'], function () {
 Route::group(['prefix' => '/cd'], function () {
     Route::get('/', [ChefDepartmentController::class, 'show']);
     Route::post('/accept/{id}', [ChefDepartmentController::class, 'accept']);
+    Route::post('/refuse/{id}', [ChefDepartmentController::class, 'refuse']);
 });
 
 
