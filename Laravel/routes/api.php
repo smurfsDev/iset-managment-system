@@ -38,11 +38,6 @@ Route::group(['prefix' => '/c'], function () {
     Route::get('/', [CategorieMaterielController::class, 'show']);
 });
 
-Route::get('{idClub}/header/getAll', [HeadersController::class, 'getHeaders']);
-Route::post('{idClub}/header/create', [HeadersController::class, 'createHeader']);
-Route::delete('{idClub}/header/delete/{id}', [HeadersController::class, 'deleteHeader']);
-Route::put('{idClub}/header/update/{id}', [HeadersController::class, 'updateHeader']);
-
 
 Route::get('{idClub}/projects/getAll', [ProjectsController::class, 'getProjects']);
 Route::post('{idClub}/projects/create', [ProjectsController::class, 'createProject']);
@@ -122,6 +117,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/create', [BoardController::class, 'createBoard']);
         Route::delete('/delete/{id}', [BoardController::class, 'deleteBoard']);
         Route::put('/update/{id}', [BoardController::class, 'updateBoard']);
+    });
+
+    // headers routes
+    Route::group(['prefix' => '/header'], function () {
+        Route::get('/getAll', [HeadersController::class, 'getHeaders']);
+        Route::post('/create', [HeadersController::class, 'createHeader']);
+        Route::delete('/delete/{id}', [HeadersController::class, 'deleteHeader']);
+        Route::put('/update/{id}', [HeadersController::class, 'updateHeader']);
     });
 });
 Route::group(['prefix' => '/m'], function () {
