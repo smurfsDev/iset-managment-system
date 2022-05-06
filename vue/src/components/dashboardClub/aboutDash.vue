@@ -117,7 +117,7 @@ export default {
       }
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/about/getAll').then(response => {
         // console.log(response.data.data);
         if (response.data.data!=undefined){
           this.abouts = response.data.data
@@ -130,14 +130,13 @@ export default {
   methods: {
     createDescription(){
       let newAbout = {
-        longDescription: this.longDescription,
-        idClub: 1
+        longDescription: this.longDescription
       }
-      this.$http.post("http://localhost:8000/api/1/about/create", newAbout).then( ()=> {
+      this.$http.post("http://localhost:8000/api/about/create", newAbout).then( ()=> {
        
         this.created = true;
         
-       this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
+       this.$http.get('http://localhost:8000/api/about/getAll').then(response => {
        
           this.abouts = response.data.data
           
@@ -149,12 +148,12 @@ export default {
   },
   deleteDescription(id){
     
-    this.$http.delete("http://localhost:8000/api/1/about/delete/"+id).then(() => {
+    this.$http.delete("http://localhost:8000/api/about/delete/"+id).then(() => {
      
       this.abouts = this.abouts.filter(item => item.id != id)
       alert("Description supprimée");
     })
-    this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/about/getAll').then(response => {
        
           this.abouts = response.data.data
           
@@ -177,9 +176,8 @@ export default {
     let newAbout = {
       id: this.id,
       longDescription: this.longDescription,
-      idClub: 1
     }
-    this.$http.put("http://localhost:8000/api/1/about/update/"+this.id, newAbout).then(() => {
+    this.$http.put("http://localhost:8000/api/about/update/"+this.id, newAbout).then(() => {
       
     
       this.created = true;

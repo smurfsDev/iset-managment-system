@@ -23,7 +23,7 @@
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
-          <form @submit.prevent="createProject" v-if="update==false">
+          <form @submit.prevent="createProject" v-if="ajout==true">
            
              
             <div class="mb-3">
@@ -115,7 +115,7 @@ export default {
     };
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/projects/getAll').then(response => {
       
       if (response.data.data!=null){
         this.projects = response.data.data;
@@ -153,11 +153,11 @@ export default {
              affiche: this.affiche,
                 idClub : 1
          }
-       this.$http.post("http://localhost:8000/api/1/projects/create",newProject)
+       this.$http.post("http://localhost:8000/api/projects/create",newProject)
           .then (() => {
             
              this.ajout=true
-             this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
+             this.$http.get('http://localhost:8000/api/projects/getAll').then(response => {
                this.projects = response.data.data;
              })
              
@@ -167,46 +167,13 @@ export default {
           .catch(() => {
             alert('Erreur! ')
           })
-        // this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
-
-        //     if (response.data.data!=null){
-        //         this.projects = response.data.data;
-                
-        //         this.ajout = true;
-        //     }
-
-          
-        //     let newProject = {
-        //       affiche: this.affiche,
-        //        idClub : 1
-        //   }
         
-        
-        //   this.$http.post("http://localhost:8000/api/1/projects/create",newProject)
-        //   .then (response => {
-        //     console.log(response)
-        //      this.ajout=true
-        //      this.projects.push(newProject)
-        //     alert('Projet ajouté! ')
-        //   })
-        //   .catch(error => {
-        //   console.log('error', error);
-        //   })
-          
-        
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
-      
-
-      
          }
          reader.readAsDataURL(this.srcImage);
   },
   deleteProject(id){
     
-    this.$http.delete("http://localhost:8000/api/1/projects/delete/"+id).then(() => {
+    this.$http.delete("http://localhost:8000/api/projects/delete/"+id).then(() => {
    
       alert('Projet supprimé! ')
       this.projects = this.projects.filter(item => item.id != id)
@@ -234,11 +201,10 @@ export default {
     let updateProject = {
             id: this.id,
             affiche: this.affiche,
-            idClub : 1
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/projects/update/"+this.id,updateProject).then(() => {
+      this.$http.put("http://localhost:8000/api/projects/update/"+this.id,updateProject).then(() => {
       
         alert('Projet modifié! ')
        this.projects = this.projects.filter(item => item.id != this.id)

@@ -9,8 +9,9 @@ use App\Http\Requests\AboutRequest;
 
 class AboutController extends Controller
 {
-    public function getAbout($id){
-        $about = about::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+    public function getAbout(Request $request){
+        $club = $request->user()->club()->get('id');
+        $about = about::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);
         if (sizeof($about) > 0)
             return response()->json(
                 $about,
@@ -35,9 +36,10 @@ class AboutController extends Controller
             ], 404);
     }
 
-    public function createAbout($id, AboutRequest $request){
+    public function createAbout(AboutRequest $request){
         $longDescription = $request->input('longDescription');
-        $idClub = $id;
+        $club = $request->user()->club()->get('id');
+        $idClub = $club[0]->id;
 
         $newAbout = array(
             "longDescription" => $longDescription,
@@ -57,8 +59,7 @@ class AboutController extends Controller
         }
         return "About created";
     }
-    public function deleteAbout($idClub,$idAbout){
-
+    public function deleteAbout($idAbout){
         $about = about::find($idAbout);
 
         if ($about){
@@ -70,19 +71,16 @@ class AboutController extends Controller
         }
         else {
             return response()->json([
-                'type' => 'Header',
-                'message' => 'Header non trouvée'
+                'type' => 'About',
+                'message' => 'About non trouvée'
             ], 404);
         }
     }
 
-    public function updateAbout($idClub, $idAbout, AboutRequest $request){
-
+    public function updateAbout($idAbout, AboutRequest $request){
         $about = about::find($idAbout);
         if ($about) {
-
             $about->longDescription = $request->input('longDescription') ? $request->input('longDescription') : $about->longDescription;
-            $about->idClub = $idClub;
             $about->save();
             return response()->json([
                 'message' => 'About mis à jour',

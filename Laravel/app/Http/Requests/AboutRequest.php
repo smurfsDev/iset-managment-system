@@ -26,10 +26,8 @@ class AboutRequest extends FormRequest
     public function rules()
     {
         return [
-            
-            "longDescription"=> "required",
-            "idClub" => "exists:clubs,id"
-            
+
+            "longDescription"=> "required"
         ];
     }
     public function failedValidation(Validator $validator)

@@ -28,8 +28,7 @@ class BoardsRequest extends FormRequest
         return [
             "nom"=> "required",
             "post" => "required",
-            "image" => "required",
-            "idClub" => "exists:clubs,id"
+            "image" => "required"
         ];
     }
     public function failedValidation(Validator $validator)

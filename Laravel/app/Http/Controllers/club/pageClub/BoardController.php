@@ -9,9 +9,9 @@ use App\Http\Requests\BoardsRequest;
 
 class BoardController extends Controller
 {
-    public function getBoard($id){
-
-        $boards = board::where('idClub','=',$id)->orderBy('updated_at')->paginate(5);
+    public function getBoard(Request $request){
+        $club = $request->user()->club()->get('id');
+        $boards = board::where('idClub','=',$club[0]->id)->orderBy('updated_at')->paginate(5);
         if (sizeof($boards) > 0)
             return response()->json(
                 $boards,
@@ -22,11 +22,12 @@ class BoardController extends Controller
                 null
             ], 404);
     }
-    public function createBoard($id, BoardsRequest $request){
+    public function createBoard(BoardsRequest $request){
+        $club = $request->user()->club()->get('id');
         $nom = $request->input('nom');
         $post = $request->input('post');
         $image = $request->input('image');
-        $idClub = $id;
+        $idClub = $club[0]->id;
 
         $newBoard = array(
             "nom" => $nom,
@@ -49,7 +50,7 @@ class BoardController extends Controller
         return "Board created";
     }
 
-    public function deleteBoard($idClub,$idBoard){
+    public function deleteBoard($idBoard){
 
         $board = board::find($idBoard);
 
@@ -68,7 +69,7 @@ class BoardController extends Controller
         }
     }
 
-    public function updateBoard($idClub, $idBoard, BoardsRequest $request){
+    public function updateBoard($idBoard, BoardsRequest $request){
 
         $board = board::find($idBoard);
         if ($board) {
@@ -76,7 +77,6 @@ class BoardController extends Controller
             $board->nom = $request->input('nom') ? $request->input('nom') : $board->nom;
             $board->post = $request->input('post') ? $request->input('post') : $board->post;
             $board->image = $request->input('image') ? $request->input('image') : $board->image;
-            $board->idClub = $idClub;
             $board->save();
             return response()->json([
                 'message' => 'Board mis à jour',
