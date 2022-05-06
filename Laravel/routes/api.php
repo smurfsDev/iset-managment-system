@@ -39,10 +39,6 @@ Route::group(['prefix' => '/c'], function () {
 });
 
 
-Route::get('{idClub}/projects/getAll', [ProjectsController::class, 'getProjects']);
-Route::post('{idClub}/projects/create', [ProjectsController::class, 'createProject']);
-Route::delete('{idClub}/projects/delete/{id}', [ProjectsController::class, 'deleteProject']);
-Route::put('{idClub}/projects/update/{id}', [ProjectsController::class, 'updateProject']);
 
 Route::group(['prefix' => '/members'], function () {
     Route::get('/{id}', [MemberController::class, 'getMembers']);
@@ -125,6 +121,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/create', [HeadersController::class, 'createHeader']);
         Route::delete('/delete/{id}', [HeadersController::class, 'deleteHeader']);
         Route::put('/update/{id}', [HeadersController::class, 'updateHeader']);
+    });
+
+    // Projects routes
+    Route::group(['prefix' => '/projects'], function () {
+    Route::get('/getAll', [ProjectsController::class, 'getProjects']);
+    Route::post('/create', [ProjectsController::class, 'createProject']);
+    Route::delete('/delete/{id}', [ProjectsController::class, 'deleteProject']);
+    Route::put('/update/{id}', [ProjectsController::class, 'updateProject']);
     });
 });
 Route::group(['prefix' => '/m'], function () {
