@@ -24,12 +24,12 @@
 								id="formLogin" name="formLogin" role="form" action="saveActivity" method="post">
 								<div class="form-group">
 									<label class="control-label">Description de l'activité :</label> <input type="text" name="paragraphe"
-										class="form-control" th:value="${Activity.paragraphe}" />
-									<span th:errors=${Activity.paragraphe} class="text-danger">
+										class="form-control" th:value="${activity.paragraphe}" />
+									<span th:errors=${activity.paragraphe} class="text-danger">
 									</span>
 								</div>
 								
-								<input type="hidden" name="id" th:value="${Activity.id}" />
+								<input type="hidden" name="id" th:value="${activity.id}" />
 								<input type="hidden" name="page" th:value="${param.page}" />
 								<input type="hidden" name="size" th:value="${param.size}" />
 								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"

@@ -56,21 +56,21 @@ public class ActivitiesController {
     @RequestMapping("/saveActivity")
     public String saveActivity(ModelMap modelMapAct,
            
-            @Valid Activity Activity,
+            @Valid Activity activity,
             BindingResult bindingResult,
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
         if (bindingResult.hasErrors()) {
             modelMapAct.addAttribute("org.springframework.validation.BindingResult.About", bindingResult);
-            modelMapAct.addAttribute("Activity", Activity);
+            modelMapAct.addAttribute("Activity", activity);
             return "createActivity";
         } else {
            /* About about = new About();
             System.out.println("About: "+About.toString());
             about.setLongDescription(About.getLongDescription());
             about.setClub(About.getClub());*/
-            Activity newActivity = activitiesService.save(Activity);
+            Activity newActivity = activitiesService.save(activity);
            // modelMapAct.addAttribute("About", newAbout);
             modelMapAct.addAttribute("msg", "About enregistrée avec succès");
             modelMapAct.addAttribute("type", "success");
@@ -99,8 +99,8 @@ public class ActivitiesController {
     public String showUpdateActivities(@RequestParam("id") Long id, ModelMap modelMapAct,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Activity Activity = activitiesService.getActivity(id);
-        modelMapAct.addAttribute("Activity", Activity);
+        Activity activity = activitiesService.getActivity(id);
+        modelMapAct.addAttribute("activity", activity);
         modelMapAct.addAttribute("edit", true);
         modelMapAct.addAttribute("pages",
                 new int[activitiesService.getAllActivitiesParPage(page, size).getTotalPages()]);
