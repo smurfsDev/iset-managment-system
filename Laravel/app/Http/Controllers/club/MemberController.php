@@ -14,10 +14,10 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getMembers($id)
+    public function getMembers(Request $request)
     {
-        $responsableClub = User::with('club')->find($id);
-        $members = Member::with('user')->with('club')->where('club_id','=',$responsableClub->club->id)->paginate(5);
+        $club = $request->user()->club()->get('id');
+        $members = Member::with('user')->with('club')->where('club_id','=',$club[0]->id)->paginate(5);
         if (!empty($members)) {
             $response = [
                 'success' => true,
