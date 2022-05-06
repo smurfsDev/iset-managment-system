@@ -12,7 +12,7 @@ class ChefDepartmentController extends Controller
         // users having roles relation containing 'chefDepartement'
         $users = User::whereHas('roles', function ($query) {
             $query->where('name', 'chefDepartement');
-        })->get();
+        })->with('roles')->paginate(5);
 
         return response()->json($users);
     }
@@ -29,7 +29,7 @@ class ChefDepartmentController extends Controller
 
     public function refuse($id){
         $user = User::find($id);
-        $user->roles()->updateExistingPivot(5, ['status' => 0]);
+        $user->roles()->updateExistingPivot(5, ['status' => 2]);
         $user->save();
         return response()->json('ChefDepartement refused',200);
     }
