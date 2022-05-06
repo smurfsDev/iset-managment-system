@@ -9,6 +9,7 @@
                     <div class="bv-example-row text-center">
                         <b-row class="mb-2">
                             <b-row>
+                                <router-link :to="{name: 'blogClub', params: {id: club.id}}">page</router-link>                                
                                 <b-col>
                                     Nom du club : {{ club.nomClub }} Date création :
                                     {{ club.dateCreation }}
