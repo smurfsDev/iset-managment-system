@@ -11,7 +11,9 @@ const state = {
   isStudent: false,
   isResponsableClub: false,
   isSuperAdmin: false,
-  message: null
+  message: null,
+  authStatus: null,
+  authMessage: null,
 };
 
 
@@ -23,6 +25,9 @@ const getters = {
   isStudent : (state) => state.isStudent,
   isResponsableClub : (state) => state.isResponsableClub,
   token: (state) => state.token,
+  authStatus : (state) => state.authStatus,
+  authMessage : (state) => state.authMessage,
+  
 };
 const actions = {
   async LogIn({ commit }, User) {
@@ -43,18 +48,23 @@ const actions = {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
           // Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.tkn;
-
           localStorage.setItem("token", this.tkn);
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
           commit('setResponsableClub',response.data.data.isResponsableClub);
           commit("setUser", response.data.data.user);
+          commit("setAuthStatus", 1);
+
           commit("setToken", response.data.data.token);
         } else {
           console.log("jawna behi nai");
         }
+
         router.push("/");
-      });
+      }).catch(function (error) {
+        commit('setAuthStatus',2);
+        commit('setAuthMessage',error.response.data.data.error); // this is the main part. Use the response property from the error object
+       });
   },
   async LogOut({ commit }) {
     localStorage.removeItem("token");
@@ -62,7 +72,9 @@ const actions = {
     router.push("/login");
 
   },
-  async Register({ commit }, User) {
+  async Register(
+    { commit },
+     User) {
     await axios
       .post("http://localhost:8000/api/register", User, {
         headers: {
@@ -70,7 +82,7 @@ const actions = {
         },
         withCredentials: true
       })
-      .then((response) => {
+       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
 
@@ -80,6 +92,8 @@ const actions = {
         } else {
           console.log("jawna behi nai");
         }
+      }) 
+      .catch(()=>{
       });
   }
 };
@@ -110,6 +124,12 @@ const mutations = {
   },
   setResponsableClub(state, isResponsableClub) {
     state.isResponsableClub = isResponsableClub;
+  },
+  setAuthStatus(state, authStatus) {
+    state.authStatus = authStatus;
+  },
+  setAuthMessage(state, authMessage) {
+    state.authMessage = authMessage;
   }
 };
 export default {
