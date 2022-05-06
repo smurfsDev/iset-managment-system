@@ -55,6 +55,12 @@
                     hidden: !this.isAdmin
                 },
                 {
+                    href: '/admin/manageChefDepartments',
+                    title: 'chefDepartements',
+                    icon: 'fas fa-user',
+                    hidden: !this.isAdmin
+                },
+                {
                     //href: '/dashboard',
                     title: 'Dashboard blog club',
                     icon: 'fas fa-dashboard',
