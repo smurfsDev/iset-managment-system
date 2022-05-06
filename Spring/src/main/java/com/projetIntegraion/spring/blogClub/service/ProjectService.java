@@ -44,8 +44,10 @@ public class ProjectService {
 	// public List<Project> getAllClubs() {
 	// 	return ProjectRepository.findAll();
 	// }
-
-	public Page<Project> getAllDemandeCreationClubParPage(int page, int size){
+	public Project getProject(Long id) {
+		return ProjectRepository.existsById(id) == false ? null : ProjectRepository.findById(id).get();
+	}
+	public Page<Project> getAllProjectsParPage(int page, int size){
 		return ProjectRepository.findAll(PageRequest.of(page, size));
 	};
 
