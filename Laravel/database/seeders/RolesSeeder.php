@@ -26,6 +26,9 @@ class RolesSeeder extends Seeder
         Role::create([
             'name' => 'superAdmin'
         ]);
+        Role::create([
+            'name' => 'chefDepartement'
+        ]);
 
     }
 }
