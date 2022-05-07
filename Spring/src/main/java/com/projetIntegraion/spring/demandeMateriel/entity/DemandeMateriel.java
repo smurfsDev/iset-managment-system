@@ -24,7 +24,7 @@ import org.springframework.lang.Nullable;
 
 @Entity
 public class DemandeMateriel {
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue 
 	private  Long id;
     @Nullable
 	private String reponse;
@@ -59,7 +59,10 @@ public class DemandeMateriel {
     }
 
     
-    public int getIdCategorie() {
+    public void setId(Long id) {
+		this.id = id;
+	}
+	public int getIdCategorie() {
 		return idCategorie;
 	}
 
