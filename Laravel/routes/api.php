@@ -136,7 +136,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::group(['prefix' => '/demandeEvent'], function () {
-        Route::get('/{id}', [DemandeEventController::class, 'getDemandesEvent']);
+        Route::get('/', [DemandeEventController::class, 'getDemandesEvent']);
         Route::post('/create/{id}', [DemandeEventController::class, 'createDemandeEvent']);
         Route::put('/update/{id}', [DemandeEventController::class, 'updateDemandeEvent']);
         Route::delete('/delete/{id}', [DemandeEventController::class, 'deleteDemandeEvent']);

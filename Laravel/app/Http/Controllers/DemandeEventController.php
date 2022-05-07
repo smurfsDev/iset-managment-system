@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\club;
 use App\Models\DemandeEvent;
 use Illuminate\Http\Request;
 use App\Http\Requests\DemandeEventRequest;
 
 class DemandeEventController extends Controller
 {
-    public function getDemandesEvent($id)
+    public function getDemandesEvent(DemandeEventRequest $request)
     {
         //$Demandes = DemandeEvent::with('materiel')->where('id', '=', $id)->get();
-        $Demandes = DemandeEvent::where('clubId','=', $id)->get();
+        $idResponsable = $request->user()->id; 
+        dd($idResponsable);
+        $club = club::where('responsableClub', '=', $idResponsable);
+        dd($club->id);
+        $Demandes = DemandeEvent::where('clubId','=', $club->id)->get();
         
         dd($Demandes);
         if (sizeof($Demandes) > 0) {
