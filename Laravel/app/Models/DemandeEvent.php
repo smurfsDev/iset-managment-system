@@ -12,6 +12,7 @@ class DemandeEvent extends Model
     protected $fillable = [
         "responsableClubId",
         "administrateurId",
+        "nomEvent",
         "dateEvent",
         "description",
         "status"

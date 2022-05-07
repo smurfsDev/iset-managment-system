@@ -17,6 +17,7 @@ class CreateDemandeEventsTable extends Migration
             $table->id();
             $table->foreignId("responsableClubId");
             $table->foreignId("administrateurId");
+            $table->string("nomEvent");
             $table->date("dateEvent");
             $table->string("description");
             $table->integer("status")->default(0);

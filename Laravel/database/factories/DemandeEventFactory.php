@@ -17,6 +17,7 @@ class DemandeEventFactory extends Factory
         return [
             "responsableClubId" => User::get('id')->random(),
             "administrateurId" => User::get('id')->random(),
+            "nomEvent" => $this->faker->word(),
             "dateEvent" => $this->faker->date(),
             "description" => $this->faker->sentence(),
         ];
