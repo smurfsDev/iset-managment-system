@@ -21,7 +21,7 @@ use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\DepartementController;
-
+use App\Http\Controllers\ClasseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -170,5 +170,5 @@ Route::group(['prefix' => '/Departement'], function () {
 });
 
 Route::group(['prefix' => '/classe'], function () {
-    Route::get('/', [ClasseController::class, 'index']);
+    Route::get('/{id}', [ClasseController::class, 'show']);
 });
