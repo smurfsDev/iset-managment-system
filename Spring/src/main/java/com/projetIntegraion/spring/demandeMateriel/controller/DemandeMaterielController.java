@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
-import com.projetIntegraion.spring.demandeMateriel.entity.Materiel;
 import com.projetIntegraion.spring.demandeMateriel.service.CategorieMaterielService;
 import com.projetIntegraion.spring.demandeMateriel.service.DemandeMaterielService;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserServise;
@@ -151,7 +150,7 @@ public class DemandeMaterielController {
 		return this.showList(modelMap, page, size);
 
 	}
-
+    
 
 	
 
