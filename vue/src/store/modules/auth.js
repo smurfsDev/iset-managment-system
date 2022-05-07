@@ -11,6 +11,7 @@ const state = {
   isStudent: false,
   isResponsableClub: false,
   isSuperAdmin: false,
+  isChefDepartement: false,
   message: null,
   authStatus: null,
   authMessage: null,
@@ -27,6 +28,7 @@ const getters = {
   token: (state) => state.token,
   authStatus : (state) => state.authStatus,
   authMessage : (state) => state.authMessage,
+  isChefDepartement : (state) => state.isChefDepartement,
   
 };
 const actions = {
@@ -52,6 +54,7 @@ const actions = {
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
           commit('setResponsableClub',response.data.data.isResponsableClub);
+          commit('setChefDepartement',response.data.data.isChefDepartement);
           commit("setUser", response.data.data.user);
           commit("setAuthStatus", 1);
 
@@ -109,6 +112,10 @@ const mutations = {
     state.isResponsableClub= false;
     state.isSuperAdmin= false;
     state.message= null;
+    state.authStatus= null;
+    state.authMessage= null;
+    state.isChefDepartement= false;
+
   },
   setUser(state, user) {
     state.user = user;
@@ -130,7 +137,11 @@ const mutations = {
   },
   setAuthMessage(state, authMessage) {
     state.authMessage = authMessage;
+  },
+  setChefDepartement(state, isChefDepartement) {
+    state.isChefDepartement = isChefDepartement;
   }
+
 };
 export default {
   state,
