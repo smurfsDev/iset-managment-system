@@ -46,6 +46,11 @@
                     title: 'Students',
                     icon: 'fas fa-user',
                     hidden: !this.isChefDepartement
+                },{
+                    href: '/cd/GererClasse',
+                    title: 'Classes',
+                    icon: 'fas fa-building',
+                    hidden: !this.isChefDepartement
                 },
                 {
                     href: '/etudiant/demandeCreationClub',
