@@ -20,6 +20,8 @@ class AuthController extends BaseController
             ) {
                 if ($user->roles->where('name', 'chefDepartement')->first()->pivot->status == 0) {
                     return $this->sendError('Unauthorised.', ['error' => 'Votre compte n\'est pas encore activé']);
+                }else if ($user->roles->where('name', 'chefDepartement')->first()->pivot->status == 2) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
                 }
             }
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
