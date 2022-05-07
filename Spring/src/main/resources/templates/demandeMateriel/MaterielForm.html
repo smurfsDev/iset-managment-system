@@ -20,15 +20,25 @@
 							<h3 th:text="${edit}?'Modifier Materiel':'Créer Materiel'" class="mb-0"></h3>
 						</div>
 						<div class="card-body">
-							<form th:action="${edit}?'updateMateriel':'saveMateriel'" enctype="multipart/form-data" class="form"
+							<form th:action="saveMateriel" enctype="multipart/form-data" class="form"
 								id="formLogin" name="formLogin" role="form" action="saveMateriel" method="post">
-	
+                                <input type="hidden" name="idDemande" th:value="${param.idDemande}">
 								<div class="form-group">
 									<label class="control-label"> Materiel :</label> 
-									<select name="materiel" >
-                                        <option th:each="materiel:${M}" th:value="${materiel.id}" th:text="${materiel.name}"></option>
+									<select name="idMateriel" >
+                                        <option th:each="materiel:${Materiels}" th:value="${materiel.id}" th:text="${materiel.titre}" ></option>
+                                    </select>
 								</div>
-								
+                                <!-- <div
+                                class="form-check" th:each="materiel:${Materiels}" th:value="${materiel.id}" >
+                                <input class="form-check-input" type="checkbox"
+                                th:value="materiel.titre"
+                                />
+                                 @change="ajoutMateriel(materiel.id)" 
+                                <label class="form-check-label" th:text="${materiel.titre}">
+
+                                </label> --> 
+                            </div>
 								<input type="hidden" name="id"  />
 								<input type="hidden" name="page" th:value="${param.page}" />
 								<input type="hidden" name="size" th:value="${param.size}" />
