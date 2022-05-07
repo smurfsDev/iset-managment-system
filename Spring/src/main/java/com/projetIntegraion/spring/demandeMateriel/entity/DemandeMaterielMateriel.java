@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,12 +14,14 @@ import javax.persistence.Table;
 @Table(name = "demande_materiel_materiel")
 
 public class DemandeMaterielMateriel implements  Serializable{
+    @Id @GeneratedValue
+    private  Long id;
 
-    @Id
+    // @Id
     @ManyToOne
     @JoinColumn(name = "idDemmande")
     private DemandeMateriel demandeMateriel;
-    @Id
+    // @Id
     @ManyToOne
     @JoinColumn(name = "idMateriel")
     private Materiel materiel;
@@ -39,6 +43,12 @@ public class DemandeMaterielMateriel implements  Serializable{
     }
     public void setQuantite(int quantite) {
         this.quantite = quantite;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
     
     
