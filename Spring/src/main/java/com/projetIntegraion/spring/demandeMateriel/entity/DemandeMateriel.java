@@ -1,21 +1,21 @@
 package com.projetIntegraion.spring.demandeMateriel.entity;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 
@@ -28,7 +28,7 @@ public class DemandeMateriel {
 	private  Long id;
     @Nullable
 	private String reponse;
-    private int status=0;
+    private int status =0;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
@@ -40,22 +40,31 @@ public class DemandeMateriel {
     @FutureOrPresent
     private Date dateDeRemise;
     @ManyToOne
-    private User idResponsableClub;
+    private User ResponsableClub;
     @ManyToOne
-    private User idDestinataire;
+    private User Destinataire;
+    @NotNull
+    private int idCategorie;
+
     @OneToMany(mappedBy="demandeMateriel", cascade = CascadeType.ALL)
     private List<DemandeMaterielMateriel> materiel;
+
 	public DemandeMateriel(String reponse, int status, @NotNull @FutureOrPresent Date dateEmploi,
-			@NotNull @FutureOrPresent Date dateDeRemise, User idResponsableClub, User idDestinataire,
-			List<DemandeMaterielMateriel> materiel) {
+			@NotNull @FutureOrPresent Date dateDeRemise, User ResponsableClub, User Destinataire,@NotNull int idCategorie,
+			List<DemandeMaterielMateriel> materiel) throws ParseException {
 		super();
-		this.reponse = reponse;
-		this.status = status;
-		this.dateEmploi = dateEmploi;
-		this.dateDeRemise = dateDeRemise;
-		this.idResponsableClub = idResponsableClub;
-		this.idDestinataire = idDestinataire;
-		this.materiel = materiel;
+	}
+    public DemandeMateriel() {
+        super();
+    }
+
+    
+    public int getIdCategorie() {
+		return idCategorie;
+	}
+
+	public void setIdCategorie(int idCategorie) {
+		this.idCategorie = idCategorie;
 	}
 	public String getReponse() {
 		return reponse;
@@ -81,17 +90,17 @@ public class DemandeMateriel {
 	public void setDateDeRemise(Date dateDeRemise) {
 		this.dateDeRemise = dateDeRemise;
 	}
-	public User getIdResponsableClub() {
-		return idResponsableClub;
+	public User getResponsableClub() {
+		return ResponsableClub;
 	}
-	public void setIdResponsableClub(User idResponsableClub) {
-		this.idResponsableClub = idResponsableClub;
+	public void setResponsableClub(User ResponsableClub) {
+		this.ResponsableClub = ResponsableClub;
 	}
-	public User getIdDestinataire() {
-		return idDestinataire;
+	public User getDestinataire() {
+		return Destinataire;
 	}
-	public void setIdDestinataire(User idDestinataire) {
-		this.idDestinataire = idDestinataire;
+	public void setDestinataire(User Destinataire) {
+		this.Destinataire = Destinataire;
 	}
 	public List<DemandeMaterielMateriel> getMateriel() {
 		return materiel;
@@ -105,8 +114,8 @@ public class DemandeMateriel {
 	@Override
 	public String toString() {
 		return "DemandeMateriel [id=" + id + ", reponse=" + reponse + ", status=" + status + ", dateEmploi="
-				+ dateEmploi + ", dateDeRemise=" + dateDeRemise + ", idResponsableClub=" + idResponsableClub
-				+ ", idDestinataire=" + idDestinataire + ", materiel=" + materiel + "]";
+				+ dateEmploi + ", dateDeRemise=" + dateDeRemise + ", ResponsableClub=" + ResponsableClub
+				+ ", Destinataire=" + Destinataire + ", materiel=" + materiel + "]";
 	}
     
 
