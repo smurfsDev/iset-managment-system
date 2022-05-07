@@ -22,6 +22,7 @@ use App\Http\Controllers\SalleController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\StudentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -171,4 +172,10 @@ Route::group(['prefix' => '/Departement'], function () {
 
 Route::group(['prefix' => '/classe'], function () {
     Route::get('/{id}', [ClasseController::class, 'show']);
+});
+
+Route::group(['prefix' => '/s'], function () {
+    Route::get('/', [StudentsController::class, 'show']);
+    Route::post('/accept/{id}', [StudentsController::class, 'accept']);
+    Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
 });
