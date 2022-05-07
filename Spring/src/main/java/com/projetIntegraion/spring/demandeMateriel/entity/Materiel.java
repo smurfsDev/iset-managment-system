@@ -16,7 +16,7 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 
 @Entity
 public class Materiel {
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue 
 	private  Long id;
 	@NotNull
 	@Size(min = 3, max = 30)
@@ -77,6 +77,9 @@ public class Materiel {
 	}
 	public Long getId() {
 		return id;
+	}
+	public Materiel() {
+		super();
 	}
 	@Override
 	public String toString() {
