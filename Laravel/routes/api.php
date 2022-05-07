@@ -168,3 +168,7 @@ Route::group(['prefix' => '/Salle'], function () {
 Route::group(['prefix' => '/Departement'], function () {
     Route::get('/', [DepartementController::class, 'index']);
 });
+
+Route::group(['prefix' => '/classe'], function () {
+    Route::get('/', [ClasseController::class, 'index']);
+});
