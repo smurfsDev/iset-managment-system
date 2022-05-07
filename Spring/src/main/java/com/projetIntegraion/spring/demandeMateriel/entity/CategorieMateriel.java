@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class CategorieMateriel {
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue 
 	private  Long id;
 	@NotNull
 	@Size(min = 3, max = 30)
