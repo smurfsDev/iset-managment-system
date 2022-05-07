@@ -23,13 +23,27 @@
             </div>
             <div class="form-group">
                 <label for="department">Department</label>
-                <select class="form-control" id="department" v-model="form.department">
-                    <option value="1">Informatique</option>
-                    <option value="2">Electronique</option>
-                    <option value="3">Mecanique</option>
-                    <option value="4">Chimie</option>
-                    <option value="5">Gestion</option>
-                </select>   
+                <select class="form-control" id="department" @change="fetchClasses(form.department)" v-model="form.department">
+                  <option 
+                    v-for="departement in departements"
+                    :key="departement.id"
+                    :value="departement.id" 
+                  >
+                    {{ departement.titre }}
+                  </option>
+                </select>
+            </div>
+            <div v-if="form.role==2" class="form-group">
+                <label for="department">Classe</label>
+                <select class="form-control"  id="department" v-model="form.classe">
+                  <option 
+                    v-for="classe in classes"
+                    :key="classe.id"
+                    :value="classe.id" 
+                  >
+                    {{ classe.abreviation }}
+                  </option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
@@ -44,7 +58,6 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-
     data() {
         return {
             form: {
@@ -52,10 +65,15 @@ export default {
                 email: '',
                 password: '',
                 confirm_password: ''
-            }
+            },
+            departements: [],
+            classes: [],
+
         }
     },
-
+    created() {
+        this.fetchDepartements();
+    },
     methods: {
         ...mapActions(["Register", "LogOut"]),
         logout() {
@@ -63,6 +81,20 @@ export default {
         },
         register() {
             this.Register(this.form);
+        },
+        fetchDepartements() {
+            fetch("http://localhost:8000/api/Departement")
+                .then((response) => response.json())
+                .then((data) => {
+                    this.departements = data.data;
+                });
+        },
+        fetchClasses(id) {
+            fetch("http://localhost:8000/api/classe/"+id)
+                .then((response) => response.json())
+                .then((data) => {
+                    this.classes = data;
+                });
         }
     }
 
