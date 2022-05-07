@@ -139,6 +139,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [MemberController::class, 'getMembers']);
         Route::delete('/{id}', [MemberController::class, 'deleteMember']);
     });
+
+    // classes routes
+
+    Route::group(['prefix' => '/Classe'], function () {
+        Route::get('/', [ClasseController::class, 'getClasses']);
+        Route::post('/', [ClasseController::class, 'createClasse']);
+        Route::delete('/{id}', [ClasseController::class, 'deleteClass']);
+        Route::put('/{id}', [ClasseController::class, 'updateClass']);
+    });
 });
 
 // page club routes
