@@ -1,7 +1,6 @@
 package com.projetIntegraion.spring.demandeMateriel.controller;
 
-import java.lang.ProcessBuilder.Redirect;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
@@ -12,6 +11,7 @@ import com.projetIntegraion.spring.demandeMateriel.service.DemandeMaterielServic
 import com.projetIntegraion.spring.demandeMateriel.service.MaterielService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +56,26 @@ public class MaterielController {
         DemandeMaterielMaterielRepository.save(materiel);
         return this.getMaterielParCategorie(modelMap,idMateriel,idDemande);
     }
-
-
+    @RequestMapping("/deleteMateriel")
+    public String deleteMateriel(ModelMap modelMap, Long idMateriel, Long idDemande){
+        DemandeMaterielMaterielRepository.deleteById(idMateriel);
+        return this.getMaterielParCategorie(modelMap,idMateriel,idDemande);
+    }
+    @RequestMapping("/setQuantite")
+    public String setQuantite(ModelMap modelMap, Long idMateriel, Long idDemande, int quantite,
+    @RequestParam(name = "page", defaultValue = "0") int page,
+    @RequestParam(name = "size", defaultValue = "2") int size){
+        Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        //DemandeMaterielMateriel materiel = DemandeMaterielMaterielRepository.findByMaterielId(idMateriel);
+        DemandeMaterielMateriel Dm = DemandeMaterielMaterielRepository.findByDemandeMaterielIdAndMaterielId(idDemande,idMateriel);
+        if(Dm != null){
+            Dm.setQuantite(quantite);
+            DemandeMaterielMaterielRepository.save(Dm);
+            return "/demandeMateriel/list";
+        }
+        return null;
+    }
 }
