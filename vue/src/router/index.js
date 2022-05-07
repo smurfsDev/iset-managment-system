@@ -23,7 +23,7 @@ import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
 import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
-
+import manageClasses from "./routes/gererClasse";
 Vue.use(VueRouter);
 
 const routes = [
@@ -59,10 +59,9 @@ const routes = [
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
   ...demandeSalle,
-
-
   ...manageChefDepartments,
   ...manageStudents,
+  ...manageClasses
 ];
 
 const router = new VueRouter({
