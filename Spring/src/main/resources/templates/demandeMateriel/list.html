@@ -25,18 +25,18 @@
             <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
             <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Materiel deleted</div>
-            <div class="row my-4 container " style="background-color:rgb(191, 191, 191) ; border-radius: 7px  ;"
+            <div class="row mt-3 mb-3 container " style="background-color:rgb(191, 191, 191) ; border-radius: 7px  ;"
                 th:each="demande:${Dmms.content}">
 
-                <div class="row col-3">
+                <div class="row col-3 mt-3">
                     <label>Destinataire :</label>
                     <p th:text="${demande.destinataire.name}"></p>
                 </div>
-                <div class=" col-4">
+                <div class=" col-4 mt-3">
                     <label>Date d'emploi :</label>
                     <p th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></p>
                             </div>  
-                            <div class=" col-5">
+                            <div class=" col-5 mt-3">
                                 <label>Date de remise :</label>
                                 <p th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}"></p>
                             </div>   
@@ -45,25 +45,28 @@
                                 <label>Reponse :</label>
                                 <p th:text="${demande.reponse}"></p>
                             </div>  
-                            <div class="row col-12">
-                                <label> Materiels :</label>
-                
-                                <div  th:each="materiel:${demande.materiel}">
-                                    <div class="row" th:each="m:${materiel.materiel}">
+                            <div class=" row col-12">
+                                <label>Materiels :</label>
+                            </div> 
+                            <div class="row col-12 mb-3">     
+                                <div class="row col-12" th:each="materiel:${demande.materiel}">
+                                    <div class="row col-12 mb-3" th:each="m:${materiel.materiel}">
                                         <div class="col-4" th:text="${m.titre}">
                                         </div>
-                                        <div class="row col-4">
-                                            <label class=" col-6">Qt :</label>
-                                            <input class=" col-6" type="number" th:value="${materiel.quantite}">
-                                        </div>
-                                        <div class="col-4">
-                                            <a class="btn btn-danger ml-2" onclick="return confirm('Etes-vous sur de supprimer ce materiel ?')" th:href="@{deleteMateriel(id=${materiel.id})}"><i class="fa-solid fa-trash"></i></a> 
-                                            <a class="btn btn-primary ml-2" th:href="@{showMateriel(id=${demande.idCategorie},idDemande=${demande.id})}"><i class="sss fa fa-check"></i></a>
+                                        <div class="row col-8">
+                                            <label class=" col-4">Qt :</label>
+                                            <form class="form-inline col-8" th:action="setQuantite" method="post">
+                                                <input type="hidden" name="idDemande" th:value="${demande.id}">
+                                                <input type="hidden" name="idMateriel" th:value="${m.id}">
+                                                <input class=" col-4" name="quantite" type="number" th:value="${materiel.quantite}">
+                                                <a class="btn btn-danger col-2 ml-2" style="float:right" onclick="return confirm('Etes-vous sur de supprimer ce materiel ?')" th:href="@{deleteMateriel(idMateriel=${materiel.id},idDemande=${demande.id})}"><i class="fa-solid fa-trash"></i></a> 
+                                                <input class="btn btn-primary col-2 ml-2"style="float:right" type="submit" th:value="Add"></input>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class=" row" sec:authorize="hasRole('STUDENT')"> 
+                            <div class=" row ml-auto mr-auto mb-3" sec:authorize="hasRole('STUDENT')"> 
                                 <a class="btn btn-danger ml-2" onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDmm(id=${demande.id},
                                     page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> 
                                 <a class="btn btn-warning ml-2 " th:href="@{showEditDm(id=${demande.id},
@@ -74,7 +77,7 @@
                             </div>
 
                     </div>
-                    <ul class="nav nav-pills container" style="text-align:center">
+                    <ul class="nav nav-pills container" >
                         <li th:each="page,status:${pages}"><a
                                 th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
                                 th:href="@{ listeDm(page=${status.index}, size=${param.size} ) }" 
