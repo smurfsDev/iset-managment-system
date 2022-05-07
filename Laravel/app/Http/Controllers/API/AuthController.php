@@ -39,6 +39,7 @@ class AuthController extends BaseController
             $success['isStudent'] = false;
             $success['isAdmin'] = false;
             $success['isResponsableClub'] = false;
+            $success['isChefDepartement'] = false;
 
             if ($user->roles->contains('name', "student")) {
                 $success['isStudent'] = true;
