@@ -62,13 +62,13 @@
             </b-row>
             <b-button
               variant="success"
-              :class="[{ disabled: Student.roles[0].pivot.status == 1 }]"
+              :class="[{ disabled: status(Student.roles) == 1 }]"
               v-on:click="Accept(Student.id)"
               >Accept</b-button
             >
             <b-button
               variant="danger"
-              :class="[{ disabled: Student.roles[0].pivot.status == 2 }]"
+              :class="[{ disabled: status(Student.roles) == 2 }]"
               v-on:click="Decline(Student.id)"
               >Decline</b-button
             >
@@ -136,6 +136,15 @@ export default {
     fetchStudent(url) {
       this.$emit("fetchStudent", url);
     },
+    status(roles){
+      let stat = 0 ;
+      roles.forEach((r)=>{
+        if (r.pivot.role_id == 2){
+          stat = r.pivot.status
+        }
+      })
+      return stat;
+    }
   },
 };
 </script>
