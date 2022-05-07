@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class DemandeEventRequest extends FormRequest
 {
@@ -11,10 +12,10 @@ class DemandeEventRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return false;
-    }
+    // public function authorize()
+    // {
+    //     return false;
+    // }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,11 +25,17 @@ class DemandeEventRequest extends FormRequest
     public function rules()
     {
         return [
-            "responsableClubId"=> "required|unique:demande_event",
             "nomEvent"=> "required|min:2",
             "dateEvent"=> "required|date",
-            "description"=> "required|min:2",
-            
+            "description"=> "required|min:2",       
         ];
+    }
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'message'   => 'Validation errors',
+            'data'      => $validator->errors()
+        ]));
     }
 }

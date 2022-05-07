@@ -1,25 +1,27 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Models\DemandeEvent;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SalleController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\MaterielController;
+
+use App\Http\Controllers\club\ClubController;
+use App\Http\Controllers\club\MemberController;
+use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\DemandeEventController;
+use App\Http\Controllers\DemandeSalleController;
+
 use App\Http\Controllers\DemandeMaterielController;
 use App\Http\Controllers\CategorieMaterielController;
-use App\Http\Controllers\DemandeCreationClubController;
-
 use App\Http\Controllers\club\pageClub\AboutController;
 use App\Http\Controllers\club\pageClub\BoardController;
+use App\Http\Controllers\DemandeCreationClubController;
 use App\Http\Controllers\club\pageClub\HeadersController;
 use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
-
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\club\ClubController;
-use App\Http\Controllers\club\MemberController;
-use App\Http\Controllers\SalleController;
-use App\Http\Controllers\DemandeSalleController;
-use App\Http\Controllers\DepartementController;
 
 
 /*
@@ -132,6 +134,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [MemberController::class, 'getMembers']);
         Route::delete('/{id}', [MemberController::class, 'deleteMember']);
     });
+
+    Route::group(['prefix' => '/demandeEvent'], function () {
+        Route::get('/{id}', [DemandeEventController::class, 'getDemandesEvent']);
+        Route::post('/create/{id}', [DemandeEventController::class, 'createDemandeEvent']);
+        Route::put('/update/{id}', [DemandeEventController::class, 'updateDemandeEvent']);
+        Route::delete('/delete/{id}', [DemandeEventController::class, 'deleteDemandeEvent']);
+    });
+
+    
 });
 
 // page club routes

@@ -16,7 +16,7 @@ class CreateDemandeEventsTable extends Migration
         Schema::create('demande_events', function (Blueprint $table) {
             $table->id();
             $table->foreignId("responsableClubId");
-            $table->foreignId("administrateurId");
+            $table->foreignId("administrateurId")->nullable();
             $table->string("nomEvent");
             $table->date("dateEvent");
             $table->string("description");
