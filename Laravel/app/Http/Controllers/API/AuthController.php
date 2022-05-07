@@ -39,6 +39,9 @@ class AuthController extends BaseController
             if ($user->roles->contains('name', "responsableClub")) {
                 $success['isResponsableClub'] = true;
             }
+            if ($user->roles->contains('name', "chefDepartement")) {
+                $success['isChefDepartement'] = true;
+            }
 
             return $this->sendResponse($success, 'User signed in');
         } else {
