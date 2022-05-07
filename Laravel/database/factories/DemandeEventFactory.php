@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\club;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class DemandeEventFactory extends Factory
             "nomEvent" => $this->faker->word(),
             "dateEvent" => $this->faker->date(),
             "description" => $this->faker->sentence(),
+            "clubId" => club::get('id')->random(),
         ];
     }
 }

@@ -20,12 +20,13 @@ class CreateDemandeEventsTable extends Migration
             $table->string("nomEvent");
             $table->date("dateEvent");
             $table->string("description");
+            $table->foreignId("clubId");
             $table->integer("status")->default(0);
            // $table->string("reponse")->nullable();
             $table->timestamps();
             $table->foreign('responsableClubId')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('administrateurId')->references('id')->on('users')->onDelete('cascade');
-      
+            $table->foreign('clubId')->references('id')->on('clubs')->onDelete('cascade');
         });
     }
 

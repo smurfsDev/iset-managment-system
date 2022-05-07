@@ -15,6 +15,7 @@ class DemandeEvent extends Model
         "nomEvent",
         "dateEvent",
         "description",
+        "clubId",
         "status"
     ];
     public function responsableClub(){
