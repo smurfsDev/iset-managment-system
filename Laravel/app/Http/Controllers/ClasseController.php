@@ -17,11 +17,11 @@ class ClasseController extends Controller
         return response()->json($classes, 200);
     }
 
-    public function getClasses(ClassesRequest $request)
+    public function getClasses(Request $request)
     {
         // check for the user's role = chefDepartement
         $did = $request->user()->roles()->where('role_id', '5')->first()->pivot->department;
-        $classes = Classe::where('departement_id', $did)->get();
+        $classes = Classe::where('departement_id', $did)->paginate(5);
 
         if ($classes->isEmpty()) {
             return response()->json(['message' => 'Aucune classe n\'est disponible pour ce département'], 404);
