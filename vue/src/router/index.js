@@ -22,6 +22,7 @@ import demandeAdhesionForm from "./routes/demandeAdhesionForm";
 import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
 import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
 import manageChefDepartments from "./routes/manageChefDepartments";
+import manageStudents from "./routes/manageStudents";
 
 Vue.use(VueRouter);
 
@@ -60,7 +61,8 @@ const routes = [
   ...demandeSalle,
 
 
-  ...manageChefDepartments
+  ...manageChefDepartments,
+  ...manageStudents,
 ];
 
 const router = new VueRouter({
@@ -90,6 +92,12 @@ router.beforeEach((to, from, next) => {
       return;
     }
     next({ name: "login", params: { msg: "You must be  a responsableClub" } });
+  }else if (to.matched.some((record) => record.meta.requiresChefDepartement)) {
+    if (store.getters.isChefDepartement) {
+      next();
+      return;
+    }
+    next({ name: "login", params: { msg: "You must be  a ChefDepartement" } });
   }else if (to.matched.some((record) => record.meta.requiresSorR)) {
     if (store.getters.isStudent || store.getters.isResponsableClub) {
       next();

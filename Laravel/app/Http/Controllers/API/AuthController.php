@@ -24,12 +24,22 @@ class AuthController extends BaseController
                     return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
                 }
             }
+            if (
+                $user->roles->contains('name', "student")
+            ) {
+                if ($user->roles->where('name', 'student')->first()->pivot->status == 0) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre compte n\'est pas encore activé']);
+                }else if ($user->roles->where('name', 'student')->first()->pivot->status == 2) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
+                }
+            }
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
             $success['user'] = $user;
             $success['isStudent'] = false;
             $success['isAdmin'] = false;
             $success['isResponsableClub'] = false;
+            $success['isChefDepartement'] = false;
 
             if ($user->roles->contains('name', "student")) {
                 $success['isStudent'] = true;
@@ -65,7 +75,7 @@ class AuthController extends BaseController
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $user->roles()->attach($request->role, ['department' => $input['department']]);
+        $user->roles()->attach($request->role, ['department' => $input['department'],'classe' => $input['classe']?$input['classe']:null]);
 
         $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
         $success['name'] =  $user->name;
