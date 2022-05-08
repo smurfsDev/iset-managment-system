@@ -29,15 +29,6 @@
                                         <option th:each="materiel:${Materiels}" th:value="${materiel.id}" th:text="${materiel.titre}" ></option>
                                     </select>
 								</div>
-                                <!-- <div
-                                class="form-check" th:each="materiel:${Materiels}" th:value="${materiel.id}" >
-                                <input class="form-check-input" type="checkbox"
-                                th:value="materiel.titre"
-                                />
-                                 @change="ajoutMateriel(materiel.id)" 
-                                <label class="form-check-label" th:text="${materiel.titre}">
-
-                                </label> --> 
                             </div>
 								<input type="hidden" name="id"  />
 								<input type="hidden" name="page" th:value="${param.page}" />
