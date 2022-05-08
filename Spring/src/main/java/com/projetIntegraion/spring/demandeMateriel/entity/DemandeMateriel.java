@@ -42,13 +42,13 @@ public class DemandeMateriel {
     @ManyToOne
     private User Destinataire;
     @NotNull
-    private int idCategorie;
+    private Long idCategorie;
 
     @OneToMany(mappedBy="demandeMateriel", cascade = CascadeType.ALL)
     private List<DemandeMaterielMateriel> materiel;
 
 	public DemandeMateriel(String reponse, int status, @NotNull @FutureOrPresent Date dateEmploi,
-			@NotNull @FutureOrPresent Date dateDeRemise, User ResponsableClub, User Destinataire,@NotNull int idCategorie,
+			@NotNull @FutureOrPresent Date dateDeRemise, User ResponsableClub, User Destinataire,@NotNull Long idCategorie,
 			List<DemandeMaterielMateriel> materiel) throws ParseException {
 		super();
 	}
@@ -60,11 +60,11 @@ public class DemandeMateriel {
     public void setId(Long id) {
 		this.id = id;
 	}
-	public int getIdCategorie() {
+	public Long getIdCategorie() {
 		return idCategorie;
 	}
 
-	public void setIdCategorie(int idCategorie) {
+	public void setIdCategorie(Long idCategorie) {
 		this.idCategorie = idCategorie;
 	}
 	public String getReponse() {
