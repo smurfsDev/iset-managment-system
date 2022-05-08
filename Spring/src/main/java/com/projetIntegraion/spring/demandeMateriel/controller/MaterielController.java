@@ -46,20 +46,36 @@ public class MaterielController {
     }
 
     @RequestMapping("/saveMateriel")
-    public String saveMateriel(ModelMap modelMap, Long idMateriel, Long idDemande){
-
+    public String saveMateriel(ModelMap modelMap, Long idMateriel, Long idDemande,
+    @RequestParam(name = "page", defaultValue = "0") int page,
+    @RequestParam(name = "size", defaultValue = "2") int size){
         DemandeMaterielMateriel materiel = new DemandeMaterielMateriel();
         Materiel Mat = MaterielService.getMaterielById(idMateriel);
         DemandeMateriel dm =  DemandeMaterielService.getdemandeById(idDemande);
         materiel.setMateriel(Mat);
         materiel.setDemandeMateriel(dm);
+        if(DemandeMaterielMaterielRepository.findByDemandeMaterielIdAndMaterielId(idDemande, idMateriel) == null){
+            Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         DemandeMaterielMaterielRepository.save(materiel);
-        return this.getMaterielParCategorie(modelMap,idMateriel,idDemande);
+        return  "/demandeMateriel/list";
+        }
+        else{
+            return this.getMaterielParCategorie(modelMap,idMateriel,idDemande);
+        }
     }
     @RequestMapping("/deleteMateriel")
-    public String deleteMateriel(ModelMap modelMap, Long idMateriel, Long idDemande){
+    public String deleteMateriel(ModelMap modelMap, Long idMateriel, Long idDemande,
+    @RequestParam(name = "page", defaultValue = "0") int page,
+    @RequestParam(name = "size", defaultValue = "2") int size){
+        Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
         DemandeMaterielMaterielRepository.deleteById(idMateriel);
-        return this.getMaterielParCategorie(modelMap,idMateriel,idDemande);
+        return "/demandeMateriel/list";
     }
     @RequestMapping("/setQuantite")
     public String setQuantite(ModelMap modelMap, Long idMateriel, Long idDemande, int quantite,
@@ -77,6 +93,6 @@ public class MaterielController {
             return "/demandeMateriel/list";
         }
         return null;
-        
+
     }
 }
