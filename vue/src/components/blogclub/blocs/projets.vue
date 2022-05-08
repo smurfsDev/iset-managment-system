@@ -18,6 +18,12 @@
 
 <script>
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   name: "projets",
   data() {
     return{
@@ -25,9 +31,8 @@ export default {
     }
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
-        // console.log(response.data.data);
-        this.projects = response.data.data;
+    this.$http.get('http://localhost:8000/api/pc/projects/'+this.id).then(response => {
+        this.projects = response.data;
        
     })
   },

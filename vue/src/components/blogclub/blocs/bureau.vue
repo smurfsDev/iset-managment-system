@@ -30,6 +30,12 @@
 
 <script>
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   name: "bureau",
   data() {
     return {
@@ -37,10 +43,8 @@ export default {
     }
   },
   created() {
-    this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
-      if (response.data.data != undefined) {
-        this.boards = response.data.data
-      }
+    this.$http.get('http://localhost:8000/api/pc/boards/'+this.id).then(response => {
+        this.boards = response.data
     })
   },
 };

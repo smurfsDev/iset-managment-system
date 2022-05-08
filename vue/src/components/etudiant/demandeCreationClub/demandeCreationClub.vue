@@ -64,11 +64,11 @@ export default {
     this.fetchDemandeCreationClub();
     if (this.$route.params.add == 1) {
       this.alert.variant = "success";
-      this.alert.msg = "Employé ajouté avec succès";
+      this.alert.msg = "demande ajouté avec succès";
       this.alert.dismissCountDown = 5;
     } else if (this.$route.params.edit == 1) {
       this.alert.variant = "warning";
-      this.alert.msg = "Employé modifié avec succès";
+      this.alert.msg = "demande modifié avec succès";
       this.alert.dismissCountDown = 5;
     } else if (this.$route.params.add == 2) {
       this.alert.variant = this.$route.params.alert.variant;
@@ -116,7 +116,6 @@ export default {
     addDemande(demande) {
       
       this.show = true;
-      console.log(demande.id);
       if (!this.edit) {
        this.$http.post('http://localhost:8000/api/dcc',
         (demande))
@@ -134,7 +133,7 @@ export default {
               this.alert.dismissCountDown = 5;
             } else {
               this.alert.variant = "success";
-              this.alert.msg = "Employé ajouté avec succès";
+              this.alert.msg = "demande ajouté avec succès";
               this.alert.dismissCountDown = 5;
             }
             this.fetchDemandeCreationClub();
@@ -146,7 +145,7 @@ export default {
           this.fetchDemandeCreationClub();
             this.edit = false;
             this.alert.variant = "warning";
-            this.alert.msg = "Employé modifié avec succès";
+            this.alert.msg = "demande modifié avec succès";
             this.alert.dismissCountDown = 5;
         });
       }

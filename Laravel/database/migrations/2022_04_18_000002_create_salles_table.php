@@ -13,7 +13,7 @@ class CreateSallesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Salles', function (Blueprint $table) {
+        Schema::create('salles', function (Blueprint $table) {
             $table->id();
             $table->string("titre");
             $table->foreignId("departement_id");

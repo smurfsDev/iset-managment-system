@@ -6,5 +6,6 @@ export default [
     path: "/demandeSalle",
     component: demandeSalle,
     name: "demandeSalle",
+    meta: { requiresSorR: true},
   },
 ];

@@ -13,4 +13,9 @@ class about extends Model
         "longDescription",
         "idClub"
     ];
+
+    public function club()
+    {
+        return $this->belongsTo(club::class);
+    }
 }

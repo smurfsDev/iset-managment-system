@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template">
+
+<head>
+	<meta charset="utf-8">
+	<title>Create About Club</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container my-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<span class="anchor" id="formLogin"></span>
+					<!-- form card login -->
+					<div class="card card-outline-secondary">
+						<div class="card-header">
+
+							<h3 th:text="${edit}?'Modifier About':'Créer About'" class="mb-0"></h3>
+						</div>
+						<div class="card-body">
+							<form th:action="${edit}?'updateAbout':'saveAbout'" enctype="multipart/form-data" class="form"
+								id="formLogin" name="formLogin" role="form" action="saveAbout" method="post">
+								<div class="form-group">
+									<label class="control-label">Longue description :</label> <input type="text" name="longDescription"
+										class="form-control" th:value="${About.longDescription}" />
+									<span th:errors=${About.longDescription} class="text-danger">
+									</span>
+								</div>
+								
+								<input type="hidden" name="id" th:value="${About.id}" />
+								<input type="hidden" name="page" th:value="${param.page}" />
+								<input type="hidden" name="size" th:value="${param.size}" />
+								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
+								type="submit" >
+							</form>
+							
+						</div>
+						<!--/card-block-->
+					</div>
+					<!-- /form card login -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

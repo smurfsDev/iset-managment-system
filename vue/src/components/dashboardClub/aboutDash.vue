@@ -1,23 +1,11 @@
 <template>
   <div>
-    <header
-      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
-    >
-      <a class="navbar-brand col-md-3 col-lg-9 me-0 px-3" href="/blogClub"
-        >Club name</a
-      >
+    
 
-      <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
-          <a class="nav-link px-3" href="#">Sign out</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="container-fluid">
-      <sidebarDash />
+    <div class="container" style="padding-left: 10vh">
+     
       <div class="row">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main>
           <div
             class="
               d-flex
@@ -30,14 +18,14 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter une longue description</h1>
+            <h1 class="h1" style="font-family:monospace">Ajouter une longue description</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
          
           <form @submit.prevent="createDescription" v-if="update==false" >
             <div class="mb-3">
-              <label for="longDesc" class="form-label"
+              <label for="longDesc" class="form-label" style="font-family:monospace"
                 >Saisir une longue description</label
               >
               <input
@@ -48,12 +36,12 @@
                 
               />
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success" >Submit</button>
           </form>
 
           <form @submit.prevent="submitEdit" v-if="update==true" >
             <div class="mb-3">
-              <label for="longDesc" class="form-label"
+              <label for="longDesc" class="form-label" style="font-family:monospace"
                 >Saisir une longue description</label
               >
               <input
@@ -69,12 +57,12 @@
           </form>
 
           <div v-if="created==true">
-            <h2>Longue description</h2>
+            <h2 style="font-family:monospace">Longue description</h2>
             <ol class="list-group list-group" v-for="(item, index) in abouts" :key="index">
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-0 me-auto">
                   
-                  <p>{{item.longDescription}}</p>
+                  <p style="font-family:monospace">{{item.longDescription}}</p>
                   
                 </div><br>
                 <div class="badge bg-warning rounded-pill btn btn-sm" @click="updateDescription(item.id)" ><b-icon-pen></b-icon-pen></div>
@@ -100,7 +88,7 @@
       
         </div>
         
-          <h2>Section title</h2>
+         
         </main>
       </div>
     </div>
@@ -110,14 +98,14 @@
 
 <script>
 
-import sidebarDash from "./sidebarDash.vue";
+//import sidebarDash from "./sidebarDash.vue";
 
 
 export default {
   name: "aboutDash",
-  components: {
+ /* components: {
     sidebarDash, 
-  },
+  },*/
   data(){
       return {
             abouts:[],
@@ -129,7 +117,7 @@ export default {
       }
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/about/getAll').then(response => {
         // console.log(response.data.data);
         if (response.data.data!=undefined){
           this.abouts = response.data.data
@@ -142,14 +130,13 @@ export default {
   methods: {
     createDescription(){
       let newAbout = {
-        longDescription: this.longDescription,
-        idClub: 1
+        longDescription: this.longDescription
       }
-      this.$http.post("http://localhost:8000/api/1/about/create", newAbout).then( ()=> {
+      this.$http.post("http://localhost:8000/api/about/create", newAbout).then( ()=> {
        
         this.created = true;
         
-       this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
+       this.$http.get('http://localhost:8000/api/about/getAll').then(response => {
        
           this.abouts = response.data.data
           
@@ -161,12 +148,12 @@ export default {
   },
   deleteDescription(id){
     
-    this.$http.delete("http://localhost:8000/api/1/about/delete/"+id).then(() => {
+    this.$http.delete("http://localhost:8000/api/about/delete/"+id).then(() => {
      
       this.abouts = this.abouts.filter(item => item.id != id)
       alert("Description supprimée");
     })
-    this.$http.get('http://localhost:8000/api/1/about/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/about/getAll').then(response => {
        
           this.abouts = response.data.data
           
@@ -189,9 +176,8 @@ export default {
     let newAbout = {
       id: this.id,
       longDescription: this.longDescription,
-      idClub: 1
     }
-    this.$http.put("http://localhost:8000/api/1/about/update/"+this.id, newAbout).then(() => {
+    this.$http.put("http://localhost:8000/api/about/update/"+this.id, newAbout).then(() => {
       
     
       this.created = true;

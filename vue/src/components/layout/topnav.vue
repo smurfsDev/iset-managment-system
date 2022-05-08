@@ -1,6 +1,6 @@
 <template>
-    <sidebar-menu class="position-fixed" @item-click='onItemClick' :show-one-child="true" @toggle-collapse="collapse = !collapse"
-        :width="'200px'" :menu="
+    <sidebar-menu class="position-fixed" @item-click='onItemClick' :show-one-child="true"
+        @toggle-collapse="collapse = !collapse" :width="'200px'" :menu="
             [
                 {
                     header: 'Main Navigation',
@@ -41,6 +41,16 @@
                     title: 'Entreprise',
                     icon: 'fas fa-building',
                     hidden: !this.isAdmin
+                },{
+                    href: '/cd/manageStudents',
+                    title: 'Students',
+                    icon: 'fas fa-user',
+                    hidden: !this.isChefDepartement
+                },{
+                    href: '/cd/GererClasse',
+                    title: 'Classes',
+                    icon: 'fas fa-building',
+                    hidden: !this.isChefDepartement
                 },
                 {
                     href: '/etudiant/demandeCreationClub',
@@ -54,6 +64,77 @@
                     icon: 'fas fa-building',
                     hidden: !this.isAdmin
                 },
+                {
+                    href: '/admin/manageChefDepartments',
+                    title: 'chefDepartements',
+                    icon: 'fas fa-user',
+                    hidden: !this.isAdmin
+                },
+                {
+                    //href: '/dashboard',
+                    title: 'Dashboard blog club',
+                    icon: 'fas fa-dashboard',
+                    hidden: !this.isResponsableClub,
+                     child: [
+                        {
+                            href: '/headerDash',
+                            title: 'Entete',
+                        },
+                        {
+                            href: '/aboutDash',
+                            title: 'Qui sommes nous?',
+                        },
+                        {
+                            href: '/activitiesDash',
+                            title: 'Activités',
+                        },
+                        {
+                            href: '/boardDash',
+                            title: 'Membres de bureau',
+                        },
+                        {
+                            href: '/projectsDash',
+                            title: 'Projets',
+                        },
+
+                    ]
+                },
+                {
+                    href: '/etudiant/listeClubs',
+                    title: 'Clubs',
+                    icon: 'fas fa-building',
+                    child: [
+                        {
+                            href: '/etudiant/demandeAdhesionClub',
+                            title: 'Mes Demandes d\'adhesion',
+                            hidden: !this.isStudent
+                        },
+                        {
+                            href: '/club/demandeAdhesionResponsable',
+                            title: 'Demandes d\'adhesion',
+                            hidden: !this.isStudent
+                        }
+                    ]
+                },
+                {
+                    title: 'Demandes',
+                    icon: 'fa fa-file',
+                    child: [
+        
+                        {
+                            href: 'demandeSalle',
+                            title: 'Demande salle',
+                            icon: 'fa fa-file',
+                            hidden: !this.isStudent && !this.isResponsableClub,
+                        },
+                        {
+                            href: 'demandeMateriel',
+                            title: 'Demande materiel',
+                            icon: 'fa fa-file',
+                            hidden: !this.isStudent && !this.isResponsableClub,
+                        }
+                    ]
+                }
         
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
@@ -65,66 +146,13 @@ export default {
     data() {
         return {
             collapse: true,
-            menu: [
-                {
-                    header: 'Main Navigation',
-                    hiddenOnCollapse: true
-                },
-                {
-                    title: 'User',
-                    icon: 'fas fa-user',
-                    child: [
-                        {
-                            href: '/login',
-                            title: 'Login',
-                            hidden: this.isAuth
-                        },
-                        {
-                            href: '/register',
-                            title: 'Register',
-                            hidden: this.isAuth
-                        },
-                        {
-                            href: '/logout',
-                            title: 'Logout',
-                            hidden: !this.isAuth
-                        },
-                    ]
-                },
-                {
-                    href: '/login',
-                    title: 'Login',
-                    hidden: this.isAuth
-                },
-                {
-                    href: '/register',
-                    title: 'Register',
-                    hidden: this.isAuth
-                },
-                {
-                    href: '/logout',
-                    title: 'Logout',
-                    hidden: !this.isAuth
-                },
-                {
-                    href: '/',
-                    title: 'Home',
-                    icon: 'fas fa-home',
-                },
-                {
-                    href: '/Entreprise',
-                    title: 'Entreprise',
-                    icon: 'fas fa-building',
-                },
-
-            ]
         }
     },
     updated() {
     },
     methods: {
         onItemClick(event, item) {
-            if (item.title=="Logout") {
+            if (item.title == "Logout") {
                 this.$store.dispatch('LogOut');
             }
         },
@@ -161,7 +189,9 @@ export default {
         ...mapGetters({
             auth: 'isAuthenticated',
             admin: 'isAdmin',
-            student : 'isStudent',
+            student: 'isStudent',
+            responsable: 'isResponsableClub',
+            chefDepartement: 'isChefDepartement',
         }),
         isAuth: function () {
             return this.auth;
@@ -172,6 +202,12 @@ export default {
         isStudent: function () {
             return this.student;
         },
+        isResponsableClub: function () {
+            return this.responsable;
+        },
+        isChefDepartement: function () {
+            return this.chefDepartement;
+        }
 
     }
 }

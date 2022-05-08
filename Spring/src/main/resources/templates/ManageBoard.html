@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Liste des membres de bureau</title>
+</head>
+
+<body>
+
+    <div layout:fragment="Mycontent">
+        <div class="container">
+            <div class="row my-4">
+                <div class="col">
+                    <h1 class="text-center">Gestion du blog club</h1>
+                    
+                </div>
+            </div>
+            
+            <h4 class="float-start">Boards</h2>
+                       
+                <a sec:authorize="hasRole('STUDENT')" th:href="@{createBoard}" class="float-start btn btn-success"> <i
+                        class="fa-solid fa-plus"></i> Ajouter
+                </a>
+                <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
+                <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
+                <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
+               
+            <div class="row my-4">
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <th>ID</th>
+                        <th>Nom et Prénom</th>
+                        <th>Poste</th>
+                        <th>Photo</th>
+                        
+                        <th sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')">Actions</th>
+                    </thead>
+                    <tr th:if="${#arrays.isEmpty(Board.content)}">
+						<td colspan="4" class="text-center ">No Officer found ! </td></tr>
+					<tr th:each="b:${Board.content}">
+                        <td th:text="${b.id}"></td>
+                        <td th:text="${b.name}"></td>
+                        <td th:text="${b.post}"></td>
+                        <td ><img th:src="'data:image/png;base64,'+${b.photo}" width="400px" height="400px"/></td>
+                       
+                        <td  sec:authorize="hasRole('STUDENT')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteBoard(id=${b.id},
+								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierBoard(id=${b.id},
+								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
+                                </td>
+                        
+					</tr>
+				</table>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}"><a
+							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+							th:href="@{ showCreateBoard(page=${status.index}, size=${param.size} ) }" 
+							th:text="${status.index+1 }"></a></li>
+				</ul>
+			</div>
+          
+		</div>
+    </div>
+</body>
+
+</html>

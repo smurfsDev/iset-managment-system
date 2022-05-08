@@ -1,23 +1,11 @@
 <template>
   <div>
-    <header
-      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
-    >
-      <a class="navbar-brand col-md-3 col-lg-9 me-0 px-3" href="/blogClub"
-        >Club name</a
-      >
+    
 
-      <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
-          <a class="nav-link px-3" href="#">Sign out</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="container-fluid">
-      <sidebarDash />
+    <div class="container" style="padding-left: 10vh">
+      
       <div class="row">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main>
           <div
             class="
               d-flex
@@ -30,13 +18,13 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter un membre de bureau</h1>
+            <h1 class="h1" style="font-family:monospace">Ajouter un membre de bureau</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
           <form @submit.prevent="createMember" v-if="ajout == true">
             <div class="mb-3">
-              <label for="name" class="form-label"
+              <label for="name" class="form-label" style="font-family:monospace"
                 >Saisir le nom</label
               >
               <input
@@ -48,7 +36,7 @@
               />
             </div>
              <div class="mb-3">
-              <label for="post" class="form-label"
+              <label for="post" class="form-label" style="font-family:monospace"
                 >Saisir le poste</label
               >
               <input
@@ -60,7 +48,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Un photo</label
               >
               <input
@@ -80,7 +68,7 @@
           
           <form @submit.prevent="submitEdit" v-if="update==true">
             <div class="mb-3">
-              <label for="nom" class="form-label"
+              <label for="nom" class="form-label" style="font-family:monospace"
                 >Saisir un nom</label
               >
               <input
@@ -92,19 +80,18 @@
               />
             </div>
             <div class="mb-3">
-              <label for="post" class="form-label"
+              <label for="post" class="form-label" style="font-family:monospace"
                 >Saisir un post</label
               >
               <input
                 type="text"
                 class="form-control"
                 v-model="post"
-                required
                 
               />
             </div>
             <div class="mb-3">
-              <label for="image" class="form-label"
+              <label for="image" class="form-label" style="font-family:monospace"
                 >Photo</label
               >
               <input
@@ -113,7 +100,6 @@
                 name="image"
                 @change="convert64"
                 ref="file"
-                required
                 
               />
             </div>
@@ -126,7 +112,7 @@
           <div class="card column" style="width: 18rem;"  v-for="(item, index) in boards" :key="index" >
             <img v-bind:src="item.image" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{item.nom}}</h5>
+              <h5 class="card-title" style="font-family:monospace">{{item.nom}}</h5>
               
                 <p class="card-text">{{item.post}}</p>
                 
@@ -146,7 +132,7 @@
       
     </div>
         
-          <h2>Section title</h2>
+          
         </main>
       </div>
     </div>
@@ -156,14 +142,11 @@
 
 <script>
 
-import sidebarDash from "./sidebarDash.vue";
 
 
 export default {
   name: "boardDash",
-  components: {
-    sidebarDash, 
-  },
+  
 
 
   data() {
@@ -181,7 +164,7 @@ export default {
   },
   created(){
      this.ajout = true;
-    this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
       
       
         this.boards = response.data.data;
@@ -216,7 +199,7 @@ export default {
      
       reader.onloadend = () => {
        
-      //  this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+      //  this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
 
            //this.board = response.data.data
             this.image = reader.result;
@@ -228,11 +211,11 @@ export default {
           }
         
         
-          this.$http.post("http://localhost:8000/api/1/boards/create",newBoard)
+          this.$http.post("http://localhost:8000/api/boards/create",newBoard)
           .then (() => {
             
              this.ajout=true
-             this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+             this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
               this.boards = response.data.data
              })
              this.nom = "";
@@ -258,7 +241,7 @@ export default {
          reader.readAsDataURL(this.srcImage);
   },
   deleteBoard(id){
-    this.$http.delete("http://localhost:8000/api/1/boards/delete/"+id).then(() => {
+    this.$http.delete("http://localhost:8000/api/boards/delete/"+id).then(() => {
       
       alert('Membre de bureau supprimé! ')
       this.boards = this.boards.filter(item => item.id != id)
@@ -290,11 +273,11 @@ export default {
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/boards/update/"+this.id,updateBoard).then(() => {
+      this.$http.put("http://localhost:8000/api/boards/update/"+this.id,updateBoard).then(() => {
        
         alert('Membre de bureau modifié! ')
        this.boards = this.boards.filter(item => item.id != this.id)
-       this.$http.get('http://localhost:8000/api/1/boards/getAll').then(response => {
+       this.$http.get('http://localhost:8000/api/boards/getAll').then(response => {
               this.boards = response.data.data
              })
         //this.boards.push(updateBoard)

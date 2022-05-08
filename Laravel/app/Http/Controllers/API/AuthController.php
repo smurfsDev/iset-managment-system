@@ -14,22 +14,48 @@ class AuthController extends BaseController
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $authUser = Auth::user();
-            $user = User::where('id','=', $authUser->id)->with('roles')->first();
+            $user = User::where('id', '=', $authUser->id)->with('roles')->first();
+            if (
+                $user->roles->contains('name', "chefDepartement")
+            ) {
+                if ($user->roles->where('name', 'chefDepartement')->first()->pivot->status == 0) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre compte n\'est pas encore activé']);
+                }else if ($user->roles->where('name', 'chefDepartement')->first()->pivot->status == 2) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
+                }
+            }
+            if (
+                $user->roles->contains('name', "student")
+            ) {
+                if ($user->roles->where('name', 'student')->first()->pivot->status == 0) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre compte n\'est pas encore activé']);
+                }else if ($user->roles->where('name', 'student')->first()->pivot->status == 2) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
+                }
+            }
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
             $success['user'] = $user;
             $success['isStudent'] = false;
             $success['isAdmin'] = false;
+            $success['isResponsableClub'] = false;
+            $success['isChefDepartement'] = false;
 
             if ($user->roles->contains('name', "student")) {
                 $success['isStudent'] = true;
             } else if ($user->roles->contains('name', "admin")) {
                 $success['isAdmin'] = true;
             }
+            if ($user->roles->contains('name', "responsableClub")) {
+                $success['isResponsableClub'] = true;
+            }
+            if ($user->roles->contains('name', "chefDepartement")) {
+                $success['isChefDepartement'] = true;
+            }
 
             return $this->sendResponse($success, 'User signed in');
         } else {
-            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+            return $this->sendError('Unauthorised.', ['error' => 'Merci de verifier vos identifiants']);
         }
     }
     public function signup(Request $request)
@@ -39,6 +65,7 @@ class AuthController extends BaseController
             'email' => 'required|email',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
+            'role' => 'required|exists:roles,id',
         ]);
 
         if ($validator->fails()) {
@@ -48,6 +75,8 @@ class AuthController extends BaseController
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+        $user->roles()->attach($request->role, ['department' => $input['department'],'classe' => $input['classe']?$input['classe']:null]);
+
         $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
         $success['name'] =  $user->name;
         $success['user'] = $user;

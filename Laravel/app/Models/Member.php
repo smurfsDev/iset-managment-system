@@ -9,6 +9,8 @@ class Member extends Model
 {
     use HasFactory;
 
+    protected $fillable =['user_id','club_id'];
+
     public function club()
     {
         return $this->belongsTo(club::class);

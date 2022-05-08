@@ -17,6 +17,9 @@ class RoleUser extends Migration
             $table->id();
             $table->integer('role_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->integer('status')->default(0);
+            $table->integer('classe')->default(0);
+            $table->integer('department')->nullable();
         });
     }
 

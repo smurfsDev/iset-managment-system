@@ -1,23 +1,12 @@
 <template>
   <div>
-    <header
-      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
-    >
-      <a class="navbar-brand col-md-3 col-lg-9 me-0 px-3" href="/blogClub"
-        >Club name</a
-      >
+    
 
-      <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
-          <a class="nav-link px-3" href="#">Sign out</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="container-fluid">
-      <sidebarDash />
+    <div class="container" style="padding-left: 10vh">
+    
       <div class="row">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main>
+           
           <div
             class="
               d-flex
@@ -30,15 +19,15 @@
               border-bottom
             "
           >
-            <h1 class="h2">Ajouter un ancien projet</h1>
+            <h1 style="font-family:monospace">Ajouter un ancien projet</h1>
           
             <div class="btn-toolbar mb-2 mb-md-0"></div>
           </div>
-          <form @submit.prevent="createProject" v-if="update==false">
+          <form @submit.prevent="createProject" v-if="ajout==true">
            
              
             <div class="mb-3">
-              <label for="bgImg" class="form-label"
+              <label for="bgImg" class="form-label" style="font-family:monospace"
                 >Une affiche</label
               >
               <input
@@ -58,8 +47,8 @@
           
           <form @submit.prevent="submitEdit" v-if="update==true">
             <div class="mb-3">
-              <label for="image" class="form-label"
-                >Photo</label
+              <label for="image" class="form-label" style="font-family:monospace" 
+                >Affiche</label
               >
               <input
                 type="file"
@@ -108,14 +97,10 @@
 
 <script>
 
-import sidebarDash from "./sidebarDash.vue";
-
 
 export default {
   name: "projectsDash",
-  components: {
-    sidebarDash, 
-  },
+ 
 
 
   data() {
@@ -130,11 +115,10 @@ export default {
     };
   },
   created(){
-    this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
+    this.$http.get('http://localhost:8000/api/projects/getAll').then(response => {
       
       if (response.data.data!=null){
         this.projects = response.data.data;
-        console.log(this.projects)
         this.ajout = true;
       }
         
@@ -169,61 +153,27 @@ export default {
              affiche: this.affiche,
                 idClub : 1
          }
-       this.$http.post("http://localhost:8000/api/1/projects/create",newProject)
+       this.$http.post("http://localhost:8000/api/projects/create",newProject)
           .then (() => {
             
              this.ajout=true
-             this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
+             this.$http.get('http://localhost:8000/api/projects/getAll').then(response => {
                this.projects = response.data.data;
              })
              
             alert('Projet ajouté! ')
             this.affiche = ""
           })
-          .catch(error => {
+          .catch(() => {
             alert('Erreur! ')
-          console.log('error', error);
           })
-        // this.$http.get('http://localhost:8000/api/1/projects/getAll').then(response => {
-
-        //     if (response.data.data!=null){
-        //         this.projects = response.data.data;
-                
-        //         this.ajout = true;
-        //     }
-
-          
-        //     let newProject = {
-        //       affiche: this.affiche,
-        //        idClub : 1
-        //   }
         
-        
-        //   this.$http.post("http://localhost:8000/api/1/projects/create",newProject)
-        //   .then (response => {
-        //     console.log(response)
-        //      this.ajout=true
-        //      this.projects.push(newProject)
-        //     alert('Projet ajouté! ')
-        //   })
-        //   .catch(error => {
-        //   console.log('error', error);
-        //   })
-          
-        
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
-      
-
-      
          }
          reader.readAsDataURL(this.srcImage);
   },
   deleteProject(id){
     
-    this.$http.delete("http://localhost:8000/api/1/projects/delete/"+id).then(() => {
+    this.$http.delete("http://localhost:8000/api/projects/delete/"+id).then(() => {
    
       alert('Projet supprimé! ')
       this.projects = this.projects.filter(item => item.id != id)
@@ -251,11 +201,10 @@ export default {
     let updateProject = {
             id: this.id,
             affiche: this.affiche,
-            idClub : 1
       }
 
 
-      this.$http.put("http://localhost:8000/api/1/projects/update/"+this.id,updateProject).then(() => {
+      this.$http.put("http://localhost:8000/api/projects/update/"+this.id,updateProject).then(() => {
       
         alert('Projet modifié! ')
        this.projects = this.projects.filter(item => item.id != this.id)

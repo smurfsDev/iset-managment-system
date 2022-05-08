@@ -1,17 +1,22 @@
 import axios from "axios";
 // import store from "..";
-import Vue from "vue";
 import router from "../../router/index";
 const state = {
   user: null,
   token: null,
+  csrfToken: null,
   secrets: null,
   isAuthenticated: false,
   isAdmin: false,
   isStudent: false,
+  isResponsableClub: false,
   isSuperAdmin: false,
-  message: null
+  isChefDepartement: false,
+  message: null,
+  authStatus: null,
+  authMessage: null,
 };
+
 
 const getters = {
   isAuthenticated: (state) => state.user !== null,
@@ -19,7 +24,12 @@ const getters = {
   userName: (state) =>  state.user !== null ? state.user.name : "User",
   isAdmin : (state) => state.isAdmin,
   isStudent : (state) => state.isStudent,
+  isResponsableClub : (state) => state.isResponsableClub,
   token: (state) => state.token,
+  authStatus : (state) => state.authStatus,
+  authMessage : (state) => state.authMessage,
+  isChefDepartement : (state) => state.isChefDepartement,
+  
 };
 const actions = {
   async LogIn({ commit }, User) {
@@ -39,18 +49,25 @@ const actions = {
       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
-          Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.tkn;
-
+          // Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.tkn;
           localStorage.setItem("token", this.tkn);
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
+          commit('setResponsableClub',response.data.data.isResponsableClub);
+          commit('setChefDepartement',response.data.data.isChefDepartement);
           commit("setUser", response.data.data.user);
+          commit("setAuthStatus", 1);
+
           commit("setToken", response.data.data.token);
         } else {
           console.log("jawna behi nai");
         }
+
         router.push("/");
-      });
+      }).catch(function (error) {
+        commit('setAuthStatus',2);
+        commit('setAuthMessage',error.response.data.data.error); // this is the main part. Use the response property from the error object
+       });
   },
   async LogOut({ commit }) {
     localStorage.removeItem("token");
@@ -58,7 +75,9 @@ const actions = {
     router.push("/login");
 
   },
-  async Register({ commit }, User) {
+  async Register(
+    { commit },
+     User) {
     await axios
       .post("http://localhost:8000/api/register", User, {
         headers: {
@@ -66,26 +85,37 @@ const actions = {
         },
         withCredentials: true
       })
-      .then((response) => {
+       .then((response) => {
         if (response.status == 200) {
           this.tkn = response.data.data.token;
+
           localStorage.setItem("token", this.tkn);
           commit("setUser", response.data.data.user);
           commit("setToken", response.data.data.token);
         } else {
           console.log("jawna behi nai");
         }
+      }) 
+      .catch(()=>{
       });
   }
 };
 const mutations = {
   resetAll(state) {
-    state.user = null;
-    state.token = null;
-    state.isAuthenticated = false;
-    state.isAdmin = false;
-    state.isStudent = false;
-    state.isSuperAdmin = false;
+    state.user= null;
+    state.token= null;
+    state.csrfToken= null;
+    state.secrets= null;
+    state.isAuthenticated= false;
+    state.isAdmin= false;
+    state.isStudent= false;
+    state.isResponsableClub= false;
+    state.isSuperAdmin= false;
+    state.message= null;
+    state.authStatus= null;
+    state.authMessage= null;
+    state.isChefDepartement= false;
+
   },
   setUser(state, user) {
     state.user = user;
@@ -98,7 +128,20 @@ const mutations = {
   },
   setStudent(state, isStudent) {
     state.isStudent = isStudent;
+  },
+  setResponsableClub(state, isResponsableClub) {
+    state.isResponsableClub = isResponsableClub;
+  },
+  setAuthStatus(state, authStatus) {
+    state.authStatus = authStatus;
+  },
+  setAuthMessage(state, authMessage) {
+    state.authMessage = authMessage;
+  },
+  setChefDepartement(state, isChefDepartement) {
+    state.isChefDepartement = isChefDepartement;
   }
+
 };
 export default {
   state,

@@ -10,7 +10,7 @@ class DemandeMaterielController extends Controller
     public function create(Request $request){
         $dateEmploi = $request->input('dateEmploi');
         $dateDeRemise = $request->input('dateDeRemise');
-        $idResponsableClub = $request->input('idResponsableClub');
+        $idResponsableClub = $request->user()->id;
         $idDestinataire = $request->input('idDestinataire');
         $idCategorie = $request->input('idCategorie');
         $data = array(
@@ -33,9 +33,9 @@ class DemandeMaterielController extends Controller
         }
         return "Success";
     }
-    public function show(){
-        $DemandeMateriel = DemandeMateriel::with('materiel')->paginate(5);
-        if(sizeof($DemandeMateriel)>0){
+    public function show(Request $request){
+        $DemandeMateriel = $request->user()->DemandeMateriel()->with('materiel')->paginate(5);
+        if(!empty($DemandeMateriel)){
         return response()->json($DemandeMateriel, 200);
         }
         else
@@ -45,7 +45,7 @@ class DemandeMaterielController extends Controller
     }
 
     public function update(Request $request ,$id){
-        $DemandeMateriel = DemandeMateriel::find($id);
+        $DemandeMateriel = $request->user()->DemandeMateriel()->find($id);
         if($DemandeMateriel){
             $DemandeMateriel->idDestinataire= $request->input('idDestinataire')?$request->input('idDestinataire'):$DemandeMateriel->idDestinataire;
             $DemandeMateriel->dateEmploi= $request->input('dateEmploi')?$request->input('dateEmploi'):$DemandeMateriel->dateEmploi;
@@ -63,8 +63,8 @@ class DemandeMaterielController extends Controller
             ], 404);
     }
     }
-    public function delete($id){
-        $DemandeMateriel = DemandeMateriel::find($id);
+    public function delete(Request $request,$id){
+        $DemandeMateriel = $request->user()->DemandeMateriel()->find($id);
         if ($DemandeMateriel) {
             $DemandeMateriel->delete();
             return response()->json([
