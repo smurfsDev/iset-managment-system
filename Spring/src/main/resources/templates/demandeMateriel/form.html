@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template">
+
+<head>
+	<meta charset="utf-8">
+	<title>Create Demande Materiel</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container my-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<span class="anchor" id="formLogin"></span>
+					<!-- form card login -->
+					<div class="card card-outline-secondary">
+						<div class="card-header">
+
+							<h3 th:text="${edit}?'Modifier Demande':'Créer Demande'" class="mb-0"></h3>
+						</div>
+						<div class="card-body">
+							<form th:action="${edit}?'updateDmm':'saveDm'" enctype="multipart/form-data" class="form"
+								id="formLogin" name="formLogin" role="form" action="saveDm" method="post">
+								<div class="form-group">
+									<label class="control-label">Id Responsable club :</label> <input type="number" name="responsableClub"
+										class="form-control" th:value="${Dmm.responsableClub}" />
+									<span th:errors=${Dmm.responsableClub} class="text-danger">
+									</span>
+								</div>
+								<div class="form-group">
+									<label class="control-label"> Destinataire :</label> 
+									<label th:if="${edit}" th:text="${dest.name}"></label>
+									<select name="destinataire" th:value="${Dmm.destinataire}">
+                                        <option th:each="user:${Users}" th:value="${user.id}" th:text="${user.name}"></option>
+									
+									<span th:errors=${Dmm.destinataire} class="text-danger">
+								</div>
+								<div class="form-group">
+									<label class="control-label">Date Emploi :</label> <input type="date"
+										name="dateEmploi" class="form-control" th:value="${#dates.format(Dmm.dateEmploi, 'yyyy-MM-dd')}" /> 
+									<span th:errors=${Dmm.dateEmploi} class="text-danger">
+								</div>
+                                <div class="form-group">
+                                    <label class="control-label">Date de Remise</label> <input type="date"
+                                        name="dateDeRemise" class="form-control" th:value="${Dmm.dateDeRemise}" /> 
+									<span th:errors=${Dmm.dateDeRemise} class="text-danger">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Categorie :</label> 
+									<label th:if="${edit}" th:text="${Cat.titre}"></label>
+                                    <select name="idCategorie" th:value="${Dmm.idCategorie}">
+                                        <option th:each="categorie:${CM}" th:value="${categorie.id}" th:text="${categorie.titre}"></option>
+									<span th:errors=${Dmm.idCategorie} class="text-danger">
+			
+                                </div>
+								<input type="hidden" name="id" th:value="${Dmm.id}" />
+								<input type="hidden" name="page" th:value="${param.page}" />
+								<input type="hidden" name="size" th:value="${param.size}" />
+								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
+								type="submit" >
+							</form>
+							
+						</div>
+						<!--/card-block-->
+					</div>
+					<!-- /form card login -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
