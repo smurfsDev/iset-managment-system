@@ -65,7 +65,15 @@ public class DemandeMaterielController {
 	@RequestParam(name = "size", defaultValue = "2") int size,
 	@RequestParam(name = "id") Long id) {
 		DemandeMateriel Dm = DemandeMaterielService.getdemandeById(id);
+        if(id != null) {
+            Long Categ = Dm.getIdCategorie();
+            CategorieMateriel C = CategorieMaterielService.getCategorieById(Categ);
+            modelMap.addAttribute("Cat", C);
+            User dest = Dm.getDestinataire();
+            modelMap.addAttribute("dest", dest);
+        }
 		modelMap.addAttribute("Dmm", Dm);
+
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
         modelMap.addAttribute("CM", listCategorieMateriel);
         List<User> listUser = UserServise.getAllUser();
