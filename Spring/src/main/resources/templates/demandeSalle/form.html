@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template">
+
+<head>
+	<meta charset="utf-8">
+	<title>Create Dcc</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container my-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<span class="anchor" id="formLogin"></span>
+					<!-- form card login -->
+					<div class="card card-outline-secondary">
+						<div class="card-header">
+
+							<h3 th:text="${edit}?'Modifier Demande':'Créer Demande'" class="mb-0"></h3>
+						</div>
+						<div class="card-body">
+							<form th:action="${edit}?'updateDS':'saveDS'" enctype="multipart/form-data" class="form"
+								id="formLogin" name="formLogin" role="form" action="saveDS" method="post">
+								<div class="form-group">
+									<label class="control-label"> Departement :</label>
+									<div th:each="demande:${demandeSalle}">
+										<div th:each="S:${demande.salle}">
+											<label th:if="${edit}" th:text="${S.salle.departement.titre}"></label>
+										</div>
+									</div>
+									<select class="fl" name="departement">
+										<option th:each="departement:${Departements}" th:value="${departement.id}"
+											th:text="${departement.titre}"></option>
+									</select>
+
+								</div>
+								<div class="form-group">
+									<label class="control-label"> Salle :</label>
+									<div th:each="demande:${demandeSalle}">
+										<div th:each="S:${demande.salle}">
+											<label th:if="${edit}" th:text="${S.salle.titre}"></label>
+										</div>
+									</div>
+									<select name="salle">
+										<option selected disabled>Choisir un salle</option>
+										<option class="salle" th:data-index="${salle.departement.id}"
+											th:each="salle:${sallesdep}" th:value="${salle.id}"
+											th:text="${salle.titre}"></option>
+										<!-- <span th:errors=${salle.titre} class="text-danger"> -->
+									</select>
+								</div>
+
+
+								<div class="form-group">
+									<label class="control-label">Date D'emploi :</label> <input type="date"
+										name="dateEmploi" class="form-control" th:value="${demandeSalle.dateEmploi}" />
+									<span th:errors=${demandeSalle.dateEmploi} class="text-danger">
+								</div>
+								<div class="form-group">
+									<label class="control-label">Date De Remise :</label> <input type="date"
+										name="dateDeRemise" class="form-control"
+										th:value="${demandeSalle.dateDeRemise}" />
+									<span th:errors=${demandeSalle.dateDeRemise} class="text-danger">
+								</div>
+
+
+								<input type="hidden" name="id" th:value="${demandeSalle.id}" />
+								<input type="hidden" name="page" th:value="${param.page}" />
+								<input type="hidden" name="size" th:value="${param.size}" />
+								<input th:value="${edit}?'Modifier':'Ajouter'"
+									class="btn btn-success my-3 btn-lg float-right" type="submit">
+							</form>
+							<!-- add script inline div -->
+							<script type="text/javascript">
+								var options = document.getElementsByClassName('salle');
+
+								for (let i = 0; i < options.length; i++) {
+									options[i].classList.add('d-none');
+								}
+								// add onchange eventlistener on select having name departement
+								document.getElementsByName('departement')[0].addEventListener('change', function () {
+									// get value of selected option
+									var departement = this.value;
+									var options = document.getElementsByClassName('salle');
+									document.getElementsByName('salle')[0].value = '';
+									for (let i = 0; i < options.length; i++) {
+										if (options[i].dataset.index != departement) {
+											options[i].classList.add('d-none');
+											options[i].classList.remove('d-block')
+
+										} else {
+											options[i].classList.remove('d-none');
+											options[i].classList.add('d-block');
+										}
+									}
+								});
+
+								// hide options having class salle where index = departement
+							</script>
+						</div>
+						<!--/card-block-->
+					</div>
+					<!-- /form card login -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
