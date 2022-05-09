@@ -41,7 +41,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						th:href="@{blogClub}">Consulter</a>
 				</div>
 			</li>
-         <li class="nav-item dropdown">
+			<li class="nav-item dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Demande Materiel
@@ -49,6 +49,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				<div class="dropdown-menu">
 					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateDm}">Ajouter</a> 
 					<a class="dropdown-item" th:href="@{listeDm}">Lister</a>
+				</div>
+			</li><li class="nav-item dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Demande Salle
+				</button>
+				<div class="dropdown-menu">
+					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{ShowcreateDS}">Ajouter</a> 
+					<a class="dropdown-item" th:href="@{listeDS}">Lister</a>
 				</div>
 			</li>
 			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
