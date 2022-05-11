@@ -21,6 +21,7 @@ import listeClubs from "./routes/listeClubs";
 import demandeAdhesionForm from "./routes/demandeAdhesionForm";
 import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
 import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
+import demandePlanificationEvent from "./routes/demandePlanificationEvent";
 
 Vue.use(VueRouter);
 
@@ -56,7 +57,8 @@ const routes = [
   ...demandeAdhesionForm,
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
-  ...demandeSalle
+  ...demandeSalle,
+  ...demandePlanificationEvent
 ];
 
 const router = new VueRouter({

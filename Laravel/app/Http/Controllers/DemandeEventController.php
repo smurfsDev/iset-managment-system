@@ -9,16 +9,19 @@ use App\Http\Requests\DemandeEventRequest;
 
 class DemandeEventController extends Controller
 {
-    public function getDemandesEvent(DemandeEventRequest $request)
+    public function getDemandesEvent(Request $request)
     {
         //$Demandes = DemandeEvent::with('materiel')->where('id', '=', $id)->get();
         $idResponsable = $request->user()->id; 
-        dd($idResponsable);
-        $club = club::where('responsableClub', '=', $idResponsable);
-        dd($club->id);
+        //dd($idResponsable);
+        $club = club::where('responsableClub', '=', $idResponsable)->first();
+    //    dd($club->id);
+       // dd($club);
+      // echo $club;
+     // var_dump($club);
         $Demandes = DemandeEvent::where('clubId','=', $club->id)->get();
         
-        dd($Demandes);
+       // dd($Demandes);
         if (sizeof($Demandes) > 0) {
             return response()->json(["data" => $Demandes], 200);
         } else
@@ -26,13 +29,22 @@ class DemandeEventController extends Controller
                 "aucun évenement"
             ], 404);
     }
+    public function getIdClub(Request $request){
+        $idResponsable = $request->user()->id;
+        $club = club::where('responsableClub', '=', $idResponsable)->first();
+        return response()->json(["data" => $club->id], 200);
+    }
     public function createDemandeEvent(DemandeEventRequest $request, $id){
 
         $nomEvent = $request->input('nomEvent');
         $dateEvent = $request->input('dateEvent');
         $description = $request->input('description');
         $responsableClubId = $request->user()->id;
+       
         $clubId = $id;
+
+       // $clubId = this.getIdClub($request);
+       // dd($clubId);
         $administrateurId = null;
 
         $newDemandeEvent = array(
@@ -45,7 +57,7 @@ class DemandeEventController extends Controller
         );
         //echo $newDemandeEvent;
         $createEvents = DemandeEvent::create($newDemandeEvent);
-        dd($createEvents);
+       // dd($createEvents);
 
         if ($createEvents) {
             return response()->json([

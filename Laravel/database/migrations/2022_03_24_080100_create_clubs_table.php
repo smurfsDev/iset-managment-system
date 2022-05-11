@@ -23,7 +23,8 @@ class CreateClubsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->onUpdate('cascade')
+                ->unique('responsableClub');
                 
             $table->string('president');
             $table->string('vicePresident'); 

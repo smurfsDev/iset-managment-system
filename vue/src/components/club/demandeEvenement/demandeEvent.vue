@@ -1,114 +1,157 @@
 <template>
-  <div>
+  <div class="w-100">
+    <h1>Demande d'événement</h1>
+    <ajouterDemandeEvent @addDemande="addDemande" :oldDemande="demande" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
-        <div class="pt-4 mt-4" v-if="!show">
+        <div v-if="!show">
+          <b-container class="bv-example-row py-0">
+            <b-row class="text-center">
+              <b-col cols="8">
+                <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
+                  @click="initModal()" data-bs-target="#demandeModal">
+                  Nouvelle demande
+                </button>
+              </b-col>
+              <b-col></b-col>
+            </b-row>
+          </b-container>
           <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
             @dismissed="alert.dismissCountDown = 0">
             <p>{{ alert.msg }}</p>
           </b-alert>
-
-          <!-- <b-card> -->
-          <showDemandes @acceptDemande="acceptDemande" :demandes="DemandeCreationClub"
-            @fetchDemande="fetchDemandeCreationClub" @declineDemande="declineDemande" :pagination="pagination" />
-          <!-- </b-card> -->
+          <showDemande :demandes="demandes" :pagination="pagination" @fetchDemande="fetchDemandeSalle"
+            @updateDemande="Update" @deleteDemande="Delete" />
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
-import showDemandes from "./show.vue";
-
+import ajouterDemandeEvent from "./ajouterDemandeEvent.vue";
+import showDemande from "./showDemande.vue";
 export default {
   components: {
-    showDemandes,
+    ajouterDemandeEvent,
+    showDemande
   },
   data() {
     return {
-      DemandeEvent: [],
-      demande: {},
+      // Salles: [],
+      demandes: [],
       pagination: {},
-      edit: false,
-      search: "",
-      show: true,
+      demande: {},
       alert: {
         dismissCountDown: 0,
         variant: "",
         msg: "",
       },
-      myid: 1,
+      edit: false,
+      search: "",
+      show: true,
     };
   },
   created() {
-    document.title = "Demande";
     this.fetchDemandeEvent();
+    if (this.$route.params.add == 1) {
+      this.alert.variant = "success";
+      this.alert.msg = "Evenement ajouté avec succès";
+      this.alert.dismissCountDown = 5;
+    } else if (this.$route.params.edit == 1) {
+      this.alert.variant = "warning";
+      this.alert.msg = "Evenement modifié avec succès";
+      this.alert.dismissCountDown = 5;
+    } else if (this.$route.params.add == 2) {
+      this.alert.variant = this.$route.params.alert.variant;
+      this.alert.msg = this.$route.params.alert.msg;
+      this.alert.dismissCountDown = 5;
+    }
   },
   methods: {
-    fetchDemandeEvent(page_url = "http://127.0.0.1:8000/api/{id}",) {
-      let vm = this;
-      this.$http.get(page_url)
-      .then((res) => {
-        this.DemandeCreationClub = res.data.data;
-        this.show = false;
-        vm.makePagination(res.data);
-      });
+
+    initModal() {
+      this.demande = {};
+      this.showModal("demandeEventModal");
     },
     makePagination(meta) {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/dcc?page=" + meta.current_page,
+          "http://localhost:8000/api/club/demandeEvent?page=" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
       };
     },
-    deleteDemande(id) {
-      if (confirm("Delete document " + id)) {
+    fetchDemandeEvent(url = "http://localhost:8000/api/club/demandeEvent/getAll") {
+      let vm = this;
+      this.$http.get(url)
+      .then((res)=> {
+        this.demandes = res.data.data.data;
+        this.show = false;
+        vm.makePagination(res.data.data);
+      });
+    },
+    Delete(id) {
+      if (confirm("Delete demande " + id)) {
         this.show = true;
-        this.$http.delete("http://localhost:8000/api/dcc/" + id, {
-        },
-        ).then(() => {
-          this.fetchDemandeCreationClub();
-          this.alert.variant = "danger";
-          this.alert.msg = "Demande suprimée avec succès";
-          this.alert.dismissCountDown = 5;
+        this.$http.delete("http://localhost:8000/api/club/demandeEvent/delete/" + id)
+          .then(() => {
+            this.fetchDemandeEvent();
+            this.alert.variant = "danger";
+            this.alert.msg = "Demande suprimée avec succès";
+            this.alert.dismissCountDown = 5;
+          });
+      }
+    },
+    addDemande(demande) {
+      this.show = true;
+      if (!this.edit) {
+        this.$http.post("http://localhost:8000/api/club/demandeEvent/create",
+        (demande))
+        .then((data) => {
+          data = data.data;
+          if (data.success == false) {
+              this.alert.variant = "danger";
+              let err = "";
+              for (const property in data.data) {
+                err += data.data[property] + "\n\n";
+              }
+              console.log(err);
+              this.alert.msg = `
+                            ${err}`;
+              this.alert.dismissCountDown = 5;
+            } else {
+              this.alert.variant = "success";
+              this.alert.msg = "Demande ajouté avec succès";
+              this.alert.dismissCountDown = 5;
+            }
+            this.fetchDemandeEvent();
+        });
+      } else {
+        this.$http.put("http://localhost:8000/api/club/demandeEvent/update/" + demande.id,
+        (demande))
+        .then(() => {
+          this.fetchDemandeEvent();
+            this.edit = false;
+            this.alert.variant = "warning";
+            this.alert.msg = "demande modifié avec succès";
+            this.alert.dismissCountDown = 5;
         });
       }
     },
-    resetModal1() {
-      this.document = {};
+    Update(demande) {
+      this.edit = true;
+      this.demande = demande;
+      this.showModal("demandeEventModal");
     },
-    acceptDemande(id) {
-      this.$http.put("http://localhost:8000/api/dcc/a/" + id)
-      .then(() => {
-        this.fetchDemandeCreationClub();
-        this.edit = false;
-        this.alert.variant = "warning";
-        this.alert.msg = "Demande acceptée avec succès";
-        this.alert.dismissCountDown = 5;
-      });
-    },
-    declineDemande(id) {
-      this.$http.put("http://localhost:8000/api/dcc/d/" + id)
-      .then(() => {
-        this.fetchDemandeCreationClub();
-        this.edit = false;
-        this.alert.variant = "warning";
-        this.alert.msg = "Demande non acceptée avec succès";
-        this.alert.dismissCountDown = 5;
-      });
-    },
+
   },
 };
 </script>
 
 <style>
-.btun {
-  color: white !important;
-  background-color: #d32f2f !important;
-}
 </style>

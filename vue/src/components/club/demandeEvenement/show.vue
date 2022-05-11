@@ -53,34 +53,16 @@
             <b-row class="mb-2">
               <b-row>
                 <b-col>
-                  Nom du club : {{ demande.nomClub }} Date création :
-                  {{ demande.dateCreation }}
+                  Nom du évenement : {{ demande.nomEvent }}<br> Date évenement :
+                  {{ demande.dateEvent }} <br> Date création : {{ demande.created_at }}
                 </b-col>
               </b-row>
               <b-row>
-                <b-col>Activité : {{ demande.activite }}</b-col>
+                <b-col>Description : {{ demande.description }}</b-col>
               </b-row>
-              <b-row>
-                <b-col>
-                  President : {{ demande.president }} Vice president :
-                  {{ demande.vicePresident }}
-                  <br />
-                  <img :src="demande.logo" alt="logo" width="250" />
-                </b-col>
-              </b-row>
+             
             </b-row>
-            <b-button
-              variant="success"
-              :class="[{ disabled: demande.status == 1 }]"
-              v-on:click="Accept(demande.id)"
-              >Accept</b-button
-            >
-            <b-button
-              variant="danger"
-              :class="[{ disabled: demande.status == 2 }]"
-              v-on:click="Decline(demande.id)"
-              >Decline</b-button
-            >
+           
           </div>
         </md-tab>
       </md-tabs>
@@ -134,14 +116,9 @@ export default {
       id: "",
     };
   },
-  emits: ["acceptDemande", "declineDemande", "fetchDemande"],
+  emits: ["fetchDemande"],
   methods: {
-    Accept(id) {
-      this.$emit("acceptDemande", id);
-    },
-    Decline(id) {
-      this.$emit("declineDemande", id);
-    },
+   
     fetchDemande(url) {
       this.$emit("fetchDemande", url);
     },
