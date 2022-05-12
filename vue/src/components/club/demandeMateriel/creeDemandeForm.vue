@@ -23,14 +23,14 @@
           <div class="modal-body">
             <div class="form-group mb-2">
               
-              <label>Id destinateur :</label>
+              <label>Nom destinataire :</label>
               <select name="idDestinataire" v-model="oldDemande.idDestinataire" class="form-control" required="required">
                   <option 
-                    v-for="destinateur in Dest"
-                    :key="destinateur.id"
-                    :value="destinateur.id"
+                    v-for="destinataire in Dest"
+                    :key="destinataire.id"
+                    :value="destinataire.id"
                   >
-                    {{ destinateur.name }}
+                    {{ destinataire.name }}
                   </option>
                 </select>
               <label>Date Emploi :</label>
