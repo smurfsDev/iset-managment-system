@@ -1,13 +1,13 @@
-const showDemande = () =>
+const demandeEvent = () =>
   import(
-    "../../components/club/demandeEvenement/showDemande.vue"
+    "../../components/club/demandeEvenement/demandeEvent.vue"
   );
 
 export default [
   {
     path: "/club/demandeEvent",
-    component: showDemande,
-    name: "showDemande",
+    component: demandeEvent,
+    name: "demadeEvent",
     meta: { requiresResponsable: true},
   },
 ];

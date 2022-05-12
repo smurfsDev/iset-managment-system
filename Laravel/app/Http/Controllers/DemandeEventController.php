@@ -13,13 +13,13 @@ class DemandeEventController extends Controller
     {
         //$Demandes = DemandeEvent::with('materiel')->where('id', '=', $id)->get();
         $idResponsable = $request->user()->id; 
-        //dd($idResponsable);
+       // dd($idResponsable);
         $club = club::where('responsableClub', '=', $idResponsable)->first();
     //    dd($club->id);
        // dd($club);
       // echo $club;
      // var_dump($club);
-        $Demandes = DemandeEvent::where('clubId','=', $club->id)->get();
+        $Demandes = DemandeEvent::where('responsableClubId','=', $idResponsable)->paginate(5);
         
        // dd($Demandes);
         if (sizeof($Demandes) > 0) {
@@ -30,14 +30,15 @@ class DemandeEventController extends Controller
             ], 404);
     }
  
-    public function createDemandeEvent(DemandeEventRequest $request, $id){
+    public function createDemandeEvent(DemandeEventRequest $request){
 
         $nomEvent = $request->input('nomEvent');
         $dateEvent = $request->input('dateEvent');
         $description = $request->input('description');
         $responsableClubId = $request->user()->id;
+        $club = club::where('responsableClub', '=', $responsableClubId)->first();
        
-        $clubId = $id;
+        $clubId = $club->id;
 
        // $clubId = this.getIdClub($request);
        // dd($clubId);

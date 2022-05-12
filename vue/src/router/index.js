@@ -63,7 +63,7 @@ const routes = [
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
   ...demandeSalle,
-  ...demandePlanificationEvent
+  ...demandePlanificationEvent,
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses

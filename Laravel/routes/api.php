@@ -23,14 +23,12 @@ use App\Http\Controllers\club\pageClub\HeadersController;
 use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
 
-
-use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ChefDepartmentController;
-use App\Http\Controllers\club\ClubController;
-use App\Http\Controllers\club\MemberController;
-use App\Http\Controllers\SalleController;
-use App\Http\Controllers\DemandeSalleController;
-use App\Http\Controllers\DepartementController;
+
+
+
+
+
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\StudentsController;
 

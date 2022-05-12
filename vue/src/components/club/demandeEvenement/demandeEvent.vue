@@ -21,8 +21,8 @@
             @dismissed="alert.dismissCountDown = 0">
             <p>{{ alert.msg }}</p>
           </b-alert>
-          <showDemande :demandes="demandes" :pagination="pagination" @fetchDemande="fetchDemandeSalle"
-            @updateDemande="Update" @deleteDemande="Delete" />
+          <showDemande :demandes="demandes" :pagination="pagination" @fetchDemande="fetchDemandeEvent"
+            @updateDemande="Update" @deleteDemande="Delete" /> 
         </div>
       </div>
     </div>
@@ -32,11 +32,13 @@
 
 <script>
 import ajouterDemandeEvent from "./ajouterDemandeEvent.vue";
-import showDemande from "./showDemande.vue";
+import showDemande from "./show.vue";
+//import showDemande from "./showDemande.vue";
 export default {
   components: {
     ajouterDemandeEvent,
-    showDemande
+    //showDemande,
+    showDemande,
   },
   data() {
     return {
@@ -56,6 +58,7 @@ export default {
   },
   created() {
     this.fetchDemandeEvent();
+    console.log(this.demandes);
     if (this.$route.params.add == 1) {
       this.alert.variant = "success";
       this.alert.msg = "Evenement ajouté avec succès";
@@ -80,13 +83,13 @@ export default {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/club/demandeEvent?page=" + meta.current_page,
+          "http://localhost:8000/api/demandeEvent?page=" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
       };
     },
-    fetchDemandeEvent(url = "http://localhost:8000/api/club/demandeEvent/getAll") {
+    fetchDemandeEvent(url = "http://localhost:8000/api/demandeEvent/getAll") {
       let vm = this;
       this.$http.get(url)
       .then((res)=> {
@@ -98,7 +101,7 @@ export default {
     Delete(id) {
       if (confirm("Delete demande " + id)) {
         this.show = true;
-        this.$http.delete("http://localhost:8000/api/club/demandeEvent/delete/" + id)
+        this.$http.delete("http://localhost:8000/api/demandeEvent/delete/" + id)
           .then(() => {
             this.fetchDemandeEvent();
             this.alert.variant = "danger";
@@ -110,7 +113,7 @@ export default {
     addDemande(demande) {
       this.show = true;
       if (!this.edit) {
-        this.$http.post("http://localhost:8000/api/club/demandeEvent/create",
+        this.$http.post("http://localhost:8000/api/demandeEvent/create",
         (demande))
         .then((data) => {
           data = data.data;
@@ -132,7 +135,7 @@ export default {
             this.fetchDemandeEvent();
         });
       } else {
-        this.$http.put("http://localhost:8000/api/club/demandeEvent/update/" + demande.id,
+        this.$http.put("http://localhost:8000/api/demandeEvent/update/" + demande.id,
         (demande))
         .then(() => {
           this.fetchDemandeEvent();
