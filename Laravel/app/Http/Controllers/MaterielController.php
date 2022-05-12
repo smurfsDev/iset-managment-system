@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Materiel;
 use Illuminate\Http\Request;
 use App\Models\DemandeMateriel;
+use App\Models\User;
 
 class MaterielController extends Controller
 {
@@ -62,4 +63,22 @@ class MaterielController extends Controller
             'attached' => false
         ], 201);
     }
+    public function getAllResponsableMateriel(){
+        $Responsable = User::whereHas('materiel')->get();
+        if (sizeof($Responsable) > 0) {
+            return response()->json(["data" => $Responsable], 200);
+        } else
+            return response()->json([
+                "aucun responsable"
+            ], 404);
+    }
+    // public function getAllResponsableMateriel(){
+    //     $Responsable = Materiel::with('responsable')->get();
+    //     if (sizeof($Responsable) > 0) {
+    //         return response()->json(["data" => $Responsable], 200);
+    //     } else
+    //         return response()->json([
+    //             "aucun responsable"
+    //         ], 404);
+    // }
 }
