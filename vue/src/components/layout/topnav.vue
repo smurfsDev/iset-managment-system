@@ -41,6 +41,16 @@
                     title: 'Entreprise',
                     icon: 'fas fa-building',
                     hidden: !this.isAdmin
+                },{
+                    href: '/cd/manageStudents',
+                    title: 'Students',
+                    icon: 'fas fa-user',
+                    hidden: !this.isChefDepartement
+                },{
+                    href: '/cd/GererClasse',
+                    title: 'Classes',
+                    icon: 'fas fa-building',
+                    hidden: !this.isChefDepartement
                 },
                 {
                     href: '/etudiant/demandeCreationClub',
@@ -52,6 +62,12 @@
                     href: '/admin/demandeCreationClub',
                     title: 'Demande creation club',
                     icon: 'fas fa-building',
+                    hidden: !this.isAdmin
+                },
+                {
+                    href: '/admin/manageChefDepartments',
+                    title: 'chefDepartements',
+                    icon: 'fas fa-user',
                     hidden: !this.isAdmin
                 },
                 {
@@ -174,7 +190,8 @@ export default {
             auth: 'isAuthenticated',
             admin: 'isAdmin',
             student: 'isStudent',
-            responsable: 'isResponsableClub'
+            responsable: 'isResponsableClub',
+            chefDepartement: 'isChefDepartement',
         }),
         isAuth: function () {
             return this.auth;
@@ -188,6 +205,9 @@ export default {
         isResponsableClub: function () {
             return this.responsable;
         },
+        isChefDepartement: function () {
+            return this.chefDepartement;
+        }
 
     }
 }

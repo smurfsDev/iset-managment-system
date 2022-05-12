@@ -1,5 +1,5 @@
 <template>
-    <div class="login-form">
+    <div class="login-form container">
         <form @submit.prevent="register">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -15,6 +15,37 @@
                     placeholder="Password">
             </div>
             <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role" v-model="form.role">
+                    <option value="2">Etudiant</option>
+                    <option value="5">Chef departement</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="department">Department</label>
+                <select class="form-control" id="department" @change="fetchClasses(form.department)" v-model="form.department">
+                  <option 
+                    v-for="departement in departements"
+                    :key="departement.id"
+                    :value="departement.id" 
+                  >
+                    {{ departement.titre }}
+                  </option>
+                </select>
+            </div>
+            <div v-if="form.role==2" class="form-group">
+                <label for="department">Classe</label>
+                <select class="form-control"  id="department" v-model="form.classe">
+                  <option 
+                    v-for="classe in classes"
+                    :key="classe.id"
+                    :value="classe.id" 
+                  >
+                    {{ classe.abreviation }}
+                  </option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" class="form-control" id="confirm_password" v-model="form.confirm_password"
                     placeholder="Confirm Password">
@@ -27,7 +58,6 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-
     data() {
         return {
             form: {
@@ -35,10 +65,15 @@ export default {
                 email: '',
                 password: '',
                 confirm_password: ''
-            }
+            },
+            departements: [],
+            classes: [],
+
         }
     },
-
+    created() {
+        this.fetchDepartements();
+    },
     methods: {
         ...mapActions(["Register", "LogOut"]),
         logout() {
@@ -46,6 +81,20 @@ export default {
         },
         register() {
             this.Register(this.form);
+        },
+        fetchDepartements() {
+            fetch("http://localhost:8000/api/Departement")
+                .then((response) => response.json())
+                .then((data) => {
+                    this.departements = data.data;
+                });
+        },
+        fetchClasses(id) {
+            fetch("http://localhost:8000/api/classe/"+id)
+                .then((response) => response.json())
+                .then((data) => {
+                    this.classes = data;
+                });
         }
     }
 

@@ -51,8 +51,7 @@ class User extends Authenticatable
     }
 
     public function roles(){
-        return $this->belongsToMany('App\Models\Role');
-    }
+        return $this->belongsToMany('App\Models\Role')->withPivot(['status','department','classe']);    }
 
     public function demandeAdhesionClub(){
         return $this->HasMany('App\Models\DemandeAdhesionClub', 'user_id');

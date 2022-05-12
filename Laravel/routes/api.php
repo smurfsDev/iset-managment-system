@@ -24,6 +24,17 @@ use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
 
 
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\ChefDepartmentController;
+use App\Http\Controllers\club\ClubController;
+use App\Http\Controllers\club\MemberController;
+use App\Http\Controllers\SalleController;
+use App\Http\Controllers\DemandeSalleController;
+use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\StudentsController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +51,11 @@ Route::group(['prefix' => '/c'], function () {
     Route::get('/', [CategorieMaterielController::class, 'show']);
 });
 
+Route::group(['prefix' => '/cd'], function () {
+    Route::get('/', [ChefDepartmentController::class, 'show']);
+    Route::post('/accept/{id}', [ChefDepartmentController::class, 'accept']);
+    Route::post('/refuse/{id}', [ChefDepartmentController::class, 'refuse']);
+});
 
 
 
@@ -144,6 +160,16 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     
+
+    // classes routes
+
+    Route::group(['prefix' => '/Classe'], function () {
+        Route::get('/', [ClasseController::class, 'getClasses']);
+        Route::post('/', [ClasseController::class, 'createClasse']);
+        Route::delete('/{id}', [ClasseController::class, 'deleteClass']);
+        Route::put('/{id}', [ClasseController::class, 'updateClass']);
+    });
+
 });
 
 // page club routes
@@ -173,4 +199,14 @@ Route::group(['prefix' => '/Salle'], function () {
 });
 Route::group(['prefix' => '/Departement'], function () {
     Route::get('/', [DepartementController::class, 'index']);
+});
+
+Route::group(['prefix' => '/classe'], function () {
+    Route::get('/{id}', [ClasseController::class, 'show']);
+});
+
+Route::group(['prefix' => '/s'], function () {
+    Route::get('/', [StudentsController::class, 'show']);
+    Route::post('/accept/{id}', [StudentsController::class, 'accept']);
+    Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
 });
