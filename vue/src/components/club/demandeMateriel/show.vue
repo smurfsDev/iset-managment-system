@@ -16,7 +16,7 @@
             <!-- <b-button variant="warning" v-on:click="fetchMaterielDemande(demande.id)">fetch</b-button> -->
             <b-row class="mb-2">
               <b-row>
-                <b-col>ID du destinateur : {{ demande.idDestinataire }} Date
+                <b-col>Nom du destinataire : {{ demande.destinataire.name }} Date
                   création : {{ demande.created_at }}</b-col>
               </b-row>
 
