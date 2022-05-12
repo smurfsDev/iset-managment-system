@@ -29,11 +29,7 @@ class DemandeEventController extends Controller
                 "aucun évenement"
             ], 404);
     }
-    public function getIdClub(Request $request){
-        $idResponsable = $request->user()->id;
-        $club = club::where('responsableClub', '=', $idResponsable)->first();
-        return response()->json(["data" => $club->id], 200);
-    }
+ 
     public function createDemandeEvent(DemandeEventRequest $request, $id){
 
         $nomEvent = $request->input('nomEvent');

@@ -114,33 +114,34 @@ export default {
     },
     methods: {
         ajouterDemande() {
-            console.log("ajouterDemande");
-            console.log(this.nomEvent);
-            console.log(this.dateEvent);
-            console.log(this.description);
+            
             this.newDemande = {
                 nomEvent: this.nomEvent,
                 dateEvent: this.dateEvent,
                 description: this.description,
             };
-            this.$http.get("http://localhost:8000/api/demandeEvent/getIdClub")
+          let idClub = this.DemandeEvent[0].clubId
+            
+            this.$http.post("http://localhost:8000/api/demandeEvent/create/"+idClub, this.newDemande)
             .then((response) => {
-                console.log(response.data.data);
-            });
-            this.$http.post("http://localhost:8000/api/demandeEvent/create", this.newDemande)
-            .then((response) => {
-                console.log(response.data.data);
+               
                 this.DemandeEvent.push(response.data.data);
                 this.nomEvent = "";
                 this.dateEvent = "";
                 this.description = "";
                 this.myModel = false;
+                this.$http.get("http://localhost:8000/api/demandeEvent/getAll")
+                    .then((response) => {
+                       
+                        this.DemandeEvent = response.data.data; 
+
+                    })
+
             })  
 
     },
      openModel:function(){
-        // application.first_name = '';
-        // application.last_name = '';
+       
         this.actionButton = "Insert";
         this.dynamicTitle = "Add Data";
         this.myModel = true;
