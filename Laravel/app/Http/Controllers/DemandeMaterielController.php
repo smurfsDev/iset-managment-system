@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DemandeMaterielRequest;
 use App\Models\DemandeMateriel;
 use Illuminate\Http\Request;
 
 class DemandeMaterielController extends Controller
 {
-    public function create(Request $request){
+    public function create(DemandeMaterielRequest $request){
         $dateEmploi = $request->input('dateEmploi');
         $dateDeRemise = $request->input('dateDeRemise');
         $idResponsableClub = $request->user()->id;
@@ -34,7 +35,7 @@ class DemandeMaterielController extends Controller
         return "Success";
     }
     public function show(Request $request){
-        $DemandeMateriel = $request->user()->DemandeMateriel()->with('materiel')->paginate(5);
+        $DemandeMateriel = $request->user()->DemandeMateriel()->with('materiel')->with('destinataire')->paginate(5);
         if(!empty($DemandeMateriel)){
         return response()->json($DemandeMateriel, 200);
         }
@@ -44,7 +45,7 @@ class DemandeMaterielController extends Controller
             ], 404);
     }
 
-    public function update(Request $request ,$id){
+    public function update(DemandeMaterielRequest $request ,$id){
         $DemandeMateriel = $request->user()->DemandeMateriel()->find($id);
         if($DemandeMateriel){
             $DemandeMateriel->idDestinataire= $request->input('idDestinataire')?$request->input('idDestinataire'):$DemandeMateriel->idDestinataire;
