@@ -74,6 +74,15 @@ class DemandeEventController extends Controller
         }
         return "Event created";
     }
+    // public function getEvent($id){
+    //     $event = DemandeEvent::where('id', '=', $id)->first();
+    //     if ($event) {
+    //         return response()->json(["data" => $event], 200);
+    //     } else
+    //         return response()->json([
+    //             "aucun évenement"
+    //         ], 404);
+    // }
     public function updateDemandeEvent(Request $request, $id)
     {
         $DemandeEvent = DemandeEvent::find($id);

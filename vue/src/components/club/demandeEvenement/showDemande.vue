@@ -22,7 +22,13 @@
                             <b-row>
                                 <b-col>Description : {{ demande.description }} </b-col>
                             </b-row>
+                           
                         </b-row>
+                                <button type="button" class="btn btn-warning btn-xs " @click="openEditModal(demande)" value="Ajouter demande d'évenement"> <b-icon-pen></b-icon-pen></button>
+                                <button type="button" class="btn btn-danger btn-xs " @click="deleteDemande(demande.id)" value="Ajouter demande d'évenement"> <b-icon-trash></b-icon-trash></button>
+   
+                                
+                     
                         </div>
                 </md-tab>
             </md-tabs>
@@ -98,6 +104,7 @@ export default {
             description:'',
             newDemande:{},
             hiddenId:'',
+            idDemande:""
 
         };
     },
@@ -105,7 +112,7 @@ export default {
 
         this.$http.get("http://localhost:8000/api/demandeEvent/getAll")
         .then((response) => {
-            console.log(response.data.data);
+           // console.log(response.data.data);
             this.DemandeEvent = response.data.data; 
 
             // this.DemandeEvent.push(res.data.data); 
@@ -113,31 +120,60 @@ export default {
         })
     },
     methods: {
+        updateDemande(id) {
+            let updatedEvent={
+                
+                nomEvent:this.nomEvent,
+                dateEvent:this.dateEvent,
+                description:this.description
+            }
+            this.$http.put("http://localhost:8000/api/demandeEvent/update/"+id,updatedEvent)
+            .then(() => {
+              //  console.log(response.data.data);
+               // this.DemandeEvent = response.data.data;
+
+                this.myModel=false;
+                this.$http.get("http://localhost:8000/api/demandeEvent/getAll")
+                                .then((response) => {
+                                
+                                    this.DemandeEvent = response.data.data; 
+
+                                })
+            })
+             
+
+        },
         ajouterDemande() {
             
+            console.log(this.actionButton);
+            if (this.actionButton == "Insert"){
             this.newDemande = {
-                nomEvent: this.nomEvent,
-                dateEvent: this.dateEvent,
-                description: this.description,
-            };
-          let idClub = this.DemandeEvent[0].clubId
+                            nomEvent: this.nomEvent,
+                            dateEvent: this.dateEvent,
+                            description: this.description,
+                        };
+                    let idClub = this.DemandeEvent[0].clubId
+                        
+                        this.$http.post("http://localhost:8000/api/demandeEvent/create/"+idClub, this.newDemande)
+                        .then((response) => {
+                        
+                            this.DemandeEvent.push(response.data.data);
+                            this.nomEvent = "";
+                            this.dateEvent = "";
+                            this.description = "";
+                            this.myModel = false;
+                            this.$http.get("http://localhost:8000/api/demandeEvent/getAll")
+                                .then((response) => {
+                                
+                                    this.DemandeEvent = response.data.data; 
+
+                                })
+
+                        })  
+                        }else{
+                            this.updateDemande(this.idDemande);
+                        }
             
-            this.$http.post("http://localhost:8000/api/demandeEvent/create/"+idClub, this.newDemande)
-            .then((response) => {
-               
-                this.DemandeEvent.push(response.data.data);
-                this.nomEvent = "";
-                this.dateEvent = "";
-                this.description = "";
-                this.myModel = false;
-                this.$http.get("http://localhost:8000/api/demandeEvent/getAll")
-                    .then((response) => {
-                       
-                        this.DemandeEvent = response.data.data; 
-
-                    })
-
-            })  
 
     },
      openModel:function(){
@@ -146,6 +182,33 @@ export default {
         this.dynamicTitle = "Add Data";
         this.myModel = true;
         },
+        deleteDemande(id){
+            confirm("Are you sure you want to delete this record?");
+
+            this.$http.delete("http://localhost:8000/api/demandeEvent/delete/"+id)
+            .then((response) => {
+                console.log(response.data);
+                this.$http.get("http://localhost:8000/api/demandeEvent/getAll")
+                    .then((response) => {
+                    
+                        this.DemandeEvent = response.data.data; 
+
+                    })
+                })
+        },
+        openEditModal:function(demande){
+            this.actionButton = "Edit";
+            this.dynamicTitle = "Update Event";
+            this.myModel = true;
+            console.log(demande);
+            this.idDemande = demande.id;
+            this.nomEvent = demande.nomEvent;
+            this.dateEvent = demande.dateEvent;
+            this.description = demande.description;
+
+
+        }
+
 
     }
 }
