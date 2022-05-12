@@ -64,6 +64,10 @@ class User extends Authenticatable
     public function DemandeMateriel(){
         return $this->HasMany('App\Models\DemandeMateriel', 'idResponsableClub');
     }
+    Public function materiel(){
+        return $this->hasMany('App\Models\Materiel', 'idResponsable');
+    }
+
 
 
 }
