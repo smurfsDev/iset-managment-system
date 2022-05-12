@@ -22,22 +22,17 @@
         <form class="mb-3" @submit.prevent="addDemande">
           <div class="modal-body">
             <div class="form-group mb-2">
-              <label>Id Responsable club :</label>
-              <input
-                type="integer"
-                class="border-0 dcc form-control"
-                placeholder="(1)"
-                v-model="oldDemande.idResponsableClub"
-                required="required"
-              />
+              
               <label>Id destinateur :</label>
-              <input
-                type="integer"
-                class="border-0 dcc form-control"
-                placeholder="(1)"
-                v-model="oldDemande.idDestinataire"
-                required="required"
-              />
+              <select name="idDestinataire" v-model="oldDemande.idDestinataire" class="form-control" required="required">
+                  <option 
+                    v-for="destinateur in Dest"
+                    :key="destinateur.id"
+                    :value="destinateur.id"
+                  >
+                    {{ destinateur.name }}
+                  </option>
+                </select>
               <label>Date Emploi :</label>
               <input
                 type="date"
@@ -88,6 +83,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      Dest: [],
+    }
+  },
   props: {
     categories: Array,
     oldDemande: Object,
@@ -95,6 +95,9 @@ export default {
   },
   emits: ["addDemande"],
   mounted() {},
+  created() {
+    this.getDestinataire();
+  },
   methods: {
     addDemande() {
       this.$emit("addDemande", this.oldDemande);
@@ -103,6 +106,14 @@ export default {
     },
     resetModal1() {
       $(".dm").val("");
+    },
+    getDestinataire(page_url = "http://127.0.0.1:8000/api/responsablesMatt") {
+      this.$http.get(page_url)
+        .then((res) => res.data)
+        .then((res) => {
+          this.Dest = res.data;
+        })
+        .catch((err) => console.log(err));
     },
   },
 };
