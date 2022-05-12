@@ -72,14 +72,6 @@
       </div>
     
     </transition>
-   </div>
-        <div>
-        <h1>Demande d'événement</h1>
-
-        <button type="button" class="btn btn-primary" @click="ajouterDemande">Ajouter une demande</button>
-        <b-list-group v-for="(item, index) in DemandeEvent" :key="index">
-           <b-list-group-item  variant="warning">{{item.nomEvent}} </b-list-group-item>
-        </b-list-group>
     </div>
     </div>
     
@@ -139,6 +131,9 @@ export default {
                                     this.DemandeEvent = response.data.data; 
 
                                 })
+                this.nomEvent='';
+                this.dateEvent='';
+                this.description='';                
             })
              
 
