@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DemandeMaterielRequest;
 use App\Models\DemandeSalle;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class DemandeSalleController extends Controller
                  "aucune demande de salle"
                ], 404);
     }
-    public function store(Request $request){
+    public function store(DemandeMaterielRequest $request){
         $dateEmploi = $request->input('dateEmploi');
         $dateDeRemise = $request->input('dateDeRemise');
         $idSalle = $request->input('idSalle');
@@ -42,7 +43,7 @@ class DemandeSalleController extends Controller
             return response()->json(["message"=>"aucune demande de salle"], 404);
         return response()->json(["data"=>$demandeSalle], 200);
     }
-    public function update(Request $request, $id){
+    public function update(DemandeMaterielRequest $request, $id){
         $demandeSalle=$request->user()->DemandeSalle()->find($id);
         if(!$demandeSalle)
             return response()->json(["message"=>"aucune demande de salle"], 404);
