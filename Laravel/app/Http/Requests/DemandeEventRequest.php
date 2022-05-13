@@ -27,7 +27,8 @@ class DemandeEventRequest extends FormRequest
     {
         return [
             "nomEvent"=> "required|min:2",
-            "dateEvent"=> "required|date",
+            "dateEvent"=> "required|date|after:tomorrow",
+            
             "description"=> "required|min:2",       
         ];
     }
