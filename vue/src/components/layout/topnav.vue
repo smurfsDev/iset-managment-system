@@ -100,17 +100,17 @@
                     ]
                 },
                 {
-                    href: '/etudiant/listeClubs',
+                    href: '/listeClubs',
                     title: 'Clubs',
                     icon: 'fas fa-building',
                     child: [
                         {
-                            href: '/etudiant/demandeAdhesionClub',
+                            href: '/demandeAdhesionClub',
                             title: 'Mes Demandes d\'adhesion',
                             hidden: !this.isStudent
                         },
                         {
-                            href: '/club/demandeAdhesionResponsable',
+                            href: '/demandeAdhesionResponsable',
                             title: 'Demandes d\'adhesion',
                             hidden: !this.isStudent
                         }
