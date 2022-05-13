@@ -58,12 +58,7 @@
                     icon: 'fas fa-plus',
                     hidden: !this.isStudent
                 },
-                {
-                    href: '/admin/demandeCreationClub',
-                    title: 'Demande creation club',
-                    icon: 'fas fa-building',
-                    hidden: !this.isAdmin
-                },
+                
                 {
                     href: '/admin/manageChefDepartments',
                     title: 'chefDepartements',
@@ -120,7 +115,12 @@
                     title: 'Demandes',
                     icon: 'fa fa-file',
                     child: [
-        
+                        {
+                            href: '/admin/demandeCreationClub',
+                            title: 'Demande creation club',
+                            icon: 'fas fa-building',
+                            hidden: !this.isAdmin
+                        },
                         {
                             href: 'demandeSalle',
                             title: 'Demande salle',
@@ -139,6 +139,13 @@
                             icon: 'fas fa-file',
                             hidden: !this.isResponsableClub
                         },
+                        {
+                            href: '/admin/demandePlannificationEvent',
+                            title: 'Demande plannification des évenements',
+                            icon: 'fas fa-file',
+                            hidden: !this.isAdmin
+                        },
+
                     ]
                 }
         

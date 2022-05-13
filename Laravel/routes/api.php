@@ -157,6 +157,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/delete/{id}', [DemandeEventController::class, 'deleteDemandeEvent']);
         Route::put('/accept/{id}', [DemandeEventController::class, 'accept']);
         Route::put('/decline/{id}', [DemandeEventController::class, 'decline']);
+        Route::get('/getAllEvents', [DemandeEventController::class, 'show']);
     });
     
 

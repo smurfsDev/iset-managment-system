@@ -9,6 +9,17 @@ use App\Http\Requests\DemandeEventRequest;
 
 class DemandeEventController extends Controller
 {
+    public function show(){
+        $demandes = DemandeEvent::get();
+        if(sizeof($demandes)>0){
+        return response()->json(["data"=>$demandes], 200);
+        }
+        else
+            return response()->json([
+                "aucune demande"
+            ], 404);
+    }
+
     public function getDemandesEvent(Request $request)
     {
         //$Demandes = DemandeEvent::with('materiel')->where('id', '=', $id)->get();
