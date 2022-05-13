@@ -157,6 +157,7 @@ export default {
         }
         this.Mat = [];
       }
+      this.Mat = [];
     },
     initModal() {
       this.demande = {};
@@ -174,6 +175,7 @@ export default {
       this.idCategorie = idCategorie;
       this.fetchMateriels();
       this.showModal("MaterielModal");
+      console.log(this.Mat);
     },
     fetchDemande(url) {
       this.$emit("fetchDemande", url);
