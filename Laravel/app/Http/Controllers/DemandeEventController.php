@@ -118,5 +118,45 @@ class DemandeEventController extends Controller
         }
     }
 
+    public function accept(Request $request, $id)
+    {
+        
+        $demande = DemandeEvent::find($id);
+        
+        $adminId = $request->user()->id;
+        
+        if (isset($adminId)) {
+            if (!$demande) {
+                return response()->json("Not found", 404);
+            } else {
+
+                $demande->administrateurId = $adminId;
+                $demande->status = 1;
+                $demande->save();
+                return response()->json("Accepted", 200);
+            }
+        } else {
+            return response()->json("Admin id required", 400);
+        }
+    }
+    public function decline(Request $request, $id)
+    {
+        $demande = DemandeEvent::find($id);
+        $adminId = $request->user()->id;
+        if (isset($adminId)) {
+            if (!$demande) {
+                return response()->json("Not found", 404);
+            } else {
+
+                $demande->administrateurId = $adminId;
+                $demande->status = 2;
+                $demande->save();
+                return response()->json("Declined", 200);
+            }
+        } else {
+            return response()->json("Admin id required", 400);
+        }
+    }
+
    
 }
