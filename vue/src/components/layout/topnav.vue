@@ -132,7 +132,13 @@
                             title: 'Demande materiel',
                             icon: 'fa fa-file',
                             hidden: !this.isStudent && !this.isResponsableClub,
-                        }
+                        },
+                        {
+                            href: 'demandeEvent',
+                            title: 'Plannification évenement',
+                            icon: 'fas fa-file',
+                            hidden: !this.isResponsableClub
+                        },
                     ]
                 }
         

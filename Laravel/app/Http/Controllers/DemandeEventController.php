@@ -19,7 +19,7 @@ class DemandeEventController extends Controller
        // dd($club);
       // echo $club;
      // var_dump($club);
-        $Demandes = DemandeEvent::where('responsableClubId','=', $idResponsable)->paginate(5);
+        $Demandes = DemandeEvent::where('responsableClubId','=', $idResponsable)->orderBy('updated_at','desc')->paginate(5);
         
        // dd($Demandes);
         if (sizeof($Demandes) > 0) {

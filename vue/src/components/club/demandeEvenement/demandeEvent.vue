@@ -1,6 +1,6 @@
 <template>
   <div class="w-100">
-    <h1>Demande d'événement</h1>
+    
     <ajouterDemandeEvent @addDemande="addDemande" :oldDemande="demande" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">

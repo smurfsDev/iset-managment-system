@@ -5,7 +5,7 @@ const demandeEvent = () =>
 
 export default [
   {
-    path: "/club/demandeEvent",
+    path: "/demandeEvent",
     component: demandeEvent,
     name: "demadeEvent",
     meta: { requiresResponsable: true},
