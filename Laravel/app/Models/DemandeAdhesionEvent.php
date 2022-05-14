@@ -14,7 +14,8 @@ class DemandeAdhesionEvent extends Model
     protected $table='demande_adhesion_events';
     protected $fillable = [
         "idStudent",
-        "idEvent"
+        "idEvent",
+        "status"
     ];
     public function student(){
         return $this->belongsTo(User::class,'idStudent');

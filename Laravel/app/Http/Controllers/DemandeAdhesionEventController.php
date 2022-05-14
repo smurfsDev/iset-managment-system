@@ -9,6 +9,7 @@ class DemandeAdhesionEventController extends Controller
 {
     public function getDemandeAdhesion(Request $request){
 
+      //  dd($request->user()->id);
         $demandeAdhesionEvent = DemandeAdhesionEvent::where('idStudent', $request->user()->id)->get();
      
         if (empty($demandeAdhesionEvent)) {
@@ -18,11 +19,11 @@ class DemandeAdhesionEventController extends Controller
         }
     }
 
-    public function createDemandeAdhesion(Request $request){
+    public function createDemandeAdhesion(Request $request,$id){
 
         $demandeAdhesionEvent = new DemandeAdhesionEvent();
         $demandeAdhesionEvent->idStudent = $request->user()->id;
-        $demandeAdhesionEvent->idEvent = $request->input('idEvent');
+        $demandeAdhesionEvent->idEvent = $id;
         $demandeAdhesionEvent->save();
         return response()->json(["data" => $demandeAdhesionEvent], 201);
     }
@@ -53,5 +54,5 @@ class DemandeAdhesionEventController extends Controller
         }
     }
 
-    
+
 }

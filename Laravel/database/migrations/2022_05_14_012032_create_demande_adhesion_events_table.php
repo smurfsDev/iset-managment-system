@@ -17,6 +17,7 @@ class CreateDemandeAdhesionEventsTable extends Migration
             $table->id();
             $table->foreignId("idStudent");
             $table->foreignId("idEvent");
+            $table->integer("status")->default(0);
             $table->foreign('idStudent')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idEvent')->references('id')->on('demande_events')->onDelete('cascade');
             $table->timestamps();

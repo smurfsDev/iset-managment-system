@@ -97,15 +97,28 @@ class DemandeEventController extends Controller
         }
         return "Event created";
     }
-    // public function getEvent($id){
-    //     $event = DemandeEvent::where('id', '=', $id)->first();
-    //     if ($event) {
-    //         return response()->json(["data" => $event], 200);
-    //     } else
-    //         return response()->json([
-    //             "aucun évenement"
-    //         ], 404);
-    // }
+    public function getEvent($id){
+        $event = DemandeEvent::where('id', '=', $id)->first();
+        if ($event) {
+            return response()->json(["data" => $event], 200);
+        } else
+            return response()->json([
+                "aucun évenement"
+            ], 404);
+    }
+    public function getApprouvedEvent(Request $request){
+       
+        $events = DemandeEvent::where('status', '=', '1')->paginate(5);
+        $apEvent = DemandeEvent::join('club','club.id', '=', 'demande_events.clubId')
+                ->where('demande_events.status','=','1')
+                ->get(['demande_event.*','club.*']);
+        if (sizeof($events) > 0) {
+            return response()->json(["data" => $events], 200);
+        } else
+            return response()->json([
+                "aucun évenement"
+            ], 404);
+    }
     public function updateDemandeEvent(Request $request, $id)
     {
         $DemandeEvent = DemandeEvent::find($id);

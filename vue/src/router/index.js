@@ -28,6 +28,8 @@ import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
+import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
+import listeEvents from "./routes/listeEvents";
 
 Vue.use(VueRouter);
 
@@ -68,7 +70,9 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...demandeEvenementAdmin
+  ...demandeEvenementAdmin,
+  ...demandeAdhesionEvent,
+  ...listeEvents
 
 ];
 

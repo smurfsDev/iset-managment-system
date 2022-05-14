@@ -20,6 +20,14 @@ class ClubController extends Controller
             return response()->json($Clubs, 200);
         }
     }
+    public function getClub($id){
+        $club = club::find($id);
+        if (empty($club)) {
+            return response()->json(['message' => 'No club found'], 404);
+        }else{
+            return response()->json($club, 200);
+        }
+    }
 
     public function DemandeeAdhesion(DemandeAdhesionClubRequest $request){
         $user_id = $request->user_id;

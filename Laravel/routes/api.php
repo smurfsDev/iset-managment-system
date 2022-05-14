@@ -83,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/a', [ClubController::class, 'getDemandeAdhesion']);
         Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
+        Route::get('/getClub/{id}', [ClubController::class, 'getClub']);
     });
     // Route::apiResource('secrets', SecretsController::class);
     Route::get('/test', [DemandeCreationClubController::class, 'test']);
@@ -153,7 +154,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/demandeEvent'], function () {
         Route::get('/getAll', [DemandeEventController::class, 'getDemandesEvent']);
        // Route::get('/resp',[DemandeEventController::class,'index']);
-        //Route::get('/getOne/{id}', [DemandeEventController::class, 'getEvent']);
+       Route::get('/getApprouve', [DemandeEventController::class, 'getApprouvedEvent']);
+        Route::get('/getOne/{id}', [DemandeEventController::class, 'getEvent']);
         Route::post('/create', [DemandeEventController::class, 'createDemandeEvent']);
         Route::put('/update/{id}', [DemandeEventController::class, 'updateDemandeEvent']);
         Route::delete('/delete/{id}', [DemandeEventController::class, 'deleteDemandeEvent']);
@@ -178,7 +180,7 @@ Route::middleware('auth:sanctum')->group(function () {
         
         //Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/get', [DemandeAdhesionEventController::class, 'getDemandeAdhesion']);
-        Route::post('/create', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
+        Route::post('/create/{id}', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
         Route::put('/update/{id}', [DemandeAdhesionEventController::class, 'updateDemandeAdhesion']);
         Route::delete('/delete/{id}', [DemandeAdhesionEventController::class, 'deleteDemandeAdhesion']);
         //Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
