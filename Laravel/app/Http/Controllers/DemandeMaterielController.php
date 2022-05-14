@@ -81,5 +81,30 @@ class DemandeMaterielController extends Controller
             ], 404);
         }
     }
+    public function getAllDemande(Request $request){
+        $user = $request->user();
+        $DemandeMateriel =DemandeMateriel::where('idDestinataire',$user->id)->with('materiel')->with('responsableClub')->paginate(5);
+
+        if(!empty($DemandeMateriel)){
+        return response()->json($DemandeMateriel, 200);
+        }
+        else
+            return response()->json([
+                "aucune demande"
+            ], 404);
+    }
+    public function accept($id){
+        $DemandeMateriel = DemandeMateriel::find($id);
+        if ($DemandeMateriel) {
+            $DemandeMateriel->status = 1;
+            $DemandeMateriel->save();
+            return response()->json('ChefDepartement accepted',200);
+        } else {
+            return response()->json([
+                'type' => 'DemandeMateriel',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
 
 }
