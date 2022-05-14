@@ -83,7 +83,7 @@ export default {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/demandeEvent?page=" + meta.current_page,
+          "http://localhost:8000/api/demandeEvent/getAll?page=" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
@@ -94,7 +94,10 @@ export default {
       this.$http.get(url)
       .then((res)=> {
         this.demandes = res.data.data.data;
+        console.log(res);
+        console.log(this.demandes);
         this.show = false;
+        console.log(res.data.data);
         vm.makePagination(res.data.data);
       });
     },

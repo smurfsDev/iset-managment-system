@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\club;
 use App\Models\DemandeEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\DemandeEventRequest;
 
 class DemandeEventController extends Controller
 {
     public function show(){
-        $demandes = DemandeEvent::get();
+        //$demandes = DB::table('demande_events')->simplePaginate(5);
+        $demandes = DemandeEvent::paginate(5);
+        //$demandes = DemandeEvent::get();
+        //gettype($demandes);
         if(sizeof($demandes)>0){
         return response()->json(["data"=>$demandes], 200);
         }

@@ -45,16 +45,18 @@ export default {
   created() {
     document.title = "Demande";
     this.fetchDemandeEvent();
-    console.log(this.DemandeEvent)
+    
   },
   methods: {
     fetchDemandeEvent(page_url = "http://localhost:8000/api/demandeEvent/getAllEvents") {
       let vm = this;
       this.$http.get(page_url)
       .then((res) => {
-        this.DemandeEvent = res.data.data;
+          console.log(res)
+        this.DemandeEvent = res.data.data.data;
         this.show = false;
-        vm.makePagination(res.data);
+        console.log(res.data.data)
+        vm.makePagination(res.data.data);
       });
     },
     makePagination(meta) {
