@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\DemandeAdhesionEvent;
+use Illuminate\Database\Seeder;
+
 
 class DemandeAdhesionEventSeeder extends Seeder
 {

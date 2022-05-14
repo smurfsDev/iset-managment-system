@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DemandeAdhesionEvent extends Model
 {
+    use HasFactory;
     protected $table='demande_adhesion_events';
     protected $fillable = [
         "idStudent",
