@@ -119,5 +119,19 @@ class DemandeMaterielController extends Controller
             ], 404);
         }
     }
+    public function setResponse($id,Request $request){
+        $DemandeMateriel = DemandeMateriel::find($id);
+        if ($DemandeMateriel) {
+            $DemandeMateriel->reponse = $request->input('reponse');
+            $DemandeMateriel->save();
+            return response()->json('Reponse ajouter avec succès',200);;
+        } else {
+            return response()->json([
+                'type' => 'DemandeMateriel',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
+
 
 }
