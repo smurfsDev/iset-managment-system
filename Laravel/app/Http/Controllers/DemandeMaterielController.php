@@ -106,5 +106,18 @@ class DemandeMaterielController extends Controller
             ], 404);
         }
     }
+    public function refuse($id){
+        $DemandeMateriel = DemandeMateriel::find($id);
+        if ($DemandeMateriel) {
+            $DemandeMateriel->status = 2;
+            $DemandeMateriel->save();
+            return response()->json('ChefDepartement refused',200);;
+        } else {
+            return response()->json([
+                'type' => 'DemandeMateriel',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
 
 }
