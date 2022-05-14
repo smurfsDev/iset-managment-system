@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\DemandeAdhesionEvent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DemandeEvent extends Model
 {
@@ -24,5 +25,9 @@ class DemandeEvent extends Model
 
     public function administrateur(){
         return $this->belongsTo(User::class,'administrateurId');
+    }
+
+    public function demandeAdhesionEvent(){
+        return $this->hasMany('App\Models\DemandeAdhesionEvent','idEvent');
     }
 }

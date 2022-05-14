@@ -16,10 +16,10 @@ class DemandeAdhesionEvent extends Model
         "idEvent"
     ];
     public function student(){
-        return $this->belongsTo(User::class,'id');
+        return $this->belongsTo(User::class,'idStudent');
     }
     public function event(){
-        return $this->belongsTo(DemandeEvent::class,'id');
+        return $this->belongsTo(DemandeEvent::class,'idEvent');
     }
 
 }
