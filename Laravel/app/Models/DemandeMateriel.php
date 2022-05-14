@@ -31,6 +31,9 @@ class DemandeMateriel extends Model
     public function destinataire(){
         return $this->belongsTo(User::class,'idDestinataire','id');
     }
+    public function responsableClub(){
+        return $this->belongsTo(User::class,'idResponsableClub','id');
+    }
 
 
 }
