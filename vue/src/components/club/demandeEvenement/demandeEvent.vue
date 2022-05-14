@@ -33,16 +33,16 @@
 <script>
 import ajouterDemandeEvent from "./ajouterDemandeEvent.vue";
 import showDemande from "./show.vue";
-//import showDemande from "./showDemande.vue";
+
 export default {
   components: {
     ajouterDemandeEvent,
-    //showDemande,
+   
     showDemande,
   },
   data() {
     return {
-      // Salles: [],
+     
       demandes: [],
       pagination: {},
       demande: {},
@@ -58,7 +58,7 @@ export default {
   },
   created() {
     this.fetchDemandeEvent();
-    console.log(this.demandes);
+    
     if (this.$route.params.add == 1) {
       this.alert.variant = "success";
       this.alert.msg = "Evenement ajouté avec succès";
@@ -94,10 +94,9 @@ export default {
       this.$http.get(url)
       .then((res)=> {
         this.demandes = res.data.data.data;
-        console.log(res);
-        console.log(this.demandes);
+        
         this.show = false;
-        console.log(res.data.data);
+        
         vm.makePagination(res.data.data);
       });
     },
