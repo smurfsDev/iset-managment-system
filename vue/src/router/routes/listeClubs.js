@@ -5,7 +5,7 @@ const listeClubs = () =>
 
 export default [
   {
-    path: "/etudiant/listeClubs",
+    path: "/listeClubs",
     component: listeClubs,
     name: "listeClubs",
   },
