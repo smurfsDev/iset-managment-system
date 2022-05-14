@@ -10,6 +10,42 @@
       <h3>il y'a aucune demande</h3>
     </div>
     <b-card class="my-2" v-for="demande in demandes" :key="demande.id">
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'success',
+          title: 'Student accepted',
+          placement: 'topright',
+        }"
+        v-if="demande.status == 1"
+        icon="check-square"
+        scale="2"
+        variant="success"
+      ></b-icon>
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'danger',
+          title: 'Student not accepted',
+          placement: 'topright',
+        }"
+        v-if="demande.status == 2"
+        icon="x-square"
+        scale="2"
+        variant="danger"
+      ></b-icon>
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'warning',
+          title: 'Student pending',
+          placement: 'topright',
+        }"
+        v-if="demande.status == 0"
+        icon="x-square"
+        scale="2"
+        variant="warning"
+      ></b-icon>
       <md-tabs>
         <md-tab id="tab-home" md-label="demande">
           <div class="bv-example-row text-center">
@@ -25,7 +61,10 @@
                   {{ demande.dateDeRemise }}</b-col>
               </b-row>
             </b-row>
-
+            <b-row>
+              <strong>Reponse :</strong>
+              <b-col class="text-danger">{{demande.reponse}}</b-col>
+            </b-row>
             <b-row>
               Materiels :
               <b-row v-for="mat in demande.materiel" :key="mat.id">
@@ -80,11 +119,11 @@
                 </div>
               </b-row>
             </b-row>
-
-            <b-button @click="ajouterMateriel(demande.id, demande.idCategorie)" variant="success">Ajouter materiels
+            
+            <b-button :class="[{ disabled: demande.status != 0 }]" @click="ajouterMateriel(demande.id, demande.idCategorie)" variant="success">Ajouter materiels
             </b-button>
             <b-button variant="danger" v-on:click="Delete(demande.id)">Delete</b-button>
-            <b-button variant="warning" v-on:click="Update(demande)">Update</b-button>
+            <b-button :class="[{ disabled: demande.status != 0 }]" variant="warning" v-on:click="Update(demande)">Update</b-button>
           </div>
         </md-tab>
       </md-tabs>
@@ -144,11 +183,9 @@ export default {
     Matt(value) {
       this.Mat = value;
     },
-
     attachMateriel(idMateriel, idDemande) {
       this.$emit('attachMateriel', idMateriel, idDemande);
     },
-
     addMateriels(value) {
       this.add = value;
       if (this.add == true) {
@@ -160,6 +197,7 @@ export default {
       this.Mat = [];
     },
     initModal() {
+      this.Mat = [];
       this.demande = {};
       this.showModal("MaterielModal");
     },
@@ -176,6 +214,12 @@ export default {
       this.fetchMateriels();
       this.showModal("MaterielModal");
       console.log(this.Mat);
+      var V =document.querySelectorAll('input[type=checkbox]');
+      for(var i=0;i<V.length;i++){
+        console.log(V[i]);
+        V[i].checked = false;
+      }
+
     },
     fetchDemande(url) {
       this.$emit("fetchDemande", url);
