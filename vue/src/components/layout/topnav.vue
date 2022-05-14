@@ -100,7 +100,7 @@
                     ]
                 },
                 {
-                    href: '/etudiant/listeClubs',
+                    href: '/listeClubs',
                     title: 'Clubs',
                     icon: 'fas fa-building',
                     child: [
@@ -132,6 +132,18 @@
                             title: 'Demande materiel',
                             icon: 'fa fa-file',
                             hidden: !this.isStudent && !this.isResponsableClub,
+                        }, 
+                        {
+                            href: 'MesDemandesMateriel',
+                            title: 'Demande materiel',
+                            icon: 'fa fa-file',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
+                        }, 
+                        {
+                            href: 'MesDemandesSalles',
+                            title: 'Demande Salle',
+                            icon: 'fa fa-file',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
                         }
                     ]
                 }
