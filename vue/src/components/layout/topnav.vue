@@ -58,12 +58,7 @@
                     icon: 'fas fa-plus',
                     hidden: !this.isStudent
                 },
-                {
-                    href: '/admin/demandeCreationClub',
-                    title: 'Demande creation club',
-                    icon: 'fas fa-building',
-                    hidden: !this.isAdmin
-                },
+                
                 {
                     href: '/admin/manageChefDepartments',
                     title: 'chefDepartements',
@@ -105,12 +100,12 @@
                     icon: 'fas fa-building',
                     child: [
                         {
-                            href: '/etudiant/demandeAdhesionClub',
+                            href: '/demandeAdhesionClub',
                             title: 'Mes Demandes d\'adhesion',
                             hidden: !this.isStudent
                         },
                         {
-                            href: '/club/demandeAdhesionResponsable',
+                            href: '/demandeAdhesionResponsable',
                             title: 'Demandes d\'adhesion',
                             hidden: !this.isStudent
                         }
@@ -120,7 +115,12 @@
                     title: 'Demandes',
                     icon: 'fa fa-file',
                     child: [
-        
+                        {
+                            href: '/admin/demandeCreationClub',
+                            title: 'Demande creation club',
+                            icon: 'fas fa-building',
+                            hidden: !this.isAdmin
+                        },
                         {
                             href: 'demandeSalle',
                             title: 'Demande salle',
@@ -132,7 +132,19 @@
                             title: 'Demande materiel',
                             icon: 'fa fa-file',
                             hidden: !this.isStudent && !this.isResponsableClub,
-                        }, 
+                        },
+                        {
+                            href: 'demandeEvent',
+                            title: 'Plannification évenement',
+                            icon: 'fas fa-file',
+                            hidden: !this.isResponsableClub
+                        },
+                        {
+                            href: '/admin/demandePlannificationEvent',
+                            title: 'Demande plannification des évenements',
+                            icon: 'fas fa-file',
+                            hidden: !this.isAdmin
+                        },
                         {
                             href: 'MesDemandesMateriel',
                             title: 'Demande materiel',
@@ -144,7 +156,8 @@
                             title: 'Demande Salle',
                             icon: 'fa fa-file',
                             hidden: !this.isAdmin && !this.isChefDepartement,
-                        }
+                        },
+
                     ]
                 }
         
