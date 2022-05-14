@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\club;
+use App\Models\User;
 use App\Models\DemandeEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,11 @@ use App\Http\Requests\DemandeEventRequest;
 
 class DemandeEventController extends Controller
 {
+    public function index(Request $request){
+        
+        
+        return $request->user()->DemandeEventResponsable()->get();
+    }
     public function show(){
         //$demandes = DB::table('demande_events')->simplePaginate(5);
         $demandes = DemandeEvent::paginate(5);
@@ -26,7 +32,7 @@ class DemandeEventController extends Controller
 
     public function getDemandesEvent(Request $request)
     {
-        //$Demandes = DemandeEvent::with('materiel')->where('id', '=', $id)->get();
+        
         $idResponsable = $request->user()->id; 
        // dd($idResponsable);
         $club = club::where('responsableClub', '=', $idResponsable)->first();
@@ -43,6 +49,7 @@ class DemandeEventController extends Controller
             return response()->json([
                 "aucun évenement"
             ], 404);
+           
     }
  
     public function createDemandeEvent(DemandeEventRequest $request){

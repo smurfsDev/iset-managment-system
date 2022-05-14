@@ -19,10 +19,10 @@ class DemandeEvent extends Model
         "status"
     ];
     public function responsableClub(){
-        return $this->belongsTo(User::class,'id');
+        return $this->belongsTo(User::class,'responsableClubId');
     }
 
     public function administrateur(){
-        return $this->belongsTo(User::class,'id');
+        return $this->belongsTo(User::class,'administrateurId');
     }
 }

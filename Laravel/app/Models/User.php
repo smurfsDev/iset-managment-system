@@ -64,8 +64,14 @@ class User extends Authenticatable
     public function DemandeMateriel(){
         return $this->HasMany('App\Models\DemandeMateriel', 'idResponsableClub');
     }
-    public function DemandeEvent(){
-        return $this->HasMany('App\Models\DemandeEvent', 'idResponsableClub');
+    public function DemandeEventResponsable(){
+        return $this->HasMany('App\Models\DemandeEvent', 'responsableClubId');
+    }
+    public function DemandeEventAdmin(){
+        return $this->HasMany('App\Models\DemandeEvent', 'administrateurId');
+    }
+    public function DemandeAdhesionEvent(){
+        return $this->HasMany('App\Models\DemandeAdhesionEvent', 'idStudent');
     }
 
 
