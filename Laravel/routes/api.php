@@ -5,32 +5,33 @@ use App\Models\DemandeEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SalleController;
+use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\MaterielController;
 
+use App\Http\Controllers\MaterielController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\club\ClubController;
 use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\DepartementController;
+
 use App\Http\Controllers\DemandeEventController;
 use App\Http\Controllers\DemandeSalleController;
-
+use App\Http\Controllers\ChefDepartmentController;
 use App\Http\Controllers\DemandeMaterielController;
 use App\Http\Controllers\CategorieMaterielController;
 use App\Http\Controllers\club\pageClub\AboutController;
 use App\Http\Controllers\club\pageClub\BoardController;
 use App\Http\Controllers\DemandeCreationClubController;
+
+use App\Http\Controllers\DemandeAdhesionEventController;
+
+
+
+
+
 use App\Http\Controllers\club\pageClub\HeadersController;
 use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
-
-use App\Http\Controllers\ChefDepartmentController;
-
-
-
-
-
-use App\Http\Controllers\ClasseController;
-use App\Http\Controllers\StudentsController;
 
 
 /*
@@ -171,6 +172,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [ClasseController::class, 'createClasse']);
         Route::delete('/{id}', [ClasseController::class, 'deleteClass']);
         Route::put('/{id}', [ClasseController::class, 'updateClass']);
+    });
+    // demande adhesion event routes
+    Route::group(['prefix' => '/demandeAdhesionEvent'], function () {
+        
+        //Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
+        Route::get('/get', [DemandeAdhesionEventController::class, 'getDemandeAdhesion']);
+        Route::post('/create', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
+        Route::put('/update/{id}', [DemandeAdhesionEventController::class, 'updateDemandeAdhesion']);
+        Route::delete('/delete/{id}', [DemandeAdhesionEventController::class, 'deleteDemandeAdhesion']);
+        //Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
 
 });
