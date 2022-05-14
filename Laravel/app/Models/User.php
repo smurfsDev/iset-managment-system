@@ -64,6 +64,10 @@ class User extends Authenticatable
     public function DemandeMateriel(){
         return $this->HasMany('App\Models\DemandeMateriel', 'idResponsableClub');
     }
+    // public function DemandeEvent(){
+    //     return $this->HasMany('App\Models\DemandeEvent', 'idResponsableClub');
+    // }
+
 
 
 }
