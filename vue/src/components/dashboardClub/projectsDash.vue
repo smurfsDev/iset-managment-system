@@ -108,7 +108,7 @@ export default {
       id: null,
       affiche: "",
       srcImage: "",
-      ajout: false,
+      ajout: true,
       update: false,
       projects:[],
      
