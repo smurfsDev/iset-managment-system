@@ -21,7 +21,7 @@
             @dismissed="alert.dismissCountDown = 0">
             <p>{{ alert.msg }}</p>
           </b-alert>
-          <showDemande :demandes="demandes" :pagination="pagination" @fetchDemande="fetchDemandeEvent"
+          <showDemande  :demandes="demandes" :pagination="pagination" @fetchDemande="fetchDemandeEvent"
             @updateDemande="Update" @deleteDemande="Delete" /> 
         </div>
       </div>

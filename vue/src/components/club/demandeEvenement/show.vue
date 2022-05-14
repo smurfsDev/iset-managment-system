@@ -20,6 +20,30 @@
         scale="2"
         variant="warning"
       ></b-icon>
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'success',
+          title: 'Demande accepted',
+          placement: 'topright',
+        }"
+        v-if="demande.status == 1"
+        icon="check-square"
+        scale="2"
+        variant="success"
+      ></b-icon>
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'danger',
+          title: 'Demande rejected',
+          placement: 'topright',
+        }"
+        v-if="demande.status == 2"
+        icon="x-square"
+        scale="2"
+        variant="danger"
+      ></b-icon>
       <md-tabs style="height: auto;!important">
         <md-tab
           style="height: auto;!important"
@@ -40,8 +64,8 @@
               </b-row>
               <b-row>
                 <b-col>
-                    <b-button variant="danger" v-on:click="Delete(demande.id)">Delete</b-button>
-                    <b-button variant="warning" v-on:click="Update(demande)">Update</b-button>
+                    <b-button variant="danger" v-on:click="Delete(demande.id)" :class="[demande.status != 0 ? 'disabled' : '']">Delete</b-button>
+                    <b-button variant="warning" v-on:click="Update(demande)" :class="[demande.status != 0 ? 'disabled' : '']">Update</b-button>
                 </b-col>
               </b-row>
              
