@@ -13,7 +13,10 @@ class ClubController extends Controller
 {
 
     public function show(){
-        $Clubs = club::paginate(5);
+        // return club with demandeCreationClub where demandeCreationClub's status=1
+        $Clubs = club::whereHas('demandeCreationClub', function($query){
+            $query->where('status', 1);
+        })->with('demandeCreationClub')->paginate(5);
         if (empty($Clubs)) {
             return response()->json(['message' => 'No clubs found'], 404);
         }else{
