@@ -51,6 +51,7 @@ class DemandeCreationClubController extends BaseController
             $dccs = DemandeCreationClub::orderBy('created_at', 'desc')
                 ->where('adminId', '=', null)
                 ->where('status', '=', '0')
+                ->where('status', '<>', '3')
                 ->orWhere('adminId', '=', $request->user()->id)
                 ->paginate(5);
             if (empty($dccs)) {
@@ -58,7 +59,11 @@ class DemandeCreationClubController extends BaseController
             }
             return response()->json($dccs, 200);
         } else {
-            $dccs = $request->user()->demandeCreationClubs()->orderBy('updated_at', 'desc')->paginate(5);
+            $dccs = $request->user()
+                ->demandeCreationClubs()
+                ->where('status', '<>', '3')
+                ->orderBy('updated_at', 'desc')
+                ->paginate(5);
             if (empty($dccs)) {
                 return response()->json(['message' => 'No demande creation club found'], 404);
             }
@@ -68,7 +73,7 @@ class DemandeCreationClubController extends BaseController
     public function showMyDemandes($id)
     {
         if ($id == "admin") {
-            $demandes = DemandeCreationClub::orderBy('updated_at', 'desc')->paginate(5);
+            $demandes = DemandeCreationClub::where('status','<>',3)->orderBy('updated_at', 'desc')->paginate(5);
             if (sizeof($demandes) > 0)
                 return response()->json(
                     $demandes,
@@ -77,7 +82,7 @@ class DemandeCreationClubController extends BaseController
             else
                 return response()->json([], 404);
         } else {
-            $demandes = DemandeCreationClub::where('responsableClubId', '=', $id)->orderBy('updated_at', 'desc')->paginate(5);
+            $demandes = DemandeCreationClub::where('status','<>',3)->where('responsableClubId', '=', $id)->orderBy('updated_at', 'desc')->paginate(5);
             if (sizeof($demandes) > 0)
                 return response()->json(
                     $demandes,
@@ -168,7 +173,9 @@ class DemandeCreationClubController extends BaseController
         $user = User::find($dcc->responsableClubId);
         $adminId = $request->user()->id;
 
-        $clubs = club::where('responsableClub', '=', $user->id)->count();
+        $clubs = club::where('responsableClub', '=', $user->id)->whereHas('demandeCreationClub',function($query){
+            $query->where('status','=',1);
+        })->count();
         if ($clubs == 0) {
             if (isset($adminId)) {
                 if (!$dcc) {
@@ -192,6 +199,8 @@ class DemandeCreationClubController extends BaseController
                 return response()->json("Admin id required", 400);
             }
         } else {
+            $dcc->status=3;
+            $dcc->save();
             return $this->sendError('Error validation', ['error' => "Student already have a club the request will be deleted"]);
             // TODO: DELETE REQUEST
 
