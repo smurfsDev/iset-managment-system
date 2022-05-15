@@ -50,6 +50,9 @@ export default {
         this.Technicien = res.data.data;
         this.show = false;
         vm.makePagination(res.data);
+      })
+      .finally(() => {
+        this.show = false;
       });
     },
     makePagination(meta) {
