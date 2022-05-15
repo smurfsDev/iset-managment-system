@@ -25,6 +25,7 @@ import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+import mesDemandesSalle from "./routes/mesDemandesSalles";
 Vue.use(VueRouter);
 
 const routes = [
@@ -63,7 +64,8 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...mesDemandesMateriel
+  ...mesDemandesMateriel,
+  ...mesDemandesSalle
 ];
 
 const router = new VueRouter({
