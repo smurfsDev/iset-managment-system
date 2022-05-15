@@ -28,7 +28,12 @@ import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
+
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+
+import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
+import listeEvents from "./routes/listeEvents";
+import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
 
 Vue.use(VueRouter);
 
@@ -69,8 +74,14 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...demandeEvenementAdmin
-  ...mesDemandesMateriel
+
+  ...demandeEvenementAdmin,
+  ...mesDemandesMateriel,
+    ...demandeEvenementAdmin,
+  ...demandeAdhesionEvent,
+  ...listeEvents,
+  ...demandeAdhesionEventForm
+
 
 ];
 
