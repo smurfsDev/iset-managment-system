@@ -31,7 +31,7 @@ use App\Http\Controllers\ChefDepartmentController;
 
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\StudentsController;
-
+use App\Http\Controllers\TechnicienController;
 
 /*
 |--------------------------------------------------------------------------
@@ -163,9 +163,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/decline/{id}', [DemandeEventController::class, 'decline']);
         Route::get('/getAllEvents', [DemandeEventController::class, 'show']);
     });
-    
 
-    
+
+
 
     // classes routes
 
@@ -175,6 +175,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [ClasseController::class, 'deleteClass']);
         Route::put('/{id}', [ClasseController::class, 'updateClass']);
     });
+
+    Route::group(['prefix' => '/technicien'], function () {
+        Route::get('/', [TechnicienController::class, 'show']);
+        Route::post('/accept/{id}', [TechnicienController::class, 'accept']);
+        Route::post('/refuse/{id}', [TechnicienController::class, 'refuse']);
+    });
+
 
 });
 
