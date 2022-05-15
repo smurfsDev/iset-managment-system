@@ -28,6 +28,9 @@ import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
+
+import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+
 import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
 import listeEvents from "./routes/listeEvents";
 import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
@@ -71,10 +74,14 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...demandeEvenementAdmin,
+
+  ...demandeEvenementAdmin
+  ...mesDemandesMateriel,
+    ...demandeEvenementAdmin,
   ...demandeAdhesionEvent,
   ...listeEvents,
   ...demandeAdhesionEventForm
+
 
 ];
 
@@ -116,7 +123,13 @@ router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    next({ name: "login", params: { msg: "You must be student or a responsableClub" } });
+    next({ name: "login", params: { msg: "You must be student or a responsableClub"  } });
+  }else if (to.matched.some((record) => record.meta.requiresAorC)) {
+    if (store.getters.isAdmin || store.getters.isChefDepartement) {
+      next();
+      return;
+    } 
+    next({ name: "login", params: { msg: "You must be an Admin or a ChefDepartement" } });
   } else if (to.matched.some((record) => record.meta.requiresAdmin)) {
     if (store.getters.isAdmin) {
       next();

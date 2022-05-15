@@ -64,7 +64,12 @@ class User extends Authenticatable
     public function DemandeMateriel(){
         return $this->HasMany('App\Models\DemandeMateriel', 'idResponsableClub');
     }
-    public function DemandeEventResponsable(){
+
+    Public function materiel(){
+        return $this->hasMany('App\Models\Materiel', 'idResponsable');
+
+    }
+  public function DemandeEventResponsable(){
         return $this->HasMany('App\Models\DemandeEvent', 'responsableClubId');
     }
     public function DemandeEventAdmin(){
@@ -73,7 +78,6 @@ class User extends Authenticatable
     
     public function DemandeAdhesionEventStudent(){
         return $this->HasMany('App\Models\DemandeAdhesionEvent', 'idStudent');
-    }
 
 
 

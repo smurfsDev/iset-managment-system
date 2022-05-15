@@ -8,10 +8,9 @@
                 <md-tab id="tab-home" style="height: auto;!important" md-label="club">
                     <div class="bv-example-row text-center">
                         <b-row class="mb-2">
-                            <b-row>
-                                <router-link :to="{name: 'blogClub', params: {id: club.id}}">page</router-link>                                
+                            <b-row>                                
                                 <b-col>
-                                    Nom du club : {{ club.nomClub }} Date création :
+                                    Nom du club : <router-link :to="{name: 'blogClub', params: {id: club.id}}">{{ club.nom }}</router-link> <br>Date création :
                                     {{ club.dateCreation }}
                                 </b-col>
                             </b-row>
@@ -20,10 +19,10 @@
                             </b-row>
                             <b-row>
                                 <b-col>
-                                    President : {{ club.president }} Vice president :
+                                    President : {{ club.president }}<br> Vice president :
                                     {{ club.vicePresident }}
                                     <br />
-                                    <img :src="club.logo" alt="logo" width="250" />
+                                    <!-- <img :src="club.logo" alt="logo" width="250" /> -->
                                 </b-col>
                             </b-row>
                         </b-row>

@@ -100,10 +100,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix' => '/dm'], function () {
         Route::get('/', [DemandeMaterielController::class, 'show']);
-        // Route::get('/{id}',[DemandeMaterielController::class,'showMyDemandes']);
         Route::post('/', [DemandeMaterielController::class, 'create']);
         Route::put('/{id}', [DemandeMaterielController::class, 'update']);
         Route::delete('/{id}', [DemandeMaterielController::class, 'delete']);
+        Route::get('/MesDemandes', [DemandeMaterielController::class, 'getAllDemande']);
+        Route::post('/accept/{id}', [DemandeMaterielController::class, 'accept']);
+        Route::post('/refuse/{id}', [DemandeMaterielController::class, 'refuse']);
+        Route::put('/reponse/{id}', [DemandeMaterielController::class, 'setResponse']);
+
     });
 
     // about routes
@@ -197,7 +201,8 @@ Route::group(['prefix' => '/pc'], function () {
     Route::get('/about/{id}', [AboutController::class, 'show']);
     Route::get('/fondator/{id}', [AboutController::class, 'getFondator']);
 });
-
+//materiel Controllers
+Route::get('/responsablesMatt', [MaterielController::class, 'getAllResponsableMateriel']);
 Route::group(['prefix' => '/m'], function () {
     Route::get('/M/{id}', [MaterielController::class, 'show']);
     Route::get('/{id}', [MaterielController::class, 'showMaterialsOfCategory']);
