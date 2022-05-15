@@ -47,9 +47,12 @@ public class DemandeMaterielController {
 	@RequestParam(name = "size", defaultValue = "2") int size) {
         modelMap.addAttribute("Dmm", new DemandeMateriel());
         modelMap.addAttribute("edit", false);
+       
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
         System.out.println(listCategorieMateriel);
         modelMap.addAttribute("CM", listCategorieMateriel);
+       
+            System.out.println(listCategorieMateriel);
         List<User> listUser = UserServise.getAllUser();
         modelMap.addAttribute("Users", listUser);
 
@@ -93,7 +96,10 @@ public class DemandeMaterielController {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dmm", bindingResult);
             modelMap.addAttribute("Dmm", Dmm);
             List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
+
+            System.out.println(listCategorieMateriel);
             modelMap.addAttribute("CM", listCategorieMateriel);
+
             List<User> listUser = UserServise.getAllUser();
             modelMap.addAttribute("Users", listUser);
 

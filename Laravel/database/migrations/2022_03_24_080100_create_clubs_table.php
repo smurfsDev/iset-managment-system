@@ -22,8 +22,10 @@ class CreateClubsTable extends Migration
             $table->foreign('responsableClub')
                 ->references('id')
                 ->on('users')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+                ->onDelete('cascade')
+                ->onUpdate('cascade')
+                ->unique('responsableClub');
+                
             $table->string('president');
             $table->string('vicePresident'); 
             $table->timestamps();
