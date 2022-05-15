@@ -18,6 +18,7 @@
                 <label for="role">Role</label>
                 <select required class="form-control" id="role" v-model="form.role">
                     <option value="2">Etudiant</option>
+                    <option value="6">Technicien</option>
                     <option value="5">Chef departement</option>
                 </select>
             </div>
