@@ -84,6 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [DemandeSalleController::class, 'store']);
         Route::put('/{id}', [DemandeSalleController::class, 'update']);
         Route::delete('/{id}', [DemandeSalleController::class, 'destroy']);
+        Route::get('/mesDemandeSalle', [DemandeSalleController::class, 'demandeSalleUser']);
     });
     // demande materiel routes
 
