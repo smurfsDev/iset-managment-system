@@ -29,6 +29,7 @@ import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+import manageTechnicien from "./routes/manageTechnicien";
 
 Vue.use(VueRouter);
 
@@ -69,8 +70,9 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...demandeEvenementAdmin
-  ...mesDemandesMateriel
+  ...demandeEvenementAdmin,
+  ...mesDemandesMateriel,
+  ...manageTechnicien
 
 ];
 
