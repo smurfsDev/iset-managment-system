@@ -1,6 +1,6 @@
 <template>
   <div>
-    <formDemande @addDemande="addDemande" :oldDemande="demande" />
+    <formDemande :edit="edit" :err="err" @fetchDemandeCreationClub="fetchDemandeCreationClub"  :oldDemande="demande" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
@@ -10,7 +10,6 @@
               <b-col cols="8">
                 <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
                   @click="initModal()" data-bs-target="#demandeModal"
-                  :class="haveClub ? 'disabled' : ''"
                   >
                   Nouvelle demande
                 </button>
@@ -57,7 +56,8 @@ export default {
         variant: "",
         msg: "",
       },
-      myid: 1,
+      err:'',
+
     };
   },
   created() {
@@ -80,13 +80,19 @@ export default {
   },
   methods: {
     fetchDemandeCreationClub(
-      page_url = "http://127.0.0.1:8000/api/dcc/"
+      page_url = "http://127.0.0.1:8000/api/dcc/",alert={
+        dismissCountDown: 0,
+        variant: "",
+        msg: "",
+      },
     ) {
       let vm = this;
       this.$http.get(page_url)
       .then((res)=> {
         this.DemandeCreationClub = res.data.data;
         this.show = false;
+        this.edit=false;
+        this.alert=alert
         vm.makePagination(res.data);
       });
     },
@@ -115,43 +121,7 @@ export default {
     resetModal1() {
       this.document = {};
     },
-    addDemande(demande) {
-      
-      this.show = true;
-      if (!this.edit) {
-       this.$http.post('http://localhost:8000/api/dcc',
-        (demande))
-        .then((data) => {
-          data = data.data;
-          if (data.success == false) {
-              this.alert.variant = "danger";
-              let err = "";
-              for (const property in data.data) {
-                err += data.data[property] + "\n\n";
-              }
-              console.log(err);
-              this.alert.msg = `
-                            ${err}`;
-              this.alert.dismissCountDown = 5;
-            } else {
-              this.alert.variant = "success";
-              this.alert.msg = "demande ajouté avec succès";
-              this.alert.dismissCountDown = 5;
-            }
-            this.fetchDemandeCreationClub();
-        });
-      } else {
-        this.$http.put("http://localhost:8000/api/dcc/" + demande.id,
-        (demande))
-        .then(() => {
-          this.fetchDemandeCreationClub();
-            this.edit = false;
-            this.alert.variant = "warning";
-            this.alert.msg = "demande modifié avec succès";
-            this.alert.dismissCountDown = 5;
-        });
-      }
-    },
+  
     updateDemande(demande) {
       this.edit = true;
       this.demande = demande;
