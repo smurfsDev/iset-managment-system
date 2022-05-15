@@ -115,6 +115,7 @@
                     //href: '/listeEvents',
                     title: 'Evenements',
                     icon: 'fas fa-building',
+                    hidden: !this.isStudent,
                     child: [
                         
                         {
@@ -159,7 +160,7 @@
                         },
                         {
                             href: '/admin/demandePlannificationEvent',
-                            title: 'Demande plannification des évenements',
+                            title: 'Demande évenement',
                             icon: 'fas fa-file',
                             hidden: !this.isAdmin
                         },
