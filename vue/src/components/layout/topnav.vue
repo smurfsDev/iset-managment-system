@@ -112,6 +112,24 @@
                     ]
                 },
                 {
+                    //href: '/listeEvents',
+                    title: 'Evenements',
+                    icon: 'fas fa-building',
+                    child: [
+                        
+                        {
+                            href: '/listeEvents',
+                            title: 'Liste des évenements',
+                            hidden: !this.isStudent
+                        },
+                        {
+                            href: '/demandeAdhesionEvent',
+                            title: 'Mes Demandes d\'adhesion',
+                            hidden: !this.isStudent
+                        }
+                    ]
+                },
+                {
                     title: 'Demandes',
                     icon: 'fa fa-file',
                     child: [

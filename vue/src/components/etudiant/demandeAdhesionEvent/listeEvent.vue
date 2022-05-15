@@ -112,8 +112,7 @@ export default {
             };
         },
         demandeAdhesion(id,nomEvent,nomClub,dateEvent){
-            console.log(this.events);
-            confirm("Voulez-vous vraiment vous inscrire à l'évenement " + nomEvent + " ?");
+            
             this.$router.push({
                 name: 'demandeAdhesionEventForm',
                 params: {
