@@ -14,6 +14,26 @@ class DepartementSeeder extends Seeder
      */
     public function run()
     {
-        Departement::factory(5)->create();
+        Departement::create([
+            'titre' => "Département Technologies de l'Informatique",
+            "chef_departement_id" => 1,
+
+        ]);
+        Departement::create([
+            'titre' => "Département Génie Electrique",
+            "chef_departement_id" => 2,
+        ]);
+        Departement::create([
+            'titre' => "Département Génie Mécanique",
+            "chef_departement_id" => 3,
+        ]);
+        Departement::create([
+            'titre' => "Département Administration d'affaire",
+            "chef_departement_id" => 4,
+        ]);
+        Departement::create([
+            'titre' => "Département Génie des procédés",
+            "chef_departement_id" => 5,
+        ]);
     }
 }

@@ -14,7 +14,14 @@ class SalleSeeder extends Seeder
      */
     public function run()
     {
-        Salle::factory(10)->create();
-
+        $Dep = ["I","E","M","GE","P"];
+        for ($j = 0; $j <= 1; $j++) {
+            for ($i = 0; $i < 10; $i++) {
+                Salle::create([
+                    'titre' => "Salle $Dep[$j]$i",
+                    'departement_id' => $j+1,
+                ]);
+            }
+        }
     }
 }
