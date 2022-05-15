@@ -121,42 +121,7 @@ export default {
           });
       }
     },
-    // addDemande(demande) {
-    //   this.show = true;
-    //   if (!this.edit) {
-    //     this.$http.post("http://localhost:8000/api/demandeEvent/create",
-    //     (demande))
-    //     .then((data) => {
-    //       data = data.data;
-    //       if (data.success == false) {
-    //           this.alert.variant = "danger";
-    //           let err = "";
-    //           for (const property in data.data) {
-    //             err += data.data[property] + "\n\n";
-    //           }
-    //           console.log(err);
-    //           this.alert.msg = `
-    //                         ${err}`;
-    //           this.alert.dismissCountDown = 5;
-    //         } else {
-    //           this.alert.variant = "success";
-    //           this.alert.msg = "Demande ajouté avec succès";
-    //           this.alert.dismissCountDown = 5;
-    //         }
-    //         this.fetchDemandeEvent();
-    //     });
-    //   } else {
-    //     this.$http.put("http://localhost:8000/api/demandeEvent/update/" + demande.id,
-    //     (demande))
-    //     .then(() => {
-    //       this.fetchDemandeEvent();
-    //         this.edit = false;
-    //         this.alert.variant = "warning";
-    //         this.alert.msg = "demande modifié avec succès";
-    //         this.alert.dismissCountDown = 5;
-    //     });
-    //   }
-    // },
+    
     Update(demande) {
       this.edit = true;
       this.demande = demande;

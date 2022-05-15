@@ -101,35 +101,31 @@ export default {
   },
   methods: {
      
-    // addDemande() {
-    //   this.$emit("addDemande", this.oldDemande);
-    //   this.resetModal1();
-    //   this.hideModal("demandeEventModal");
-    // },
+    
      fetchDemandeEvent() {
       this.$emit(
         "fetchDemandeEvent",
         "http://localhost:8000/api/demandeEvent/getAll",
         this.alert
       )
-      console.log(this.alert)
+     
       },
     addDemande(demande) {
       this.show = true;
-      console.log(demande)
+      
       if (!this.edit) {
         this.$http.post("http://localhost:8000/api/demandeEvent/create",
         (demande))
         .then((data) => {
           data = data.data;
-          console.log(data)
+          
           if (data.success == false) {
               this.alert.variant = "danger";
               let err = "";
               for (const property in data.data) {
                 err += data.data[property] + "\n\n";
               }
-              console.log(err);
+             
               this.alert.msg = `
                             ${err}`;
               this.alert.dismissCountDown = 5;
@@ -145,13 +141,9 @@ export default {
         this.$http.put("http://localhost:8000/api/demandeEvent/update/" + demande.id,
         (demande))
         .then((data) => {
-          // this.fetchDemandeEvent();
-          //   this.edit = false;
-          //   this.alert.variant = "warning";
-          //   this.alert.msg = "demande modifié avec succès";
-          //   this.alert.dismissCountDown = 5;
+         
           data = data.data;
-          console.log(data)
+         
           
           if (data.success == false) {
               this.alert.variant = "danger";
@@ -159,7 +151,7 @@ export default {
               for (const property in data.data) {
                 err += data.data[property] + "\n\n";
               }
-              console.log(err);
+              
               this.alert.msg = `
                             ${err}`;
               this.alert.dismissCountDown = 5;

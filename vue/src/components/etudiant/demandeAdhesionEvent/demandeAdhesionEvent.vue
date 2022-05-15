@@ -83,7 +83,7 @@ export default {
             key: "status",
             title: "Status",
 
-          }
+          },
         ]
       };
     }
