@@ -1,7 +1,7 @@
 <template>
   <div class="w-100">
     
-    <ajouterDemandeEvent @addDemande="addDemande" :oldDemande="demande" />
+    <ajouterDemandeEvent @fetchDemandeEvent="fetchDemandeEvent" :edit="edit" :oldDemande="demande" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
@@ -54,6 +54,7 @@ export default {
       edit: false,
       search: "",
       show: true,
+      err: "",
     };
   },
   created() {
@@ -89,14 +90,19 @@ export default {
         prev_page_url: meta.prev_page_url,
       };
     },
-    fetchDemandeEvent(url = "http://localhost:8000/api/demandeEvent/getAll") {
+    fetchDemandeEvent(url = "http://localhost:8000/api/demandeEvent/getAll",alert={
+        dismissCountDown: 0,
+        variant: "",
+        msg: "",
+      }) {
       let vm = this;
       this.$http.get(url)
       .then((res)=> {
         this.demandes = res.data.data.data;
         
         this.show = false;
-        
+        this.alert = alert;
+        this.edit = false;
         vm.makePagination(res.data.data);
       })
       .catch(()=> {
@@ -115,42 +121,42 @@ export default {
           });
       }
     },
-    addDemande(demande) {
-      this.show = true;
-      if (!this.edit) {
-        this.$http.post("http://localhost:8000/api/demandeEvent/create",
-        (demande))
-        .then((data) => {
-          data = data.data;
-          if (data.success == false) {
-              this.alert.variant = "danger";
-              let err = "";
-              for (const property in data.data) {
-                err += data.data[property] + "\n\n";
-              }
-              console.log(err);
-              this.alert.msg = `
-                            ${err}`;
-              this.alert.dismissCountDown = 5;
-            } else {
-              this.alert.variant = "success";
-              this.alert.msg = "Demande ajouté avec succès";
-              this.alert.dismissCountDown = 5;
-            }
-            this.fetchDemandeEvent();
-        });
-      } else {
-        this.$http.put("http://localhost:8000/api/demandeEvent/update/" + demande.id,
-        (demande))
-        .then(() => {
-          this.fetchDemandeEvent();
-            this.edit = false;
-            this.alert.variant = "warning";
-            this.alert.msg = "demande modifié avec succès";
-            this.alert.dismissCountDown = 5;
-        });
-      }
-    },
+    // addDemande(demande) {
+    //   this.show = true;
+    //   if (!this.edit) {
+    //     this.$http.post("http://localhost:8000/api/demandeEvent/create",
+    //     (demande))
+    //     .then((data) => {
+    //       data = data.data;
+    //       if (data.success == false) {
+    //           this.alert.variant = "danger";
+    //           let err = "";
+    //           for (const property in data.data) {
+    //             err += data.data[property] + "\n\n";
+    //           }
+    //           console.log(err);
+    //           this.alert.msg = `
+    //                         ${err}`;
+    //           this.alert.dismissCountDown = 5;
+    //         } else {
+    //           this.alert.variant = "success";
+    //           this.alert.msg = "Demande ajouté avec succès";
+    //           this.alert.dismissCountDown = 5;
+    //         }
+    //         this.fetchDemandeEvent();
+    //     });
+    //   } else {
+    //     this.$http.put("http://localhost:8000/api/demandeEvent/update/" + demande.id,
+    //     (demande))
+    //     .then(() => {
+    //       this.fetchDemandeEvent();
+    //         this.edit = false;
+    //         this.alert.variant = "warning";
+    //         this.alert.msg = "demande modifié avec succès";
+    //         this.alert.dismissCountDown = 5;
+    //     });
+    //   }
+    // },
     Update(demande) {
       this.edit = true;
       this.demande = demande;
