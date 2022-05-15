@@ -9,7 +9,9 @@
             <b-row class="text-center">
               <b-col cols="8">
                 <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
-                  @click="initModal()" data-bs-target="#demandeModal">
+                  @click="initModal()" data-bs-target="#demandeModal"
+                  :class="haveClub ? 'disabled' : ''"
+                  >
                   Nouvelle demande
                 </button>
               </b-col>
@@ -161,6 +163,14 @@ export default {
     initModal() {
       this.demande = {};
       this.showModal("demandeModal");
+    },
+  },
+  computed: {
+    haveClub() {
+      // check if at least one DemandeCreationClub have status 1
+      return this.DemandeCreationClub.some((DemandeCreationClub) => {
+        return DemandeCreationClub.status == 1;
+      });
     },
   },
 };
