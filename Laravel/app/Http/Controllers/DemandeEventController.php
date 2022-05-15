@@ -108,12 +108,13 @@ class DemandeEventController extends Controller
     }
     public function getApprouvedEvent(Request $request){
        
-        $events = DemandeEvent::where('status', '=', '1')->paginate(5);
-        $apEvent = DemandeEvent::join('club','club.id', '=', 'demande_events.clubId')
+       // $events = DemandeEvent::where('status', '=', '1')->paginate(5);
+        $apEvent = DemandeEvent::join('clubs','clubs.id', '=', 'demande_events.clubId')
                 ->where('demande_events.status','=','1')
-                ->get(['demande_event.*','club.*']);
-        if (sizeof($events) > 0) {
-            return response()->json(["data" => $events], 200);
+                ->get(['demande_events.*','clubs.*']);
+              //  dd($apEvent);
+        if (sizeof($apEvent) > 0) {
+            return response()->json(["data" => $apEvent], 200);
         } else
             return response()->json([
                 "aucun évenement"
