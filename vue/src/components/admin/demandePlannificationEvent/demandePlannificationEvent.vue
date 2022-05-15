@@ -52,10 +52,10 @@ export default {
       let vm = this;
       this.$http.get(page_url)
       .then((res) => {
-          console.log(res)
+         
         this.DemandeEvent = res.data.data.data;
         this.show = false;
-        console.log(res.data.data)
+        
         vm.makePagination(res.data.data);
       });
     },
