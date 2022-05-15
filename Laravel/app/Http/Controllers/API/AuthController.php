@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DemandeCreationClub;
 use App\Models\DemandeSalle;
 use App\Models\User;
+use App\Models\DemandeCreationClub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +49,8 @@ class AuthController extends BaseController
             } else if ($user->roles->contains('name', "admin")) {
                 $success['isAdmin'] = true;
             }
-            if ($user->roles->contains('name', "responsableClub")||DemandeCreationClub::where('responsableClubId', $user->id)->where('status','=', 1)->first()) {
+            if ($user->roles->contains('name', "responsableClub")||DemandeCreationClub::where('responsableClubId', '=', $user->id)->where('status','=',1)->first()) {
+
                 $success['isResponsableClub'] = true;
             }
             if ($user->roles->contains('name', "chefDepartement")) {

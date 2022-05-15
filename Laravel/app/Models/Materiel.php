@@ -29,6 +29,9 @@ class Materiel extends Model
             'idDemande')->withPivot(['quantité'])
             ;
     }
+    public function responsable(){
+        return $this->belongsTo(User::class,'idResponsable','id');
+    }
 
 
 }

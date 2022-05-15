@@ -5,7 +5,7 @@ const demandeAdhesionResponsable = () =>
 
 export default [
   {
-    path: "/club/demandeAdhesionResponsable",
+    path: "/demandeAdhesionResponsable",
     component: demandeAdhesionResponsable,
     name: "demandeAdhesionResponsable",
     meta: { requiresEtudiant: true},

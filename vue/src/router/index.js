@@ -21,9 +21,15 @@ import listeClubs from "./routes/listeClubs";
 import demandeAdhesionForm from "./routes/demandeAdhesionForm";
 import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
 import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
+
+import demandePlanificationEvent from "./routes/demandePlanificationEvent";
+
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
+import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
+import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -59,9 +65,13 @@ const routes = [
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
   ...demandeSalle,
+  ...demandePlanificationEvent,
   ...manageChefDepartments,
   ...manageStudents,
-  ...manageClasses
+  ...manageClasses,
+  ...demandeEvenementAdmin
+  ...mesDemandesMateriel
+
 ];
 
 const router = new VueRouter({
@@ -102,7 +112,13 @@ router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    next({ name: "login", params: { msg: "You must be student or a responsableClub" } });
+    next({ name: "login", params: { msg: "You must be student or a responsableClub"  } });
+  }else if (to.matched.some((record) => record.meta.requiresAorC)) {
+    if (store.getters.isAdmin || store.getters.isChefDepartement) {
+      next();
+      return;
+    } 
+    next({ name: "login", params: { msg: "You must be an Admin or a ChefDepartement" } });
   } else if (to.matched.some((record) => record.meta.requiresAdmin)) {
     if (store.getters.isAdmin) {
       next();

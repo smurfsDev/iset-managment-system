@@ -29,6 +29,7 @@ class CreateClubsTable extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
+
             $table->timestamps();
         });
     }

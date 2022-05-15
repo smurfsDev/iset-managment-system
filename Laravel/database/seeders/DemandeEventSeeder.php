@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Materiel;
+use App\Models\DemandeEvent;
 use Illuminate\Database\Seeder;
 
-class MaterielsSeeder extends Seeder
+class DemandeEventSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,7 @@ class MaterielsSeeder extends Seeder
      */
     public function run()
     {
-        Materiel::factory(10)->create();
+        DemandeEvent::factory(5)->create();
+        
     }
 }

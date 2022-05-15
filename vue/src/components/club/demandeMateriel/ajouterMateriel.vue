@@ -30,7 +30,7 @@
               >
                 <input
                   class="form-check-input"
-                  type="checkbox"
+                  type="checkbox" 
                   :value="materiel.titre"
                   :id="materiel.id"
                   @change="ajoutMateriel(materiel.id)"
@@ -65,11 +65,6 @@ export default {
       Materiels: [],
       id: "",
       Mat: [],
-      fiche: {
-        rebriques: [],
-        titre: "",
-        id: "",
-      },
       alert: {
         dismissCountDown: 0,
         variant: "",
@@ -102,7 +97,7 @@ export default {
     },
     ajoutMateriel(id) {
       let x = -1;
-      for (var i = 0; i < this.Mat.length; i++) {
+      for (var i = 0; i < this.Mat.length+1; i++) {
         if (this.Mat[i] == id) {
           x = i;
         }
@@ -111,12 +106,17 @@ export default {
         this.Mat.splice(x, 1);
       } else if (x == -1) {
         this.Mat.push(id);
+      }else{
+        this.Mat = [];
       }
       this.$emit("Mat", this.Mat);
+      this.resetModal1();
+      
     },
     sendMat() {
       this.$emit("add", true);
       this.hideModal("MaterielModal");
+      console.log(this.Mat);
     },
   },
 };

@@ -47,9 +47,11 @@ Vue.mixin({
   methods: {
     showModal: function (id) {
       $(`#${id}`).modal("show");
+
     },
     hideModal: function (id) {
       $(`#${id}`).modal("hide");
+      this.Mat = [];
     },
   },
 });
