@@ -20,6 +20,8 @@ class DemandeSalleFactory extends Factory
             "idSalle" => Salle::get('id')->random(),
             "dateEmploi" => $this->faker->date(),
             "dateDeRemise" => $this->faker->date(),
+            "status"  =>$this->faker->numberBetween(1,3),
+            "reponse" =>$this->faker->sentence(),
 
         ];
     }
