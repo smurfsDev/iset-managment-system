@@ -34,24 +34,13 @@ export default {
   methods: {
     getDemandes() {
       this.$http.get("http://localhost:8000/api/demandeAdhesionEvent/get").then(response => {
-          console.log(response.data.data);
-          console.log(this.$route.params)
-            this.demandes = response.data.data;
+         
+            this.demandes = response.data.data.data;
             this.demandes.forEach(demande => {
-          demande.nomEvent = demande.club.nom;
-          demande.status = demande.status == 0 ? "En attente" : demande.status == 1 ? "Acceptée" : "Refusée";
-        })
-        // this.demandes = response.data.data
-        // console.log(this.demandes);
-      //   this.demandes.forEach(demande => {
-      //     console.log(demande.idEvent);
-      //     this.$http.get("http://localhost:8000/api/demandeEvent/getOne/" + demande.idEvent).then(response => {
-      //      // console.log(response.data.data);
-      //       demande.event = response.data.data;
-      //     });
-      //     demande.status = demande.status == 0 ? "En attente" : demande.status == 1 ? "Acceptée" : "Refusée";
-      //   })
-      //   console.log(this.demandes);
+            demande.nomEvent = demande.demande_event.nomEvent;
+            demande.status = demande.status == 0 ? "En attente" : demande.status == 1 ? "Acceptée" : "Refusée";
+          })
+            
        })
     },
     handleAction(action, data) {
@@ -94,10 +83,6 @@ export default {
             key: "status",
             title: "Status",
 
-          },
-          {
-            key: "nomClub",
-            title: "Nom Club",
           }
         ]
       };

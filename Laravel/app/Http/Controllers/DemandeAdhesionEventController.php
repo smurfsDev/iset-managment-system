@@ -8,9 +8,10 @@ use App\Models\DemandeAdhesionEvent;
 class DemandeAdhesionEventController extends Controller
 {
     public function getDemandeAdhesion(Request $request){
-
+        
       //  dd($request->user()->id);
-        $demandeAdhesionEvent = DemandeAdhesionEvent::where('idStudent', $request->user()->id)->get();
+        $demandeAdhesionEvent = DemandeAdhesionEvent::where('idStudent', $request->user()->id)->with('demandeEvent')->paginate();
+        //dd($demandeAdhesionEvent);
      
         if (empty($demandeAdhesionEvent)) {
             return response()->json(['message' => 'No demande found'], 404);

@@ -47,18 +47,14 @@ export default {
   },
   methods: {
     send(id) {
-      //this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
-      // this.$http.post("http://localhost:8000/api/demandeAdhesionEvent", {
-      //   user_id : this.$store.getters.StateUser.id,
-      //   club_id : this.$route.params.id,
-      //   message: this.message,
-      // })
+      
 
       console.log(this.message)
       this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
       .then((result) => {
-        console.log(result)
-        if (result.status == "200") {
+       
+        if (result.status == "201") {
+          console.log(result.status)
           this.$router.push({ name:"demandeAdhesionEvent", params:{
             nomEvent: this.$route.params.nomEvent,
             dateEvent: this.$route.params.dateEvent,

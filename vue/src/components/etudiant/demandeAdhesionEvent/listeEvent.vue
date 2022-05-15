@@ -29,7 +29,7 @@
                             
                         </b-row>
                         <b-button variant="success" 
-                            @click="demandeAdhesion(event.id,event.nom,event.nomEvent,event.dateEvent)"
+                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.nom,event.dateEvent)"
                             
                         >
                             S'inscrire</b-button>
@@ -111,7 +111,7 @@ export default {
                 prev_page_url: meta.prev_page_url,
             };
         },
-        demandeAdhesion(id,nomClub,nomEvent,dateEvent){
+        demandeAdhesion(id,nomEvent,nomClub,dateEvent){
             console.log(this.events);
             confirm("Voulez-vous vraiment vous inscrire à l'évenement " + nomEvent + " ?");
             this.$router.push({
@@ -127,32 +127,9 @@ export default {
             });
             console.log(id,nomClub,nomEvent,dateEvent);
 
-            // this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
-            // .then(res => {
-            //     console.log(res)
-                
-            //     this.alert.msg = "Votre demande a été envoyé avec succès";
-            //     console.log(res.data.message)
-            //     console.log(this.alert.msg)
-            //     this.alert.variant = "success";
-            //     alert("Votre demande a été envoyé avec succès");
-              
-            //     this.fetchEvents();
-            //     this.inscrire = false;
-            //     console.log(this.inscrire)
-            // })
+            
         },
-        // deleteDemande(id){
-        //     console.log(id)
-        //     this.$http.delete("http://localhost:8000/api/demandeAdhesionEvent/delete/"+id)
-        //     .then(res => {
-        //         this.alert.msg = res.data.message;
-        //         this.alert.variant = "success";
-        //         alert("Votre demande a été annulée avec succès");
-        //          this.fetchEvents();
-        //         this.inscrire = true;
-        //     })
-        // }
+        
     }
 
 }
