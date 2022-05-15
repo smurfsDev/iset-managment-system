@@ -41,7 +41,7 @@
         <nav class="row" v-if="events.length != 0">
             <ul class="pagination w-auto mx-auto">
                 <li :class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
-                    <a @click="fetchclub(pagination.prev_page_url)" class="btn btun page-link" :class="[
+                    <a @click="fetchEvents(pagination.prev_page_url)" class="btn btun page-link" :class="[
                         !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
                     ]">Precedent</a>
                 </li>
@@ -51,7 +51,7 @@
                     }}</a>
                 </li>
                 <li :class="[{ disabled: !pagination.next_page_url }]" class="page-item">
-                    <a @click="fetchclub(pagination.next_page_url)" :class="[
+                    <a @click="fetchEvents(pagination.next_page_url)" :class="[
                         !pagination.next_page_url ? 'disabled' : 'link-primary btun',
                     ]" class="btun btn page-link">Suivant</a>
                 </li>
