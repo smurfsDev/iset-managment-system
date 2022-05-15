@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DemandeCreationClubRequest;
 use App\Models\DemandeCreationClub;
+use App\Models\Role;
+use App\Models\club;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DemandeCreationClubController extends Controller
@@ -157,6 +160,14 @@ class DemandeCreationClubController extends Controller
             if (!$dcc) {
                 return response()->json("Not found", 404);
             } else {
+                $user = User::find($dcc->responsableClubId);
+                $user->roles()->attach(
+                    Role::where('name', '=', 'responsableClub')->first()
+                );
+                $club = club::create([
+                    'responsableClub' => $user->id,
+                    'demandeCreationClubId' => $dcc->id,
+                ]);
 
                 $dcc->adminId = $adminId;
                 $dcc->status = 1;
