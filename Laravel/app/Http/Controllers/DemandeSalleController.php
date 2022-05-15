@@ -59,9 +59,9 @@ class DemandeSalleController extends Controller
         return response()->json(["message"=>"demande de salle supprimée"], 200);
     }
     public function demandeSalleUser(Request $request){
-        $demandeSalle = DemandeSalle::with("salles")->whereHas("salles.departement", function ($query) use ($request) {
+        $demandeSalle = DemandeSalle::with("salles")->with('responsable')->whereHas("salles.departement", function ($query) use ($request) {
             $query->where('chef_departement_id', $request->user()->id);
-        })->get();
+        })->orderBy('created_at')->paginate(5);
         if(!empty($demandeSalle)){
         return response()->json($demandeSalle, 200);
         }
@@ -70,7 +70,45 @@ class DemandeSalleController extends Controller
                 "aucune demande"
             ], 404);
     }
-
+    public function accept($id){
+        $demandeSalle = DemandeSalle::find($id);
+        if ($demandeSalle) {
+            $demandeSalle->status = 1;
+            $demandeSalle->save();
+            return response()->json('demande Salle accepted',200);
+        } else {
+            return response()->json([
+                'type' => 'demandeSalle',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
+    public function refuse($id){
+        $demandeSalle = DemandeSalle::find($id);
+        if ($demandeSalle) {
+            $demandeSalle->status = 2;
+            $demandeSalle->save();
+            return response()->json('demande Salle refused',200);
+        } else {
+            return response()->json([
+                'type' => 'demandeSalle',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
+    public function setReponse($id,Request $request){
+        $demandeSalle = DemandeSalle::find($id);
+        if ($demandeSalle) {
+            $demandeSalle->reponse = $request->input('reponse');;
+            $demandeSalle->save();
+            return response()->json('reponse set',200);
+        } else {
+            return response()->json([
+                'type' => 'demandeSalle',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
 
 
 
