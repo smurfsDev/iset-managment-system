@@ -151,7 +151,7 @@ export default {
           //   this.alert.msg = "demande modifié avec succès";
           //   this.alert.dismissCountDown = 5;
           data = data.data;
-          console.log(data.success)
+          console.log(data)
           
           if (data.success == false) {
               this.alert.variant = "danger";
@@ -164,7 +164,7 @@ export default {
                             ${err}`;
               this.alert.dismissCountDown = 5;
             } else {
-              this.alert.variant = "success";
+              this.alert.variant = "warning";
               this.alert.msg = "Demande modifiée avec succès";
               this.alert.dismissCountDown = 5;
                this.hideModal("demandeEventModal");

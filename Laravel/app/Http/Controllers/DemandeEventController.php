@@ -123,7 +123,7 @@ class DemandeEventController extends Controller
                 "aucun évenement"
             ], 404);
     }
-    public function updateDemandeEvent(Request $request, $id)
+    public function updateDemandeEvent(DemandeEventRequest $request, $id)
     {
         $DemandeEvent = DemandeEvent::find($id);
         //dd($DemandeEvent);
