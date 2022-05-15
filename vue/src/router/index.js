@@ -78,7 +78,6 @@ const routes = [
   ...demandeEvenementAdmin,
   ...mesDemandesMateriel,
   ...mesDemandesSalle,
-  ...demandeEvenementAdmin,
   ...demandeAdhesionEvent,
   ...listeEvents,
   ...demandeAdhesionEventForm,
