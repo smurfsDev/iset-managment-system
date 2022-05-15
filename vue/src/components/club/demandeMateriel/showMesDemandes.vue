@@ -79,7 +79,7 @@
                                         <strong>Reponse :</strong>
                         </div>
                         <div class="col-md-5">
-                            <input type="text" v-model="demande.reponse" class="form-control" name="reponse" style="
+                            <textarea  v-model="demande.reponse" class="form-control" name="reponse" style="
                                 background-color: rgb(236, 239, 241);
                                 border: 0px !important;
                                 " />
@@ -166,7 +166,7 @@ export default {
     Approve(id) {
       this.$http.post("http://127.0.0.1:8000/api/dm/accept/" + id)
         .then((res) => res.data)
-        .then((res) => {
+        .then(() => {
             this.fetchDemandeMateriels();
             this.alert.variant = "warning";
             this.alert.msg = "Demande acceptée avec succès";
@@ -177,7 +177,7 @@ export default {
     Desapprove(id) {
       this.$http.post("http://127.0.0.1:8000/api/dm/refuse/" + id)
         .then((res) => res.data)
-        .then((res) => {
+        .then(() => {
           this.fetchDemandeMateriels();
             this.alert.variant = "warning";
             this.alert.msg = "Demande refusée avec succès";
@@ -188,7 +188,7 @@ export default {
     setReponse(id,reponse) {
       this.$http.put("http://127.0.0.1:8000/api/dm/reponse/" + id,{reponse:reponse})
         .then((res) => res.data)
-        .then((res) => {
+        .then(() => {
           this.fetchDemandeMateriels();
             this.alert.variant = "warning";
             this.alert.msg = "Reponse envoyée avec succès";
