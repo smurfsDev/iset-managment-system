@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\DemandeCreationClub;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,11 +16,12 @@ class clubFactory extends Factory
     public function definition()
     {
         return [
-            "nom"=>$this->faker->name,
-            "dateCreation"=>$this->faker->date,
+            // "nom"=>$this->faker->name,
+            // "dateCreation"=>$this->faker->date,
             "responsableClub"=>User::get('id')->random(),
-            "president"=>$this->faker->firstName().' '.$this->faker->lastName,
-            "vicePresident"=>$this->faker->firstName().' '.$this->faker->lastName,
+            "demandeCreationClubId"=>DemandeCreationClub::get('id')->random(),
+            // "president"=>$this->faker->firstName().' '.$this->faker->lastName,
+            // "vicePresident"=>$this->faker->firstName().' '.$this->faker->lastName,
         ];
     }
 }
