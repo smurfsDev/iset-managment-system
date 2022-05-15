@@ -86,7 +86,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="input-group-append">
-                                <b-button type="button" variant="success" :class="[{ disabled: demande.status == 2 }]" @click="setReponse(demande.id,demande.reponse)">Add Reponse</b-button>
+                                <b-button type="button" variant="warning" v-if="demande.reponse != null" @click="setReponse(demande.id,demande.reponse)">Edit Reponse</b-button>
+                                <b-button type="button" variant="success" v-else  @click="setReponse(demande.id,demande.reponse)">Add Reponse</b-button>
                             </div>
                         </div>
                     </div>
