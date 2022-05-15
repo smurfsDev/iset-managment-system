@@ -1,46 +1,47 @@
 <template>
     <div class="container w-100">
-        <div class="card card-body my-5 py-5 text-center" v-if="clubs.length == 0">
-            <h3>il y'a aucun club</h3>
+        <div class="card card-body my-5 py-5 text-center" v-if="events.length == 0">
+            <h3>il y'a aucun évenement</h3>
         </div>
-        <b-card class="my-2" v-for="club in clubs" :key="club.id">
+        <b-card class="my-2" v-for="event in events" :key="event.id">
             <md-tabs style="height: auto;!important">
-                <md-tab id="tab-home" style="height: auto;!important" md-label="club">
+                <md-tab id="tab-home" style="height: auto;!important" md-label="event">
+                     <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
+                        @dismissed="alert.dismissCountDown = 0">
+                        <p>{{ alert.msg }}</p>
+                    </b-alert>
+
                     <div class="bv-example-row text-center">
                         <b-row class="mb-2">
-                            <b-row>                                
+                            <b-row>
+                                                           
                                 <b-col>
-                                    Nom du club : <router-link :to="{name: 'blogClub', params: {id: club.id}}">{{ club.demande_creation_club.nomClub }}</router-link><br> Date création :
-                                    {{ club.demande_creation_club.dateCreation }}
-
+                                    Nom du Evenement : {{ event.nomEvent }} <br>Date evenement :
+                                    {{ event.dateEvent }}
                                 </b-col>
                             </b-row>
                             <b-row>
-                                <b-col>Activité : {{ club.demande_creation_club.dateCreation }}</b-col>
+                                <b-col>Description : {{ event.description }} <br></b-col>
                             </b-row>
                             <b-row>
-                                <b-col>
-
-                                    President : {{ club.demande_creation_club.president }}<br> Vice president :
-                                    {{ club.demande_creation_club.vicePresident }}
-                                    <br />
-                                    <img :src="club.demande_creation_club.logo" alt="logo" width="250" />
-
-                                </b-col>
+                                <b-col>Organisé par : {{ event.club.nom }} <br></b-col>
                             </b-row>
+                            
                         </b-row>
-                        <b-button variant="info" 
-                            @click="demandeAdhesion(club.id,club.demande_creation_club.nomClub)"
+                        <b-button variant="success" 
+                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.nom,event.dateEvent)"
+                            
                         >
                             S'inscrire</b-button>
+                        
                     </div>
                 </md-tab>
             </md-tabs>
         </b-card>
-        <nav class="row" v-if="clubs.length != 0">
+        <nav class="row" v-if="events.length != 0">
             <ul class="pagination w-auto mx-auto">
                 <li :class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
-                    <a @click="fetchclub(pagination.prev_page_url)" class="btn btun page-link" :class="[
+                    <a @click="fetchEvents(pagination.prev_page_url)" class="btn btun page-link" :class="[
                         !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
                     ]">Precedent</a>
                 </li>
@@ -50,7 +51,7 @@
                     }}</a>
                 </li>
                 <li :class="[{ disabled: !pagination.next_page_url }]" class="page-item">
-                    <a @click="fetchclub(pagination.next_page_url)" :class="[
+                    <a @click="fetchEvents(pagination.next_page_url)" :class="[
                         !pagination.next_page_url ? 'disabled' : 'link-primary btun',
                     ]" class="btun btn page-link">Suivant</a>
                 </li>
@@ -64,7 +65,7 @@ export default {
 
     data() {
         return {
-            clubs: [],
+            events: [],
             pagination: {},
             show: true,
             alert: {
@@ -72,42 +73,62 @@ export default {
                 variant: "",
                 msg: "",
             },
+           // inscrire : false,
+           
         };
     },
     created() {
-        this.fetchclub();
+        this.fetchEvents();
     },
     methods: {
-        fetchclub(
-            page_url = "http://127.0.0.1:8000/api/dac/"
+        fetchEvents(
+            page_url = "http://127.0.0.1:8000/api/demandeEvent/getApprouve"
         ) {
             let vm = this;
             this.$http.get(page_url)
                 .then((res) => {
-                    this.clubs = res.data.data;
+                    console.log(res.data.data.data)
+                    this.events= res.data.data.data;
+
+                  
                     this.show = false;
-                    vm.makePagination(res.data);
+                    console.log(res.data.data)
+                    vm.makePagination(res.data.data);
+                    //console.log(this.events.data);
+                   
                 });
+                
+               
+
         },
         makePagination(meta) {
             this.pagination = {
                 current_page: meta.current_page,
                 current_page_url:
-                    "http://localhost:8000/api/dcc?page=" + meta.current_page,
+                    "http://localhost:8000/api/demandeEvent/getApprouve?page=" + meta.current_page,
                 last_page: meta.last_page,
                 next_page_url: meta.next_page_url,
                 prev_page_url: meta.prev_page_url,
             };
         },
-        demandeAdhesion(id,nomClub){
+        demandeAdhesion(id,nomEvent,nomClub,dateEvent){
+            
             this.$router.push({
-                name: 'demandeAdhesionForm',
+                name: 'demandeAdhesionEventForm',
                 params: {
                     id: id,
-                    nomClub: nomClub  
+                    nomClub: nomClub,
+                    nomEvent : nomEvent,
+                    dateEvent : dateEvent 
                 }
+                
+                
             });
-        }
+            console.log(id,nomClub,nomEvent,dateEvent);
+
+            
+        },
+        
     }
 
 }

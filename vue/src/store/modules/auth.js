@@ -15,6 +15,9 @@ const state = {
   message: null,
   authStatus: null,
   authMessage: null,
+  regStatus: null,
+  regMessage: null,
+  
 };
 
 
@@ -28,7 +31,10 @@ const getters = {
   token: (state) => state.token,
   authStatus : (state) => state.authStatus,
   authMessage : (state) => state.authMessage,
+  regStatus : (state) => state.regStatus,
+  regMessage : (state) => state.regMessage,
   isChefDepartement : (state) => state.isChefDepartement,
+
   
 };
 const actions = {
@@ -87,16 +93,20 @@ const actions = {
       })
        .then((response) => {
         if (response.status == 200) {
-          this.tkn = response.data.data.token;
+          // this.tkn = response.data.data.token;
+          // localStorage.setItem("token", this.tkn);
+          // commit("setUser", response.data.data.user);
+          // commit("setToken", response.data.data.token);
+          router.push("/login");
+          commit("setRegStatus", 1);
 
-          localStorage.setItem("token", this.tkn);
-          commit("setUser", response.data.data.user);
-          commit("setToken", response.data.data.token);
         } else {
           console.log("jawna behi nai");
         }
       }) 
-      .catch(()=>{
+      .catch((error)=>{
+        commit('setRegStatus',2);
+        commit('setRegMessage',error.response.data.data.error); // this is the main part. Use the response property from the error object
       });
   }
 };
@@ -140,7 +150,14 @@ const mutations = {
   },
   setChefDepartement(state, isChefDepartement) {
     state.isChefDepartement = isChefDepartement;
+  },
+  setRegStatus(state, regStatus) {
+    state.regStatus = regStatus;
+  },
+  setRegMessage(state, regMessage) {
+    state.regMessage = regMessage;
   }
+  
 
 };
 export default {

@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\DemandeCreationClubRequest;
+use App\Http\Requests\DemandeCreationClubRequestEdit;
 use App\Models\DemandeCreationClub;
+use App\Models\Role;
+use App\Models\club;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class DemandeCreationClubController extends Controller
+class DemandeCreationClubController extends BaseController
 {
     public function test(Request $request)
     {
@@ -46,14 +51,19 @@ class DemandeCreationClubController extends Controller
             $dccs = DemandeCreationClub::orderBy('created_at', 'desc')
                 ->where('adminId', '=', null)
                 ->where('status', '=', '0')
-                ->orWhere('adminId', '=',$request->user()->id)
+                ->where('status', '<>', '3')
+                ->orWhere('adminId', '=', $request->user()->id)
                 ->paginate(5);
             if (empty($dccs)) {
                 return response()->json(['message' => 'No demande creation club found'], 404);
             }
             return response()->json($dccs, 200);
-        }else{
-            $dccs = $request->user()->demandeCreationClubs()->orderBy('updated_at', 'desc')->paginate(5);
+        } else {
+            $dccs = $request->user()
+                ->demandeCreationClubs()
+                ->where('status', '<>', '3')
+                ->orderBy('updated_at', 'desc')
+                ->paginate(5);
             if (empty($dccs)) {
                 return response()->json(['message' => 'No demande creation club found'], 404);
             }
@@ -63,7 +73,7 @@ class DemandeCreationClubController extends Controller
     public function showMyDemandes($id)
     {
         if ($id == "admin") {
-            $demandes = DemandeCreationClub::orderBy('updated_at', 'desc')->paginate(5);
+            $demandes = DemandeCreationClub::where('status','<>',3)->orderBy('updated_at', 'desc')->paginate(5);
             if (sizeof($demandes) > 0)
                 return response()->json(
                     $demandes,
@@ -72,7 +82,7 @@ class DemandeCreationClubController extends Controller
             else
                 return response()->json([], 404);
         } else {
-            $demandes = DemandeCreationClub::where('responsableClubId', '=', $id)->orderBy('updated_at', 'desc')->paginate(5);
+            $demandes = DemandeCreationClub::where('status','<>',3)->where('responsableClubId', '=', $id)->orderBy('updated_at', 'desc')->paginate(5);
             if (sizeof($demandes) > 0)
                 return response()->json(
                     $demandes,
@@ -84,36 +94,44 @@ class DemandeCreationClubController extends Controller
     }
     public function create(DemandeCreationClubRequest $request)
     {
-        $nomClub = $request->input('nomClub');
-        $logo = $request->input('logo');
-        $dateCreation = $request->input('dateCreation');
-        $activite = $request->input('activite');
-        $president = $request->input('president');
-        $vicePresident = $request->input('vicePresident');
-        $responsableClubId = $request->user()->id;
-        $data = array(
-            "nomClub" => $nomClub,
-            "logo" => $logo,
-            "dateCreation" => $dateCreation,
-            "activite" => $activite,
-            "president" => $president,
-            "vicePresident" => $vicePresident,
-            "responsableClubId" => $responsableClubId,
-        );
-        $DemandeCreationClub = DemandeCreationClub::create($data);
-        if ($DemandeCreationClub) {
-            return response()->json([
-                'data' => [
-                    'message' => 'Success',
-                    'id' => $DemandeCreationClub->id,
-                    'attributes' => $DemandeCreationClub
-                ]
-            ], 201);
+        $user = $request->user();
+        $clubs = club::where('responsableClub', '=', $user->id)->count();
+        if ($clubs == 0) {
+            $nomClub = $request->input('nomClub');
+            $logo = $request->input('logo');
+            $dateCreation = $request->input('dateCreation');
+            $activite = $request->input('activite');
+            $president = $request->input('president');
+            $vicePresident = $request->input('vicePresident');
+            $responsableClubId = $request->user()->id;
+            $data = array(
+                "nomClub" => $nomClub,
+                "logo" => $logo,
+                "dateCreation" => $dateCreation,
+                "activite" => $activite,
+                "president" => $president,
+                "vicePresident" => $vicePresident,
+                "responsableClubId" => $responsableClubId,
+            );
+
+            $DemandeCreationClub = DemandeCreationClub::create($data);
+            if ($DemandeCreationClub) {
+                return response()->json([
+                    'data' => [
+                        'message' => 'Success',
+                        'id' => $DemandeCreationClub->id,
+                        'attributes' => $DemandeCreationClub
+                    ]
+                ], 201);
+            }
+            return "Success";
+        }else{
+            return $this->sendError('Error validation', ['error' => "you already have a club the request will be deleted"]);
+
         }
-        return "Success";
     }
 
-    public function update(Request $request, $id)
+    public function update(DemandeCreationClubRequestEdit $request, $id)
     {
         $DemandeCreationClub = DemandeCreationClub::find($id);
         if ($DemandeCreationClub) {
@@ -152,19 +170,40 @@ class DemandeCreationClubController extends Controller
     public function accept(Request $request, $id)
     {
         $dcc = DemandeCreationClub::find($id);
+        $user = User::find($dcc->responsableClubId);
         $adminId = $request->user()->id;
-        if (isset($adminId)) {
-            if (!$dcc) {
-                return response()->json("Not found", 404);
-            } else {
 
-                $dcc->adminId = $adminId;
-                $dcc->status = 1;
-                $dcc->save();
-                return response()->json("Accepted", 200);
+        $clubs = club::where('responsableClub', '=', $user->id)->whereHas('demandeCreationClub',function($query){
+            $query->where('status','=',1);
+        })->count();
+        if ($clubs == 0) {
+            if (isset($adminId)) {
+                if (!$dcc) {
+                    return response()->json("Not found", 404);
+                } else {
+                    $user = User::find($dcc->responsableClubId);
+                    $user->roles()->attach(
+                        Role::where('name', '=', 'responsableClub')->first()
+                    );
+                    $club = club::create([
+                        'responsableClub' => $user->id,
+                        'demandeCreationClubId' => $dcc->id,
+                    ]);
+
+                    $dcc->adminId = $adminId;
+                    $dcc->status = 1;
+                    $dcc->save();
+                    return response()->json("Accepted", 200);
+                }
+            } else {
+                return response()->json("Admin id required", 400);
             }
         } else {
-            return response()->json("Admin id required", 400);
+            $dcc->status=3;
+            $dcc->save();
+            return $this->sendError('Error validation', ['error' => "Student already have a club the request will be deleted"]);
+            // TODO: DELETE REQUEST
+
         }
     }
     public function decline(Request $request, $id)

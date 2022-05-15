@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\club;
+use App\Models\User;
 use App\Models\DemandeEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,11 @@ use App\Http\Requests\DemandeEventRequest;
 
 class DemandeEventController extends Controller
 {
+    public function index(Request $request){
+        
+        
+        return $request->user()->DemandeEventResponsable()->get();
+    }
     public function show(){
         //$demandes = DB::table('demande_events')->simplePaginate(5);
         $demandes = DemandeEvent::paginate(5);
@@ -26,7 +32,7 @@ class DemandeEventController extends Controller
 
     public function getDemandesEvent(Request $request)
     {
-        //$Demandes = DemandeEvent::with('materiel')->where('id', '=', $id)->get();
+        
         $idResponsable = $request->user()->id; 
        // dd($idResponsable);
         $club = club::where('responsableClub', '=', $idResponsable)->first();
@@ -43,6 +49,7 @@ class DemandeEventController extends Controller
             return response()->json([
                 "aucun évenement"
             ], 404);
+           
     }
  
     public function createDemandeEvent(DemandeEventRequest $request){
@@ -90,16 +97,33 @@ class DemandeEventController extends Controller
         }
         return "Event created";
     }
-    // public function getEvent($id){
-    //     $event = DemandeEvent::where('id', '=', $id)->first();
-    //     if ($event) {
-    //         return response()->json(["data" => $event], 200);
-    //     } else
-    //         return response()->json([
-    //             "aucun évenement"
-    //         ], 404);
-    // }
-    public function updateDemandeEvent(Request $request, $id)
+    public function getEvent($id){
+        $event = DemandeEvent::where('id', '=', $id)->first();
+        if ($event) {
+            return response()->json(["data" => $event], 200);
+        } else
+            return response()->json([
+                "aucun évenement"
+            ], 404);
+    }
+    public function getApprouvedEvent(Request $request){
+        
+       // $events = DemandeEvent::where('status', '=', '1')->paginate(5);
+        // $apEvent = DemandeEvent::join('clubs','clubs.id', '=', 'demande_events.clubId')
+        //         ->where('demande_events.status','=','1')
+        //         ->get(['clubs.*','demande_events.*']);
+        $apEvent = DemandeEvent::where('status',1)->with('club')->paginate(5);
+               // $demandes = $request->DemandeEvent()->club()->with('DemandeAdhesionClub')->with('DemandeAdhesionClub.user')->paginate(5);
+              //  dd($apEvent);
+            //  $apEvent->orderBy('updated_at','desc')->paginate(10);
+        if (sizeof($apEvent) > 0) {
+            return response()->json(["data" => $apEvent], 200);
+        } else
+            return response()->json([
+                "aucun évenement"
+            ], 404);
+    }
+    public function updateDemandeEvent(DemandeEventRequest $request, $id)
     {
         $DemandeEvent = DemandeEvent::find($id);
         //dd($DemandeEvent);
