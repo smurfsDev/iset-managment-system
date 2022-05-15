@@ -21,11 +21,16 @@ import listeClubs from "./routes/listeClubs";
 import demandeAdhesionForm from "./routes/demandeAdhesionForm";
 import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
 import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
+
+import demandePlanificationEvent from "./routes/demandePlanificationEvent";
+
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
+import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
 import mesDemandesSalle from "./routes/mesDemandesSalles";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -61,11 +66,14 @@ const routes = [
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
   ...demandeSalle,
+  ...demandePlanificationEvent,
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
+
+  ...demandeEvenementAdmin,
   ...mesDemandesMateriel,
-  ...mesDemandesSalle
+  ...mesDemandesSalle,
 ];
 
 const router = new VueRouter({
