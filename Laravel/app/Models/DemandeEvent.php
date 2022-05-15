@@ -30,4 +30,7 @@ class DemandeEvent extends Model
     public function demandeAdhesionEvent(){
         return $this->hasMany('App\Models\DemandeAdhesionEvent','idEvent');
     }
+    public function club(){
+        return $this->hasOne('App\Models\club','id','clubId');
+    }
 }

@@ -107,11 +107,13 @@ class DemandeEventController extends Controller
             ], 404);
     }
     public function getApprouvedEvent(Request $request){
-       
+        
        // $events = DemandeEvent::where('status', '=', '1')->paginate(5);
-        $apEvent = DemandeEvent::join('clubs','clubs.id', '=', 'demande_events.clubId')
-                ->where('demande_events.status','=','1')
-                ->get(['clubs.*','demande_events.*']);
+        // $apEvent = DemandeEvent::join('clubs','clubs.id', '=', 'demande_events.clubId')
+        //         ->where('demande_events.status','=','1')
+        //         ->get(['clubs.*','demande_events.*']);
+        $apEvent = DemandeEvent::where('status',1)->with('club')->paginate(5);
+               // $demandes = $request->DemandeEvent()->club()->with('DemandeAdhesionClub')->with('DemandeAdhesionClub.user')->paginate(5);
               //  dd($apEvent);
             //  $apEvent->orderBy('updated_at','desc')->paginate(10);
         if (sizeof($apEvent) > 0) {

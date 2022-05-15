@@ -6,7 +6,7 @@
       <p>{{ alert.msg }}</p>
     </b-alert>
     <main>
-      
+       <data-table v-bind="parameters" @actionTriggered="handleAction" />
     </main>
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
     getDemandes() {
       this.$http.get("http://localhost:8000/api/demandeAdhesionEvent/get").then(response => {
           console.log(response.data.data);
+          console.log(this.$route.params)
             this.demandes = response.data.data;
             this.demandes.forEach(demande => {
           demande.nomEvent = demande.club.nom;

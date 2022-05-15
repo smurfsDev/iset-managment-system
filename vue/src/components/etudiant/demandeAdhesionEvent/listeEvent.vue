@@ -24,7 +24,7 @@
                                 <b-col>Description : {{ event.description }} <br></b-col>
                             </b-row>
                             <b-row>
-                                <b-col>Organisé par : {{ event.nom }} <br></b-col>
+                                <b-col>Organisé par : {{ event.club.nom }} <br></b-col>
                             </b-row>
                             
                         </b-row>
@@ -87,13 +87,14 @@ export default {
             let vm = this;
             this.$http.get(page_url)
                 .then((res) => {
-                    console.log(res.data)
-                    this.events= res.data.data;
+                    console.log(res.data.data.data)
+                    this.events= res.data.data.data;
 
                   
                     this.show = false;
-                    vm.makePagination(res.data);
-                    console.log(this.events.data);
+                    console.log(res.data.data)
+                    vm.makePagination(res.data.data);
+                    //console.log(this.events.data);
                    
                 });
                 
