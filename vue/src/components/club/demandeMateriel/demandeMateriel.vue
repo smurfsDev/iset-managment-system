@@ -170,6 +170,7 @@ export default {
     },
     initModal() {
       this.demande = {};
+      this.edit = false;
       this.showModal("demandeMaterielModal");
     },
 

@@ -145,6 +145,18 @@
                             icon: 'fas fa-file',
                             hidden: !this.isAdmin
                         },
+                        {
+                            href: 'MesDemandesMateriel',
+                            title: 'Demande materiel',
+                            icon: 'fa fa-file',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
+                        }, 
+                        {
+                            href: 'MesDemandesSalles',
+                            title: 'Demande Salle',
+                            icon: 'fa fa-file',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
+                        },
 
                     ]
                 }

@@ -28,6 +28,7 @@ import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
+import mesDemandesMateriel from "./routes/mesDemandesMateriel";
 
 Vue.use(VueRouter);
 
@@ -69,6 +70,7 @@ const routes = [
   ...manageStudents,
   ...manageClasses,
   ...demandeEvenementAdmin
+  ...mesDemandesMateriel
 
 ];
 
@@ -110,7 +112,13 @@ router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    next({ name: "login", params: { msg: "You must be student or a responsableClub" } });
+    next({ name: "login", params: { msg: "You must be student or a responsableClub"  } });
+  }else if (to.matched.some((record) => record.meta.requiresAorC)) {
+    if (store.getters.isAdmin || store.getters.isChefDepartement) {
+      next();
+      return;
+    } 
+    next({ name: "login", params: { msg: "You must be an Admin or a ChefDepartement" } });
   } else if (to.matched.some((record) => record.meta.requiresAdmin)) {
     if (store.getters.isAdmin) {
       next();
