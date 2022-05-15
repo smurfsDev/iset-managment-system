@@ -49,37 +49,25 @@
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
-                <b-col>Nom du Responsable : {{ demande.responsable_club.name }} Date
+                <b-col>Nom du Responsable : {{ demande.responsable.name }} Date
                   création : {{ demande.created_at }}</b-col>
               </b-row>
 
-              <b-row>
-                <b-col>Date d'emploi : {{ demande.dateEmploi }} Date de remise :
-                  {{ demande.dateDeRemise }}</b-col>
-              </b-row>
-            </b-row>
-            <b-row>
-                <div class="col-md-4 row">
-                    <strong>Materiels :</strong>
-                </div>
-                        
-                <b-row v-for="mat in demande.materiel" :key="mat.id">
-                        <b-col> <p class="text-center">
-                                <strong>{{ mat.titre }}</strong>
-                                 De quantité :
-                                    <strong>{{ mat.pivot.quantité }}</strong>
-                                </p>
-                  </b-col>
+                <b-row>
+                    <b-col>Date d'emploi : {{ demande.dateEmploi }} Date de remise :
+                    {{ demande.dateDeRemise }}</b-col>
                 </b-row>
-                
-            </b-row>
+                <b-row>
+                    <b-col>Salle  :{{ demande.salles.titre }}</b-col>
+                </b-row>
+            </b-row> 
                 <b-row >
                     <div role="group" class="row" style="align-items: center">
                         <div class="col-md-4 row">
                                         <strong>Reponse :</strong>
                         </div>
                         <div class="col-md-5">
-                            <textarea  v-model="demande.reponse" class="form-control" name="reponse" style="
+                            <textarea v-model="demande.reponse" class="form-control" name="reponse" style="
                                 background-color: rgb(236, 239, 241);
                                 border: 0px !important;
                                 " />
@@ -137,12 +125,12 @@ export default {
     };
   },
   created() {
-      this.fetchDemandeMateriels();
+      this.fetchDemandeSalles();
   },
 
   methods: {
-   fetchDemandeMateriels(
-      page_url = "http://127.0.0.1:8000/api/dm/MesDemandes"
+   fetchDemandeSalles(
+      page_url = "http://127.0.0.1:8000/api/DemandeSalle/mesDemandeSalle"
     ) {
         let vm = this;
         this.$http.get(page_url)
@@ -158,17 +146,17 @@ export default {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/dm/MesDemandes?page=" + meta.current_page,
+          "http://localhost:8000/api/DemandeSalle/MesDemandes?page=" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
       };
     },
     Approve(id) {
-      this.$http.post("http://127.0.0.1:8000/api/dm/accept/" + id)
+      this.$http.post("http://127.0.0.1:8000/api/DemandeSalle/accept/" + id)
         .then((res) => res.data)
         .then(() => {
-            this.fetchDemandeMateriels();
+            this.fetchDemandeSalles();
             this.alert.variant = "warning";
             this.alert.msg = "Demande acceptée avec succès";
             this.alert.dismissCountDown = 5;
@@ -176,10 +164,10 @@ export default {
         .catch((err) => console.log(err));
     },
     Desapprove(id) {
-      this.$http.post("http://127.0.0.1:8000/api/dm/refuse/" + id)
+      this.$http.post("http://127.0.0.1:8000/api/DemandeSalle/refuse/" + id)
         .then((res) => res.data)
         .then(() => {
-          this.fetchDemandeMateriels();
+          this.fetchDemandeSalles();
             this.alert.variant = "warning";
             this.alert.msg = "Demande refusée avec succès";
             this.alert.dismissCountDown = 5;
@@ -187,10 +175,10 @@ export default {
         .catch((err) => console.log(err));
     },
     setReponse(id,reponse) {
-      this.$http.put("http://127.0.0.1:8000/api/dm/reponse/" + id,{reponse:reponse})
+      this.$http.put("http://127.0.0.1:8000/api/DemandeSalle/reponse/" + id,{reponse:reponse})
         .then((res) => res.data)
         .then(() => {
-          this.fetchDemandeMateriels();
+          this.fetchDemandeSalles();
             this.alert.variant = "warning";
             this.alert.msg = "Reponse envoyée avec succès";
             this.alert.dismissCountDown = 5;

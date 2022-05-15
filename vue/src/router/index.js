@@ -30,6 +30,7 @@ import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
 
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+import mesDemandesSalle from "./routes/mesDemandesSalles";
 
 import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
 import listeEvents from "./routes/listeEvents";
@@ -74,14 +75,12 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-
   ...demandeEvenementAdmin,
   ...mesDemandesMateriel,
-    ...demandeEvenementAdmin,
+  ...mesDemandesSalle,
   ...demandeAdhesionEvent,
   ...listeEvents,
-  ...demandeAdhesionEventForm
-
+  ...demandeAdhesionEventForm,
 
 ];
 

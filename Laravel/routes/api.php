@@ -95,6 +95,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [DemandeSalleController::class, 'store']);
         Route::put('/{id}', [DemandeSalleController::class, 'update']);
         Route::delete('/{id}', [DemandeSalleController::class, 'destroy']);
+        Route::get('/mesDemandeSalle', [DemandeSalleController::class, 'demandeSalleUser']);
+        Route::post('/accept/{id}', [DemandeSalleController::class, 'accept']);
+        Route::post('/refuse/{id}', [DemandeSalleController::class, 'refuse']);
+        Route::put('/reponse/{id}', [DemandeSalleController::class, 'setReponse']);
     });
     // demande materiel routes
 
@@ -106,7 +110,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/MesDemandes', [DemandeMaterielController::class, 'getAllDemande']);
         Route::post('/accept/{id}', [DemandeMaterielController::class, 'accept']);
         Route::post('/refuse/{id}', [DemandeMaterielController::class, 'refuse']);
-        Route::put('/reponse/{id}', [DemandeMaterielController::class, 'setResponse']);
+        Route::put('/reponse/{id}', [DemandeMaterielController::class, 'setReponse']);
 
     });
 
