@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DemandeMaterielRequest;
 use App\Models\DemandeSalle;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DemandeSalleController extends Controller
@@ -57,6 +58,20 @@ class DemandeSalleController extends Controller
         $demandeSalle->delete();
         return response()->json(["message"=>"demande de salle supprimée"], 200);
     }
+    public function demandeSalleUser(Request $request){
+        $demandeSalle = DemandeSalle::with("salles")->whereHas("salles.departement", function ($query) use ($request) {
+            $query->where('chef_departement_id', $request->user()->id);
+        })->get();
+        if(!empty($demandeSalle)){
+        return response()->json($demandeSalle, 200);
+        }
+        else
+            return response()->json([
+                "aucune demande"
+            ], 404);
+    }
+
+
 
 
 }
