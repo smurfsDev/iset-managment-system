@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\DemandeCreationClub;
+use App\Models\DemandeSalle;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -48,6 +49,7 @@ class AuthController extends BaseController
                 $success['isAdmin'] = true;
             }
             if ($user->roles->contains('name', "responsableClub")||DemandeCreationClub::where('responsableClubId', '=', $user->id)->where('status','=',1)->first()) {
+
                 $success['isResponsableClub'] = true;
             }
             if ($user->roles->contains('name', "chefDepartement")) {
@@ -63,20 +65,26 @@ class AuthController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'role' => 'required|exists:roles,id',
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Error validation', $validator->errors());
+            // recover all validation message into string
+            $messages = $validator->errors()->all();
+            // concatenate all validation message into one string
+            $messages = implode("\n", $messages);
+
+            return $this->sendError('Error validation', ['error' =>$messages]);
         }
+
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $user->roles()->attach($request->role, ['department' => $input['department'],'classe' => $input['classe']?$input['classe']:null]);
+        $user->roles()->attach($request->role, ['department' => $input['department'],'classe' => $input['classe']?$input['classe']:0]);
 
         $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
         $success['name'] =  $user->name;
