@@ -16,24 +16,24 @@ class DepartementSeeder extends Seeder
     {
         Departement::create([
             'titre' => "Département Technologies de l'Informatique",
-            "chef_departement_id" => 1,
+            "chef_departement_id" => 6,
 
         ]);
         Departement::create([
             'titre' => "Département Génie Electrique",
-            "chef_departement_id" => 2,
+            "chef_departement_id" => 7,
         ]);
         Departement::create([
             'titre' => "Département Génie Mécanique",
-            "chef_departement_id" => 3,
+            "chef_departement_id" => 8,
         ]);
         Departement::create([
             'titre' => "Département Administration d'affaire",
-            "chef_departement_id" => 4,
+            "chef_departement_id" => 9,
         ]);
         Departement::create([
             'titre' => "Département Génie des procédés",
-            "chef_departement_id" => 5,
+            "chef_departement_id" => 10,
         ]);
     }
 }
