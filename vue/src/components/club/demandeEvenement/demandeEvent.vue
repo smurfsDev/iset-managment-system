@@ -98,7 +98,10 @@ export default {
         this.show = false;
         
         vm.makePagination(res.data.data);
-      });
+      })
+      .catch(()=> {
+        this.show = false;
+      })
     },
     Delete(id) {
       if (confirm("Delete demande " + id)) {
