@@ -10,6 +10,7 @@
               <b-col cols="8">
                 <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
                   @click="initModal()" data-bs-target="#demandeModal"
+                  :class="haveClub? 'disabled' : ''"
                   >
                   Nouvelle demande
                 </button>
