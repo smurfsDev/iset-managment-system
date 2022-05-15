@@ -113,6 +113,7 @@ class DemandeEventController extends Controller
                 ->where('demande_events.status','=','1')
                 ->get(['clubs.*','demande_events.*']);
               //  dd($apEvent);
+            //  $apEvent->orderBy('updated_at','desc')->paginate(10);
         if (sizeof($apEvent) > 0) {
             return response()->json(["data" => $apEvent], 200);
         } else

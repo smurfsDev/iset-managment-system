@@ -25,10 +25,7 @@
                   <label for="date">Nom club</label>
                   <input type="text" class="form-control" style="width:90%!important" id="club" disabled :value="$route.params.nomClub">
                 </div>
-                <div class="form-group">
-                  <label for="message">Message</label>
-                  <textarea class="form-control" style="width:90%!important" id="message" rows="3" v-model="message"></textarea>  
-                </div>
+                
 
                 
                 <button type="submit" class="btn btn-primary">Valider la demande </button>
