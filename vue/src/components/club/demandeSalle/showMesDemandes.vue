@@ -67,14 +67,15 @@
                                         <strong>Reponse :</strong>
                         </div>
                         <div class="col-md-5">
-                            <input type="text" v-model="demande.reponse" class="form-control" name="reponse" style="
+                            <textarea v-model="demande.reponse" class="form-control" name="reponse" style="
                                 background-color: rgb(236, 239, 241);
                                 border: 0px !important;
                                 " />
                         </div>
                         <div class="col-md-3">
                             <div class="input-group-append">
-                                <b-button type="button" variant="success" :class="[{ disabled: demande.status == 1 }]" @click="setReponse(demande.id,demande.reponse)">Add Reponse</b-button>
+                                <b-button type="button" variant="warning" v-if="demande.reponse != null" @click="setReponse(demande.id,demande.reponse)">Edit Reponse</b-button>
+                                <b-button type="button" variant="success" v-else  @click="setReponse(demande.id,demande.reponse)">Add Reponse</b-button>
                             </div>
                         </div>
                     </div>
