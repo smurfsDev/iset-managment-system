@@ -30,6 +30,7 @@ import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
 import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
 import listeEvents from "./routes/listeEvents";
+import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
 
 Vue.use(VueRouter);
 
@@ -72,7 +73,8 @@ const routes = [
   ...manageClasses,
   ...demandeEvenementAdmin,
   ...demandeAdhesionEvent,
-  ...listeEvents
+  ...listeEvents,
+  ...demandeAdhesionEventForm
 
 ];
 

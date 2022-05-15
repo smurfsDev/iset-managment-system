@@ -3,9 +3,14 @@
         <div class="card card-body my-5 py-5 text-center" v-if="events.length == 0">
             <h3>il y'a aucun évenement</h3>
         </div>
-        <b-card class="my-2" v-for="event in events.data" :key="event.id">
+        <b-card class="my-2" v-for="event in events" :key="event.id">
             <md-tabs style="height: auto;!important">
                 <md-tab id="tab-home" style="height: auto;!important" md-label="event">
+                     <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
+                        @dismissed="alert.dismissCountDown = 0">
+                        <p>{{ alert.msg }}</p>
+                    </b-alert>
+
                     <div class="bv-example-row text-center">
                         <b-row class="mb-2">
                             <b-row>
@@ -19,14 +24,16 @@
                                 <b-col>Description : {{ event.description }} <br></b-col>
                             </b-row>
                             <b-row>
-                                <b-col>Organisé par : {{ event.club }} <br></b-col>
+                                <b-col>Organisé par : {{ event.nom }} <br></b-col>
                             </b-row>
                             
                         </b-row>
-                        <b-button variant="info" 
-                            @click="demandeAdhesion(event.id)"
+                        <b-button variant="success" 
+                            @click="demandeAdhesion(event.id,event.nom,event.nomEvent,event.dateEvent)"
+                            
                         >
                             S'inscrire</b-button>
+                        
                     </div>
                 </md-tab>
             </md-tabs>
@@ -58,17 +65,7 @@ export default {
 
     data() {
         return {
-            events: [
-                event => {
-                    return {
-                        id: event.id,
-                        nomEvent: event.nomEvent,
-                        dateEvent: event.dateEvent,
-                        description: event.description,
-                        club: event.club,
-                    };
-                },
-            ],
+            events: [],
             pagination: {},
             show: true,
             alert: {
@@ -76,6 +73,7 @@ export default {
                 variant: "",
                 msg: "",
             },
+           // inscrire : false,
            
         };
     },
@@ -89,30 +87,14 @@ export default {
             let vm = this;
             this.$http.get(page_url)
                 .then((res) => {
-                    this.events.event = res.data.data;
+                    console.log(res.data)
+                    this.events= res.data.data;
 
-                    //console.log(this.events.data);
+                  
                     this.show = false;
                     vm.makePagination(res.data);
                     console.log(this.events.data);
-                    // this.events.event.data.forEach(event => {
-                    //     console.log(event)
-                    // this.$http.get("http://localhost:8000/api/dac/getClub/"+event.clubId)
-                    // .then((res) => {
-                    //     console.log(res.data)
-                       
-                    //     //this.club = res.data.nom;
-                    //     event.club = res.data.nom;
-                    //     console.log(this.club)
-                    //     console.log(event)
-                    //     // this.event = res.data.nom
-                    //     console.log(event);
-                    //      console.log(this.events);
-                    // });
                    
-                   
-                    
-                // });
                 });
                 
                
@@ -128,16 +110,48 @@ export default {
                 prev_page_url: meta.prev_page_url,
             };
         },
-        demandeAdhesion(id){
-            this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
-            .then(res => {
-                this.alert.msg = res.data.message;
-                this.alert.variant = "success";
-                alert("Votre demande a été envoyé avec succès");
-               // console.log(res.data);
-                this.fetchEvents();
-            })
-        }
+        demandeAdhesion(id,nomClub,nomEvent,dateEvent){
+            console.log(this.events);
+            confirm("Voulez-vous vraiment vous inscrire à l'évenement " + nomEvent + " ?");
+            this.$router.push({
+                name: 'demandeAdhesionEventForm',
+                params: {
+                    id: id,
+                    nomClub: nomClub,
+                    nomEvent : nomEvent,
+                    dateEvent : dateEvent 
+                }
+                
+                
+            });
+            console.log(id,nomClub,nomEvent,dateEvent);
+
+            // this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
+            // .then(res => {
+            //     console.log(res)
+                
+            //     this.alert.msg = "Votre demande a été envoyé avec succès";
+            //     console.log(res.data.message)
+            //     console.log(this.alert.msg)
+            //     this.alert.variant = "success";
+            //     alert("Votre demande a été envoyé avec succès");
+              
+            //     this.fetchEvents();
+            //     this.inscrire = false;
+            //     console.log(this.inscrire)
+            // })
+        },
+        // deleteDemande(id){
+        //     console.log(id)
+        //     this.$http.delete("http://localhost:8000/api/demandeAdhesionEvent/delete/"+id)
+        //     .then(res => {
+        //         this.alert.msg = res.data.message;
+        //         this.alert.variant = "success";
+        //         alert("Votre demande a été annulée avec succès");
+        //          this.fetchEvents();
+        //         this.inscrire = true;
+        //     })
+        // }
     }
 
 }

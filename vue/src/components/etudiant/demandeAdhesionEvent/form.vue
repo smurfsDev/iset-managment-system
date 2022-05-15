@@ -11,17 +11,27 @@
           </div>
           <div class="card-body">
             <b-container>
-              <form class="w-100" @submit.prevent="send">
+              <form class="w-100" @submit.prevent="send($route.params.id)">
                 <!-- one input for message bootstrap -->
                 <div class="form-group">
                   <label for="event">Nom Event</label>
                   <input type="text" class="form-control" style="width:90%!important" id="event" disabled :value="$route.params.nomEvent">
                 </div>
                 <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea class="form-control" v-model="description" style="width:90%!important" id="description" rows="3"></textarea>
+                  <label for="date">Date Event</label>
+                  <input type="text" class="form-control" style="width:90%!important" id="date" disabled :value="$route.params.dateEvent">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="form-group">
+                  <label for="date">Nom club</label>
+                  <input type="text" class="form-control" style="width:90%!important" id="club" disabled :value="$route.params.nomClub">
+                </div>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea class="form-control" style="width:90%!important" id="message" rows="3" v-model="message"></textarea>  
+                </div>
+
+                
+                <button type="submit" class="btn btn-primary">Valider la demande </button>
               </form>
             </b-container>
           </div>
@@ -39,16 +49,24 @@ export default {
     };
   },
   methods: {
-    send() {
-      this.$http.post("http://localhost:8000/api/demandeAdhesionEvent", {
-        user_id : this.$store.getters.StateUser.id,
-        club_id : this.$route.params.id,
-        message: this.message,
-      })
+    send(id) {
+      //this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
+      // this.$http.post("http://localhost:8000/api/demandeAdhesionEvent", {
+      //   user_id : this.$store.getters.StateUser.id,
+      //   club_id : this.$route.params.id,
+      //   message: this.message,
+      // })
+
+      console.log(this.message)
+      this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
       .then((result) => {
+        console.log(result)
         if (result.status == "200") {
-          this.$router.push({ name:"demandeAdhesionClub", params:{
+          this.$router.push({ name:"demandeAdhesionEvent", params:{
+            nomEvent: this.$route.params.nomEvent,
+            dateEvent: this.$route.params.dateEvent,
             nomClub: this.$route.params.nomClub,
+
           }});
         }
 

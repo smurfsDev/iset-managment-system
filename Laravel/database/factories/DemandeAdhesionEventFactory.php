@@ -17,7 +17,8 @@ class DemandeAdhesionEventFactory extends Factory
     {
         return [
             "idStudent" => User::get('id')->random(),
-            "idEvent" => DemandeEvent::get('id')->random()
+            "idEvent" => DemandeEvent::get('id')->random(),
+         //   "message" => $this->faker->sentence,
         ];
     }
 }

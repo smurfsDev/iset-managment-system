@@ -25,7 +25,7 @@ export default {
   },
   created() {
     this.getDemandes()
-    if (this.$route.params.idEvent != null) {
+    if (this.$route.params.nomEvent != null) {
       this.alert.variant = "success";
       this.alert.msg = "Demande d'adhesion au évenement envoyée avec succès";
       this.alert.dismissCountDown = 5;
@@ -36,23 +36,27 @@ export default {
       this.$http.get("http://localhost:8000/api/demandeAdhesionEvent/get").then(response => {
           console.log(response.data.data);
             this.demandes = response.data.data;
-        // this.demandes = response.data.data
-        // console.log(this.demandes);
-        this.demandes.forEach(demande => {
-          console.log(demande.idEvent);
-          this.$http.get("http://localhost:8000/api/demandeEvent/getOne/" + demande.idEvent).then(response => {
-           // console.log(response.data.data);
-            demande.event = response.data.data;
-          });
+            this.demandes.forEach(demande => {
+          demande.nomEvent = demande.club.nom;
           demande.status = demande.status == 0 ? "En attente" : demande.status == 1 ? "Acceptée" : "Refusée";
         })
-        console.log(this.demandes);
-      })
+        // this.demandes = response.data.data
+        // console.log(this.demandes);
+      //   this.demandes.forEach(demande => {
+      //     console.log(demande.idEvent);
+      //     this.$http.get("http://localhost:8000/api/demandeEvent/getOne/" + demande.idEvent).then(response => {
+      //      // console.log(response.data.data);
+      //       demande.event = response.data.data;
+      //     });
+      //     demande.status = demande.status == 0 ? "En attente" : demande.status == 1 ? "Acceptée" : "Refusée";
+      //   })
+      //   console.log(this.demandes);
+       })
     },
     handleAction(action, data) {
       if (action == 'delete') {
         if (confirm("Suprimer demande ?")) {
-          this.$http.delete("http://localhost:8000/api/demandeAdhesionEvent/" + data.id).then(() => {
+          this.$http.delete("http://localhost:8000/api/demandeAdhesionEvent/delete/" + data.id).then(() => {
             this.alert.variant = "danger";
             this.alert.msg = "Demande d'adhesion supprimée !";
             this.alert.dismissCountDown = 5;
@@ -91,8 +95,8 @@ export default {
 
           },
           {
-            key: "description",
-            title: "description",
+            key: "nomClub",
+            title: "Nom Club",
           }
         ]
       };

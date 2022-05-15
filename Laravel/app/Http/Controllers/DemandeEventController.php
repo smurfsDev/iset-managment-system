@@ -111,7 +111,7 @@ class DemandeEventController extends Controller
        // $events = DemandeEvent::where('status', '=', '1')->paginate(5);
         $apEvent = DemandeEvent::join('clubs','clubs.id', '=', 'demande_events.clubId')
                 ->where('demande_events.status','=','1')
-                ->get(['demande_events.*','clubs.*']);
+                ->get(['clubs.*','demande_events.*']);
               //  dd($apEvent);
         if (sizeof($apEvent) > 0) {
             return response()->json(["data" => $apEvent], 200);
