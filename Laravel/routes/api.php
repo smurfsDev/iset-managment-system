@@ -9,7 +9,6 @@ use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\API\AuthController;
 
 use App\Http\Controllers\MaterielController;
-use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\club\ClubController;
 use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\DepartementController;
@@ -29,6 +28,8 @@ use App\Http\Controllers\DemandeAdhesionEventController;
 
 
 
+use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TechnicienController;
 use App\Http\Controllers\club\pageClub\HeadersController;
 use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
@@ -171,9 +172,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/decline/{id}', [DemandeEventController::class, 'decline']);
         Route::get('/getAllEvents', [DemandeEventController::class, 'show']);
     });
-    
 
-    
+
+
 
     // classes routes
 
@@ -185,7 +186,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     // demande adhesion event routes
     Route::group(['prefix' => '/demandeAdhesionEvent'], function () {
-        
+
         //Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/get', [DemandeAdhesionEventController::class, 'getDemandeAdhesion']);
         Route::post('/create/{id}', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
@@ -196,6 +197,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/delete/{id}', [DemandeAdhesionEventController::class, 'deleteDemandeAdhesion']);
         //Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
+
+    Route::group(['prefix' => '/technicien'], function () {
+        Route::get('/', [TechnicienController::class, 'show']);
+        Route::post('/accept/{id}', [TechnicienController::class, 'accept']);
+        Route::post('/refuse/{id}', [TechnicienController::class, 'refuse']);
+    });
+
 
 });
 
