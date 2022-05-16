@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\club;
+use App\Models\DemandeEvent;
 use Illuminate\Http\Request;
 use App\Models\DemandeAdhesionEvent;
 
@@ -51,6 +53,21 @@ class DemandeAdhesionEventController extends Controller
             $demandeAdhesionEvent->idStudent = $request->user()->id;
             $demandeAdhesionEvent->idEvent = $request->input('idEvent');
             $demandeAdhesionEvent->save();
+            return response()->json(["data" => $demandeAdhesionEvent], 200);
+        }
+    }
+
+    public function getDemandeAdhesionParClub(Request $Request ){
+        $idResponsable = $Request->user()->id;
+        $club = club::where('responsableClub', '=', $idResponsable)->first();
+       dd($club);
+        $events = DemandeEvent::where('clubId','=', $club->id)->orderBy('updated_at','desc')->paginate(5);
+        dd($events);
+        $demandeAdhesionEvent = DemandeAdhesionEvent::where('idClub', $idClub)->with('demandeEvent')->paginate();
+        //dd($demandeAdhesionEvent);
+        if (empty($demandeAdhesionEvent)) {
+            return response()->json(['message' => 'No demande found'], 404);
+        }else{
             return response()->json(["data" => $demandeAdhesionEvent], 200);
         }
     }

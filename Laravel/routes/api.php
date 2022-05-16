@@ -190,6 +190,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/get', [DemandeAdhesionEventController::class, 'getDemandeAdhesion']);
         Route::post('/create/{id}', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
         Route::put('/update/{id}', [DemandeAdhesionEventController::class, 'updateDemandeAdhesion']);
+        Route::get('/parClub', [DemandeAdhesionEventController::class, 'getDemandeAdhesionParClub']);
         Route::delete('/delete/{id}', [DemandeAdhesionEventController::class, 'deleteDemandeAdhesion']);
         //Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
