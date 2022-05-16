@@ -9,7 +9,6 @@ use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\API\AuthController;
 
 use App\Http\Controllers\MaterielController;
-use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\club\ClubController;
 use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\DepartementController;
@@ -183,7 +182,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     // demande adhesion event routes
     Route::group(['prefix' => '/demandeAdhesionEvent'], function () {
-        
+
         //Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/get', [DemandeAdhesionEventController::class, 'getDemandeAdhesion']);
         Route::post('/create/{id}', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
