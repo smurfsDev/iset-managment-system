@@ -176,7 +176,7 @@
                             hidden: !this.isAdmin && !this.isChefDepartement,
                         }, 
                         {
-                            href: 'MesDemandesSalles',
+                            href: 'MesDemandesSalle',
                             title: 'Demande Salle',
                             icon: 'fa fa-file',
                             hidden: !this.isAdmin && !this.isChefDepartement,

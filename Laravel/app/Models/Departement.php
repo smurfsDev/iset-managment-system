@@ -19,7 +19,7 @@ class Departement extends Model
     }
 
     public function user(){
-        return $this->hasOne(User::class,'chef_departement_id');
+        return $this->hasOne(User::class,'id','chef_departement_id');
     }
 
 }

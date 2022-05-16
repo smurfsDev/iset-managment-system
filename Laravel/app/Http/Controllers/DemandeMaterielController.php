@@ -119,7 +119,7 @@ class DemandeMaterielController extends Controller
             ], 404);
         }
     }
-    public function setResponse($id,Request $request){
+    public function setReponse($id,Request $request){
         $DemandeMateriel = DemandeMateriel::find($id);
         if ($DemandeMateriel) {
             $DemandeMateriel->reponse = $request->input('reponse');
