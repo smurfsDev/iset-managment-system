@@ -66,6 +66,7 @@ class DemandeAdhesionEventController extends Controller
         ->where('responsableClubId','=', $idResponsable)
         ->where('status','=',1)
         ->with('demandeAdhesionEvent')
+        ->with('demandeAdhesionEvent.student')
         ->paginate(5);
      
         if (empty($events)) {
