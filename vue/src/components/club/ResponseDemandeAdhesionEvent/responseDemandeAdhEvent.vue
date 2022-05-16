@@ -52,10 +52,19 @@ export default {
       let vm = this;
       this.$http.get(page_url)
       .then((res) => {
-         console.log(res.data.data.data);
+        // console.log(res.data.data.data);
         this.DemandeEvent = res.data.data.data;
+        for (let index = 0; index < this.DemandeEvent.length; index++) {
+         // console.log(this.DemandeEvent[index].demande_adhesion_event);
+          for (let i = 0; i < this.DemandeEvent[index].demande_adhesion_event.length; i++) {
+           console.log(this.DemandeEvent[index].demande_adhesion_event[i].student)
+            
+          }
+          
+        }
         this.show = false;
-        
+        //console.log(this.DemandeEvent)
+     //  console.log(this.demandes.demande_adhesion_event)
         vm.makePagination(res.data.data);
       });
     },

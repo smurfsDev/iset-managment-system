@@ -6,43 +6,9 @@
     >
       <h3>il y'a aucune demande</h3>
     </div>
-    <b-card class="my-2" v-for="demande in demandes" :key="demande.id">
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'success',
-          title: 'Demande accepted',
-          placement: 'topright',
-        }"
-        v-if="demande.status == 1"
-        icon="check-square"
-        scale="2"
-        variant="success"
-      ></b-icon>
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'danger',
-          title: 'Demande not accepted',
-          placement: 'topright',
-        }"
-        v-if="demande.status == 2"
-        icon="x-square"
-        scale="2"
-        variant="danger"
-      ></b-icon>
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'warning',
-          title: 'Demande pending',
-          placement: 'topright',
-        }"
-        v-if="demande.status == 0"
-        icon="x-square"
-        scale="2"
-        variant="warning"
-      ></b-icon>
+    
+      <b-card class="my-2" v-for="demande in demandes" :key="demande.id">
+      
       <md-tabs style="height: auto;!important">
         <md-tab
           style="height: auto;!important"
@@ -52,38 +18,45 @@
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
+               
+              </b-row>
+              <b-row>
                 <b-col>
                   Nom du évenement : {{ demande.nomEvent }} <br> Date évenement :
                   {{ demande.dateEvent }}
                 </b-col>
               </b-row>
-              <b-row>
-                <b-col>Description : {{ demande.description }}</b-col>
-              </b-row>
-              <b-row>
+              <b-row v-for="d in demande.demande_adhesion_event" :key="d.id">
+                <b-col> {{ d.student.name }}</b-col>
+                   
+           
+     
                 <b-col>
-                  Demande crée le : {{ demande.created_at }} 
-                  <br />
-                  
+                  <b-button
+                    variant="success"
+                    :class="[{ disabled: d.status == 1 }]"
+                    v-on:click="Accept(d.id)"
+                    >Accept</b-button
+                  >
                 </b-col>
-              </b-row>
-            </b-row>
-            <b-button
-              variant="success"
-              :class="[{ disabled: demande.status == 1 }]"
-              v-on:click="Accept(demande.id)"
-              >Accept</b-button
-            >
-            <b-button
+                <b-col>
+                  <b-button
               variant="danger"
-              :class="[{ disabled: demande.status == 2 }]"
-              v-on:click="Decline(demande.id)"
+              :class="[{ disabled: d.status == 2 }]"
+              v-on:click="Decline(d.id)"
               >Decline</b-button
             >
+                </b-col>
+              </b-row>
+             
+            </b-row>
+            
           </div>
         </md-tab>
       </md-tabs>
     </b-card>
+    
+    
     <nav class="row" v-if="demandes.length != 0">
       <ul class="pagination w-auto mx-auto">
         <li

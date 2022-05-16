@@ -68,6 +68,15 @@ class DemandeAdhesionEventController extends Controller
         ->with('demandeAdhesionEvent')
         ->with('demandeAdhesionEvent.student')
         ->paginate(5);
+        // $events = DemandeAdhesionEvent::orderBy('updated_at','desc')
+        // ->with('demandeEvent')
+        
+        // // ->where('demande_events.responsableClubId','=', $idResponsable)
+        // ->with('student')
+        // // ->where('demandeEvent.clubId','=', $club->id)
+        // ->get();
+      //  dd($events->nomEvent);
+        
      
         if (empty($events)) {
             return response()->json(['message' => 'No demande found'], 404);
