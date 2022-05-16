@@ -30,8 +30,8 @@ import manageClasses from "./routes/gererClasse";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
 
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+import manageTechnicien from "./routes/manageTechnicien";
 import mesDemandesSalle from "./routes/mesDemandesSalles";
-
 import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
 import listeEvents from "./routes/listeEvents";
 import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
@@ -77,10 +77,12 @@ const routes = [
   ...manageClasses,
   ...demandeEvenementAdmin,
   ...mesDemandesMateriel,
-  ...mesDemandesSalle,
+  ...demandeEvenementAdmin,
   ...demandeAdhesionEvent,
   ...listeEvents,
   ...demandeAdhesionEventForm,
+   ...manageTechnicien
+  ...mesDemandesSalle,
 
 ];
 

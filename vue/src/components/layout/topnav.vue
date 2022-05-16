@@ -47,6 +47,11 @@
                     icon: 'fas fa-user',
                     hidden: !this.isChefDepartement
                 },{
+                    href: '/cd/manageTechnicien',
+                    title: 'Techniciens',
+                    icon: 'fas fa-user',
+                    hidden: !this.isChefDepartement
+                },{
                     href: '/cd/GererClasse',
                     title: 'Classes',
                     icon: 'fas fa-building',
