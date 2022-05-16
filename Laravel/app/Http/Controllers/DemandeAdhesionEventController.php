@@ -66,7 +66,7 @@ class DemandeAdhesionEventController extends Controller
         ->where('responsableClubId','=', $idResponsable)
         ->where('status','=',1)
         ->with('demandeAdhesionEvent')
-        ->get();
+        ->paginate(5);
      
         if (empty($events)) {
             return response()->json(['message' => 'No demande found'], 404);
