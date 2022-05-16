@@ -74,6 +74,26 @@ class DemandeAdhesionEventController extends Controller
             return response()->json(["data" => $events], 200);
         }
     }
+    public function accept(Request $request, $id)
+    {
+        
+        $demande = DemandeAdhesionEvent::find($id);
+        
+       
+        
+        
+            if (!$demande) {
+                return response()->json("Not found", 404);
+            } else {
+
+                
+                $demande->status = 1;
+                $demande->save();
+                return response()->json("Accepted", 200);
+            }
+       
+    }
+    
 
 
 }
