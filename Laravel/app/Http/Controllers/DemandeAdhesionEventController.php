@@ -60,15 +60,18 @@ class DemandeAdhesionEventController extends Controller
     public function getDemandeAdhesionParClub(Request $Request ){
         $idResponsable = $Request->user()->id;
         $club = club::where('responsableClub', '=', $idResponsable)->first();
-       dd($club);
-        $events = DemandeEvent::where('clubId','=', $club->id)->orderBy('updated_at','desc')->paginate(5);
-        dd($events);
-        $demandeAdhesionEvent = DemandeAdhesionEvent::where('idClub', $idClub)->with('demandeEvent')->paginate();
-        //dd($demandeAdhesionEvent);
-        if (empty($demandeAdhesionEvent)) {
+   
+        $events = DemandeEvent::orderBy('updated_at','desc')
+        ->where('clubId','=', $club->id)
+        ->where('responsableClubId','=', $idResponsable)
+        ->where('status','=',1)
+        ->with('demandeAdhesionEvent')
+        ->get();
+     
+        if (empty($events)) {
             return response()->json(['message' => 'No demande found'], 404);
         }else{
-            return response()->json(["data" => $demandeAdhesionEvent], 200);
+            return response()->json(["data" => $events], 200);
         }
     }
 
