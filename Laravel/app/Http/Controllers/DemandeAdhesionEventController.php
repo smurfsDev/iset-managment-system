@@ -93,7 +93,22 @@ class DemandeAdhesionEventController extends Controller
             }
        
     }
-    
+    public function decline(Request $request, $id)
+    {
+        $demande = DemandeAdhesionEvent::find($id);
+        
+        
+            if (!$demande) {
+                return response()->json("Not found", 404);
+            } else {
+
+               
+                $demande->status = 2;
+                $demande->save();
+                return response()->json("Declined", 200);
+            }
+        
+    }
 
 
 }
