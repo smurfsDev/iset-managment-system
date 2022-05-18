@@ -89,9 +89,10 @@ export default {
                 .then((res) => {
                     
                     this.events= res.data.data.data;
-
+  
                   
                     this.show = false;
+                
                     
                     vm.makePagination(res.data.data);
                    
