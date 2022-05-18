@@ -30,8 +30,8 @@
                 required="required"
               />
               <label>class:</label>
-              <div class="form-group">
-                <select name="Categorie" v-model="oldDemande.Categorie">
+              <!-- <div class="form-group">
+                <select name="Categorie" v-model="oldDocument.Categorie">
                   <option
                     v-for="categorie in categories"
                     :key="categorie.id"
@@ -40,18 +40,18 @@
                     {{ categorie.titre }}
                   </option>
                 </select>
-              </div>
-             <!-- <input
-             <--   type="text"
-             <--   class="border-0 dcc form-control"
-             <--   placeholder="class"
-             <--   v-model="oldDocument.class"
-             <--   required="required"
-             <-- />-->
+              </div> -->
+             <input
+                type="text"
+                class="border-0 dcc form-control"
+                placeholder="class"
+                v-model="oldDocument.class"
+                required="required"
+              />
 
               <label>categorie:</label>
-              <div class="form-group">
-                <select name="idCategorie" v-model="oldDemande.idCategorie">
+              <!-- <div class="form-group">
+                <select name="idCategorie" v-model="oldDocument.idCategorie">
                   <option
                     v-for="categorie in categories"
                     :key="categorie.id"
@@ -61,14 +61,14 @@
                   </option>
                 </select>
               </div>
-              
-              <!-- <input
+               -->
+              <input
                 type="text"
                 class="border-0 dcc form-control"
                 placeholder="categorie"
                 v-model="oldDocument.categorie"
                 required="required"
-              />-->
+              />
 
               <label>Fichier:</label>
               <input
