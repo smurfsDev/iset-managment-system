@@ -31,6 +31,7 @@ class ReclamationController extends Controller
           $reclamation->Titre = "Titre";
           $reclamation->Description = "Description";
           $reclamation->type = "type";
+          $reclamation->idAdmin = "idAdmin";
           $reclamation->save();
           
             return response()->json($reclamation, 201);
