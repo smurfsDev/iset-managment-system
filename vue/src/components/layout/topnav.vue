@@ -134,8 +134,20 @@
                             hidden: !this.isStudent && !this.isResponsableClub,
                         }
                     ]
+                },
+                {
+                    title:'Documents',
+                    icon: 'fa fa-file',
+                    href: 'GererDocument',
+                    hidden: !this.isAuth
+                },
+                {
+                    title: 'Reclamation',
+                    href:'GererReclamation',
+                    icon: 'fa fa-file',
+                    hidden: !this.isAuth
                 }
-        
+
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
 </template>
