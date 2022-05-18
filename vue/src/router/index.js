@@ -81,7 +81,7 @@ const routes = [
   ...demandeAdhesionEvent,
   ...listeEvents,
   ...demandeAdhesionEventForm,
-   ...manageTechnicien
+  ...manageTechnicien,
   ...mesDemandesSalle,
 
 ];
