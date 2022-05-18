@@ -29,7 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SalleSeeder::class);
         $this->call(DemandeSalleSeeder::class);
         $this->call(ClasseSeeder::class);
-
+        $this->call(ReclamationSeeder::class);
+        $this->call(DocumentSeeder::class);
 
     }
 }

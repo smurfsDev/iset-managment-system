@@ -18,7 +18,7 @@ class DocumentFactory extends Factory
             'nom' => $this->faker->sentence,
             'class' => $this->faker->sentence,
             'categorie' => $this->faker->sentence,
-            'image' => $this->faker->sentence,
+            'file' => $this->faker->sentence,
             'idResponsable' =>User::get('id')->random(),
 
         ];

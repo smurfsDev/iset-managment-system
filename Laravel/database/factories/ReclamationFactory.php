@@ -15,10 +15,11 @@ class ReclamationFactory extends Factory
     public function definition()
     {
         return [
-            "stitle"=>$this->faker->word(),
+            "titre"=>$this->faker->word(),
             "description"=>$this->faker->sentence(),
             "type"=>$this->faker->word(),
             'idResponsable' =>User::get('id')->random(),
+            'idAdmin' =>User::get('id')->random(),
         ];
     }
 }
