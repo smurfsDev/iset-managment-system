@@ -109,13 +109,12 @@ class DemandeEventController extends Controller
     }
     public function getApprouvedEvent(Request $request){
         
-       // $events = DemandeEvent::where('status', '=', '1')->paginate(5);
-        // $apEvent = DemandeEvent::join('clubs','clubs.id', '=', 'demande_events.clubId')
-        //         ->where('demande_events.status','=','1')
-        //         ->get(['clubs.*','demande_events.*']);
+      
         if ($request->user()->roles()->get()->contains('name', "student")) {
-            $demandeAdhesionEvent = DemandeAdhesionEvent::where('idStudent', $request->user()->id)->with('demandeEvent')->get('idEvent');
-            $apEvent = DemandeEvent::where('status',1)->whereNotIn('id',$demandeAdhesionEvent->flatten()->pluck('idEvent')->all())->with('club')->paginate(5);
+            $demandeAdhesionEvent = DemandeAdhesionEvent::where('idStudent', $request->user()->id)
+            ->with('demandeEvent')->get('idEvent');
+            $apEvent = DemandeEvent::where('status',1)->whereNotIn('id',$demandeAdhesionEvent->flatten()
+            ->pluck('idEvent')->all())->with('club')->paginate(5);
         if (sizeof($apEvent) > 0) {
             return response()->json(["data" => $apEvent], 200);
         } else
@@ -123,16 +122,7 @@ class DemandeEventController extends Controller
                 "aucun évenement"
             ], 404);
         }
-        // $apEvent = DemandeEvent::where('status',1)->with('club')->paginate(5);
-        //        // $demandes = $request->DemandeEvent()->club()->with('DemandeAdhesionClub')->with('DemandeAdhesionClub.user')->paginate(5);
-        //       //  dd($apEvent);
-        //     //  $apEvent->orderBy('updated_at','desc')->paginate(10);
-        // if (sizeof($apEvent) > 0) {
-        //     return response()->json(["data" => $apEvent], 200);
-        // } else
-        //     return response()->json([
-        //         "aucun évenement"
-        //     ], 404);
+       
     }
     public function updateDemandeEvent(DemandeEventRequest $request, $id)
     {
