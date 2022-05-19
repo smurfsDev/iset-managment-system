@@ -15,17 +15,21 @@ class CreateClubsTable extends Migration
     {
         Schema::create('clubs', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('nom');
-            $table->date('dateCreation');
+
             $table->foreignId('responsableClub');
             $table->foreign('responsableClub')
                 ->references('id')
                 ->on('users')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
-            $table->string('president');
-            $table->string('vicePresident'); 
+            $table->foreignId('demandeCreationClubId');
+            $table->foreign('demandeCreationClubId')
+                ->references('id')
+                ->on('demande_creation_clubs')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+
             $table->timestamps();
         });
     }

@@ -9,13 +9,19 @@ class club extends Model
 {
     use HasFactory;
     protected $table = 'clubs';
-    protected $fillable = [
-        "nom",
-        "dateCreation",
-        "responsableClub",
-        "president",
-        "vicePresident"
-    ];
+    // protected $fillable = [
+    //     "nom",
+    //     "dateCreation",
+    //     "responsableClub",
+    //     "president",
+    //     "vicePresident"
+    // ];
+    protected $guarded = [];
+
+    public function demandeCreationClub()
+    {
+        return $this->HasOne(DemandeCreationClub::class,'id','demandeCreationClubId');
+    }
 
     public function demandeAdhesionClub(){
         return $this->HasMany('App\Models\DemandeAdhesionClub', 'club_id');

@@ -19,6 +19,8 @@ class CreateDemandeSallesTable extends Migration
             $table->foreignId("idSalle");
             $table->date("dateEmploi");
             $table->date("dateDeRemise");
+            $table->integer("status")->default(0);
+            $table->string("reponse")->nullable();
             $table->timestamps();
             $table->foreign('idResponsable')
                 ->references('id')

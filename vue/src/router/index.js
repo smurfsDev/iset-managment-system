@@ -21,12 +21,24 @@ import listeClubs from "./routes/listeClubs";
 import demandeAdhesionForm from "./routes/demandeAdhesionForm";
 import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
 import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
+
+import demandePlanificationEvent from "./routes/demandePlanificationEvent";
+
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import avis from "./routes/avis/avis";
 import listavis from "./routes/avis/listavis";
 import detailsavis from "./routes/avis/detailsavis";
+import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
+
+import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+import manageTechnicien from "./routes/manageTechnicien";
+import mesDemandesSalle from "./routes/mesDemandesSalles";
+import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
+import listeEvents from "./routes/listeEvents";
+import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -62,12 +74,22 @@ const routes = [
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
   ...demandeSalle,
+  ...demandePlanificationEvent,
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
   ...avis,
   ...listavis,
-  ...detailsavis
+  ...detailsavis,
+  ...demandeEvenementAdmin,
+  ...mesDemandesMateriel,
+  ...demandeEvenementAdmin,
+  ...demandeAdhesionEvent,
+  ...listeEvents,
+  ...demandeAdhesionEventForm,
+   ...manageTechnicien,
+  ...mesDemandesSalle,
+
 ];
 
 const router = new VueRouter({
@@ -108,7 +130,13 @@ router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    next({ name: "login", params: { msg: "You must be student or a responsableClub" } });
+    next({ name: "login", params: { msg: "You must be student or a responsableClub"  } });
+  }else if (to.matched.some((record) => record.meta.requiresAorC)) {
+    if (store.getters.isAdmin || store.getters.isChefDepartement) {
+      next();
+      return;
+    } 
+    next({ name: "login", params: { msg: "You must be an Admin or a ChefDepartement" } });
   } else if (to.matched.some((record) => record.meta.requiresAdmin)) {
     if (store.getters.isAdmin) {
       next();

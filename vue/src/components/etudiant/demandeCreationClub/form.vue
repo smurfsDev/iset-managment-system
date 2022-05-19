@@ -18,7 +18,16 @@
             @click="hideModal('demandeModal')"
           ></button>
         </div>
-        <form class="mb-3" @submit.prevent="addDemande">
+        <b-alert
+          class="mt-4"
+          :show="alert.dismissCountDown"
+          dismissible
+          :variant="alert.variant"
+          @dismissed="alert.dismissCountDown = 0"
+        >
+          <p>{{ alert.msg }}</p>
+        </b-alert>
+        <form class="mb-3" @submit.prevent="addDemandee">
           <div class="modal-body">
             <div class="form-group mb-2">
               <label>Nom du club:</label>
@@ -36,7 +45,7 @@
                 name="backgroundImage"
                 @change="convert64"
                 ref="file"
-                required
+                :required="!edit?true : false"
               />
               <label>Date création</label>
               <input
@@ -95,13 +104,25 @@ export default {
     oldDemande: Object,
     edit: Boolean,
   },
-  emits: ["addDemande"],
+  data() {
+    return {
+      alert: {
+        dismissCountDown: 0,
+        variant: "",
+        msg: "",
+      },
+      err: null,
+    };
+  },
+  emits: ["fetchDemandeCreationClub"],
   mounted() {},
   methods: {
-    addDemande() {
-      this.$emit("addDemande", this.oldDemande);
-      this.resetModal1();
-      this.hideModal("demandeModal");
+    fetchDemandeCreationClub() {
+      this.$emit(
+        "fetchDemandeCreationClub",
+        "http://127.0.0.1:8000/api/dcc/",
+        this.alert
+      );
     },
     resetModal1() {
       $(".dcc").val("");
@@ -114,6 +135,65 @@ export default {
         this.oldDemande.logo = reader.result;
       };
       reader.readAsDataURL(file);
+    },
+    addDemandee() {
+      this.show = true;
+      if (!this.edit) {
+        this.$http
+          .post("http://localhost:8000/api/dcc", this.oldDemande)
+          .then((data) => {
+            data = data.data;
+            if (data.success == false) {
+              this.alert.variant = "danger";
+              let err = "";
+              for (const property in data.data) {
+                err += data.data[property] + "\n\n";
+              }
+              console.log(err);
+              this.err = err;
+              this.alert.msg = `
+                            ${err}`;
+              this.alert.dismissCountDown = 5;
+            } else {
+              this.err = "";
+              this.alert.variant = "success";
+              this.alert.msg = "demande ajouté avec succès";
+              this.alert.dismissCountDown = 5;
+              this.resetModal1();
+              this.hideModal("demandeModal");
+            }
+            this.fetchDemandeCreationClub();
+          });
+      } else {
+        this.$http
+          .put(
+            "http://localhost:8000/api/dcc/" + this.oldDemande.id,
+            this.oldDemande
+          )
+          .then((data) => {
+            data = data.data;
+            if (data.success == false) {
+              this.alert.variant = "danger";
+              let err = "";
+              for (const property in data.data) {
+                err += data.data[property] + "\n\n";
+              }
+              console.log(err);
+              this.err = err;
+              this.alert.msg = `
+                            ${err}`;
+              this.alert.dismissCountDown = 5;
+            } else {
+              this.err = "";
+              this.alert.variant = "warning";
+              this.alert.msg = "demande modifié avec succès";
+              this.alert.dismissCountDown = 5;
+              this.fetchDemandeCreationClub();
+              this.resetModal1();
+              this.hideModal("demandeModal");
+            }
+          });
+      }
     },
   },
 };
