@@ -157,6 +157,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/members'], function () {
         Route::get('/', [MemberController::class, 'getMembers']);
         Route::delete('/{id}', [MemberController::class, 'deleteMember']);
+        Route::post('/mail/{id}', [MemberController::class, 'sendMail']);
     });
 
     Route::group(['prefix' => '/demandeEvent'], function () {
@@ -171,9 +172,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/decline/{id}', [DemandeEventController::class, 'decline']);
         Route::get('/getAllEvents', [DemandeEventController::class, 'show']);
     });
-    
 
-    
+
+
 
     // classes routes
 
@@ -185,7 +186,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     // demande adhesion event routes
     Route::group(['prefix' => '/demandeAdhesionEvent'], function () {
-        
+
         //Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/get', [DemandeAdhesionEventController::class, 'getDemandeAdhesion']);
         Route::post('/create/{id}', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
