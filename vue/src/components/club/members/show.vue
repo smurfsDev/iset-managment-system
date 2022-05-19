@@ -141,7 +141,7 @@ export default {
                 if(this.use.length!==0){
                     if(window.confirm("Are you sure you want to delete")){
                         for(var i=0;i<this.use.length;i++){
-                           this.Delete(this.use[i]);
+                           this.$emit("deleteMemberGroup",this.use[i]);
                         }
                     }
                 }
