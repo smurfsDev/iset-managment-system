@@ -3,10 +3,10 @@
     <mailS @sendMail="sendMail" :use="use"></mailS>
     <div class="row col-12">
       <div class="col-6 mt-1 mb-2">
-        <button type="button" class="btn btn-danger" @click="deletteRecords">Delete</button>
+        <button type="button" :class="[{ disabled: use.length == 0 }]" class="btn btn-danger" @click="deletteRecords">Delete</button>
       </div>
       <div class="col-6 mt-1 mb-2 ">
-        <button type="button" class="btn btn-primary mx-1 float-end" data-bs-toggle="modal" data-bs-target="#MailModal" @click="initModal()">Send Email</button>
+        <button type="button" :class="[{ disabled: use.length == 0 }]" class="btn btn-primary mx-1 float-end" data-bs-toggle="modal" data-bs-target="#MailModal" @click="initModal()">Send Email</button>
       </div>
     </div>
         
