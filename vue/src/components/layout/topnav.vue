@@ -188,7 +188,13 @@
                             hidden: !this.isResponsableClub,
                         },
                     ]
-                }
+                },
+                {
+                            href: '/gererCategorieMateriel',
+                            title: 'gererCategorieMateriel',
+                            icon: 'fas fa-file',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
+                        },
         
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
