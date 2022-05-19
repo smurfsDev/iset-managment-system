@@ -211,6 +211,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [CategorieMaterielController::class, 'destroy']);
     });
 
+    Route::group(['prefix' => '/m'], function () {
+        Route::get('/', [MaterielController::class, 'get']);
+        Route::post('/', [MaterielController::class, 'create']);
+        Route::put('/{id}', [MaterielController::class, 'update']);
+        Route::delete('/{id}', [MaterielController::class, 'destroy']);
+    });
 });
 
 // page club routes
