@@ -22,7 +22,10 @@ use App\Http\Controllers\SalleController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ReclamationController;
 use App\Http\Controllers\StudentsController;
+use App\Models\Reclamation;
 
 /*
 |--------------------------------------------------------------------------
@@ -148,6 +151,26 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [ClasseController::class, 'deleteClass']);
         Route::put('/{id}', [ClasseController::class, 'updateClass']);
     });
+    
+// documents routes
+Route::group(['prefix' => '/Document'], function () {
+Route::get('/', [DocumentController::class, 'getDocument']);
+Route::delete('/{id}', [DocumentController::class, 'show']);
+Route::post('/', [DocumentController::class, 'createDocument']);
+Route::put('/{id}', [DocumentController::class, 'updateDocument']);
+Route::delete('/{id}', [DocumentController::class, 'deleteDocument']);
+
+});
+
+// reclamation routes
+Route::group(['prefix' => '/reclamation'], function () {
+Route::get('/', [ReclamationController::class, 'getReclamation']);
+Route::post('/', [ReclamationController::class, 'addReclamation']);
+Route::put('/{id}', [ReclamationController::class, 'updateReclamation']);
+Route::delete('/{id}', [ReclamationController::class, 'deleteReclamation']);
+
+});
+
 });
 
 // page club routes
@@ -188,3 +211,4 @@ Route::group(['prefix' => '/s'], function () {
     Route::post('/accept/{id}', [StudentsController::class, 'accept']);
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
 });
+

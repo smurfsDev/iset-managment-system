@@ -65,5 +65,9 @@ class User extends Authenticatable
         return $this->HasMany('App\Models\DemandeMateriel', 'idResponsableClub');
     }
 
+    public function Reclamation(){
+        return $this->HasMany('App\Models\Reclamation', 'idResponsable');
+    }
+
 
 }
