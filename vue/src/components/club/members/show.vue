@@ -5,8 +5,8 @@
       <div class="col-6 mt-1 mb-2">
         <button type="button" class="btn btn-danger" @click="deletteRecords">Delete</button>
       </div>
-      <div class="col-6 mt-1 mb-2 float-end">
-        <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal" data-bs-target="#MailModal" @click="initModal()">Send Email</button>
+      <div class="col-6 mt-1 mb-2 ">
+        <button type="button" class="btn btn-primary mx-1 float-end" data-bs-toggle="modal" data-bs-target="#MailModal" @click="initModal()">Send Email</button>
       </div>
     </div>
         
