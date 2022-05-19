@@ -27,7 +27,7 @@ class MaterielRequest extends FormRequest
     {
         return [
 
-            "titre"=>"required|string|max:255",
+            "titre"=>"required|string|max:255|unique:materiels",
             "quantité"=>"required|integer|min:1",
             "description"=>"required|string|max:255",
             "idCategorie"=>"required|exists:categorie_materiels,id",
