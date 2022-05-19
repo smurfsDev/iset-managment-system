@@ -114,7 +114,7 @@ class DemandeEventController extends Controller
             $demandeAdhesionEvent = DemandeAdhesionEvent::where('idStudent', $request->user()->id)
             ->with('demandeEvent')->get('idEvent');
             $apEvent = DemandeEvent::where('status',1)->whereNotIn('id',$demandeAdhesionEvent->flatten()
-            ->pluck('idEvent')->all())->with('club')->paginate(5);
+            ->pluck('idEvent')->all())->with('club.demandeCreationClub')->paginate(5);
         if (sizeof($apEvent) > 0) {
             return response()->json(["data" => $apEvent], 200);
         } else

@@ -24,12 +24,12 @@
                                 <b-col>Description : {{ event.description }} <br></b-col>
                             </b-row>
                             <b-row>
-                                <b-col>Organisé par : {{ event.club.nom }} <br></b-col>
+                                <b-col>Organisé par : {{ event.club.demande_creation_club.nomClub }} <br></b-col>
                             </b-row>
                             
                         </b-row>
                         <b-button variant="success" 
-                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.nom,event.dateEvent)"
+                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.demande_creation_club.nom,event.dateEvent)"
                             
                         >
                             S'inscrire</b-button>
