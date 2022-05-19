@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\club;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MailRequest;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -91,6 +92,36 @@ class MemberController extends Controller
                 'success' => false,
                 'data' => 'Empty',
                 'message' => 'Member could not be deleted.'
+            ];
+            return response()->json($response, 404);
+        }
+    }
+    public function sendMail(MailRequest $request,$id)
+    {
+        $member = Member::find($id);
+        if (!empty($member)) {
+            $user = User::find($member->user_id);
+            $data = array('name' => $user->name, 'email' => $user->email);
+            \Mail::send('mail', array(
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+                'sujet' => $request->get('sujet'),
+                'user_query' => $request->get('message'),
+            ), function($message) use ($request,$data){
+                $message->from($request->user()->email, $request->user()->name);
+                $message->to($data['email'], $data['name'])->subject($request->get('sujet'));
+            });
+            $response = [
+                'success' => true,
+                'data' => $member,
+                'message' => 'Mail sent successfully.'
+            ];
+            return response()->json($response, 200);
+        } else {
+            $response = [
+                'success' => false,
+                'data' => 'Empty',
+                'message' => 'Mail could not be sent.'
             ];
             return response()->json($response, 404);
         }
