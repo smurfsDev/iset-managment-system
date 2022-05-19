@@ -49,6 +49,7 @@
 
 <script>
 export default {
+  emits: ["sendMail"],
     props: {
     use: Array,
     },
@@ -61,15 +62,7 @@ export default {
     },
   methods: {
         sendMail(id){
-            this.$http.post("http://127.0.0.1:8000/api/members/mail/"+id,{
-                sujet:this.sujet,
-                message:this.message,
-            }).then(res => {
-                this.hideModal('MailModal');
-                this.alert.variant = "success";
-                this.alert.msg = "Mail envoyée avec succès";
-                this.alert.dismissCountDown = 5;
-            });
+            this.$emit("sendMail",id);
         },
         send(){
             for(var i=0; i < this.use.length;i++){

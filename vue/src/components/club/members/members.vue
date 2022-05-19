@@ -18,6 +18,7 @@
           <p>{{ alert.msg }}</p>
         </b-alert>
         <showMember
+          @sendMail="sendMail"
           :members="members"
           :pagination="pagination"
           @fetchMember="fetchMembers"
@@ -89,6 +90,17 @@ export default {
           .catch((err) => console.log(err));
       }
     },
+    sendMail(id){
+            this.$http.post("http://127.0.0.1:8000/api/members/mail/"+id,{
+                sujet:this.sujet,
+                message:this.message,
+            }).then(res => {
+                this.hideModal('MailModal');
+                this.alert.variant = "success";
+                this.alert.msg = "Mail envoyée avec succès";
+                this.alert.dismissCountDown = 5;
+            });
+        },
   },
 };
 </script>

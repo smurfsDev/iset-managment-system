@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mailS :use="use"></mailS>
+    <mailS @sendMail="sendMail" :use="use"></mailS>
     <div class="row col-12">
       <div class="col-6 mt-1 mb-2">
         <button type="button" class="btn btn-danger" @click="deletteRecords">Delete</button>
@@ -85,6 +85,7 @@
 <script>
 import mailS from "./mail.vue";
 export default {
+  emits: ["senMail"],
   components: {
     mailS
   },
@@ -144,7 +145,10 @@ export default {
                         }
                     }
                 }
-            }
+        },
+         sendMail(id){
+            this.$emit("sendMail",id);
+        },
     },
 }
 </script>
