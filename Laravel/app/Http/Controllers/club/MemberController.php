@@ -5,6 +5,7 @@ namespace App\Http\Controllers\club;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MailRequest;
 use App\Models\Member;
+use App\Models\SendMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -115,6 +116,18 @@ class MemberController extends Controller
                 'success' => true,
                 'message' => 'Mail sent successfully.'
             ];
+            $sujet = $request->get('sujet');
+            $message = $request->get('message');
+            $from = $request->user()->email;
+            $to = $user->email;
+
+            $data=array(
+                'sujet'=>$sujet,
+                'message'=>$message,
+                'from'=>$from,
+                'to'=>$to,
+            );
+            SendMail::create($data);
             return response()->json($response, 200);
         } else {
             $response = [
