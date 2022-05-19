@@ -195,7 +195,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/accept/{id}', [DemandeAdhesionEventController::class, 'accept']);
         Route::put('/decline/{id}', [DemandeAdhesionEventController::class, 'decline']);
         Route::delete('/delete/{id}', [DemandeAdhesionEventController::class, 'deleteDemandeAdhesion']);
-       
+
         //Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
 
@@ -205,6 +205,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/refuse/{id}', [TechnicienController::class, 'refuse']);
     });
 
+    Route::group(['prefix' => '/c'], function () {
+        Route::post('/', [CategorieMaterielController::class, 'store']);
+        Route::put('/{id}', [CategorieMaterielController::class, 'update']);
+        Route::delete('/{id}', [CategorieMaterielController::class, 'destroy']);
+    });
 
 });
 
