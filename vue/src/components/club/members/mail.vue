@@ -22,7 +22,6 @@
         <form class="mb-3" @submit.prevent="send">
           <div class="modal-body">
             <div class="form-group mb-2">
-                {{use}}
                 <label>Sujet :</label>
               <div class="form-group">
                 <input type="text" class="form-control" v-model="sujet" placeholder="sujet"  required="required" />
