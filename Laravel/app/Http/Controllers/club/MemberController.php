@@ -17,7 +17,7 @@ class MemberController extends Controller
     public function getMembers(Request $request)
     {
         $club = $request->user()->club()->get('id');
-        $members = Member::with('user')->with('club')->where('club_id','=',$club[0]->id)->paginate(5);
+        $members = Member::with('user')->with('club.demandeCreationClub')->where('club_id','=',$club[0]->id)->paginate(5);
         if (!empty($members)) {
             $response = [
                 'success' => true,
