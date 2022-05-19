@@ -82,9 +82,9 @@ const routes = [
   ...demandeAdhesionEvent,
   ...listeEvents,
   ...demandeAdhesionEventForm,
-
+  ...manageTechnicien,
   ...responseDemandeAdhEvent,
-   ...manageTechnicien,
+  ...manageTechnicien,
   ...mesDemandesSalle,
 
 
