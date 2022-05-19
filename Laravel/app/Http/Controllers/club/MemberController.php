@@ -113,14 +113,12 @@ class MemberController extends Controller
             });
             $response = [
                 'success' => true,
-                'data' => $member,
                 'message' => 'Mail sent successfully.'
             ];
             return response()->json($response, 200);
         } else {
             $response = [
                 'success' => false,
-                'data' => 'Empty',
                 'message' => 'Mail could not be sent.'
             ];
             return response()->json($response, 404);
