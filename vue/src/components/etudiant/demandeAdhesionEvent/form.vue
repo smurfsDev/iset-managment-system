@@ -28,7 +28,7 @@
                 
 
                 
-                <button type="submit" class="btn btn-primary">Valider la demande </button>
+                <button type="submit" class="btn btn-primary" >Valider la demande </button>
               </form>
             </b-container>
           </div>
@@ -43,22 +43,30 @@ export default {
   data() {
     return {
       message: "",
+      valider:false,
+      response: {},
     };
   },
   methods: {
     send(id) {
       
 
-      console.log(this.message)
+      
       this.$http.post("http://localhost:8000/api/demandeAdhesionEvent/create/"+id)
       .then((result) => {
        
         if (result.status == "201") {
-          console.log(result.status)
+         
+          this.res = result.data.data;
+         
+        
+             this.valider=true;
+
           this.$router.push({ name:"demandeAdhesionEvent", params:{
             nomEvent: this.$route.params.nomEvent,
             dateEvent: this.$route.params.dateEvent,
             nomClub: this.$route.params.nomClub,
+         
 
           }});
         }

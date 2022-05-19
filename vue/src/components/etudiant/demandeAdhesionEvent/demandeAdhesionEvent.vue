@@ -84,6 +84,10 @@ export default {
             title: "Status",
 
           },
+          {
+            'title': 'Action',
+            'key': 'action',
+          }
         ]
       };
     }

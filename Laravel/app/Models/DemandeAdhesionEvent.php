@@ -18,8 +18,9 @@ class DemandeAdhesionEvent extends Model
         "status"
     ];
     public function student(){
-        return $this->belongsTo(User::class,'idStudent');
+        return $this->belongsTo(User::class,'idStudent','id');
     }
+    
     // public function event(){
     //     return $this->belongsTo(DemandeEvent::class,'idEvent');
     // }

@@ -24,12 +24,12 @@
                                 <b-col>Description : {{ event.description }} <br></b-col>
                             </b-row>
                             <b-row>
-                                <b-col>Organisé par : {{ event.club.nom }} <br></b-col>
+                                <b-col>Organisé par : {{ event.club.demande_creation_club.nomClub }} <br></b-col>
                             </b-row>
                             
                         </b-row>
                         <b-button variant="success" 
-                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.nom,event.dateEvent)"
+                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.demande_creation_club.nom,event.dateEvent)"
                             
                         >
                             S'inscrire</b-button>
@@ -87,14 +87,15 @@ export default {
             let vm = this;
             this.$http.get(page_url)
                 .then((res) => {
-                    console.log(res.data.data.data)
+                    
                     this.events= res.data.data.data;
-
+  
                   
                     this.show = false;
-                    console.log(res.data.data)
+                
+                    
                     vm.makePagination(res.data.data);
-                    //console.log(this.events.data);
+                   
                    
                 });
                 
@@ -124,7 +125,7 @@ export default {
                 
                 
             });
-            console.log(id,nomClub,nomEvent,dateEvent);
+           
 
             
         },

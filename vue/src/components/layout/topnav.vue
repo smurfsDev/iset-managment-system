@@ -181,7 +181,12 @@
                             icon: 'fa fa-file',
                             hidden: !this.isAdmin && !this.isChefDepartement,
                         },
-
+                        {
+                            href: '/responseDemandeAdhEvent',
+                            title: 'Adhesion evenement',
+                            icon: 'fas fa-building',
+                            hidden: !this.isResponsableClub,
+                        },
                     ]
                 }
         
