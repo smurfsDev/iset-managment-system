@@ -27,7 +27,8 @@ class MaterielController extends Controller
         } else
             return response()->json([
                 "aucun materiel"
-            ], 404);
+            ],
+             404);
     }
 
     public function addMateriel($idMateriel, $idDemande)
