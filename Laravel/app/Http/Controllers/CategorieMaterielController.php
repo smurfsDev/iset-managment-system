@@ -10,7 +10,7 @@ class CategorieMaterielController extends Controller
 {
     public function show()
     {
-        $Categorie = CategorieMateriel::get();
+        $Categorie = CategorieMateriel::orderBy('updated_at','desc')->get();
         if (sizeof($Categorie) > 0) {
             return response()->json(["data" => $Categorie], 200);
         } else
