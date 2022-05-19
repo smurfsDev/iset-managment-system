@@ -14,7 +14,8 @@ class MatiereFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "nom" => $this->faker->word(),
+            "idClasse" => Classe::get('id')->random(),
         ];
     }
 }
