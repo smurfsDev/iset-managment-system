@@ -23,6 +23,7 @@ use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\posteavisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -187,4 +188,11 @@ Route::group(['prefix' => '/s'], function () {
     Route::get('/', [StudentsController::class, 'show']);
     Route::post('/accept/{id}', [StudentsController::class, 'accept']);
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
+});
+Route::group(['prefix' => '/avis'], function () {
+    Route::get('/show', [posteavisController::class, 'index']);
+    Route::get('/details/{id}', [posteavisController::class, 'show']);
+    Route::post('/update/{id}', [posteavisController::class, 'update']);
+    Route::post('/add', [posteavisController::class, 'store']);
+    Route::post('/delete/{id}', [posteavisController::class, 'destroy']);
 });

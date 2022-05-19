@@ -24,6 +24,9 @@ import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
+import avis from "./routes/avis/avis";
+import listavis from "./routes/avis/listavis";
+import detailsavis from "./routes/avis/detailsavis";
 Vue.use(VueRouter);
 
 const routes = [
@@ -61,7 +64,10 @@ const routes = [
   ...demandeSalle,
   ...manageChefDepartments,
   ...manageStudents,
-  ...manageClasses
+  ...manageClasses,
+  ...avis,
+  ...listavis,
+  ...detailsavis
 ];
 
 const router = new VueRouter({
