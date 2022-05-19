@@ -122,6 +122,13 @@ class DemandeEventController extends Controller
                 "aucun évenement"
             ], 404);
         }
+        if (sizeof($apEvent) > 0) {
+            return response()->json(["data" => $apEvent], 200);
+        } else
+            return response()->json([
+                "aucun évenement"
+            ], 404);
+
        
     }
     public function updateDemandeEvent(DemandeEventRequest $request, $id)
