@@ -1,7 +1,13 @@
 <template>
   <div>
-    <div class="col-6 mt-1 mb-2">
-               <button type="button" class="btn btn-danger" @click="deletteRecords">Delete</button>
+    <mailS :use="use"></mailS>
+    <div class="row col-12">
+      <div class="col-6 mt-1 mb-2">
+        <button type="button" class="btn btn-danger" @click="deletteRecords">Delete</button>
+      </div>
+      <div class="col-6 mt-1 mb-2 float-end">
+        <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal" data-bs-target="#MailModal" @click="initModal()">Send Email</button>
+      </div>
     </div>
         
     <div
@@ -10,7 +16,6 @@
     >
       <h3>il y'a aucun member</h3>
     </div>
-    {{use}}
   <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -36,7 +41,6 @@
                         <button class="btn btn-danger" @click="Delete(member.id)"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 </td>
-                {{member.id}}
             </tr>
             </tbody>
         </table>
@@ -79,12 +83,15 @@
 </template>
 
 <script>
+import mailS from "./mail.vue";
 export default {
+  components: {
+    mailS
+  },
    data() {
             return {
                 multipleSelect:false,
                 use:[],
-                useEmail:[],
 
             }
         },
@@ -94,6 +101,9 @@ export default {
     },
     emits:['fetchMember','deleteMember'],
     methods:{
+        initModal() {
+          this.showModal("MailModal");
+        },
         Delete(id){
             this.$emit("deleteMember",id);
         },
