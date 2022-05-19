@@ -5,6 +5,6 @@ export default [
     path: "/gererCategorieMateriel",
     component: gererCategorieMateriel,
     name: "gererCategorieMateriel",
-    meta: { requiresAorC: true },
+    meta: { requiresAorCorT: true },
   },
 ];

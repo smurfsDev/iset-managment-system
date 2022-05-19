@@ -190,11 +190,17 @@
                     ]
                 },
                 {
-                            href: '/gererCategorieMateriel',
-                            title: 'gererCategorieMateriel',
-                            icon: 'fas fa-file',
-                            hidden: !this.isAdmin && !this.isChefDepartement,
-                        },
+                    href: '/gererCategorieMateriel',
+                    title: 'gererCategorieMateriel',
+                    icon: 'fas fa-file',
+                    hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
+                },
+                {
+                    href: '/gererMateriel',
+                    title: 'gererMateriel',
+                    icon: 'fas fa-file',
+                    hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
+                },
         
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
@@ -252,6 +258,7 @@ export default {
             student: 'isStudent',
             responsable: 'isResponsableClub',
             chefDepartement: 'isChefDepartement',
+            technicien: 'isTechnicien',
         }),
         isAuth: function () {
             return this.auth;
@@ -267,7 +274,11 @@ export default {
         },
         isChefDepartement: function () {
             return this.chefDepartement;
-        }
+        },
+        isTechnicien: function () {
+            return this.technicien;
+        },
+
 
     }
 }
