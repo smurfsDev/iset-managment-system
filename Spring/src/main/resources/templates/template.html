@@ -8,15 +8,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<link rel="stylesheet" type="text/css"
 	href="bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script src="jquery.js"></script>
     <script src="bootstrap.js"></script>
         <script src="popper.min.js"></script>
+		<script src="script.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 	<meta charset="utf-8" />
 	<title>Gestion des Produits</title>
 </head>
 
 <body>
+	
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<a class="navbar-brand" th:href="@{listeDcc}">PROJECT</a>
 		<ul class="navbar-nav">
@@ -79,7 +83,18 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			</li>
 		</ul>
 	</nav>
-	<section layout:fragment="Mycontent"></section>
+	<div class="page-wrapper chiller-theme toggled">
+		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+		  <i class="fas fa-bars"></i>
+		</a>
+		<div th:replace="header :: header">...</div>
+		<!-- sidebar-wrapper  -->
+		<main class="page-content">
+		  <div class="container-fluid">
+			<section layout:fragment="Mycontent"></section>
+		  </div>
+		</main>
+	
 </body>
 
 </html>
