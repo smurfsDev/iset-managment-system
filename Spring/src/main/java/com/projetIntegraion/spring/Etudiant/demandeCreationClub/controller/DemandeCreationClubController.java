@@ -31,7 +31,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("pages", new int[listDcc.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
 
-        return "list";
+        return "demandeCreationClub/list";
     }
 
     @RequestMapping("/showCreateDcc")
@@ -43,7 +43,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
-        return "form";
+        return "demandeCreationClub/form";
     }
 
     @RequestMapping("/saveDcc")
@@ -57,7 +57,7 @@ public class DemandeCreationClubController {
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
             modelMap.addAttribute("Dcc", Dcc);
-            return "form";
+            return "demandeCreationClub/form";
         } else {
             DemandeCreationClub dc = new DemandeCreationClub();
             dc.setNomClub(Dcc.getNomClub());
@@ -101,7 +101,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("edit", true);
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
-        return "form";
+        return "demandeCreationClub/form";
     }
 
     @RequestMapping("/updateDcc")
@@ -116,7 +116,7 @@ public class DemandeCreationClubController {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
             modelMap.addAttribute("Dcc", Dcc);
             modelMap.addAttribute("edit", true);
-            return "form";
+            return "demandeCreationClub/form";
         } else {
             DemandeCreationClub dc = new DemandeCreationClub();
             dc.setId(Dcc.getId());
@@ -180,7 +180,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("name", name);
-        return "list";
+        return "demandeCreationClub/list";
     }
 
 }
