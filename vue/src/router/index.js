@@ -36,8 +36,12 @@ import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
 import listeEvents from "./routes/listeEvents";
 import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
 import responseDemandeAdhEvent from "./routes/responseDemandeAdhEvent";
+
 import gererCategorieMateriel from "./routes/gererCategorieMateriel";
 import gererMateriel from "./routes/gererMateriel";
+import gererMatieres from "./routes/gererMatieres";
+import manageEnseignant from "./routes/manageEnseignant";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -83,12 +87,15 @@ const routes = [
   ...demandeAdhesionEvent,
   ...listeEvents,
   ...demandeAdhesionEventForm,
-  ...manageTechnicien,
   ...responseDemandeAdhEvent,
   ...manageTechnicien,
   ...mesDemandesSalle,
+
   ...gererCategorieMateriel,
-  ...gererMateriel
+  ...gererMateriel,
+   ...gererMatieres,
+  ...manageEnseignant
+
 
 
 ];

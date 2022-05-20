@@ -44,6 +44,15 @@ class AuthController extends BaseController
                     return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
                 }
             }
+            if (
+                $user->roles->contains('name', "enseignant")
+            ) {
+                if ($user->roles->where('name', 'enseignant')->first()->pivot->status == 0) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre compte n\'est pas encore activé']);
+                }else if ($user->roles->where('name', 'enseignant')->first()->pivot->status == 2) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
+                }
+            }
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
             $success['user'] = $user;
@@ -52,6 +61,7 @@ class AuthController extends BaseController
             $success['isResponsableClub'] = false;
             $success['isChefDepartement'] = false;
             $success['isTechnicien'] = false;
+            $success['isEnseignant'] = false;
 
             if ($user->roles->contains('name', "student")) {
                 $success['isStudent'] = true;
@@ -67,6 +77,9 @@ class AuthController extends BaseController
             }
             if ($user->roles->contains('name', "technicien")) {
                 $success['isTechnicien'] = true;
+            }
+            if ($user->roles->contains('name', "enseignant")) {
+                $success['isEnseignant'] = true;
             }
 
             return $this->sendResponse($success, 'User signed in');
