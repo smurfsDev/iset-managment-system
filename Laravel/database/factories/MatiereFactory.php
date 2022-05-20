@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Classe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MatiereFactory extends Factory
