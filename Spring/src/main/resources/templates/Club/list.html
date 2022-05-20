@@ -15,10 +15,6 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des Clubs</h1>
-                    <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateDcc(
-                    page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
-                            class="fa-solid fa-plus"></i> Ajouter
-                    </a>
                 </div>
             </div>
             <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
