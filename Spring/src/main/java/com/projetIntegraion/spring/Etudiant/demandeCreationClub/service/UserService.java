@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServise {
+public class UserService {
     @Autowired UserRepository UserRepository;
     public List<User> getAllUser() {
         return UserRepository.findAll();
