@@ -174,9 +174,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/getAllEvents', [DemandeEventController::class, 'show']);
     });
 
-    Route::group(['prefix' => '/Matiere'], function () {
+    Route::group(['prefix' => '/matiere'], function () {
         Route::get('/{id}', [MatiereController::class, 'getMatiereParClasse']);
-        
+        Route::post('/create/{id}', [MatiereController::class, 'createMatiere']);
     });
 
 
