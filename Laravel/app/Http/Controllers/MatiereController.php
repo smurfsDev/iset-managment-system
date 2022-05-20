@@ -23,4 +23,21 @@ class MatiereController extends Controller
         $matiere->save();
         return response()->json(["data" => $matiere], 201);
     }
+
+    public function updateMatiere(MatiereRequest $request, $id){
+        $matiere = Matiere::find($id);
+        if ($matiere) {
+            $matiere->nom = $request->input('nom') ? $request->input('nom') : $matiere->nom;
+             $matiere->save();
+            return response()->json([
+                'message' => 'Update Success',
+                'id' => $matiere->id,
+                'attributes' => $matiere
+            ], 201);
+        } else {
+            return response()->json([
+                "Matiere non trouvée"
+            ], 404);
+        }
+    }
 }
