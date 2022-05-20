@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import com.projetIntegraion.spring.blogClub.entity.Club;
 
 @Entity
-public class Members {
+public class Member {
     private @Id @GeneratedValue Long id;
 
     @OneToOne
@@ -17,11 +17,11 @@ public class Members {
     private Club club;
 
 
-    public Members() {
+    public Member() {
     }
 
 
-    public Members(Long id, User etudiant, Club club) {
+    public Member(Long id, User etudiant, Club club) {
         this.id = id;
         this.etudiant = etudiant;
         this.club = club;
