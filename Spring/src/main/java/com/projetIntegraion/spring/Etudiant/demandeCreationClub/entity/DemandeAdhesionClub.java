@@ -4,15 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import com.projetIntegraion.spring.blogClub.entity.Club;
 
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 @Entity
 public class DemandeAdhesionClub {
     private @Id @GeneratedValue Long id;
     private int status;
     @NotNull
+	@Size(min = 3, max = 30)
 	private String message;
     @ManyToOne
 	private User etudiant;
