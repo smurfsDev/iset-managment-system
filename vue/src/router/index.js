@@ -36,6 +36,7 @@ import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
 import listeEvents from "./routes/listeEvents";
 import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
 import responseDemandeAdhEvent from "./routes/responseDemandeAdhEvent";
+import gererMatieres from "./routes/gererMatieres";
 
 Vue.use(VueRouter);
 
@@ -86,6 +87,7 @@ const routes = [
   ...responseDemandeAdhEvent,
   ...manageTechnicien,
   ...mesDemandesSalle,
+  ...gererMatieres
 
 
 ];

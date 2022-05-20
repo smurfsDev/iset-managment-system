@@ -2,47 +2,12 @@
   <div>
     <div
       class="card card-body my-5 py-5 text-center"
-      v-if="Classes.length == 0"
+      v-if="Matieres.length == 0"
     >
-      <h3>il y'a aucune Classe</h3>
+      <h3>il y'a aucune Matiere</h3>
     </div>
-    <b-card class="my-2" v-for="Classe in Classes" :key="Classe.id">
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'success',
-          title: 'Classe accepted',
-          placement: 'topright',
-        }"
-        v-if="Classe.status == 1"
-        icon="check-square"
-        scale="2"
-        variant="success"
-      ></b-icon>
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'danger',
-          title: 'Classe not accepted',
-          placement: 'topright',
-        }"
-        v-if="Classe.status == 2"
-        icon="x-square"
-        scale="2"
-        variant="danger"
-      ></b-icon>
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'warning',
-          title: 'Classe pending',
-          placement: 'topright',
-        }"
-        v-if="Classe.status == 0"
-        icon="x-square"
-        scale="2"
-        variant="warning"
-      ></b-icon>
+    <b-card class="my-2" v-for="Matiere in Matieres" :key="Matiere.id">
+      
       <md-tabs style="height: auto;!important">
         <md-tab
           id="tab-home"
@@ -53,24 +18,20 @@
             <b-row class="mb-2">
               <b-row>
                 <b-col>
-                  Nom  : <button v-on:click="addmat(Classe.id)"> {{ Classe.nom }} </button>
+                  Nom  : {{ Matiere.nom }}
                 </b-col>
               </b-row>
-              <b-row>
-                <b-col>
-                  Abbreveation : {{ Classe.abreviation }} 
-                </b-col>
-              </b-row>
+              
             </b-row>
             <b-button
               variant="danger"
-              v-on:click="Delete(Classe.id)"
+              v-on:click="Delete(Matiere.id)"
             >
               Delete</b-button
             >
             <b-button
               variant="warning"
-              v-on:click="Update(Classe)"
+              v-on:click="Update(Matiere)"
             >
               Update</b-button
             >
@@ -78,14 +39,14 @@
         </md-tab>
       </md-tabs>
     </b-card>
-    <nav class="row" v-if="Classes.length != 0">
+    <nav class="row" v-if="Matieres.length != 0">
       <ul class="pagination w-auto mx-auto">
         <li
           :class="[{ disabled: !pagination.prev_page_url }]"
           class="page-item"
         >
           <a
-            @click="fetchClasse(pagination.prev_page_url)"
+            @click="fetchMatiere(pagination.prev_page_url)"
             class="btn btun page-link"
             :class="[
               !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
@@ -103,7 +64,7 @@
           class="page-item"
         >
           <a
-            @click="fetchClasse(pagination.next_page_url)"
+            @click="fetchMatiere(pagination.next_page_url)"
             :class="[
               !pagination.next_page_url ? 'disabled' : 'link-primary btun',
             ]"
@@ -119,7 +80,7 @@
 <script>
 export default {
   props: {
-    Classes: Array,
+    Matieres: Array,
     pagination: Object,
   },
   data() {
@@ -127,24 +88,18 @@ export default {
       id: "",
     };
   },
-  emits: ["deleteClasse", "updateClasse", "fetchClasse"],
+  emits: ["deleteMatiere", "updateMatiere", "fetchMatiere"],
   methods: {
     Delete(id) {
-      this.$emit("deleteClasse", id);
+      this.$emit("deleteMatiere", id);
     },
-    Update(Classe) {
-      this.$emit("updateClasse", Classe);
+    Update(Matiere) {
+      this.$emit("updateMatiere", Matiere);
       this.showModal("ClasseModal");
     },
     fetchClasse(url) {
-      this.$emit("fetchClasse", url);
+      this.$emit("fetchMatiere", url);
     },
-    addmat(id) {
-      
-      this.$router.push({ name:"GererMatiere", params:{
-            id: id,
-          }});
-    }
   },
 };
 </script>
