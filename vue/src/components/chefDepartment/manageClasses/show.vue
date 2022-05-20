@@ -53,7 +53,7 @@
             <b-row class="mb-2">
               <b-row>
                 <b-col>
-                  Nom  : <button v-on:click="addmat(Classe.id)"> {{ Classe.nom }} </button>
+                  Nom  : <button class="btn white" v-on:click="addmat(Classe.id)"> {{ Classe.nom }} </button>
                 </b-col>
               </b-row>
               <b-row>
