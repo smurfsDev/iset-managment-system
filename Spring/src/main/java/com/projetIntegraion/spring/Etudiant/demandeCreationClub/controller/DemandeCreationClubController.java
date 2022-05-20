@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeCreationClubService;
+import com.projetIntegraion.spring.blogClub.entity.Club;
+import com.projetIntegraion.spring.blogClub.service.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class DemandeCreationClubController {
     @Autowired
     private DemandeCreationClubService DemandeCreationClubService;
-
+    @Autowired
+    private ClubService clubService;
     @RequestMapping("/listeDcc")
     public String showList(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -147,6 +150,16 @@ public class DemandeCreationClubController {
         DemandeCreationClub dc = DemandeCreationClubService.getDemandeCreationClub(id);
         dc.setStatus(1);
         DemandeCreationClubService.save(dc);
+        Club c = new Club();
+        c.setNomClub(dc.getNomClub());
+        c.setDateCreation(dc.getDateCreation());
+        c.setPresident(dc.getPresident());
+        c.setVicePresident(dc.getVicePresident());
+        c.setResponsableClub(dc.getResponsableClub());
+        c.setLogo(dc.getLogo());
+        
+        c = clubService.save(c);
+
         modelMap.addAttribute("Dcc", new DemandeCreationClub());
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
