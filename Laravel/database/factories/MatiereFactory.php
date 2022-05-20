@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Classe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,7 @@ class MatiereFactory extends Factory
         return [
             "nom" => $this->faker->word(),
             "idClasse" => Classe::get('id')->random(),
+            "idEnseignant" => User::get('id')->random(),
         ];
     }
 }

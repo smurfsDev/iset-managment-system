@@ -17,6 +17,8 @@ class CreateMatieresTable extends Migration
             $table->id();
             $table->string('nom');
             $table->foreignId('idClasse');
+            $table->foreignId('idEnseignant');
+            $table->foreign('idEnseignant')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('idClasse')->references('id')->on('classes')->onDelete('cascade');
             $table->timestamps();
         });

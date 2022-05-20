@@ -30,6 +30,7 @@ class EnseignantController extends Controller
                 ->where('department', $user[0]->id)
                 ->where('status','=',1);
         })->with('roles')
+        ->with('matiere')
             ->get();
 
         if (empty($users)) {

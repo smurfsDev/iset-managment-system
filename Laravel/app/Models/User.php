@@ -82,5 +82,8 @@ class User extends Authenticatable
         return $this->HasMany('App\Models\DemandeAdhesionEvent', 'idStudent');
     }
 
+    public function matiere(){
+        return $this->HasOne('App\Models\Matiere','idEnseignant');
+    }
 
 }
