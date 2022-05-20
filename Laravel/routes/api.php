@@ -160,6 +160,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/members'], function () {
         Route::get('/', [MemberController::class, 'getMembers']);
         Route::delete('/{id}', [MemberController::class, 'deleteMember']);
+        Route::post('/mail/{id}', [MemberController::class, 'sendMail']);
     });
 
     Route::group(['prefix' => '/demandeEvent'], function () {
@@ -204,7 +205,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/accept/{id}', [DemandeAdhesionEventController::class, 'accept']);
         Route::put('/decline/{id}', [DemandeAdhesionEventController::class, 'decline']);
         Route::delete('/delete/{id}', [DemandeAdhesionEventController::class, 'deleteDemandeAdhesion']);
-       
+
         //Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
     });
 
@@ -214,13 +215,25 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/refuse/{id}', [TechnicienController::class, 'refuse']);
     });
 
-    Route::group(['prefix' => '/enseignant'], function () {
+
+    Route::group(['prefix' => '/c'], function () {
+        Route::post('/', [CategorieMaterielController::class, 'store']);
+        Route::put('/{id}', [CategorieMaterielController::class, 'update']);
+        Route::delete('/{id}', [CategorieMaterielController::class, 'destroy']);
+    });
+  Route::group(['prefix' => '/enseignant'], function () {
         Route::get('/', [EnseignantController::class, 'show']);
         Route::post('/accept/{id}', [EnseignantController::class, 'accept']);
         Route::post('/refuse/{id}', [EnseignantController::class, 'refuse']);
     });
 
 
+    Route::group(['prefix' => '/m'], function () {
+        Route::get('/', [MaterielController::class, 'get']);
+        Route::post('/', [MaterielController::class, 'create']);
+        Route::put('/{id}', [MaterielController::class, 'update']);
+        Route::delete('/{id}', [MaterielController::class, 'destroy']);
+    });
 });
 
 // page club routes
