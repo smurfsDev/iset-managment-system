@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\club;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MailRequest;
 use App\Models\Member;
+use App\Models\SendMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,7 @@ class MemberController extends Controller
     public function getMembers(Request $request)
     {
         $club = $request->user()->club()->get('id');
-        $members = Member::with('user')->with('club')->where('club_id','=',$club[0]->id)->paginate(5);
+        $members = Member::with('user')->with('club.demandeCreationClub')->where('club_id','=',$club[0]->id)->paginate(5);
         if (!empty($members)) {
             $response = [
                 'success' => true,
@@ -91,6 +93,46 @@ class MemberController extends Controller
                 'success' => false,
                 'data' => 'Empty',
                 'message' => 'Member could not be deleted.'
+            ];
+            return response()->json($response, 404);
+        }
+    }
+    public function sendMail(MailRequest $request,$id)
+    {
+        $member = Member::find($id);
+        if (!empty($member)) {
+            $user = User::find($member->user_id);
+            $data = array('name' => $user->name, 'email' => $user->email);
+            \Mail::send('mail', array(
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+                'sujet' => $request->get('sujet'),
+                'user_query' => $request->get('message'),
+            ), function($message) use ($request,$data){
+                $message->from($request->user()->email, $request->user()->name);
+                $message->to($data['email'], $data['name'])->subject($request->get('sujet'));
+            });
+            $response = [
+                'success' => true,
+                'message' => 'Mail sent successfully.'
+            ];
+            $sujet = $request->get('sujet');
+            $message = $request->get('message');
+            $from = $request->user()->email;
+            $to = $user->email;
+
+            $data=array(
+                'sujet'=>$sujet,
+                'message'=>$message,
+                'from'=>$from,
+                'to'=>$to,
+            );
+            SendMail::create($data);
+            return response()->json($response, 200);
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'Mail could not be sent.'
             ];
             return response()->json($response, 404);
         }
