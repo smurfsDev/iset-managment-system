@@ -61,6 +61,7 @@ class AuthController extends BaseController
             $success['isResponsableClub'] = false;
             $success['isChefDepartement'] = false;
             $success['isTechnicien'] = false;
+            $success['isEnseignant'] = false;
 
             if ($user->roles->contains('name', "student")) {
                 $success['isStudent'] = true;
@@ -76,6 +77,9 @@ class AuthController extends BaseController
             }
             if ($user->roles->contains('name', "technicien")) {
                 $success['isTechnicien'] = true;
+            }
+            if ($user->roles->contains('name', "enseignant")) {
+                $success['isEnseignant'] = true;
             }
 
             return $this->sendResponse($success, 'User signed in');
