@@ -40,4 +40,17 @@ class MatiereController extends Controller
             ], 404);
         }
     }
+
+    public function deleteMatiere($id){
+        $matiere = Matiere::find($id);
+        if ($matiere) {
+            $matiere->delete();
+            return response()->json([], 204);
+        } else {
+            return response()->json([
+                'type' => 'matiere',
+                'message' => 'demande non trouvée'
+            ], 404);
+        }
+    }
 }
