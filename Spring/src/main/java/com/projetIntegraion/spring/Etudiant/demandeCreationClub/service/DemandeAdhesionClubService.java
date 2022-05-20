@@ -23,6 +23,10 @@ public class DemandeAdhesionClubService {
 		return DemandeAdhesionClubRepository.existsById(id);
 	}
 
+	public Boolean existsByIds(Long idClub, Long idEtudiant) {
+		return DemandeAdhesionClubRepository.findByClubIdAndEtudiantId(idClub, idEtudiant)!=null;
+	}
+
 	public DemandeAdhesionClub updateDemandeAdhesionClub(Long id, DemandeAdhesionClub p) {
 		return null;
 	}
