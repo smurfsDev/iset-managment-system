@@ -60,7 +60,7 @@ class MatiereController extends Controller
         //dd($idEns);
         $classes = Matiere::where('idEnseignant', $idEns)
         ->with('classe')
-        ->get();
+        ->paginate(5);
         return response()->json($classes);
     }
 }
