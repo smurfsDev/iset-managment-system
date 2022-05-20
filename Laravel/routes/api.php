@@ -158,6 +158,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/members'], function () {
         Route::get('/', [MemberController::class, 'getMembers']);
         Route::delete('/{id}', [MemberController::class, 'deleteMember']);
+        Route::post('/mail/{id}', [MemberController::class, 'sendMail']);
     });
 
     Route::group(['prefix' => '/demandeEvent'], function () {

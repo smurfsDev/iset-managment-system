@@ -113,6 +113,11 @@
                             href: '/demandeAdhesionResponsable',
                             title: 'Demandes d\'adhesion',
                             hidden: !this.isStudent
+                        },
+                        {
+                            href: '/members',
+                            title: 'membres',
+                            hidden: !this.isResponsableClub
                         }
                     ]
                 },
