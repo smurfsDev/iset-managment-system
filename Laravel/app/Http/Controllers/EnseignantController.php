@@ -14,7 +14,7 @@ class EnseignantController extends Controller
             $query->where('name', 'enseignant')
                 ->where('department', $user[0]->id);
         })->with('roles')
-            ->paginate(5);
+            ->get();
 
         if (empty($users)) {
             return response()->json(['message' => 'No Enseignant found'], 404);
