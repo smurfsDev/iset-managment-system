@@ -23,6 +23,7 @@
               </b-row>
               
             </b-row>
+
             <b-button
               variant="danger"
               v-on:click="Delete(Matiere.id)"
@@ -81,6 +82,7 @@
 export default {
   props: {
     Matieres: Array,
+    Enseignant: Array,
     pagination: Object,
   },
   data() {

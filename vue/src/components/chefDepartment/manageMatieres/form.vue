@@ -32,6 +32,16 @@
               
             </div>
           </div>
+          <label>Nom enseignant :</label>
+              <select name="idEnseignant" v-model="idEns" class="form-control" required="required">
+                  <option 
+                    v-for="ens in Enseignant"
+                    :key="ens.id"
+                    :value="ens.id"
+                  >
+                    {{ ens.name }}
+                  </option>
+                </select>
           <div class="modal-footer">
             <button
               type="button"
@@ -53,14 +63,30 @@
 export default {
   props: {
     oldMatiere: Object,
+   // Enseignant: Object,
     edit: Boolean,
+  },
+  data() {
+    return {
+      Enseignant: [],
+      idEns: null
+    }
   },
   emits: ["addMatiere"],
   mounted() {},
+  created() {
+    this.$http.get("http://localhost:8000/api/enseignant/approuved")
+    .then((res)=>{
+        
+        this.Enseignant = res.data
+
+    })
+  },
   methods: {
     addMatiere() {
-      this.$emit("addMatiere", this.oldMatiere);
+      this.$emit("addMatiere", this.oldMatiere, this.idEns);
       this.resetModal1();
+     
       this.hideModal("ClasseModal");
     },
     resetModal1() {
