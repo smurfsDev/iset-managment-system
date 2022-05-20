@@ -97,7 +97,7 @@ export default {
       this.$emit("updateMatiere", Matiere);
       this.showModal("ClasseModal");
     },
-    fetchClasse(url) {
+    fetchMatiere(url) {
       this.$emit("fetchMatiere", url);
     },
   },

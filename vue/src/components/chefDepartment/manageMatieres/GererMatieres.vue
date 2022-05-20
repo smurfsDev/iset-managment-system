@@ -62,7 +62,7 @@ export default {
   },
   created() {
     // console.log(typeof $);
-    console.log(this.$route.params.id);
+   
     this.idC = this.$route.params.id;
     document.title = "Matiere";
     this.fetchMatiere();
@@ -88,9 +88,10 @@ export default {
 
       this.$http.get(page_url)
       .then((res)=> {
-        this.Matieres = res.data.data;
+       
+        this.Matieres = res.data.data.data;
         this.show = false;
-        vm.makePagination(res.data);
+        vm.makePagination(res.data.data);
       });
     },
     makePagination(meta) {

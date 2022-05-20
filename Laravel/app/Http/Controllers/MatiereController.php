@@ -11,7 +11,7 @@ class MatiereController extends Controller
     public function getMatiereParClasse($id){
 
        
-        $mat = Matiere::where('idClasse','=',$id)->get();
+        $mat = Matiere::where('idClasse','=',$id)->paginate(5);
         return response()->json(["data" => $mat], 200);
 
     }
