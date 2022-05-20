@@ -13,6 +13,7 @@ use App\Http\Controllers\MaterielController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\club\ClubController;
 
+use App\Http\Controllers\EnseignantController;
 use App\Http\Controllers\TechnicienController;
 use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\DepartementController;
@@ -20,14 +21,14 @@ use App\Http\Controllers\DemandeEventController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\ChefDepartmentController;
 use App\Http\Controllers\DemandeMaterielController;
+
 use App\Http\Controllers\CategorieMaterielController;
 
+
+
+
+
 use App\Http\Controllers\club\pageClub\AboutController;
-
-
-
-
-
 use App\Http\Controllers\club\pageClub\BoardController;
 use App\Http\Controllers\DemandeCreationClubController;
 use App\Http\Controllers\DemandeAdhesionEventController;
@@ -211,6 +212,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [TechnicienController::class, 'show']);
         Route::post('/accept/{id}', [TechnicienController::class, 'accept']);
         Route::post('/refuse/{id}', [TechnicienController::class, 'refuse']);
+    });
+
+    Route::group(['prefix' => '/enseignant'], function () {
+        Route::get('/', [EnseignantController::class, 'show']);
+        Route::post('/accept/{id}', [EnseignantController::class, 'accept']);
+        Route::post('/refuse/{id}', [EnseignantController::class, 'refuse']);
     });
 
 
