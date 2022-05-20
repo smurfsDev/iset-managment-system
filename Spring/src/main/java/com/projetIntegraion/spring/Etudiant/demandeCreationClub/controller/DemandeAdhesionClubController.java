@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeAdhesionClub;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeAdhesionClubService;
-import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.service.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,25 +24,32 @@ public class DemandeAdhesionClubController {
     @Autowired
     private ClubService clubService;
 
-
     @GetMapping("/demandeAdhesionClub")
     public String demandeAdhesionClub(ModelMap modelMap,
-    @RequestParam(name = "page", defaultValue = "0") int page,
-    @RequestParam(name = "size", defaultValue = "2") int size) {
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
         Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(page, size);
         modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
         return "Club/demandeAdhesionClub/list";
     }
-   
+
     @GetMapping("/joinClub")
     public String joinClub(
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             @RequestParam(name = "idClub") long idClub) {
-
+        Boolean c = demandeAdhesionClubService.existsByIds(idClub, Long.valueOf(1));
+        if (c) {
+            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
+            modelMap.addAttribute("Dacs", Dacs);
+            modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+            modelMap.addAttribute("currentPage", 0);
+            modelMap.addAttribute("exist", 1);
+            return "Club/demandeAdhesionClub/list";
+        }
         modelMap.addAttribute("Dac", new DemandeAdhesionClub());
         modelMap.addAttribute("edit", false);
         modelMap.addAttribute("pages",
@@ -56,11 +62,12 @@ public class DemandeAdhesionClubController {
 
     @PostMapping("/JoinClub")
     public String joinClub(
-        @Valid DemandeAdhesionClub Dac,
-        BindingResult bindingResult,
-        @RequestParam(name = "nomClub", defaultValue = "") String nomClub,
-        @RequestParam(name = "idClub", defaultValue = "") Long idClub,
-        ModelMap modelMap) {
+            @Valid DemandeAdhesionClub Dac,
+            BindingResult bindingResult,
+            @RequestParam(name = "nomClub", defaultValue = "") String nomClub,
+            @RequestParam(name = "idClub", defaultValue = "") Long idClub,
+            ModelMap modelMap) {
+
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dac", bindingResult);
             modelMap.addAttribute("Dac", Dac);
@@ -68,7 +75,7 @@ public class DemandeAdhesionClubController {
             modelMap.addAttribute("nomClub", nomClub);
 
             return "Club/demandeAdhesionClub/form";
-        } 
+        }
         Dac.setClub(clubService.getClub(idClub));
         demandeAdhesionClubService.save(Dac);
 
@@ -127,7 +134,7 @@ public class DemandeAdhesionClubController {
             modelMap.addAttribute("edit", true);
 
             return "Club/demandeAdhesionClub/form";
-        } 
+        }
         DemandeAdhesionClub daac = demandeAdhesionClubService.getDemandeAdhesionClub(Dac.getId());
         daac.setId(Dac.getId());
         daac.setMessage(Dac.getMessage());
@@ -141,4 +148,5 @@ public class DemandeAdhesionClubController {
         return "Club/demandeAdhesionClub/list";
     }
 
+    
 }
