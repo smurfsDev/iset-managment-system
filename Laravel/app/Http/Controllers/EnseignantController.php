@@ -14,6 +14,22 @@ class EnseignantController extends Controller
             $query->where('name', 'enseignant')
                 ->where('department', $user[0]->id);
         })->with('roles')
+            ->paginate(5);
+
+        if (empty($users)) {
+            return response()->json(['message' => 'No Enseignant found'], 404);
+        } else {
+            return response()->json($users, 200);
+        }
+    }
+    public function getApprouvedEns(Request $request)
+    {
+        $user = $request->user()->department()->get();
+        $users = User::whereHas('roles', function ($query) use ($user) {
+            $query->where('name', 'enseignant')
+                ->where('department', $user[0]->id)
+                ->where('status','=',1);
+        })->with('roles')
             ->get();
 
         if (empty($users)) {
