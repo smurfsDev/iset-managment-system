@@ -3,7 +3,9 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeAdhesionClub;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Member;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeAdhesionClubService;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.MemberService;
 import com.projetIntegraion.spring.blogClub.service.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class DemandeAdhesionClubController {
     @Autowired
     private ClubService clubService;
 
+    @Autowired
+    private MemberService memberService;
     @GetMapping("/demandeAdhesionClub")
     public String demandeAdhesionClub(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -155,6 +159,10 @@ public class DemandeAdhesionClubController {
             ModelMap modelMap) {
         DemandeAdhesionClub Dac = demandeAdhesionClubService.getDemandeAdhesionClub(id);
         Dac.setStatus(1);
+        Member m = new Member();
+        m.setClub(Dac.getClub());
+        m.setEtudiant(Dac.getEtudiant());
+        memberService.save(m);
         demandeAdhesionClubService.save(Dac);
         Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(page, size);
         modelMap.addAttribute("Dacs", Dacs);
