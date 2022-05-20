@@ -64,6 +64,9 @@ export default {
     // console.log(typeof $);
    
     this.idC = this.$route.params.id;
+    if (this.idC==null){
+      this.$router.push({ name:"GererClasse"});
+    }
     document.title = "Matiere";
     this.fetchMatiere();
     if (this.$route.params.add == 1) {
