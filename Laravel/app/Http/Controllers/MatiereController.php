@@ -20,6 +20,8 @@ class MatiereController extends Controller
         $matiere = new Matiere();
         $matiere->nom = $request->input('nom');
         $matiere->idClasse = $id;
+        $matiere->idEnseignant = $request->input('idEnseignant');
+
         $matiere->save();
         return response()->json(["data" => $matiere], 201);
     }

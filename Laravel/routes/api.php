@@ -182,8 +182,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/update/{id}', [MatiereController::class, 'updateMatiere']);
         Route::delete('/delete/{id}', [MatiereController::class, 'deleteMatiere']);
     });
-
-
+  
 
 
     // classes routes
