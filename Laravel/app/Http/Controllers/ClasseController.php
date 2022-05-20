@@ -69,4 +69,6 @@ class ClasseController extends Controller
         }
         return response()->json(['message' => 'Classe introuvable'], 404);
     }
+
+  
 }

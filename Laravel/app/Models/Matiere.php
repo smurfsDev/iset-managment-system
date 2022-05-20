@@ -16,7 +16,7 @@ class Matiere extends Model
     ];
 
     public function classe(){
-        return $this->hasOne(Classe::class,'idClasse');
+        return $this->hasOne(Classe::class,'id','idClasse');
     }
 
     public function enseignant(){

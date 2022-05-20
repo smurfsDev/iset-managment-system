@@ -8,7 +8,7 @@ use App\Http\Requests\MatiereRequest;
 
 class MatiereController extends Controller
 {
-    public function getMatiereParClasse($id){
+    public function getMatiereParClasse(Request $request,$id){
 
        
         $mat = Matiere::where('idClasse','=',$id)->paginate(5);
@@ -54,5 +54,13 @@ class MatiereController extends Controller
                 'message' => 'demande non trouvée'
             ], 404);
         }
+    }
+    public function getMatieresParEns(Request $request){
+        $idEns = $request->user()->id;
+        //dd($idEns);
+        $classes = Matiere::where('idEnseignant', $idEns)
+        ->with('classe')
+        ->get();
+        return response()->json($classes);
     }
 }

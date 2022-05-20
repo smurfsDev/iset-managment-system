@@ -181,6 +181,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/create/{id}', [MatiereController::class, 'createMatiere']);
         Route::put('/update/{id}', [MatiereController::class, 'updateMatiere']);
         Route::delete('/delete/{id}', [MatiereController::class, 'deleteMatiere']);
+        Route::get('/', [MatiereController::class, 'getMatieresParEns']);
+
     });
   
 
