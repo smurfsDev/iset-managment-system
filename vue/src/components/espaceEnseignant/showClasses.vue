@@ -53,27 +53,16 @@
             <b-row class="mb-2">
               <b-row>
                 <b-col>
-                  Nom  : <button class="btn white" v-on:click="addmat(Classe.id)"> {{ Classe.nom }} </button>
+                  Nom  : <button class="btn white" v-on:click="addmat(Classe.id)"> {{ Classe.classe.nom }} </button>
                 </b-col>
               </b-row>
               <b-row>
                 <b-col>
-                  Abbreveation : {{ Classe.abreviation }} 
+                  Abbreveation : {{ Classe.classe.abreviation }} 
                 </b-col>
               </b-row>
             </b-row>
-            <b-button
-              variant="danger"
-              v-on:click="Delete(Classe.id)"
-            >
-              Delete</b-button
-            >
-            <b-button
-              variant="warning"
-              v-on:click="Update(Classe)"
-            >
-              Update</b-button
-            >
+           
           </div>
         </md-tab>
       </md-tabs>
@@ -126,6 +115,9 @@ export default {
     return {
       id: "",
     };
+  },
+  created() {
+    console.log(this.Classes)
   },
   emits: ["deleteClasse", "updateClasse", "fetchClasse"],
   methods: {

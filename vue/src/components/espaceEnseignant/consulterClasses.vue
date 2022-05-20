@@ -1,18 +1,13 @@
 <template>
   <div>
-    <formClasse @addClasse="addClasse" :oldClasse="Classe" />
+   <h1>Bonjourr </h1>
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
         <div v-if="!show">
           <b-container class="bv-example-row py-0">
             <b-row class="text-center">
-              <b-col cols="8">
-                <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
-                  @click="initModal()" data-bs-target="#ClasseModal">
-                  Nouvelle Classe
-                </button>
-              </b-col>
+            
               <b-col></b-col>
             </b-row>
           </b-container>
@@ -32,14 +27,13 @@
 </template>
 
 <script>
-import showClasses from "./show.vue";
-import formClasse from "./form.vue";
+import showClasses from "./showClasses.vue";
+
 // import search from '../search.vue';
 
 export default {
   components: {
-    showClasses,
-    formClasse,
+    showClasses
     //     search
   },
   data() {
@@ -78,12 +72,13 @@ export default {
   },
   methods: {
     fetchClasse(
-      page_url = "http://127.0.0.1:8000/api/Classe/"
+      page_url = "http://127.0.0.1:8000/api/matiere/"
     ) {
       let vm = this;
       this.$http.get(page_url)
       .then((res)=> {
-        this.Classes = res.data.data;
+        console.log(res.data);
+        this.Classes = res.data;
         this.show = false;
         vm.makePagination(res.data);
       });
