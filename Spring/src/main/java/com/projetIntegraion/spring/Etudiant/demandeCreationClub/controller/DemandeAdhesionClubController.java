@@ -147,6 +147,38 @@ public class DemandeAdhesionClubController {
         modelMap.addAttribute("edit", 1);
         return "Club/demandeAdhesionClub/list";
     }
+    @GetMapping("/acceptDac")
+    public String acceptDac(
+            @RequestParam(name = "id") long id,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            ModelMap modelMap) {
+        DemandeAdhesionClub Dac = demandeAdhesionClubService.getDemandeAdhesionClub(id);
+        Dac.setStatus(1);
+        demandeAdhesionClubService.save(Dac);
+        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(page, size);
+        modelMap.addAttribute("Dacs", Dacs);
+        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        modelMap.addAttribute("accept", 1);
+        return "Club/demandeAdhesionClub/list";
+    }
 
+    @GetMapping("/declineDac")
+    public String declineDac(
+            @RequestParam(name = "id") long id,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            ModelMap modelMap) {
+        DemandeAdhesionClub Dac = demandeAdhesionClubService.getDemandeAdhesionClub(id);
+        Dac.setStatus(2);
+        demandeAdhesionClubService.save(Dac);
+        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(page, size);
+        modelMap.addAttribute("Dacs", Dacs);
+        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        modelMap.addAttribute("decline", 1);
+        return "Club/demandeAdhesionClub/list";
+    }
     
 }
