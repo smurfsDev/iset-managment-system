@@ -6,30 +6,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\ClasseController;
-use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\MatiereController;
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\MaterielController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\club\ClubController;
+
+use App\Http\Controllers\TechnicienController;
 use App\Http\Controllers\club\MemberController;
 use App\Http\Controllers\DepartementController;
-
 use App\Http\Controllers\DemandeEventController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\ChefDepartmentController;
 use App\Http\Controllers\DemandeMaterielController;
 use App\Http\Controllers\CategorieMaterielController;
+
 use App\Http\Controllers\club\pageClub\AboutController;
+
+
+
+
+
 use App\Http\Controllers\club\pageClub\BoardController;
 use App\Http\Controllers\DemandeCreationClubController;
-
 use App\Http\Controllers\DemandeAdhesionEventController;
-
-
-
-
-
-use App\Http\Controllers\StudentsController;
-use App\Http\Controllers\TechnicienController;
 use App\Http\Controllers\club\pageClub\HeadersController;
 use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
@@ -171,6 +172,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/accept/{id}', [DemandeEventController::class, 'accept']);
         Route::put('/decline/{id}', [DemandeEventController::class, 'decline']);
         Route::get('/getAllEvents', [DemandeEventController::class, 'show']);
+    });
+
+    Route::group(['prefix' => '/Matiere'], function () {
+        Route::get('/{id}', [MatiereController::class, 'getMatiereParClasse']);
+        
     });
 
 
