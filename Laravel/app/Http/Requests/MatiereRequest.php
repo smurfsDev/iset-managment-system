@@ -25,7 +25,8 @@ class MatiereRequest extends FormRequest
     public function rules()
     {
         return [
-            "nom"=> "required"
+            "nom"=> "required",
+            "idEnseignant" => "required"
         ];
     }
 
