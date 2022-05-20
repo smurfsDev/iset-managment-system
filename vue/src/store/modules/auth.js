@@ -17,6 +17,7 @@ const state = {
   authMessage: null,
   regStatus: null,
   regMessage: null,
+  isTechnicien: false,
   
 };
 
@@ -34,6 +35,7 @@ const getters = {
   regStatus : (state) => state.regStatus,
   regMessage : (state) => state.regMessage,
   isChefDepartement : (state) => state.isChefDepartement,
+  isTechnicien : (state) => state.isTechnicien,
 
   
 };
@@ -60,6 +62,7 @@ const actions = {
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
           commit('setResponsableClub',response.data.data.isResponsableClub);
+          commit('setTechnicien',response.data.data.isTechnicien);         
           commit('setChefDepartement',response.data.data.isChefDepartement);
           commit("setUser", response.data.data.user);
           commit("setAuthStatus", 1);
@@ -156,6 +159,9 @@ const mutations = {
   },
   setRegMessage(state, regMessage) {
     state.regMessage = regMessage;
+  },
+  setTechnicien(state, isTechnicien) {
+    state.isTechnicien = isTechnicien;
   }
   
 
