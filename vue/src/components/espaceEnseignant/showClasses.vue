@@ -86,9 +86,7 @@ export default {
       id: "",
     };
   },
-  created() {
-    console.log(this.Classes)
-  },
+  
   emits: ["deleteClasse", "updateClasse", "fetchClasse"],
   methods: {
     Delete(id) {

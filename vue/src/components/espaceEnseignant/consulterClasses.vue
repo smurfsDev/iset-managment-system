@@ -1,6 +1,6 @@
 <template>
   <div>
-   <h1>Bonjourr </h1>
+   
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
@@ -77,7 +77,7 @@ export default {
       let vm = this;
       this.$http.get(page_url)
       .then((res)=> {
-        console.log(res.data.data);
+      
         this.Classes = res.data.data;
        // console.log(this.Classes.classe);
         this.show = false;
