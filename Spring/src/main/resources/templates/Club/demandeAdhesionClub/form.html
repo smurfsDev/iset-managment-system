@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template">
+
+<head>
+	<meta charset="utf-8">
+	<title>Join club</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container my-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<span class="anchor" id="formLogin"></span>
+					<!-- form card login -->
+					<div class="card card-outline-secondary">
+						<div class="card-header">
+
+							<h3 th:text="${edit}?'Modifier Demande':'Créer Demande'" class="mb-0"></h3>
+						</div>
+						<div class="card-body">
+							<form th:action="${edit}?'editJoinClub':'JoinClub'" enctype="multipart/form-data" class="form"
+								id="formLogin" name="formLogin" role="form" action="saveDac" method="post">
+								<div class="form-group">
+									<label class="control-label">Nom Club :</label> <input  type="text" name="nomClub"
+										class="form-control " readonly th:value="${nomClub}" />
+									</span>
+								</div>
+                                <div class="form-group">
+                                    <label class="control-label">Message :</label> <input type="text"
+                                        name="message" class="form-control" th:value="${Dac.message}" /> 
+									<span th:errors=${Dac.message} class="text-danger">
+                                </div>
+                                
+								<input type="hidden" name="id" th:value="${Dac.id}" />
+								<input type="hidden" name="idClub" th:value="${idClub}" />
+								<input type="hidden" name="page" th:value="${param.page}" />
+								<input type="hidden" name="size" th:value="${param.size}" />
+								<input th:value="${edit}?'Modifier':'Envoyer'" class="btn btn-success my-3 btn-lg float-right"
+								type="submit" >
+							</form>
+							
+						</div>
+						<!--/card-block-->
+					</div>
+					<!-- /form card login -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

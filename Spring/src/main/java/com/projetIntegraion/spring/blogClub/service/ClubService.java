@@ -47,7 +47,7 @@ public class ClubService {
 	// 	return clubRepository.findAll();
 	// }
 
-	public Page<Club> getAllDemandeCreationClubParPage(int page, int size){
+	public Page<Club> getAllClubParPage(int page, int size){
 		return clubRepository.findAll(PageRequest.of(page, size));
 	};
 
