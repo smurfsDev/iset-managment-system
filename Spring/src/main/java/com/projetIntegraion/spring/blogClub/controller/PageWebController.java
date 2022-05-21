@@ -5,10 +5,12 @@ import java.util.List;
 import com.projetIntegraion.spring.blogClub.entity.About;
 import com.projetIntegraion.spring.blogClub.entity.Activity;
 import com.projetIntegraion.spring.blogClub.entity.Board;
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.entity.Project;
 import com.projetIntegraion.spring.blogClub.service.AboutService;
 import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
 import com.projetIntegraion.spring.blogClub.service.BoardService;
+import com.projetIntegraion.spring.blogClub.service.ClubService;
 import com.projetIntegraion.spring.blogClub.service.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +30,25 @@ public class PageWebController {
     BoardService boardService;
     @Autowired 
     ProjectService projectService;
-
+    @Autowired
+    ClubService clubService;
     @RequestMapping("/blogClub")
-    public String showPage(ModelMap modelMap) {
+    public String showPage(ModelMap modelMap,
+        @RequestParam(name = "idClub", defaultValue = "1") Long idClub
+    ) {
                
        // Page<About> listDcc = aboutService.getAllAboutsParPage(page, size);
-       List<About> Abouts = aboutService.getAllAbouts();
-       List<Activity> Activities = activitiesService.getAllActivities();
-       List<Board> Boards = boardService.getAllBoards();
-       List<Project> Projects = projectService.getAllProjects();
+       Club c = clubService.getClub(idClub);
+       List<About> Abouts = aboutService.getAboutByClubId(c);
+       List<Activity> Activities = activitiesService.getActivityByClubId(c);
+       List<Board> Boards = boardService.getBoardByClubId(c);
+       List<Project> Projects = projectService.getProjectByClubId(c);
+       System.out.println("Abouts : " + Abouts);
+        System.out.println("Activities : " + Activities);
+        System.out.println("Boards : " + Boards);
+        System.out.println("Projects : " + Projects);
+        System.out.println("idClub : " + idClub);
+
          modelMap.addAttribute("Abouts", Abouts);
         modelMap.addAttribute("Activities", Activities);
         modelMap.addAttribute("Boards", Boards);

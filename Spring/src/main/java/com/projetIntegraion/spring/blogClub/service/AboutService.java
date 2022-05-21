@@ -1,6 +1,7 @@
 package com.projetIntegraion.spring.blogClub.service;
 
 import com.projetIntegraion.spring.blogClub.entity.About;
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.repository.AboutRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +63,8 @@ public class AboutService {
 	// public Page<Club> getClubParNom(String nom, int page, int size){
 	// 	return clubRepository.findByNomClubContains(nom, page, size); //(nom, PageRequest.of(page, size));
 	// };
+
+	public List<About> getAboutByClubId(Club club) {
+		return aboutRepository.findByClub(club);
+	}
 }
