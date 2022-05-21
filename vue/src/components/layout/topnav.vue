@@ -37,6 +37,12 @@
                     icon: 'fas fa-home',
                 },
                 {
+                    href: '/consulterClasseEns',
+                    title: 'Classes et Matieres',
+                    icon: 'fas fa-home',
+                    hidden: this.isEnseignant
+                },
+                {
                     href: '/Entreprise',
                     title: 'Entreprise',
                     icon: 'fas fa-building',
