@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\Matiere;
 use Illuminate\Http\Request;
 use App\Http\Requests\MatiereRequest;
@@ -59,11 +60,23 @@ class MatiereController extends Controller
         }
     }
     public function getMatieresParEns(Request $request){
-        $idEns = $request->user()->id;
-        //dd($idEns);
-        $classes = Matiere::where('idEnseignant', $idEns)
-        ->with('classe')
-        ->paginate(5);
+         $idEns = $request->user()->id;
+        // //dd($idEns);
+        // $classes = Matiere::where('idEnseignant', $idEns)
+        // ->with('classe')
+        // ->paginate(5);
+        //  $classes = Classe::with('matiere')->with('matiere.enseignant')
+        // // ->where('matiere.idEnseignant', $idEns)
+        // // //->where('Classe.matiere.idEnseignant', $idEns)
+        //  ->get();
+        $classes = Classe::whereHas('matiere', function ($query) use($idEns) {
+            $query->where('idEnseignant', $idEns);
+          })->with('matiere', function ($query) use ($idEns){
+            $query->where('idEnseignant', $idEns);
+        })
+        ->paginate();
+
+        
         return response()->json($classes);
     }
 }
