@@ -77,8 +77,9 @@ export default {
       let vm = this;
       this.$http.get(page_url)
       .then((res)=> {
-        console.log(res.data);
+        console.log(res.data.data);
         this.Classes = res.data.data;
+       // console.log(this.Classes.classe);
         this.show = false;
         vm.makePagination(res.data);
       });

@@ -43,6 +43,7 @@ import gererMatieres from "./routes/gererMatieres";
 import manageEnseignant from "./routes/manageEnseignant";
 import consulterClasseEns from "./routes/consulterClasseEns";
 
+
 Vue.use(VueRouter);
 
 const routes = [

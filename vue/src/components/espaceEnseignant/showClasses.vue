@@ -7,42 +7,7 @@
       <h3>il y'a aucune Classe</h3>
     </div>
     <b-card class="my-2" v-for="Classe in Classes" :key="Classe.id">
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'success',
-          title: 'Classe accepted',
-          placement: 'topright',
-        }"
-        v-if="Classe.status == 1"
-        icon="check-square"
-        scale="2"
-        variant="success"
-      ></b-icon>
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'danger',
-          title: 'Classe not accepted',
-          placement: 'topright',
-        }"
-        v-if="Classe.status == 2"
-        icon="x-square"
-        scale="2"
-        variant="danger"
-      ></b-icon>
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'warning',
-          title: 'Classe pending',
-          placement: 'topright',
-        }"
-        v-if="Classe.status == 0"
-        icon="x-square"
-        scale="2"
-        variant="warning"
-      ></b-icon>
+      
       <md-tabs style="height: auto;!important">
         <md-tab
           id="tab-home"
@@ -53,12 +18,17 @@
             <b-row class="mb-2">
               <b-row>
                 <b-col>
-                  Nom  : <button class="btn white" v-on:click="addmat(Classe.id)"> {{ Classe.classe.nom }} </button>
+                  Classe  : {{ Classe.classe.nom }}
                 </b-col>
               </b-row>
               <b-row>
                 <b-col>
-                  Abbreveation : {{ Classe.classe.abreviation }} 
+                  Matiere : {{ Classe.nom }} 
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col>
+                  Abbreveation classe : {{ Classe.classe.abreviation }} 
                 </b-col>
               </b-row>
             </b-row>
@@ -133,7 +103,7 @@ export default {
     },
     addmat(id) {
       
-      this.$router.push({ name:"GererMatiere", params:{
+      this.$router.push({ name:"consulterMatiere", params:{
             id: id,
           }});
     }
