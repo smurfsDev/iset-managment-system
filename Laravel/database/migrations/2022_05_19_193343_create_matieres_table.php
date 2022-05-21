@@ -16,6 +16,8 @@ class CreateMatieresTable extends Migration
         Schema::create('matieres', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->integer('semestre');
+            $table->float('coefficient');
             $table->foreignId('idClasse');
             $table->foreignId('idEnseignant')->nullable();
             $table->foreign('idEnseignant')->references('id')->on('users')->onDelete('cascade');
