@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Matiere;
 use Illuminate\Http\Request;
 use App\Http\Requests\MatiereRequest;
+use App\Models\Classe;
+use App\Models\Note;
+use App\Models\User;
 
 class MatiereController extends Controller
 {
     public function getMatiereParClasse(Request $request,$id){
 
-       
+
         $mat = Matiere::where('idClasse','=',$id)
-        
+
         ->paginate(5);
         return response()->json(["data" => $mat], 200);
 
@@ -23,8 +26,22 @@ class MatiereController extends Controller
         $matiere->nom = $request->input('nom');
         $matiere->idClasse = $id;
         $matiere->idEnseignant = $request->input('idEnseignant');
-
         $matiere->save();
+
+        $users = Classe::with('users')->find($id);
+        $ids = $users->users->pluck('user_id')->toArray();
+        foreach ($ids as $id){
+            Note::create([
+                'student_id' => $id,
+                'matiere_id' => $matiere->id,
+                'note' => 0,
+            ]);
+        }
+
+        $users = Classe::find($id);
+
+
+
         return response()->json(["data" => $matiere], 201);
     }
 
@@ -60,7 +77,6 @@ class MatiereController extends Controller
     }
     public function getMatieresParEns(Request $request){
         $idEns = $request->user()->id;
-        //dd($idEns);
         $classes = Matiere::where('idEnseignant', $idEns)
         ->with('classe')
         ->paginate(5);
