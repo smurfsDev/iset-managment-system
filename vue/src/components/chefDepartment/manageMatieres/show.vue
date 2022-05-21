@@ -21,7 +21,11 @@
                   Nom  : {{ Matiere.nom }}
                 </b-col>
               </b-row>
-              
+              <b-row>
+                <b-col>
+                  Nom  : {{ Matiere.enseignant.name }}
+                </b-col>
+              </b-row>
             </b-row>
 
             <b-button

@@ -12,7 +12,7 @@ class MatiereController extends Controller
 
        
         $mat = Matiere::where('idClasse','=',$id)
-        
+        ->with('enseignant')
         ->paginate(5);
         return response()->json(["data" => $mat], 200);
 

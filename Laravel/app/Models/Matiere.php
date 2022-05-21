@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Classe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +21,7 @@ class Matiere extends Model
     }
 
     public function enseignant(){
-        return $this->hasOne(Enseignant::class,'idEnseignant');
+        return $this->hasOne(User::class,'id','idEnseignant');
     }
 
 
