@@ -40,7 +40,7 @@
                     href: '/consulterClasseEns',
                     title: 'Classes et Matieres',
                     icon: 'fas fa-home',
-                    hidden: this.isEnseignant
+                    hidden: !this.isEnseignant
                 },
                 {
                     href: '/Entreprise',
@@ -276,6 +276,7 @@ export default {
             responsable: 'isResponsableClub',
             chefDepartement: 'isChefDepartement',
             technicien: 'isTechnicien',
+            enseignant: 'isEnseignant'
         }),
         isAuth: function () {
             return this.auth;
@@ -295,6 +296,9 @@ export default {
         isTechnicien: function () {
             return this.technicien;
         },
+        isEnseignant: function(){
+            return this.enseignant;
+        }
 
 
     }

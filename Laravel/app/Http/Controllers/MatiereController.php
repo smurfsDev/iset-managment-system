@@ -11,7 +11,9 @@ class MatiereController extends Controller
     public function getMatiereParClasse(Request $request,$id){
 
        
-        $mat = Matiere::where('idClasse','=',$id)->paginate(5);
+        $mat = Matiere::where('idClasse','=',$id)
+        
+        ->paginate(5);
         return response()->json(["data" => $mat], 200);
 
     }
@@ -30,6 +32,7 @@ class MatiereController extends Controller
         $matiere = Matiere::find($id);
         if ($matiere) {
             $matiere->nom = $request->input('nom') ? $request->input('nom') : $matiere->nom;
+            $matiere->idEnseignant = $request->input('idEnseignant') ? $request->input('idEnseignant') : $matiere->idEnseignant;
              $matiere->save();
             return response()->json([
                 'message' => 'Update Success',
