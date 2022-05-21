@@ -27,7 +27,6 @@ import demandePlanificationEvent from "./routes/demandePlanificationEvent";
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
-import avis from "./routes/avis/avis";
 import listavis from "./routes/avis/listavis";
 import detailsavis from "./routes/avis/detailsavis";
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
@@ -78,7 +77,6 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...avis,
   ...listavis,
   ...detailsavis,
   ...demandeEvenementAdmin,

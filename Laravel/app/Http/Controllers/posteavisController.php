@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\affiches;
+use Illuminate\Validation\ValidationException;
+use App\Models\avis;
+
 class posteavisController extends Controller
 {
     /**
@@ -13,8 +15,8 @@ class posteavisController extends Controller
      */
     public function index()
     {
-        $affiche=affiches::get();
-        return $affiche;
+        $avis=avis::get();
+        return $avis;
     }
 
     /**
@@ -25,7 +27,26 @@ class posteavisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // $validated = $request->validate([
+        //     'title' => 'required|max:255',
+        //     'content' => 'required',
+        // ]);
+
+        $avis= new avis();
+
+
+            
+        
+            $avis->title=$request->get('title');
+            $avis->content=$request->get('content');
+            $avis->image= $request->get('image');
+            // $avis->image=$request->file('image')->hashName();
+            $avis->save();
+        
+ 
+        //return redirect()->route('/listavis');
+
     }
 
     /**
@@ -36,7 +57,8 @@ class posteavisController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = avis::find($id);
+        return $data;
     }
 
     /**
@@ -48,7 +70,11 @@ class posteavisController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $avis = avis::find($id);
+        $avis->title=$request->get('title');
+        $avis->content=$request->get('content');
+        $avis->content="xx";
+        $avis->save();
     }
 
     /**
@@ -59,6 +85,7 @@ class posteavisController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $avis = avis::find($id);
+        $avis->delete();
     }
 }

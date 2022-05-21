@@ -180,10 +180,16 @@
                             title: 'Demande Salle',
                             icon: 'fa fa-file',
                             hidden: !this.isAdmin && !this.isChefDepartement,
-                        },
+                        }
 
                     ]
-                }
+                },
+                        {
+                            href: 'listavis',
+                            title: 'avis',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
+
+                        }
         
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
