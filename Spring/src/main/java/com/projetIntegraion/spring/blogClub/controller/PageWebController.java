@@ -43,12 +43,7 @@ public class PageWebController {
        List<Activity> Activities = activitiesService.getActivityByClubId(c);
        List<Board> Boards = boardService.getBoardByClubId(c);
        List<Project> Projects = projectService.getProjectByClubId(c);
-       System.out.println("Abouts : " + Abouts);
-        System.out.println("Activities : " + Activities);
-        System.out.println("Boards : " + Boards);
-        System.out.println("Projects : " + Projects);
-        System.out.println("idClub : " + idClub);
-
+  
          modelMap.addAttribute("Abouts", Abouts);
         modelMap.addAttribute("Activities", Activities);
         modelMap.addAttribute("Boards", Boards);
