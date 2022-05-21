@@ -24,6 +24,8 @@ class MatiereController extends Controller
         $matiere->nom = $request->input('nom');
         $matiere->idClasse = $id;
         $matiere->idEnseignant = $request->input('idEnseignant');
+        $matiere->semestre = $request->input('semestre');
+        $matiere->coefficient = $request->input('coefficient');
 
         $matiere->save();
         return response()->json(["data" => $matiere], 201);
@@ -34,7 +36,10 @@ class MatiereController extends Controller
         if ($matiere) {
             $matiere->nom = $request->input('nom') ? $request->input('nom') : $matiere->nom;
             $matiere->idEnseignant = $request->input('idEnseignant') ? $request->input('idEnseignant') : $matiere->idEnseignant;
-             $matiere->save();
+            $matiere->semestre = $request->input('semestre') ? $request->input('semestre') : $matiere->semestre;
+            $matiere->coefficient = $request->input('coefficient') ? $request->input('coefficient') : $matiere->coefficient;
+             
+            $matiere->save();
             return response()->json([
                 'message' => 'Update Success',
                 'id' => $matiere->id,
