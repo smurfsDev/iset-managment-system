@@ -7,8 +7,8 @@
       <h3>il y'a aucune Classe</h3>
     </div>
     <b-card class="my-2" v-for="Classe in Classes" :key="Classe.id">
-      
       <md-tabs style="height: auto;!important">
+        
         <md-tab
           id="tab-home"
           style="height: auto;!important"
@@ -17,26 +17,45 @@
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
+                
+              </b-row>
+              <b-row>
                 <b-col>
-                  Classe  : {{ Classe.classe.nom }}
+                  Classe : {{ Classe.nom }} 
                 </b-col>
               </b-row>
               <b-row>
                 <b-col>
-                  Matiere : {{ Classe.nom }} 
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
-                  Abbreveation classe : {{ Classe.classe.abreviation }} 
+                  Abbreveation classe : {{ Classe.abreviation }} 
                 </b-col>
               </b-row>
             </b-row>
            
           </div>
         </md-tab>
+        <md-tab
+          id="tab"
+          style="height: auto;!important"
+          md-label="Matiere"
+        >
+          <div class="bv-example-row text-center">
+            <b-row class="mb-2">
+              <b-row>
+                
+              </b-row>
+              <b-row v-for="m in Classe.matiere" :key="m.id">
+                <b-col>
+                  Matiere : {{ m.nom }} 
+                </b-col>
+              </b-row>
+             
+            </b-row>
+           
+          </div>
+        </md-tab>
       </md-tabs>
     </b-card>
+    
     <nav class="row" v-if="Classes.length != 0">
       <ul class="pagination w-auto mx-auto">
         <li
