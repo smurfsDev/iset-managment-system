@@ -45,7 +45,7 @@
                         <td th:text="${club.president}"></td>
                         <td th:text="${club.vicePresident}"></td>
 						<td  >
-                            <a class="btn btn-info" th:href="@{deleteDcc(id=${club.id},
+                            <a class="btn btn-info" th:href="@{blogClub(idClub=${club.id},
 								page=${currentPage},size=${param.size})}">
                                     <i class="fa-solid fa-diamond-turn-right"></i>
                             </a>
