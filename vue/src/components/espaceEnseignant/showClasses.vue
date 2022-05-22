@@ -18,12 +18,17 @@
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
-                <b-col> Classe : {{ Classe.nom }} </b-col>
+                <b-col>
+                  Classe : {{ Classe.nom }} 
+                </b-col>
               </b-row>
               <b-row>
-                <b-col> abreviation : {{ Classe.abreviation }} </b-col>
+                <b-col>
+                  Abbreveation classe : {{ Classe.abreviation }} 
+                </b-col>
               </b-row>
             </b-row>
+           
           </div>
         </md-tab>
         <md-tab
@@ -84,6 +89,7 @@
         </md-tab>
       </md-tabs>
     </b-card>
+    
     <nav class="row" v-if="Classes.length != 0">
       <ul class="pagination w-auto mx-auto">
         <li
@@ -169,8 +175,6 @@ export default {
           dismissCountDown: 3,
 
         });
-        console.log(response.data);
-        console.log(idMat,idStudent,Note);
       });
     },
     fetchNote(idMat,idStudent){

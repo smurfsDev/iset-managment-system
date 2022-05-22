@@ -27,7 +27,9 @@ class MatiereRequest extends FormRequest
     {
         return [
             "nom"=> "required",
-            "idEnseignant" => "required"
+            "idEnseignant" => "required",
+            "semestre" => "required",
+            "coefficient" => "required"
         ];
     }
 

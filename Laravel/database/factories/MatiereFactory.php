@@ -18,6 +18,8 @@ class MatiereFactory extends Factory
         return [
             "nom" => $this->faker->word(),
             "idClasse" => Classe::get('id')->random(),
+            "semestre" => 1,
+            "coefficient" => 1,
            
         ];
     }

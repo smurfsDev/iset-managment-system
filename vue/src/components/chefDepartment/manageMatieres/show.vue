@@ -21,7 +21,21 @@
                   Nom  : {{ Matiere.nom }}
                 </b-col>
               </b-row>
-              
+              <b-row>
+                <b-col>
+                  Nom  : {{ Matiere.enseignant.name }}
+                </b-col>
+              </b-row>
+               <b-row>
+                <b-col>
+                  Semestre  : {{ Matiere.semestre }}
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col>
+                  Coefficient  : {{ Matiere.coefficient }}
+                </b-col>
+              </b-row>
             </b-row>
 
             <b-button
