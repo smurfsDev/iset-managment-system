@@ -90,4 +90,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)->using(RoleUser::class)->with("RoleUser.class");
     }
 
+    public function note(){
+        return $this->HasMany('App\Models\Note', 'student_id');
+    }
+
 }
