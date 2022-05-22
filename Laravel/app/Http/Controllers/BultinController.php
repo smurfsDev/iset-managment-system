@@ -13,6 +13,7 @@ class BultinController extends Controller
         $bultin = bultin::create([
             'student_id' => $request->student_id,
             'moyenne' => $request->moyenne,
+            'numero_bultin' => $request->numero_bultin,
         ]);
 
         return response()->json($bultin, 201);
