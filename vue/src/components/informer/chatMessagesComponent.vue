@@ -1,6 +1,14 @@
 <template>
     <div class="message-area">
-        <messageComponent></messageComponent>
+            <!-- {{userId}} -->
+
+        <messageComponent
+            v-for="message in messages" 
+            :key="message.id" 
+            :message="message"
+        
+        >
+</messageComponent>
     </div>
 </template>
 
@@ -10,8 +18,21 @@
         components: {
             messageComponent,
         },
+         data() {
+            return {
+                // messages: [],
+            }
+        },
+        props: {
+            // userId: Number,
+            messages:Array,
+        },
         mounted() {
             console.log('Component mounted.')
+        },
+        created() {
+        },
+        methods: {
         }
     }
     
