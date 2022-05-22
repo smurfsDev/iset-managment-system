@@ -1,8 +1,8 @@
 <template>
   <div class="container w-100 py-4">
     <!-- form containing one field for messages -->
-        <chatComponents></chatComponents>  
-        <userComponents></userComponents>  
+        <chatComponents  :messages="msg"></chatComponents>  
+        <userComponents @messages="submitMessage"></userComponents>  
   </div>
 </template>
 
@@ -16,14 +16,28 @@ export default {
         userComponents,
         
     },
+    data() {
+        return {
+          // userId:0,
+          msg:[],
+        }
+    },
+    create() {
+        this.fetchMessages();
+    },
     mounted() {
         console.log('Component mounted.')
     },
-  data() {
-    return {
-    };
-  },
   methods: {
+    submitMessage(messages) {
+      this.msg = messages;
+    },
+    // fetchMessages() {
+    //     this.$http.get("http://localhost:8000/api/message/M/"+this.userId).then(response => {
+    //         this.messages = response.data;
+    //      })
+    // },
+
     
   },
 }
