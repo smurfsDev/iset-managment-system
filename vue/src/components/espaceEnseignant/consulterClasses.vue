@@ -78,7 +78,6 @@ export default {
       .then((res)=> {
       
         this.Classes = res.data.data;
-      //  console.log(this.Classes);
         this.show = false;
         vm.makePagination(res.data);
       });

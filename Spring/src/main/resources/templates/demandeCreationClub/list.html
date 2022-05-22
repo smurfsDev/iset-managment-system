@@ -5,13 +5,13 @@
 <head>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Liste des Produits</title>
+    <title>Liste des demande creation club</title>
 </head>
 
 <body>
 
     <div layout:fragment="Mycontent">
-        <div class="container">
+        <div class="">
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des DemandeCreationClub</h1>
@@ -53,14 +53,19 @@
                                 <span th:if="${demande.status==1}" th:class="${demande.status==1?'btn btn-success disabled ':'' }"><i class="fa fa-check"></i></span>
                                 <span th:if="${demande.status==2}" th:class="${demande.status==2?'btn btn-danger disabled ':'' }"><i class="fa fa-times"></i></span>
 
-                            </td>
-                        <td  sec:authorize="hasRole('ADMIN')" >
-                        <a th:class="${demande.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{accept(id=${demande.id},page=${currentPage},size=${param.size})}">
-                        <i class="fa fa-check"></i>
-                        </a>
-                        <a th:class="${demande.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{decline(id=${demande.id},page=${currentPage},size=${param.size})}">
-                        <i class="fa fa-times"></i>
-                        </a>
+                                </td>
+                        <td  sec:authorize="hasRole('ADMIN')"  >
+                            <div th:if="${demande.status!=1}">
+                                <a th:class="${demande.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{accept(id=${demande.id},page=${currentPage},size=${param.size})}">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                                <a th:class="${demande.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{decline(id=${demande.id},page=${currentPage},size=${param.size})}">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            <div class="text-success" th:if="${demande.status==1}">
+                                Demande acceptée
+                            </div>
                         </td>
 					</tr>
 				</table>

@@ -37,6 +37,7 @@
           style="height: auto;!important"
           md-label="Matieres"
         >
+
           <md-tabs id="mdtbs" style="height: auto;!important">
             <md-tab
               v-for="matiere in Classe.matieres"
