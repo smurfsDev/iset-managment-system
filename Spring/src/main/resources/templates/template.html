@@ -75,6 +75,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<a sec:authorize="!isAuthenticated()" class="dropdown-item" th:href="@{login}">login</a>
 					<a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{logout}">logout</a>
 					<a class="dropdown-item" href="@{login}">Profile</a>
+					<a sec:authorize="!isAuthenticated()" class="dropdown-item"
+					th:href="@{register}">register</a>
 				</div>
 			</li>
 		</ul>

@@ -28,7 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements Serializable, UserDetails {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-private Integer userId;
+private Integer id;
 private String username;
 private String password;
 @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -36,11 +36,11 @@ private String password;
 inverseJoinColumns = @JoinColumn(name = "role_id"))
 
 private Set<Role> roles = new HashSet<>();
-public Integer getUserId() {
- return userId;
+public Integer getId() {
+ return id;
  }
-public void setUserId(Integer userId) {
- this.userId = userId;
+public void setId(Integer id) {
+ this.id = id;
  }
 public String getUsername() {
  return username;

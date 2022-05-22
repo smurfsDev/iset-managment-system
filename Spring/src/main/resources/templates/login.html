@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head> 
+<meta charset="utf-8">
+<title>Connexion</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+<body>
+  
+	<section layout:fragment="Mycontent"></section>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="col-md-6 offset-md-3">
+<div class="card">
+<div class="card-header">Connexion</div>
+<div class="card-body">
+<form th:action="${login}?'login':'register'" method="post">
+<div class="form-group">
+<label class="control-label" >Utilisateur :</label>
+<input type="text" name="username">
+</div>
+<div class="form-group">
+<label class="control-label" >Mot de passe :</label>
+<input type="password" name="password" >
+</div>
+<div class="form-group" th:if="${login==false}">
+<label class="control-label"  > Confirmer le Mot de passe :</label>
+<input type="password" name="confirmedPassword"  >
+</div>
+
+<button class="btn btn-primary" type="submit"  th:if="${login==true}">se connecter</button>
+<button class="btn btn-primary" type="submit"  th:if="${login==false}" >S'inscrire</button>
+<a sec:authorize="!isAuthenticated()" 
+					th:href="@{register}" class="btn btn-primary">register</a>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html> 
