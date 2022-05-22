@@ -9,6 +9,7 @@ use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\MatiereController;
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\BultinController;
 use App\Http\Controllers\MaterielController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\club\ClubController;
@@ -286,3 +287,5 @@ Route::group(['prefix' => '/s'], function () {
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
     Route::delete('/{id}', [StudentsController::class, 'delete']);
 });
+
+Route::post('/bultin', [BultinController::class, 'store']);
