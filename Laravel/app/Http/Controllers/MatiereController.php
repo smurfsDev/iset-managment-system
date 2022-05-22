@@ -82,7 +82,7 @@ class MatiereController extends Controller
         }
     }
 
-    public function getMatieresParEns(Request $request)
+    public function getClassesEnseignéeParEnseignant(Request $request)
     {
         // $user = User::with("classe")->find(2);
         // $user = Classe::with("users.user")->find(1);
