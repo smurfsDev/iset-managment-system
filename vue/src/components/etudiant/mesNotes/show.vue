@@ -39,11 +39,15 @@
             <button @click="generatePDF()" class="btn btn-info">
               Telechargers relevé
             </button>
-              <button type="button" class="btn btn-primary mx-1 " data-bs-toggle="modal"
-                  @click="showModal('demandeModal')" data-bs-target="#demandeModal"
-                  >
-                  Voir relevé
-                </button>
+            <button
+              type="button"
+              class="btn btn-primary mx-1"
+              data-bs-toggle="modal"
+              @click="showModal('demandeModal')"
+              data-bs-target="#demandeModal"
+            >
+              Voir relevé
+            </button>
           </div>
         </md-tab>
       </md-tabs>
@@ -74,6 +78,11 @@
               :userName="$store.getters.StateUser.name"
               :Clazz="$store.getters.StateUser.name"
               :notes="Notes"
+              :numBul="
+                parseInt(Math.random(1, 9999)) +
+                '' +
+                $store.getters.token.substring(0, 10)
+              "
             />
           </div>
         </div>
@@ -99,6 +108,7 @@
           :userName="$store.getters.StateUser.name"
           :Clazz="$store.getters.StateUser.name"
           :notes="Notes"
+          :numBul="numBul"
         />
       </section>
     </vue-html2pdf>
@@ -113,6 +123,14 @@ export default {
     Notes: Array,
     pagination: Object,
   },
+  data() {
+    return {
+      numBul:
+        parseInt(Math.random(1, 9999)) +
+        "" +
+        this.$store.getters.token.substring(0, 10),
+    };
+  },
   components: {
     printable,
     VueHtml2pdf,
@@ -123,6 +141,11 @@ export default {
       this.$emit("fetchNote", url);
     },
     generatePDF() {
+      this.$http.post("http://localhost:8000/api/bultin", {
+        student_id: this.$store.getters.StateUser.id,
+        moyenne: this.myMoy,
+        numero_bultin: this.numBul,
+      });
       this.$refs.html2Pdf.generatePdf();
     },
   },
@@ -134,8 +157,6 @@ export default {
         somme += this.Notes[i].note * this.Notes[i].matiere.coefficient;
         nb += this.Notes[i].matiere.coefficient;
       }
-      console.log(somme, nb);
-      // show only two decimal places
       return (somme / nb).toFixed(2);
     },
   },
