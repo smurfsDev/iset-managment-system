@@ -94,7 +94,7 @@ export default {
       .then((res)=> {
        
         this.Matieres = res.data.data.data;
-        console.log(this.Matieres)
+        // console.log(this.Matieres)
         
         // this.$http.get("http://localhost:8000/api/enseignant/approuved")
         // .then((res)=> {

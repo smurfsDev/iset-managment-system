@@ -57,7 +57,7 @@
                   </option>
               </select><br>
               <label>Coefficient: </label>
-              <input type="number"  v-model="oldMatiere.coefficient" >
+              <input type="number" step=0.1  v-model="oldMatiere.coefficient" >
           <div class="modal-footer">
             <button
               type="button"
