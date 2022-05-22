@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header">Chats</div>
             <div class="card-body">
-                <chatMessagesComponent></chatMessagesComponent>
+                <chatMessagesComponent  :messages="messages"></chatMessagesComponent>
                 <chatFormComponent></chatFormComponent>
             </div>
         </div>
@@ -21,6 +21,20 @@ import chatFormComponent from "./chatFormComponent";
         },
         mounted() {
             console.log('Component mounted.')
+        },
+        props: {
+            // userId: Number,
+            messages:Array,
+        },
+        data() {
+            return {
+                user: {},
+            }
+        },
+        created() {
+        },
+        methods: {
+           
         }
     }
 </script>
