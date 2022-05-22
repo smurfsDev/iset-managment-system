@@ -218,6 +218,12 @@
                     icon: 'fas fa-file',
                     hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
                 },
+                {
+                    href: '/mesNotes',
+                    title: 'Mes notes',
+                    icon: 'fas fa-file',
+                    hidden: !this.isStudent,
+                }
         
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
