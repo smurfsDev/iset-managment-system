@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classe;
 use App\Models\Matiere;
 use Illuminate\Http\Request;
 use App\Http\Requests\MatiereRequest;
+use App\Models\Classe;
+use App\Models\Note;
+use App\Models\User;
 
 class MatiereController extends Controller
 {
     public function getMatiereParClasse(Request $request,$id){
 
-       
+
         $mat = Matiere::where('idClasse','=',$id)
         ->with('enseignant')
         ->paginate(5);
@@ -28,6 +30,21 @@ class MatiereController extends Controller
         $matiere->coefficient = $request->input('coefficient');
 
         $matiere->save();
+
+        $users = Classe::with('users')->find($id);
+        $ids = $users->users->pluck('user_id')->toArray();
+        foreach ($ids as $id){
+            Note::create([
+                'student_id' => $id,
+                'matiere_id' => $matiere->id,
+                'note' => 0,
+            ]);
+        }
+
+        $users = Classe::find($id);
+
+
+
         return response()->json(["data" => $matiere], 201);
     }
 
@@ -38,7 +55,7 @@ class MatiereController extends Controller
             $matiere->idEnseignant = $request->input('idEnseignant') ? $request->input('idEnseignant') : $matiere->idEnseignant;
             $matiere->semestre = $request->input('semestre') ? $request->input('semestre') : $matiere->semestre;
             $matiere->coefficient = $request->input('coefficient') ? $request->input('coefficient') : $matiere->coefficient;
-             
+
             $matiere->save();
             return response()->json([
                 'message' => 'Update Success',
@@ -64,24 +81,27 @@ class MatiereController extends Controller
             ], 404);
         }
     }
-    public function getMatieresParEns(Request $request){
-         $idEns = $request->user()->id;
-        // //dd($idEns);
-        // $classes = Matiere::where('idEnseignant', $idEns)
-        // ->with('classe')
-        // ->paginate(5);
-        //  $classes = Classe::with('matiere')->with('matiere.enseignant')
-        // // ->where('matiere.idEnseignant', $idEns)
-        // // //->where('Classe.matiere.idEnseignant', $idEns)
-        //  ->get();
-        $classes = Classe::whereHas('matiere', function ($query) use($idEns) {
+
+    public function getClassesEnseignéeParEnseignant(Request $request)
+    {
+        // $user = User::with("classe")->find(2);
+        // $user = Classe::with("users.user")->find(1);
+        // return $user;
+        $idEns = $request->user()->id;
+        $classes = Classe::whereHas('matieres', function ($query) use($idEns) {
             $query->where('idEnseignant', $idEns);
-          })->with('matiere', function ($query) use ($idEns){
+        })->with('matieres', function ($query) use($idEns) {
             $query->where('idEnseignant', $idEns);
         })
-        ->paginate();
+        ->with('matieres.notes.student')
+        ->paginate(5);
+        return response()->json($classes);    }
 
-        
-        return response()->json($classes);
+    public function getMyMatieres(Request $request)
+    {
+        $idStudent = $request->user()->id;
+        $student = Note::where('student_id', $idStudent)->with('matiere.enseignant')->with("matiere.classe")->get();
+
+        return response()->json($student);
     }
 }

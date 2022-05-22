@@ -1,7 +1,6 @@
 <template>
   <div>
-   
-    <div class="content container">
+    <div class="content container w-100">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
         <div v-if="!show">
@@ -17,7 +16,7 @@
           </b-alert>
 
           <!-- <b-card> -->
-          <showClasses @deleteClasse="deleteClasse" :Classes="Classes"
+          <showClasses @alertIt="alertIt" @deleteClasse="deleteClasse" :Classes="Classes"
             @fetchClasse="fetchClasse" @updateClasse="updateClasse" :pagination="pagination" />
           <!-- </b-card> -->
         </div>
@@ -79,7 +78,6 @@ export default {
       .then((res)=> {
       
         this.Classes = res.data.data;
-       
         this.show = false;
         vm.makePagination(res.data);
       });
@@ -157,6 +155,11 @@ export default {
     initModal() {
       this.Classe = {};
       this.showModal("ClasseModal");
+    },
+    alertIt(alert){
+      this.alert.variant = alert.variant;
+      this.alert.msg = alert.msg;
+      this.alert.dismissCountDown = 5;
     },
   },
 };

@@ -77,13 +77,21 @@ class User extends Authenticatable
     public function DemandeEventAdmin(){
         return $this->HasMany('App\Models\DemandeEvent', 'administrateurId');
     }
-    
+
     public function DemandeAdhesionEventStudent(){
         return $this->HasMany('App\Models\DemandeAdhesionEvent', 'idStudent');
     }
 
     public function matiere(){
         return $this->HasOne('App\Models\Matiere','idEnseignant');
+    }
+
+    public function classe(){
+        return $this->belongsToMany(Role::class)->using(RoleUser::class)->with("RoleUser.class");
+    }
+
+    public function note(){
+        return $this->HasMany('App\Models\Note', 'student_id');
     }
 
 }

@@ -24,6 +24,11 @@ class Matiere extends Model
         return $this->hasOne(User::class,'id','idEnseignant');
     }
 
+    public function notes(){
+        return $this->hasMany(Note::class,'matiere_id');
+    }
 
-    
+
+
+
 }

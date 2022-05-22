@@ -9,6 +9,7 @@ use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\MatiereController;
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\BultinController;
 use App\Http\Controllers\MaterielController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\club\ClubController;
@@ -35,7 +36,7 @@ use App\Http\Controllers\DemandeAdhesionEventController;
 use App\Http\Controllers\club\pageClub\HeadersController;
 use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
-
+use App\Http\Controllers\NoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -181,10 +182,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/create/{id}', [MatiereController::class, 'createMatiere']);
         Route::put('/update/{id}', [MatiereController::class, 'updateMatiere']);
         Route::delete('/delete/{id}', [MatiereController::class, 'deleteMatiere']);
-        Route::get('/', [MatiereController::class, 'getMatieresParEns']);
+        Route::get('/', [MatiereController::class, 'getClassesEnseignéeParEnseignant']);
 
     });
-  
+
 
 
     // classes routes
@@ -236,6 +237,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{id}', [MaterielController::class, 'update']);
         Route::delete('/{id}', [MaterielController::class, 'destroy']);
     });
+
+    Route::group(['prefix'=>'/note'],function(){
+        Route::post('/',[NoteController::class,'setNote']);
+        Route::get('/{idMat}/{idStudent}',[NoteController::class,'getNote']);
+        Route::get('/',[NoteController::class,'getMatieres']);
+        Route::get('/getMyNotes', [MatiereController::class, 'getMyMatieres']);
+
+    });
 });
 
 // page club routes
@@ -276,4 +285,7 @@ Route::group(['prefix' => '/s'], function () {
     Route::get('/', [StudentsController::class, 'show']);
     Route::post('/accept/{id}', [StudentsController::class, 'accept']);
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
+    Route::delete('/{id}', [StudentsController::class, 'delete']);
 });
+
+Route::post('/bultin', [BultinController::class, 'store']);

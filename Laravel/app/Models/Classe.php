@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use RoleUser;
 
 class Classe extends Model
 {
@@ -15,8 +16,21 @@ class Classe extends Model
         'departement_id',
     ];
 
-    public function matiere(){
-        return $this->hasMany('App\Models\Matiere', 'idClasse');
+    public function departement()
+    {
+        return $this->belongsTo(Departement::class);
     }
+
+    public function matieres()
+    {
+        return $this->hasMany(Matiere::class, 'idClasse', 'id');
+    }
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\RoleUser','classe','id');
+    }
+
+
 
 }

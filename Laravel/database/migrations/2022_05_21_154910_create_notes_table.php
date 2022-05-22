@@ -18,8 +18,8 @@ class CreateNotesTable extends Migration
             $table->foreignId("student_id");
             $table->foreignId("matiere_id");
             $table->float("note")->default(0);
-            $table->foreign("student_id")->references("id")->on("users");
-            $table->foreign("matiere_id")->references("id")->on("matieres");
+            $table->foreign("student_id")->references("id")->on("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("matiere_id")->references("id")->on("matieres")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }
