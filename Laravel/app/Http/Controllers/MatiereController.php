@@ -100,7 +100,7 @@ class MatiereController extends Controller
     public function getMyMatieres(Request $request)
     {
         $idStudent = $request->user()->id;
-        $student = Note::where('student_id', $idStudent)->with('matiere')->paginate(5);
+        $student = Note::where('student_id', $idStudent)->with('matiere.enseignant')->with("matiere.classe")->get();
 
         return response()->json($student);
     }
