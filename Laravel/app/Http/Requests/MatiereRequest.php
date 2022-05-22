@@ -29,7 +29,7 @@ class MatiereRequest extends FormRequest
             "nom"=> "required",
             "idEnseignant" => "required",
             "semestre" => "required",
-            "coefficient" => "required"
+            "coefficient" => "required|Integer|min:1"
         ];
     }
 

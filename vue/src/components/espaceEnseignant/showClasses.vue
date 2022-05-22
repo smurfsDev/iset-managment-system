@@ -38,6 +38,7 @@
           style="height: auto;!important"
           md-label="Matiere"
         >
+       
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
@@ -45,8 +46,12 @@
               </b-row>
               <b-row v-for="m in Classe.matiere" :key="m.id">
                 <b-col>
+                  
                   Matiere : {{ m.nom }} 
+                  Coefficient: {{ m.coefficient}}
+                  Semestre: {{m.semestre}}
                 </b-col>
+                
               </b-row>
              
             </b-row>
