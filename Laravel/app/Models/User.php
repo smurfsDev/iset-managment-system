@@ -77,9 +77,13 @@ class User extends Authenticatable
     public function DemandeEventAdmin(){
         return $this->HasMany('App\Models\DemandeEvent', 'administrateurId');
     }
-    
+
     public function DemandeAdhesionEventStudent(){
         return $this->HasMany('App\Models\DemandeAdhesionEvent', 'idStudent');
+    }
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
 
