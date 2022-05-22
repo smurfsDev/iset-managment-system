@@ -30,11 +30,13 @@ class StudentsController extends Controller
             $idMatieres = $ListeMatiere->pluck('id')->toArray();
 
             foreach ($idMatieres as $idMatiere){
-                Note::create([
-                    'student_id' => $id,
-                    'matiere_id' => $idMatiere,
-                    'note' => 0,
-                ]);
+                if(empty(Note::where('student_id', $id)->where('matiere_id', $idMatiere)->first())){
+                    Note::create([
+                        'student_id' => $id,
+                        'matiere_id' => $idMatiere,
+                        'note' => 0,
+                    ]);
+                }
             }
 
             return response()->json('student accepted',200);
