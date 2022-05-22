@@ -9,14 +9,19 @@ class Message extends Model
 {
     use HasFactory;
     protected $fillable = ['body'];
-
-    protected $appends = ['selfMessage'];
+    // protected $appends = ['selfMessage'];
+    // public function getSelfMessageAttribute()
+    // {
+    //      return $this->user_id === auth()->user()->id;
+    // }
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
-    public function getSelfMessageAttribute()
+    public function receiver()
     {
-        return $this->user_id === request()->user()->id;
+        return $this->belongsTo(User::class, 'receiver_id');
     }
+
+
 }
