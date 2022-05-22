@@ -41,7 +41,23 @@
                   >
                     {{ ens.name }}
                   </option>
-                </select>
+              </select>
+              <label>Semestre: </label>
+              <select name="oldMatiere.semestre" v-model="oldMatiere.semestre" class="form-control" required="required">
+                  <option 
+                 
+                    :value="1"
+                  >
+                    1
+                  </option>
+                  <option 
+                    :value="2"
+                  >
+                    2
+                  </option>
+              </select><br>
+              <label>Coefficient: </label>
+              <input type="number"  v-model="oldMatiere.coefficient" >
           <div class="modal-footer">
             <button
               type="button"
