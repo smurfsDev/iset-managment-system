@@ -82,7 +82,7 @@ export default {
       let vm = this;
       this.$http.get(page_url)
       .then((res)=> {
-        this.Notes = res.data.data;
+        this.Notes = res.data;
         this.show = false;
         this.edit=false;
         this.alert=alert
