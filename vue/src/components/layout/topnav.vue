@@ -207,6 +207,12 @@
                     hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
                 },
                 {
+                    href: '/chat',
+                    title: 'Chat',
+                    icon: 'fas fa-file',
+                    
+                },
+                {
                     href: '/gererMateriel',
                     title: 'gererMateriel',
                     icon: 'fas fa-file',
