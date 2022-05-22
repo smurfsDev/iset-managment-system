@@ -181,9 +181,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/create/{id}', [MatiereController::class, 'createMatiere']);
         Route::put('/update/{id}', [MatiereController::class, 'updateMatiere']);
         Route::delete('/delete/{id}', [MatiereController::class, 'deleteMatiere']);
+        Route::get('/', [MatiereController::class, 'getMatieresParEns']);
+
     });
-
-
+  
 
 
     // classes routes
@@ -225,6 +226,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [EnseignantController::class, 'show']);
         Route::post('/accept/{id}', [EnseignantController::class, 'accept']);
         Route::post('/refuse/{id}', [EnseignantController::class, 'refuse']);
+        Route::get('/approuved', [EnseignantController::class, 'getApprouvedEns']);
     });
 
 

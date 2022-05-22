@@ -2,13 +2,13 @@
   <div>
     <div
       class="card card-body my-5 py-5 text-center"
-      v-if="Matieres.length == 0"
+      v-if="Classes.length == 0"
     >
-      <h3>il y'a aucune Matiere</h3>
+      <h3>il y'a aucune Classe</h3>
     </div>
-    <b-card class="my-2" v-for="Matiere in Matieres" :key="Matiere.id">
-      
+    <b-card class="my-2" v-for="Classe in Classes" :key="Classe.id">
       <md-tabs style="height: auto;!important">
+        
         <md-tab
           id="tab-home"
           style="height: auto;!important"
@@ -17,51 +17,58 @@
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
+                
+              </b-row>
+              <b-row>
                 <b-col>
-                  Nom  : {{ Matiere.nom }}
+                  Classe : {{ Classe.nom }} 
                 </b-col>
               </b-row>
               <b-row>
                 <b-col>
-                  Nom  : {{ Matiere.enseignant.name }}
-                </b-col>
-              </b-row>
-               <b-row>
-                <b-col>
-                  Semestre  : {{ Matiere.semestre }}
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
-                  Coefficient  : {{ Matiere.coefficient }}
+                  Abbreveation classe : {{ Classe.abreviation }} 
                 </b-col>
               </b-row>
             </b-row>
-
-            <b-button
-              variant="danger"
-              v-on:click="Delete(Matiere.id)"
-            >
-              Delete</b-button
-            >
-            <b-button
-              variant="warning"
-              v-on:click="Update(Matiere)"
-            >
-              Update</b-button
-            >
+           
+          </div>
+        </md-tab>
+        <md-tab
+          id="tab"
+          style="height: auto;!important"
+          md-label="Matiere"
+        >
+       
+          <div class="bv-example-row text-center">
+            <b-row class="mb-2">
+              <b-row>
+                
+              </b-row>
+              <b-row v-for="m in Classe.matiere" :key="m.id">
+                <b-col>
+                  
+                  Matiere : {{ m.nom }} 
+                  Coefficient: {{ m.coefficient}}
+                  Semestre: {{m.semestre}}
+                </b-col>
+                
+              </b-row>
+             
+            </b-row>
+           
           </div>
         </md-tab>
       </md-tabs>
     </b-card>
-    <nav class="row" v-if="Matieres.length != 0">
+    
+    <nav class="row" v-if="Classes.length != 0">
       <ul class="pagination w-auto mx-auto">
         <li
           :class="[{ disabled: !pagination.prev_page_url }]"
           class="page-item"
         >
           <a
-            @click="fetchMatiere(pagination.prev_page_url)"
+            @click="fetchClasse(pagination.prev_page_url)"
             class="btn btun page-link"
             :class="[
               !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
@@ -79,7 +86,7 @@
           class="page-item"
         >
           <a
-            @click="fetchMatiere(pagination.next_page_url)"
+            @click="fetchClasse(pagination.next_page_url)"
             :class="[
               !pagination.next_page_url ? 'disabled' : 'link-primary btun',
             ]"
@@ -95,8 +102,7 @@
 <script>
 export default {
   props: {
-    Matieres: Array,
-    Enseignant: Array,
+    Classes: Array,
     pagination: Object,
   },
   data() {
@@ -104,18 +110,25 @@ export default {
       id: "",
     };
   },
-  emits: ["deleteMatiere", "updateMatiere", "fetchMatiere"],
+  
+  emits: ["deleteClasse", "updateClasse", "fetchClasse"],
   methods: {
     Delete(id) {
-      this.$emit("deleteMatiere", id);
+      this.$emit("deleteClasse", id);
     },
-    Update(Matiere) {
-      this.$emit("updateMatiere", Matiere);
+    Update(Classe) {
+      this.$emit("updateClasse", Classe);
       this.showModal("ClasseModal");
     },
-    fetchMatiere(url) {
-      this.$emit("fetchMatiere", url);
+    fetchClasse(url) {
+      this.$emit("fetchClasse", url);
     },
+    addmat(id) {
+      
+      this.$router.push({ name:"consulterMatiere", params:{
+            id: id,
+          }});
+    }
   },
 };
 </script>

@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Matiere;
 use App\Models\User;
-use App\Models\Classe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MatiereFactory extends Factory
+class NoteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,11 +16,9 @@ class MatiereFactory extends Factory
     public function definition()
     {
         return [
-            "nom" => $this->faker->word(),
-            "idClasse" => Classe::get('id')->random(),
-            "semestre" => 1,
-            "coefficient" => 1,
-           
+            "note" => $this->faker->numberBetween(0, 20),
+            "student_id" => User::all()->random()->id,
+            "matiere_id" => Matiere::all()->random()->id,
         ];
     }
 }

@@ -1,19 +1,13 @@
 <template>
   <div>
-    
-    <formMatiere @addMatiere="addMatiere" :oldMatiere="Matiere" :Enseignant="Enseignant" />
+   
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
         <div v-if="!show">
           <b-container class="bv-example-row py-0">
             <b-row class="text-center">
-              <b-col cols="8">
-                <button type="button" class="btn btn-primary mx-1 float-start" data-bs-toggle="modal"
-                  @click="initModal()" data-bs-target="#ClasseModal">
-                  Nouvelle Matiere
-                </button>
-              </b-col>
+            
               <b-col></b-col>
             </b-row>
           </b-container>
@@ -23,8 +17,8 @@
           </b-alert>
 
           <!-- <b-card> -->
-          <showMatieres @deleteMatiere="deleteMatiere" :Matieres="Matieres"
-            @fetchMatiere="fetchMatiere" @updateMatiere="updateMatiere" :pagination="pagination" />
+          <showClasses @deleteClasse="deleteClasse" :Classes="Classes"
+            @fetchClasse="fetchClasse" @updateClasse="updateClasse" :pagination="pagination" />
           <!-- </b-card> -->
         </div>
       </div>
@@ -33,21 +27,19 @@
 </template>
 
 <script>
-import showMatieres from "./show.vue";
-import formMatiere from "./form.vue";
+import showClasses from "./showClasses.vue";
+
 // import search from '../search.vue';
 
 export default {
   components: {
-    showMatieres,
-    formMatiere,
+    showClasses
     //     search
   },
   data() {
     return {
-      Matiere: {},
-      Matieres: [],
-      Enseignant:[],
+      Classe: {},
+      Classes: [],
       pagination: {},
       edit: false,
       search: "",
@@ -58,25 +50,19 @@ export default {
         msg: "",
       },
       myid: 1,
-      idC:null,
     };
   },
   created() {
     // console.log(typeof $);
-   
-    this.idC = this.$route.params.id;
-    if (this.idC==null){
-      this.$router.push({ name:"GererClasse"});
-    }
-    document.title = "Matiere";
-    this.fetchMatiere();
+    document.title = "Classe";
+    this.fetchClasse();
     if (this.$route.params.add == 1) {
       this.alert.variant = "success";
-      this.alert.msg = "Matiere ajouté avec succès";
+      this.alert.msg = "Classe ajouté avec succès";
       this.alert.dismissCountDown = 5;
     } else if (this.$route.params.edit == 1) {
       this.alert.variant = "warning";
-      this.alert.msg = "Matiere modifié avec succès";
+      this.alert.msg = "Classe modifié avec succès";
       this.alert.dismissCountDown = 5;
     } else if (this.$route.params.add == 2) {
       this.alert.variant = this.$route.params.alert.variant;
@@ -85,62 +71,50 @@ export default {
     }
   },
   methods: {
-    fetchMatiere(
-      page_url = "http://127.0.0.1:8000/api/matiere/"+this.idC
+    fetchClasse(
+      page_url = "http://127.0.0.1:8000/api/matiere/"
     ) {
       let vm = this;
-
       this.$http.get(page_url)
       .then((res)=> {
+      
+        this.Classes = res.data.data;
        
-        this.Matieres = res.data.data.data;
-        // console.log(this.Matieres)
-        
-        // this.$http.get("http://localhost:8000/api/enseignant/approuved")
-        // .then((res)=> {
-        //   console.log(res.data)
-        //   this.Matieres.Enseignant = res.data
-          
-        //   console.log(this.Matieres)
-        // })
         this.show = false;
-        vm.makePagination(res.data.data);
+        vm.makePagination(res.data);
       });
     },
     makePagination(meta) {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/matiere?page=" + meta.current_page,
+          "http://localhost:8000/api/Classe?page=" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
       };
     },
-    deleteMatiere(id) {
-      if (confirm("Delete Matiere " + id)) {
+    deleteClasse(id) {
+      if (confirm("Delete Classe " + id)) {
         this.show = true;
-        this.$http.delete("http://localhost:8000/api/matiere/delete/" + id)
+        this.$http.delete("http://localhost:8000/api/Classe/" + id)
         .then(() => {
-          this.fetchMatiere();
+          this.fetchClasse();
             this.alert.variant = "danger";
-            this.alert.msg = "Matiere suprimée avec succès";
+            this.alert.msg = "Classe suprimée avec succès";
             this.alert.dismissCountDown = 5;
         });
       }
     },
     resetModal1() {
-      this.Matiere = {};
+      this.Classe = {};
     },
-    addMatiere(Matiere, idEns) {
+    addClasse(Classe) {
       
       this.show = true;
-    
-      Matiere.idEnseignant = idEns;
-      
       if (!this.edit) {
-       this.$http.post('http://localhost:8000/api/matiere/create/'+this.idC,
-        (Matiere))
+       this.$http.post('http://localhost:8000/api/Classe',
+        (Classe))
         .then((data) => {
           data = data.data;
           if (data.success == false) {
@@ -155,33 +129,33 @@ export default {
               this.alert.dismissCountDown = 5;
             } else {
               this.alert.variant = "success";
-              this.alert.msg = "Matiere ajouté avec succès";
+              this.alert.msg = "Classe ajouté avec succès";
               this.alert.dismissCountDown = 5;
             }
-            this.fetchMatiere();
+            this.fetchClasse();
         });
       } else {
-        this.$http.put("http://localhost:8000/api/matiere/update/" + Matiere.id,
-        (Matiere))
+        this.$http.put("http://localhost:8000/api/Classe/" + Classe.id,
+        (Classe))
         .then(() => {
-          this.fetchMatiere();
+          this.fetchClasse();
             this.edit = false;
             this.alert.variant = "warning";
-            this.alert.msg = "Matiere modifié avec succès";
+            this.alert.msg = "Classe modifié avec succès";
             this.alert.dismissCountDown = 5;
         });
       }
     },
-    updateMatiere(Matiere) {
+    updateClasse(Classe) {
       this.edit = true;
-      this.Matiere = Matiere;
+      this.Classe = Classe;
     },
     searchEmploye(search) {
       this.search = search;
-      this.fetchMatiere();
+      this.fetchClasse();
     },
     initModal() {
-      this.Matiere = {};
+      this.Classe = {};
       this.showModal("ClasseModal");
     },
   },

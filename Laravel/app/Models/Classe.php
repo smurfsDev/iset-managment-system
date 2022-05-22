@@ -15,4 +15,8 @@ class Classe extends Model
         'departement_id',
     ];
 
+    public function matiere(){
+        return $this->hasMany('App\Models\Matiere', 'idClasse');
+    }
+
 }

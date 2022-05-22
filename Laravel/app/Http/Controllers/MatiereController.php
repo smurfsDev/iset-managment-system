@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\Matiere;
 use Illuminate\Http\Request;
 use App\Http\Requests\MatiereRequest;
 
 class MatiereController extends Controller
 {
-    public function getMatiereParClasse($id){
+    public function getMatiereParClasse(Request $request,$id){
 
        
-        $mat = Matiere::where('idClasse','=',$id)->paginate(5);
+        $mat = Matiere::where('idClasse','=',$id)
+        ->with('enseignant')
+        ->paginate(5);
         return response()->json(["data" => $mat], 200);
 
     }
@@ -20,6 +23,10 @@ class MatiereController extends Controller
         $matiere = new Matiere();
         $matiere->nom = $request->input('nom');
         $matiere->idClasse = $id;
+        $matiere->idEnseignant = $request->input('idEnseignant');
+        $matiere->semestre = $request->input('semestre');
+        $matiere->coefficient = $request->input('coefficient');
+
         $matiere->save();
         return response()->json(["data" => $matiere], 201);
     }
@@ -28,7 +35,11 @@ class MatiereController extends Controller
         $matiere = Matiere::find($id);
         if ($matiere) {
             $matiere->nom = $request->input('nom') ? $request->input('nom') : $matiere->nom;
-             $matiere->save();
+            $matiere->idEnseignant = $request->input('idEnseignant') ? $request->input('idEnseignant') : $matiere->idEnseignant;
+            $matiere->semestre = $request->input('semestre') ? $request->input('semestre') : $matiere->semestre;
+            $matiere->coefficient = $request->input('coefficient') ? $request->input('coefficient') : $matiere->coefficient;
+             
+            $matiere->save();
             return response()->json([
                 'message' => 'Update Success',
                 'id' => $matiere->id,
@@ -52,5 +63,25 @@ class MatiereController extends Controller
                 'message' => 'demande non trouvée'
             ], 404);
         }
+    }
+    public function getMatieresParEns(Request $request){
+         $idEns = $request->user()->id;
+        // //dd($idEns);
+        // $classes = Matiere::where('idEnseignant', $idEns)
+        // ->with('classe')
+        // ->paginate(5);
+        //  $classes = Classe::with('matiere')->with('matiere.enseignant')
+        // // ->where('matiere.idEnseignant', $idEns)
+        // // //->where('Classe.matiere.idEnseignant', $idEns)
+        //  ->get();
+        $classes = Classe::whereHas('matiere', function ($query) use($idEns) {
+            $query->where('idEnseignant', $idEns);
+          })->with('matiere', function ($query) use ($idEns){
+            $query->where('idEnseignant', $idEns);
+        })
+        ->paginate();
+
+        
+        return response()->json($classes);
     }
 }

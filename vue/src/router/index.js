@@ -41,6 +41,8 @@ import gererCategorieMateriel from "./routes/gererCategorieMateriel";
 import gererMateriel from "./routes/gererMateriel";
 import gererMatieres from "./routes/gererMatieres";
 import manageEnseignant from "./routes/manageEnseignant";
+import consulterClasseEns from "./routes/consulterClasseEns";
+
 
 Vue.use(VueRouter);
 
@@ -94,7 +96,8 @@ const routes = [
   ...gererCategorieMateriel,
   ...gererMateriel,
    ...gererMatieres,
-  ...manageEnseignant
+  ...manageEnseignant,
+  ...consulterClasseEns
 
 
 
