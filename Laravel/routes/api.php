@@ -21,7 +21,7 @@ use App\Http\Controllers\DemandeEventController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\ChefDepartmentController;
 use App\Http\Controllers\DemandeMaterielController;
-
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CategorieMaterielController;
 
 
@@ -234,6 +234,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{id}', [MaterielController::class, 'update']);
         Route::delete('/{id}', [MaterielController::class, 'destroy']);
     });
+    Route::group(['prefix' => '/message'], function () {
+        Route::get('/users', [MessageController::class, 'users']);
+        Route::get('/M/{id}', [MessageController::class, 'index']);
+
+    });
 });
 
 // page club routes
@@ -275,3 +280,5 @@ Route::group(['prefix' => '/s'], function () {
     Route::post('/accept/{id}', [StudentsController::class, 'accept']);
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
 });
+
+
