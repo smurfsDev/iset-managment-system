@@ -17,6 +17,7 @@ class CreateBultinsTable extends Migration
             $table->id();
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('id')->on('users');
+            $table->string("numero_bultin");
             $table->float("moyenne");
             $table->timestamps();
         });

@@ -12,6 +12,7 @@ class bultin extends Model
     protected $fillable = [
         'student_id',
         'moyenne',
+        'numero_bultin',
     ];
 
     public function student()
