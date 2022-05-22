@@ -37,58 +37,55 @@
           <h1>
             Moyenne (NonFinal) : {{ myMoy }} 
           </h1>
+              <div @click="generatePDF()" class="btn btn-info">Get bultin</div>
           </div>
         </md-tab>
       </md-tabs>
     </b-card>
-    <nav class="row" v-if="Notes.length != 0">
-      <ul class="pagination w-auto mx-auto">
-        <li
-          :class="[{ disabled: !pagination.prev_page_url }]"
-          class="page-item"
-        >
-          <a
-            @click="fetchNote(pagination.prev_page_url)"
-            class="btn btun page-link"
-            :class="[
-              !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
-            ]"
-            >Precedent</a
-          >
-        </li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">{{
-            pagination.current_page + "/" + pagination.last_page
-          }}</a>
-        </li>
-        <li
-          :class="[{ disabled: !pagination.next_page_url }]"
-          class="page-item"
-        >
-          <a
-            @click="fetchNote(pagination.next_page_url)"
-            :class="[
-              !pagination.next_page_url ? 'disabled' : 'link-primary btun',
-            ]"
-            class="btun btn page-link"
-            >Suivant</a
-          >
-        </li>
-      </ul>
-    </nav>
+   
+
+    <vue-html2pdf
+      :show-layout="false"
+      :float-layout="true"
+      :enable-download="true"
+      :paginate-elements-by-height="1400"
+      :filename="$store.getters.StateUser.name"
+      :pdf-quality="2"
+      :manual-pagination="false"
+      pdf-format="a4"
+      :pdf-margin="10"
+      pdf-orientation="portrait"
+      pdf-content-width="800px"
+      ref="html2Pdf"
+    >
+      <section slot="pdf-content">
+          <printable :userName="$store.getters.StateUser.name" :Clazz="$store.getters.StateUser.name" :notes="Notes" />
+      </section>
+    </vue-html2pdf>
+          <printable :userName="$store.getters.StateUser.name" :Clazz="$store.getters.StateUser.name" :notes="Notes"/>
+       
   </div>
 </template>
 
 <script>
+import printable from "./bultin.vue";
+import VueHtml2pdf from "vue-html2pdf";
 export default {
   props: {
     Notes: Array,
     pagination: Object,
   },
+  components: {
+    printable,
+    VueHtml2pdf
+  },
   emits: ["fetchNote"],
   methods: {
     fetchNote(url) {
       this.$emit("fetchNote", url);
+    },
+     generatePDF() {
+      this.$refs.html2Pdf.generatePdf();
     },
     
   },
