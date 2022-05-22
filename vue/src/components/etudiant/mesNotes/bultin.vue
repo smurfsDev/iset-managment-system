@@ -55,7 +55,7 @@
               <tr>
                 <th width="500" class="tg-0pky">Numero de relevé:</th>
                 <th class="text-center" colspan="3">{{
-                  parseInt(Math.random(1,9999))+""+$store.getters.token.substring(0, 10) }}</th>
+                 numBul }}</th>
               </tr>
             </thead>
             <tbody>
@@ -127,7 +127,7 @@
 
 <script>
 export default {
-  props: ["userName", "Clazz", "notes"],
+  props: ["userName", "Clazz", "notes", "numBul"],
   computed: {
     myMoy() {
       let somme = 0;
@@ -136,7 +136,6 @@ export default {
         somme += this.notes[i].note * this.notes[i].matiere.coefficient;
         nb += this.notes[i].matiere.coefficient;
       }
-      console.log(somme, nb);
       return (somme / nb).toFixed(2);
     },
     somme() {
