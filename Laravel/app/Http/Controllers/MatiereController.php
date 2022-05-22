@@ -96,4 +96,11 @@ class MatiereController extends Controller
         ->with('matieres.notes.student')
         ->paginate(5);
         return response()->json($classes);    }
+
+    public function getMyMatieres(Request $request)
+    {
+        $idStudent = $request->user()->id;
+        $student = User::with('note.matiere')->find($idStudent);
+        return response()->json($student);
+    }
 }

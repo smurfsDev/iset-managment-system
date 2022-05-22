@@ -241,6 +241,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/',[NoteController::class,'setNote']);
         Route::get('/{idMat}/{idStudent}',[NoteController::class,'getNote']);
         Route::get('/',[NoteController::class,'getMatieres']);
+        Route::get('/getMyNotes', [MatiereController::class, 'getMyMatieres']);
+
     });
 });
 
