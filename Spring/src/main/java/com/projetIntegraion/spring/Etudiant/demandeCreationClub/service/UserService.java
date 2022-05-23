@@ -9,6 +9,7 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.security.SecurityConfig;
+import com.projetIntegraion.spring.security.MyUserDetail;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,8 @@ import groovy.util.logging.Slf4j;
 public class UserService implements UserDetailsService {
 	private final UserRepository userRepository;
 	private RoleRepository roleRepository;
+	@Autowired
+	RoleService roleService;
 	@Autowired UserRepository UserRepository;
     public List<User> getAllUser() {
         return UserRepository.findAll();
@@ -52,10 +55,11 @@ public class UserService implements UserDetailsService {
 	 Objects.requireNonNull(username);
 	 User user = userRepository.findUserWithName(username)
 	 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-	 return user;
+	//  return user;
+	return new MyUserDetail(user);
 	 }
 
-	 public User saveUser(String username, String password, String confirmedPassword) {
+	 public User saveUser(String username, String password, String confirmedPassword, Long role) {
 		User appUser = new User();
 		if (userRepository.findUserWithName(username).isPresent() == true)
 		throw new RuntimeException("User already exists");
@@ -63,7 +67,10 @@ public class UserService implements UserDetailsService {
 		throw new RuntimeException("Please confirm your password");
 		appUser.setUsername(username);
 		Set<Role> roles = new HashSet<Role>();
-		Role r = new Role("ROLE_USER");
+		// Role r = new Role("ROLE_USER");
+		//Role r = roleService.getRole(role);
+		//Role r = roleRepository.findByName("ROLE_USER");
+		Role r = roleRepository.findById(role).get();
 		roleRepository.save(r);
 		roles.add(r);
 		appUser.setRoles(roles);
@@ -71,6 +78,9 @@ public class UserService implements UserDetailsService {
 		userRepository.save(appUser);
 		return appUser;
 		} 
+		public List<User> listAll() {
+			return userRepository.findAll();
+		}
 
 
 }
