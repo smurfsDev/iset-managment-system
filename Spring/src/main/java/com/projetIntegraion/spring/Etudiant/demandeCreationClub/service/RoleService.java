@@ -22,5 +22,8 @@ public class RoleService {
     public Role getRole(int id) {
 		return roleRepository.existsById(id) == false ? null : roleRepository.findById(id).get();
 	}
+    public Role save(Role role)  {
+		return roleRepository.save(role);
+	}
 
 }
