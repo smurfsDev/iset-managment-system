@@ -70,6 +70,10 @@ export default {
         this.alert.variant = "warning";
         this.alert.msg = "ChefDepartement acceptée avec succès";
         this.alert.dismissCountDown = 5;
+      }).catch((err) => {
+        this.alert.variant = "danger";
+        this.alert.msg = err.response.data.msg;
+        this.alert.dismissCountDown = 5;
       });
     },
     declineChefDepartement(id) {
