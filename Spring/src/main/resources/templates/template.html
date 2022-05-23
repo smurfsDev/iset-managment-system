@@ -26,7 +26,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Demande Creation Club
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateDcc}">Ajouter</a> <a class="dropdown-item"
+					<a sec:authorize="hasAuthority('STUDENT')" class="dropdown-item"  th:href="@{showCreateDcc}">Ajouter</a> <a class="dropdown-item"
 						th:href="@{listeDcc}">Lister</a>
 				</div>
 			</li>
@@ -36,7 +36,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Blog Club
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showManageBlog}">Gérer</a> 
+					<a sec:authorize="hasAuthority('RESPONSABLE')" class="dropdown-item"  th:href="@{showManageBlog}">Gérer</a> 
 					<a class="dropdown-item"
 						th:href="@{blogClub}">Consulter</a>
 				</div>
@@ -47,7 +47,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Demande Materiel
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateDm}">Ajouter</a> 
+					<a sec:authorize="hasAuthority('RESPONSABLE')" class="dropdown-item"  th:href="@{showCreateDm}">Ajouter</a> 
 					<a class="dropdown-item" th:href="@{listeDm}">Lister</a>
 				</div>
 			</li><li class="nav-item dropdown">
@@ -56,7 +56,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Demande Salle
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{ShowcreateDS}">Ajouter</a> 
+					<a sec:authorize="hasAuthority('RESPONSABLE')" class="dropdown-item"  th:href="@{ShowcreateDS}">Ajouter</a> 
 					<a class="dropdown-item" th:href="@{listeDS}">Lister</a>
 				</div>
 			</li>

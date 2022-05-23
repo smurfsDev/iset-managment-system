@@ -18,17 +18,17 @@
                     
                 </div>
             </div>
-            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateBlog}" class="float-start btn btn-success"> <i
+            <a sec:authorize="hasAuthority('RESPONSABLE')" th:href="@{showCreateBlog}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Gerer About Club 
             </a>
-            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateActivity}" class="float-start btn btn-success"> <i
+            <a sec:authorize="hasAuthority('RESPONSABLE')" th:href="@{showCreateActivity}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Gerer Activities Club
             </a>
             
-            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateBoard}" class="float-start btn btn-success"> <i
+            <a sec:authorize="hasAuthority('RESPONSABLE')" th:href="@{showCreateBoard}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Gerer Bureau Club 
             </a>
-            <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateProject}" class="float-start btn btn-success"> <i
+            <a sec:authorize="hasAuthority('RESPONSABLE')" th:href="@{showCreateProject}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Gerer Projects Club 
             </a>
             

@@ -79,13 +79,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//.anyRequest().authenticated(); 
 		
 
-		// http.authorizeRequests().antMatchers("/showCreate","/saveProduit")
-		// .hasAnyAuthority("ADMIN","AGENT");
-		//  http.authorizeRequests().antMatchers("/ListeProduits")
-		//  .hasAnyAuthority("ADMIN","AGENT","USER");
-		//  http.authorizeRequests()
-		//  .antMatchers("/supprimerProduit","/modifierProduit","/updateProduit")
-		//  .hasAuthority("ADMIN");
+		http.authorizeRequests().antMatchers("/listeDcc","/accept","/decline","/categorieMateriel")
+		.hasAnyAuthority("ADMIN");
+		 http.authorizeRequests().antMatchers("/listeDcc","/showCreateDcc", "/deleteDcc",
+		 "/modifierDcc","/blogClub")
+		 .hasAnyAuthority("STUDENT");
+		 http.authorizeRequests().antMatchers("/listeDcc","/showCreateDcc", "/deleteDcc",
+		 "/modifierDcc","/blogClub","/showCreateBlog","/createAbout","/deleteAbout","/modifierAbout",
+		 "/showCreateActivity","/createActivity","/deleteActivities","/modifierActivities","/showManageBlog","/showCreateBoard"
+		 ,"/createBoard","/deleteBoard","/showCreateProject","/createProject","/deleteProject","/modifierProject",
+		 "/listeDm","/showCreateDm","/showEditDm","/updateDmm","/deleteDmm","/materiel","/showMateriel",
+		 "/deleteMateriel","/setQuantite","/listeDS","/ShowcreateDS","/showEditDS","/updateDS","/modifierDS",
+		 "/deleteDS")
+		 .hasAnyAuthority("RESPONSABLE");
+		 http.authorizeRequests()
+		 .antMatchers("/supprimerProduit","/modifierProduit","/updateProduit")
+		 .hasAuthority("ADMIN");
 		 http.authorizeRequests().antMatchers("/login").permitAll();
 		 http.authorizeRequests().antMatchers("/register").permitAll();
 		 http.authorizeRequests().antMatchers("/webjars/**").permitAll();
