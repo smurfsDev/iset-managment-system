@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class TechnicienController extends Controller
 {
+    /**
+     * Display a listing of the resource where the user is a technicien and belongs to the auth user department
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function show(Request $request)
     {
         $user = $request->user()->department()->get();
@@ -22,6 +27,11 @@ class TechnicienController extends Controller
             return response()->json($users, 200);
         }
     }
+
+    /**
+     * accept user request to create account as technicien
+     * @return \Illuminate\Http\Response
+     */
     public function accept($id)
     {
         $user = User::find($id);
@@ -33,6 +43,10 @@ class TechnicienController extends Controller
         return response()->json('technicien not found', 404);
     }
 
+    /**
+     * refuse user request to create account as technicien
+     * @return \Illuminate\Http\Response
+     */
     public function refuse($id)
     {
         $user = User::find($id);

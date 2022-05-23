@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class BultinController extends Controller
 {
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response containing the newly created resource
+     */
     public function store(Request $request)
     {
 

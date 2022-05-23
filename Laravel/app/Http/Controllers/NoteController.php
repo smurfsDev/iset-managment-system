@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
+    /**
+     * update an existing resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function setNote(Request $request)
     {
         $n = Note::where('student_id', $request->student_id)
