@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(" select u from User u where u.username = ?1")
 	Optional<User> findUserWithName(String username);
+    void deleteById(int id);
 }

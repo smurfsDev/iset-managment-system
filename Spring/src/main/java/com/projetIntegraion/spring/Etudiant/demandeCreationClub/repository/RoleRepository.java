@@ -11,4 +11,5 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     Role findByName(String role);
     Optional<Role> findById(Long id);
     List<Role> findAll();
+    void deleteById(Long id);
 }

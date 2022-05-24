@@ -55,12 +55,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
+		http.exceptionHandling().accessDeniedPage("/accessDenied");
+
 		http.csrf().disable()
 				.authenticationProvider(getProvider())
-				.formLogin()
+				.formLogin().loginPage("/login")
 				.loginProcessingUrl("/login")
 				.successHandler(new AuthentificationLoginSuccessHandler())
-				.failureHandler(new SimpleUrlAuthenticationFailureHandler())
+				.failureHandler(new AuthentificationLoginErrorHandler())
 				.and()
 				.logout()
 				.logoutUrl("/logout")
@@ -69,15 +71,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
-				.antMatchers("/logout").permitAll();
-		// .anyRequest().authenticated();
-
-		http.authorizeRequests().antMatchers("/listeDcc", "/accept", "/decline", "/categorieMateriel")
-				.hasAnyAuthority("ADMIN");
-		http.authorizeRequests().antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
+				.antMatchers("/logout").permitAll()
+		.antMatchers("/listeDcc", "/accept", "/decline", "/categorieMateriel")
+				.hasAnyRole("ADMIN")
+		.antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
 				"/modifierDcc", "/blogClub")
-				.hasAnyAuthority("STUDENT");
-		http.authorizeRequests().antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
+				.hasAnyRole("STUDENT")
+		.antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
 				"/modifierDcc", "/blogClub", "/showCreateBlog", "/createAbout", "/deleteAbout", "/modifierAbout",
 				"/showCreateActivity", "/createActivity", "/deleteActivities", "/modifierActivities", "/showManageBlog",
 				"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
@@ -86,17 +86,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/deleteMateriel", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
 				"/modifierDS",
 				"/deleteDS")
-				.hasAnyAuthority("RESPONSABLE");
-		http.authorizeRequests()
-				.antMatchers("/supprimerProduit", "/modifierProduit", "/updateProduit")
-				.hasAuthority("ADMIN");
-		http.authorizeRequests().antMatchers("/login").permitAll();
-		http.authorizeRequests().antMatchers("/register").permitAll();
-		http.authorizeRequests().antMatchers("/webjars/**").permitAll();
-		http.authorizeRequests().anyRequest().authenticated();
-		http.formLogin().loginPage("/login");
+				.hasAnyRole("RESPONSABLE")
+				.antMatchers("/login").permitAll()
+				.antMatchers("/register").permitAll()
+				.antMatchers("/webjars/**").permitAll()
+				.anyRequest().authenticated();
+		
 
-		http.exceptionHandling().accessDeniedPage("/accessDenied");
 
 	}
 
@@ -142,6 +138,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		}
 
 	}
+	private class AuthentificationLoginErrorHandler extends
+            SimpleUrlAuthenticationFailureHandler {
+        @Override
+        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                org.springframework.security.core.AuthenticationException exception)
+                throws IOException, ServletException {
+
+                response.sendRedirect("/produits/login?error=1");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+        }
+
+    }
 
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {

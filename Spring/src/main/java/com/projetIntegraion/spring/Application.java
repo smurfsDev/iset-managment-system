@@ -1,8 +1,7 @@
 package com.projetIntegraion.spring;
 
-
-
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.RoleService;
 import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
 
@@ -13,58 +12,54 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
+import java.util.List;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
-
-
-	// public static void main(String[] args) {
-	// 	SpringApplication.run(Application.class, args);
-	// }
-	// @Autowired
-	// private ClubService service;
-	// @Autowired
-	// private UserService userSer;
 	@Autowired
 	ActivitiesService service;
 	@Autowired
-	RoleService roleService;
+	RoleRepository roleRepository;
+
+	@Autowired
+	UserRepository userRepository;
+
 	public static void main(String[] args) {
-	SpringApplication.run(Application.class, args);
-	// Role r = new Role("ADMIN");
-	// 	roleService.save(r);
-//	System.out.println(service.getAllActivities());
-		//System.out.println("Act"+service.getAllActivitiesParPage(page, size))
+		SpringApplication.run(Application.class, args);
 	}
+
 	@Override
 	public void run(String... args) throws Exception {
-		Role r = new Role("ADMIN");
-		roleService.save(r);
-		Role r1 = new Role("STUDENT");
-		roleService.save(r1);
-		Role r2 = new Role("RESPONSABLE");
-		roleService.save(r2);
-	// TODO Auto-generated method stub
-	// User user = new User();
-	// userSer.save(user);
-	// Club c1 = new Club(1L,"nomClub", new Date(), user, "president", "vicePresident");
-	
-	// service.save(c1);
-	// Club c = null;
-	// c= service.getClub(3L);
-	// System.out.println(c);
-	
-	// service.saveProduit(prod2);
-	// service.saveProduit(prod3);
-	} 
+		if (roleRepository.findAll().size() != 0) {
+			List<Role> roles = roleRepository.findAll();
+			for (Role role : roles) {
+				System.out.println(role.getId());
+				roleRepository.deleteById(role.getId());
+			}
+		}
 
+		if (userRepository.findAll().size() != 0) {
+			List<User> users = userRepository.findAll();
+			for (User user : users) {
+				userRepository.deleteById(user.getId());
+			}
+		}
 
-	
+		Role role = new Role("ROLE_ADMIN");
+		Role role1 = new Role("ROLE_RESPONSABLE");
+		Role role2 = new Role("ROLE_STUDENT");
+		roleRepository.save(role1);
+		roleRepository.save(role2);
+		roleRepository.save(role);
+
+	}
+
 	// @Bean
-	//  public PasswordEncoder getBCPE()  {
-	//  return new BCryptPasswordEncoder();
-	//  }
-	 
-	
+	// public PasswordEncoder getBCPE() {
+	// return new BCryptPasswordEncoder();
+	// }
+
 }
