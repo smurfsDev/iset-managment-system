@@ -107,13 +107,18 @@ public String posterror() {
     @RequestParam(name = "error", defaultValue = "0") int error,
     @RequestParam(name = "logout", defaultValue = "0") int logout) {
         if (error == 1) {
+            System.out.println("error : "+error);
             modelMap.addAttribute("error", "Veuillez vérifier vos identifiants");
             return "login";
         }
         if (logout == 1) {
+            System.out.println("error : "+error);
+
             modelMap.addAttribute("error", "Vous avez été déconnecté");
             return "login";
         }
+        System.out.println("error : "+error);
+
         return "login";
     }
 //  @GetMapping("/login")

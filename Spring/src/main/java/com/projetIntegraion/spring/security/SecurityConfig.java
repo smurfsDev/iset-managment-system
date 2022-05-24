@@ -145,12 +145,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 org.springframework.security.core.AuthenticationException exception)
                 throws IOException, ServletException {
 
-                response.sendRedirect("/produits/login?error=1");
+                response.sendRedirect("/login?error=1");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         }
 
     }
+	
 
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {
