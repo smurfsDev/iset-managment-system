@@ -14,18 +14,16 @@ public class AppAuthProvider extends DaoAuthenticationProvider{
     UserService userDetailsService;
    @Override
    public Authentication authenticate(Authentication authentication) {
-    UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken)
-   authentication;
+    UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
     String name = auth.getName();
     String password = auth.getCredentials().toString();
     UserDetails user = userDetailsService.loadUserByUsername(name);
-    if (user == null) {
-    throw new BadCredentialsException("Username/Password does not match for "
-   + auth.getPrincipal());
+    if (user == null || !user.getPassword().equals(password)) {
+        throw new BadCredentialsException("Username/Password does not match for "
+                + auth.getPrincipal());
     }
-    return new UsernamePasswordAuthenticationToken(user, null,
-   user.getAuthorities());
-    }
+    return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+}
    @Override
    public boolean supports(Class<?> authentication) {
     return true;

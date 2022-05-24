@@ -1,6 +1,5 @@
 package com.projetIntegraion.spring.security;
 
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
@@ -20,6 +19,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -27,97 +27,111 @@ import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-
-
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String AUTHORITIES_CLAIM_NAME = "roles";
 	@Autowired
 	UserService userDetailsService;
-	@Autowired
-	private AccessDeniedHandler accessDeniedHandler;
+	// @Autowired
+	// private AccessDeniedHandler accessDeniedHandler;
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	 // TODO Auto-generated method stub
-	/* PasswordEncoder passwordEncoder = passwordEncoder ();
-	 auth.inMemoryAuthentication().withUser("admin")
-	 .password(passwordEncoder.encode("123")).roles("ADMIN");
-	 auth.inMemoryAuthentication().withUser("Najla")
-	 .password(passwordEncoder.encode("123")).roles("AGENT","USER");
-	 auth.inMemoryAuthentication().withUser("user1")
-	 .password(passwordEncoder.encode("123")).roles("USER");*/
-		//auth.userDetailsService(userDetailsService);
-	 } 
+		auth.userDetailsService(userDetailsService);
+	}
+
 	@Bean
 	public AuthenticationProvider getProvider() {
-	 AppAuthProvider provider = new AppAuthProvider();
-	provider.setUserDetailsService(userDetailsService);
-	return provider;
-	 }
-    
+		AppAuthProvider provider = new AppAuthProvider();
+		provider.setUserDetailsService(userDetailsService);
+		return provider;
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
 		http.csrf().disable()
-		.authenticationProvider(getProvider())
-		.formLogin()
-		.loginProcessingUrl("/login")
-		.successHandler(new AuthentificationLoginSuccessHandler())
-		.failureHandler(new SimpleUrlAuthenticationFailureHandler())
-		.and()
-		.logout()
-		.logoutUrl("/logout")
-		.logoutSuccessHandler(new AuthentificationLogoutSuccessHandler())
-		.invalidateHttpSession(true)
-		.and()
-		.authorizeRequests()
-		.antMatchers("/login").permitAll()
-		.antMatchers("/logout").permitAll();
-		//.anyRequest().authenticated(); 
-		
+				.authenticationProvider(getProvider())
+				.formLogin()
+				.loginProcessingUrl("/login")
+				.successHandler(new AuthentificationLoginSuccessHandler())
+				.failureHandler(new SimpleUrlAuthenticationFailureHandler())
+				.and()
+				.logout()
+				.logoutUrl("/logout")
+				.logoutSuccessHandler(new AuthentificationLogoutSuccessHandler())
+				.invalidateHttpSession(true)
+				.and()
+				.authorizeRequests()
+				.antMatchers("/login").permitAll()
+				.antMatchers("/logout").permitAll();
+		// .anyRequest().authenticated();
 
-		http.authorizeRequests().antMatchers("/listeDcc","/accept","/decline","/categorieMateriel")
-		.hasAnyAuthority("ADMIN");
-		 http.authorizeRequests().antMatchers("/listeDcc","/showCreateDcc", "/deleteDcc",
-		 "/modifierDcc","/blogClub")
-		 .hasAnyAuthority("STUDENT");
-		 http.authorizeRequests().antMatchers("/listeDcc","/showCreateDcc", "/deleteDcc",
-		 "/modifierDcc","/blogClub","/showCreateBlog","/createAbout","/deleteAbout","/modifierAbout",
-		 "/showCreateActivity","/createActivity","/deleteActivities","/modifierActivities","/showManageBlog","/showCreateBoard"
-		 ,"/createBoard","/deleteBoard","/showCreateProject","/createProject","/deleteProject","/modifierProject",
-		 "/listeDm","/showCreateDm","/showEditDm","/updateDmm","/deleteDmm","/materiel","/showMateriel",
-		 "/deleteMateriel","/setQuantite","/listeDS","/ShowcreateDS","/showEditDS","/updateDS","/modifierDS",
-		 "/deleteDS")
-		 .hasAnyAuthority("RESPONSABLE");
-		 http.authorizeRequests()
-		 .antMatchers("/supprimerProduit","/modifierProduit","/updateProduit")
-		 .hasAuthority("ADMIN");
-		 http.authorizeRequests().antMatchers("/login").permitAll();
-		 http.authorizeRequests().antMatchers("/register").permitAll();
-		 http.authorizeRequests().antMatchers("/webjars/**").permitAll();
-		 http.authorizeRequests().anyRequest().authenticated();
-		 http.formLogin().loginPage("/login"); 
-		 
-		 http.exceptionHandling().accessDeniedPage("/accessDenied");
-		 
+		http.authorizeRequests().antMatchers("/listeDcc", "/accept", "/decline", "/categorieMateriel")
+				.hasAnyAuthority("ADMIN");
+		http.authorizeRequests().antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
+				"/modifierDcc", "/blogClub")
+				.hasAnyAuthority("STUDENT");
+		http.authorizeRequests().antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
+				"/modifierDcc", "/blogClub", "/showCreateBlog", "/createAbout", "/deleteAbout", "/modifierAbout",
+				"/showCreateActivity", "/createActivity", "/deleteActivities", "/modifierActivities", "/showManageBlog",
+				"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
+				"/deleteProject", "/modifierProject",
+				"/listeDm", "/showCreateDm", "/showEditDm", "/updateDmm", "/deleteDmm", "/materiel", "/showMateriel",
+				"/deleteMateriel", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
+				"/modifierDS",
+				"/deleteDS")
+				.hasAnyAuthority("RESPONSABLE");
+		http.authorizeRequests()
+				.antMatchers("/supprimerProduit", "/modifierProduit", "/updateProduit")
+				.hasAuthority("ADMIN");
+		http.authorizeRequests().antMatchers("/login").permitAll();
+		http.authorizeRequests().antMatchers("/register").permitAll();
+		http.authorizeRequests().antMatchers("/webjars/**").permitAll();
+		http.authorizeRequests().anyRequest().authenticated();
+		http.formLogin().loginPage("/login");
+
+		http.exceptionHandling().accessDeniedPage("/accessDenied");
 
 	}
+
 	@Bean
-	 public PasswordEncoder passwordEncoder () {
-	 return new BCryptPasswordEncoder();
-	 }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	private class AuthentificationLoginSuccessHandler extends
-	SimpleUrlAuthenticationSuccessHandler {
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-	Authentication authentication) throws IOException, ServletException {
-		response.setStatus(HttpServletResponse.SC_OK);
-	 } 
+			SimpleUrlAuthenticationSuccessHandler {
+		@Override
+		public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+				Authentication authentication) throws IOException, ServletException {
+			
+			response.sendRedirect("/");
+			response.setStatus(HttpServletResponse.SC_OK);
+		}
 
 	}
+
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+			org.springframework.security.core.AuthenticationException exception)
+			throws IOException, ServletException {
+		// String password = request.getParameter("password");
+		// String username = request.getParameter("username");
+		// UserDetails user = userDetailsService.loadUserByUsername(username);
+		// if (user == null || !user.getPassword().equals(password)) {
+		// response.sendRedirect("/produits/login?error=1");
+		// response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		// }
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		// System.out.println(request.toString());
+		response.sendRedirect("/login?error=1");
+	}
+
 	private class AuthentificationLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
 		@Override
@@ -126,14 +140,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// TODO Auto-generated method stub
 			super.onLogoutSuccess(request, response, authentication);
 		}
-		
-		 }
+
+	}
+
 	@Bean
-	public AccessDeniedHandler accessDeniedHandler(){
-	 return new AccessDeniedHandlerImpl();
-	 }
-	
-
-
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new AccessDeniedHandlerImpl();
+	}
 
 }

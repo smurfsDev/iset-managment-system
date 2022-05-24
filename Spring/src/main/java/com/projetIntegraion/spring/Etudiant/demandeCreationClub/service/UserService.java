@@ -1,6 +1,5 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.service;
 
-
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,8 +22,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-
 import groovy.util.logging.Slf4j;
 
 @Service
@@ -34,43 +31,47 @@ public class UserService implements UserDetailsService {
 	private RoleRepository roleRepository;
 	@Autowired
 	RoleService roleService;
-	@Autowired UserRepository UserRepository;
-    public List<User> getAllUser() {
-        return UserRepository.findAll();
-    }
-    public Page<User> getAllUserParPage(int page , int size){
-        return UserRepository.findAll(PageRequest.of(page, size));
-    }
+	@Autowired
+	UserRepository UserRepository;
+
+	public List<User> getAllUser() {
+		return UserRepository.findAll();
+	}
+
+	public Page<User> getAllUserParPage(int page, int size) {
+		return UserRepository.findAll(PageRequest.of(page, size));
+	}
 
 	@Autowired
 	SecurityConfig securityConfig;
-	@Autowired
-	public UserService(UserRepository userRepository,RoleRepository roleRepository) {
-	 this.userRepository = userRepository;
-	 this.roleRepository = roleRepository;
-	 }
-	@Override
-	public UserDetails loadUserByUsername(String username) throws
-	UsernameNotFoundException {
-	 Objects.requireNonNull(username);
-	 User user = userRepository.findUserWithName(username)
-	 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-	//  return user;
-	return new MyUserDetail(user);
-	 }
 
-	 public User saveUser(String username, String password, String confirmedPassword, Long role) {
+	@Autowired
+	public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Objects.requireNonNull(username);
+		User user = userRepository.findUserWithName(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		// return user;
+		return new MyUserDetail(user);
+	}
+
+	public User saveUser(String username, String password, String confirmedPassword, Long role) {
 		User appUser = new User();
 		if (userRepository.findUserWithName(username).isPresent() == true)
-		throw new RuntimeException("User already exists");
+			throw new RuntimeException("User already exists");
 		if (!password.equals(confirmedPassword))
-		throw new RuntimeException("Please confirm your password");
+			throw new RuntimeException("Please confirm your password");
 		appUser.setUsername(username);
 		Set<Role> roles = new HashSet<Role>();
-		//  Role r1 = new Role("ADMIN");
-		//  roleService.save(r1);
-		//Role r = roleService.getRole(role);
-		//Role r = roleRepository.findByName("ROLE_USER");
+		// Role r1 = new Role("ADMIN");
+		// roleService.save(r1);
+		// Role r = roleService.getRole(role);
+		// Role r = roleRepository.findByName("ROLE_USER");
 		Role r = roleRepository.findById(role).get();
 		roleRepository.save(r);
 		roles.add(r);
@@ -78,11 +79,10 @@ public class UserService implements UserDetailsService {
 		appUser.setPassword(securityConfig.passwordEncoder().encode(password));
 		userRepository.save(appUser);
 		return appUser;
-		} 
-		public List<User> listAll() {
-			return userRepository.findAll();
-		}
+	}
 
+	public List<User> listAll() {
+		return userRepository.findAll();
+	}
 
 }
-

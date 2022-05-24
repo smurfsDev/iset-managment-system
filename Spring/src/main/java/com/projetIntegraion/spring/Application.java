@@ -61,10 +61,10 @@ public class Application implements CommandLineRunner {
 
 
 	
-	@Bean
-	 public PasswordEncoder getBCPE()  {
-	 return new BCryptPasswordEncoder();
-	 }
+	// @Bean
+	//  public PasswordEncoder getBCPE()  {
+	//  return new BCryptPasswordEncoder();
+	//  }
 	 
 	
 }
