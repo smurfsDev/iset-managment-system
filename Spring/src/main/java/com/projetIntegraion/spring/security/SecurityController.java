@@ -7,11 +7,16 @@ import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.RoleService;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserService;
+import com.projetIntegraion.spring.annotation.equalPasswordsConstraint;
+import com.projetIntegraion.spring.annotation.uniqueConstraint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,34 +24,66 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-class UserForm{
+@equalPasswordsConstraint.List({
+    @equalPasswordsConstraint(
+            field = "password",
+            fieldMatch = "confirmedPassword",
+            message = "Les mots de passe ne sont pas identiques!"
+    )
+})
+
+class UserForm {
+    @NotNull
+    @Email
+    @uniqueConstraint    
     private String username;
+    @NotNull
+    @Size(min = 8, max = 15)
     private String password;
+    @NotNull
+    @Size(min = 8, max = 15)
     private String confirmedPassword;
-    
-    public String getUsername() {
-        return username;
+    public UserForm(@NotNull String username, @NotNull @Size(min = 8, max = 15) String password,
+            @NotNull String confirmedPassword) {
+        this.username = username;
+        this.password = password;
+        this.confirmedPassword = confirmedPassword;
     }
+
+    public UserForm() {
+    }
+
+
+    public String getUsername() {
+        return this.username;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getPassword() {
-        return password;
+        return this.password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getConfirmedPassword() {
-        return confirmedPassword;
+        return this.confirmedPassword;
     }
+
     public void setConfirmedPassword(String confirmedPassword) {
         this.confirmedPassword = confirmedPassword;
     }
 
-   
-    
-} 
+
+
+
+}
 @Controller
 public class SecurityController {
     @Autowired
@@ -65,57 +102,93 @@ public String geterror() {
 public String posterror() {
  return "accessDenied";
  }
-
  @GetMapping("/login")
- public String login(ModelMap modelMap)
- {
-    modelMap.addAttribute("login", true);
-    // List<Role> roles ;
-    // roles = roleService.getAllRole();
-    // modelMap.addAttribute("roles", roles);
+    public String login(ModelMap modelMap, 
+    @RequestParam(name = "error", defaultValue = "0") int error,
+    @RequestParam(name = "logout", defaultValue = "0") int logout) {
+        if (error == 1) {
+            modelMap.addAttribute("error", "Veuillez vérifier vos identifiants");
+            return "login";
+        }
+        if (logout == 1) {
+            modelMap.addAttribute("error", "Vous avez été déconnecté");
+            return "login";
+        }
+        return "login";
+    }
+//  @GetMapping("/login")
+//  public String login(ModelMap modelMap)
+//  {
+//     modelMap.addAttribute("login", true);
+//     // List<Role> roles ;
+//     // roles = roleService.getAllRole();
+//     // modelMap.addAttribute("roles", roles);
     
 
- return "login";
- } 
+//  return "login";
+//  } 
  @GetMapping("/logout")
  public String logout(HttpServletRequest request) throws ServletException
  {
  request.logout();
  return "redirect:/login";
  }
-
  @GetMapping("/register")
- public String register(ModelMap modelMap) {
-   modelMap.addAttribute("user", new UserForm());
-  // modelMap.addAttribute("r", new Role());
-   modelMap.addAttribute("login", false);
-  // System.out.println("logiiin : "+modelMap.getAttribute("login"));
-//    List<Role> roles ;
-//     roles = roleService.getAllRole();
-//     modelMap.addAttribute("roles", roles);
-List<Role> roles = roleRepository.findAll();
-        modelMap.addAttribute("roles", roles);
-   return "login";
+ public String showRegister(ModelMap modelMap) {
+     List<Role> roles = roleRepository.findAll();
+     modelMap.addAttribute("roles", roles);
+     modelMap.addAttribute("userForm", new UserForm());
+     modelMap.addAttribute("reg", true);
+
+     return "login";
  }
+
  @PostMapping("/register")
- public String register(@Valid UserForm user,Long role,
-   BindingResult bindingResult,
-   ModelMap modelMap) {
-   if (bindingResult.hasErrors()) {
-    List<Role> roles = roleRepository.findAll();
-    System.out.println(roles);
-    modelMap.addAttribute("roles", roles);
-     return "register";
-   }
-  // UserForm userForm = new UserForm();
-//    userForm.setUsername(user.getUsername());
-//    userForm.setPassword(user.getPassword());
-//    userForm.setConfirmedPassword(user.getPassword());
-   userService.saveUser(user.getUsername(),user.getPassword(),user.getConfirmedPassword(),role);
- 
-    //Role r1 = roleService.getRole(r.getId());
-   //   System.out.println(r1.getName() );
-  modelMap.addAttribute("login", true);
-   return "login";
+ public String register(@Valid UserForm userForm, BindingResult bindingResult,Long role, ModelMap modelMap) {
+     if (bindingResult.hasErrors()) {
+         List<Role> roles = roleRepository.findAll();
+         System.out.println(roles);
+         modelMap.addAttribute("roles", roles);
+         modelMap.addAttribute("reg", true);
+         modelMap.addAttribute("userForm", userForm);
+         return "login";
+     }
+     userService.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword(), role);
+
+     return "redirect:/login";
  }
+//  @GetMapping("/register")
+//  public String register(ModelMap modelMap) {
+//    modelMap.addAttribute("user", new UserForm());
+//   // modelMap.addAttribute("r", new Role());
+//    modelMap.addAttribute("login", false);
+//   // System.out.println("logiiin : "+modelMap.getAttribute("login"));
+// //    List<Role> roles ;
+// //     roles = roleService.getAllRole();
+// //     modelMap.addAttribute("roles", roles);
+// List<Role> roles = roleRepository.findAll();
+//         modelMap.addAttribute("roles", roles);
+//    return "login";
+//  }
+//  @PostMapping("/register")
+//  public String register(@Valid UserForm user,Long role,
+//    BindingResult bindingResult,
+//    ModelMap modelMap) {
+//    if (bindingResult.hasErrors()) {
+//     List<Role> roles = roleRepository.findAll();
+//     System.out.println(roles);
+//     modelMap.addAttribute("roles", roles);
+//      return "register";
+//    }
+//   // UserForm userForm = new UserForm();
+// //    userForm.setUsername(user.getUsername());
+// //    userForm.setPassword(user.getPassword());
+// //    userForm.setConfirmedPassword(user.getPassword());
+//    userService.saveUser(user.getUsername(),user.getPassword(),user.getConfirmedPassword(),role);
+ 
+//     //Role r1 = roleService.getRole(r.getId());
+//    //   System.out.println(r1.getName() );
+//   modelMap.addAttribute("login", true);
+//    return "login";
+//  }
 } 
