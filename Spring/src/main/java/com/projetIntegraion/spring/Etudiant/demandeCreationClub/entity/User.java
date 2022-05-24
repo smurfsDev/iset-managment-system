@@ -26,9 +26,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "USER")
 public class User implements Serializable, UserDetails {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Integer id;
+// @Id
+// @GeneratedValue(strategy = GenerationType.IDENTITY)
+// private Integer id;
+private @Id @GeneratedValue Integer id;
 private String username;
 private String password;
 @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
