@@ -12,11 +12,13 @@ const state = {
   isResponsableClub: false,
   isSuperAdmin: false,
   isChefDepartement: false,
+  isEnseignant: false,
   message: null,
   authStatus: null,
   authMessage: null,
   regStatus: null,
   regMessage: null,
+  isTechnicien: false,
   
 };
 
@@ -28,12 +30,14 @@ const getters = {
   isAdmin : (state) => state.isAdmin,
   isStudent : (state) => state.isStudent,
   isResponsableClub : (state) => state.isResponsableClub,
+  isEnseignant : (state) => state.isEnseignant,
   token: (state) => state.token,
   authStatus : (state) => state.authStatus,
   authMessage : (state) => state.authMessage,
   regStatus : (state) => state.regStatus,
   regMessage : (state) => state.regMessage,
   isChefDepartement : (state) => state.isChefDepartement,
+  isTechnicien : (state) => state.isTechnicien,
 
   
 };
@@ -60,7 +64,9 @@ const actions = {
           commit('setAdmin',response.data.data.isAdmin);
           commit('setStudent',response.data.data.isStudent);
           commit('setResponsableClub',response.data.data.isResponsableClub);
+          commit('setTechnicien',response.data.data.isTechnicien);         
           commit('setChefDepartement',response.data.data.isChefDepartement);
+          commit('setEnseignant',response.data.data.isEnseignant);
           commit("setUser", response.data.data.user);
           commit("setAuthStatus", 1);
 
@@ -121,6 +127,7 @@ const mutations = {
     state.isStudent= false;
     state.isResponsableClub= false;
     state.isSuperAdmin= false;
+    state.isEnseignant= false;
     state.message= null;
     state.authStatus= null;
     state.authMessage= null;
@@ -142,6 +149,9 @@ const mutations = {
   setResponsableClub(state, isResponsableClub) {
     state.isResponsableClub = isResponsableClub;
   },
+  setEnseignant(state, isEnseignant) {
+    state.isEnseignant = isEnseignant;
+  },
   setAuthStatus(state, authStatus) {
     state.authStatus = authStatus;
   },
@@ -156,6 +166,9 @@ const mutations = {
   },
   setRegMessage(state, regMessage) {
     state.regMessage = regMessage;
+  },
+  setTechnicien(state, isTechnicien) {
+    state.isTechnicien = isTechnicien;
   }
   
 

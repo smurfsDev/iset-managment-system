@@ -20,6 +20,7 @@
                     <option value="2">Etudiant</option>
                     <option value="6">Technicien</option>
                     <option value="5">Chef departement</option>
+                    <option value="7">Enseignant</option>
                 </select>
             </div>
             <div class="form-group">

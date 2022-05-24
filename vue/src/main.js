@@ -56,7 +56,9 @@ Vue.mixin({
   },
 });
 
-
+window.Vue = require('vue').default;
+// window.VueResource = require('vue-resource');
+// window.Vue.use(window.VueResource);
 // importing the helper
 import interceptorsSetup from './helpers/interceptors';
 

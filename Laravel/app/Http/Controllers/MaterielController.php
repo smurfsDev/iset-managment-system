@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MaterielRequest;
 use App\Models\Materiel;
 use Illuminate\Http\Request;
 use App\Models\DemandeMateriel;
@@ -9,11 +10,67 @@ use App\Models\User;
 
 class MaterielController extends Controller
 {
+
+    public function get(Request $request)
+    {
+        $materiel = $request->user()->materiel()->with('categorie')->orderBy('updated_at','desc')->paginate(5);
+        if (!empty($materiel)) {
+            return response()->json(["data" => $materiel], 200);
+        } else {
+            return response()->json([
+                "aucun materiel"
+            ], 404);
+        }
+    }
+
+    public function create(MaterielRequest $request)
+    {
+        $materiel = new Materiel();
+        $materiel->titre = $request->titre;
+        $materiel->quantité = $request->quantité;
+        $materiel->description = $request->description;
+        $materiel->idCategorie = $request->idCategorie;
+        $materiel->idResponsable = $request->user()->id;
+        $materiel->save();
+        return response()->json(["data" => $materiel], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $materiel = Materiel::find($id);
+        if (!empty($materiel)) {
+            $materiel->titre = $request->titre;
+            $materiel->quantité = $request->quantité;
+            $materiel->description = $request->description;
+            $materiel->idCategorie = $request->idCategorie;
+            $materiel->idResponsable = $request->user()->id;
+            $materiel->save();
+            return response()->json(["data" => $materiel], 200);
+        } else {
+            return response()->json([
+                "aucun materiel"
+            ], 404);
+        }
+    }
+
+    public function delete($id)
+    {
+        $materiel = Materiel::find($id);
+        if (!empty($materiel)) {
+            $materiel->delete();
+            return response()->json(["data" => $materiel], 200);
+        } else {
+            return response()->json([
+                "aucun materiel"
+            ], 404);
+        }
+    }
+
     public function show($id)
     {
         $Materiel = DemandeMateriel::with('materiel')->where('id', '=', $id)->get();
         if (sizeof($Materiel) > 0) {
-            return response()->json(["data" => $Materiel], 200);
+            return response()->json($Materiel, 200);
         } else
             return response()->json([
                 "aucun materiel"
@@ -72,13 +129,5 @@ class MaterielController extends Controller
                 "aucun responsable"
             ], 404);
     }
-    // public function getAllResponsableMateriel(){
-    //     $Responsable = Materiel::with('responsable')->get();
-    //     if (sizeof($Responsable) > 0) {
-    //         return response()->json(["data" => $Responsable], 200);
-    //     } else
-    //         return response()->json([
-    //             "aucun responsable"
-    //         ], 404);
-    // }
+
 }

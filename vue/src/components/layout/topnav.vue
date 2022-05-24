@@ -37,6 +37,12 @@
                     icon: 'fas fa-home',
                 },
                 {
+                    href: '/consulterClasseEns',
+                    title: 'Classes et Matieres',
+                    icon: 'fas fa-home',
+                    hidden: !this.isEnseignant
+                },
+                {
                     href: '/Entreprise',
                     title: 'Entreprise',
                     icon: 'fas fa-building',
@@ -47,6 +53,12 @@
                     icon: 'fas fa-user',
                     hidden: !this.isChefDepartement
                 },{
+                    href: '/manageEnseignant',
+                    title: 'Enseignant',
+                    icon: 'fas fa-user',
+                    hidden: !this.isChefDepartement
+                },
+                {
                     href: '/cd/manageTechnicien',
                     title: 'Techniciens',
                     icon: 'fas fa-user',
@@ -113,6 +125,11 @@
                             href: '/demandeAdhesionResponsable',
                             title: 'Demandes d\'adhesion',
                             hidden: !this.isStudent
+                        },
+                        {
+                            href: '/members',
+                            title: 'membres',
+                            hidden: !this.isResponsableClub
                         }
                     ]
                 },
@@ -188,6 +205,24 @@
                             hidden: !this.isResponsableClub,
                         },
                     ]
+                },
+                {
+                    href: '/gererCategorieMateriel',
+                    title: 'gererCategorieMateriel',
+                    icon: 'fas fa-file',
+                    hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
+                },
+                {
+                    href: '/gererMateriel',
+                    title: 'gererMateriel',
+                    icon: 'fas fa-file',
+                    hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
+                },
+                {
+                    href: '/mesNotes',
+                    title: 'Mes notes',
+                    icon: 'fas fa-file',
+                    hidden: !this.isStudent,
                 }
         
             ]
@@ -246,6 +281,8 @@ export default {
             student: 'isStudent',
             responsable: 'isResponsableClub',
             chefDepartement: 'isChefDepartement',
+            technicien: 'isTechnicien',
+            enseignant: 'isEnseignant'
         }),
         isAuth: function () {
             return this.auth;
@@ -261,7 +298,14 @@ export default {
         },
         isChefDepartement: function () {
             return this.chefDepartement;
+        },
+        isTechnicien: function () {
+            return this.technicien;
+        },
+        isEnseignant: function(){
+            return this.enseignant;
         }
+
 
     }
 }

@@ -52,26 +52,34 @@
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
-                <b-col>
-                  Nom  : {{ Student.name }} 
-                </b-col>
+                <b-col> Nom : {{ Student.name }} </b-col>
               </b-row>
               <b-row>
                 <b-col>Email : {{ Student.email }}</b-col>
               </b-row>
             </b-row>
-            <b-button
-              variant="success"
-              :class="[{ disabled: status(Student.roles) == 1 }]"
-              v-on:click="Accept(Student.id)"
-              >Accept</b-button
-            >
-            <b-button
-              variant="danger"
-              :class="[{ disabled: status(Student.roles) == 2 }]"
-              v-on:click="Decline(Student.id)"
-              >Decline</b-button
-            >
+            <div v-if="status(Student.roles) != 1">
+              <b-button
+                variant="success"
+                :class="[{ disabled: status(Student.roles) == 1 }]"
+                v-on:click="Accept(Student.id)"
+                >Accept</b-button
+              >
+              <b-button
+                variant="danger"
+                :class="[{ disabled: status(Student.roles) == 2 }]"
+                v-on:click="Decline(Student.id)"
+                >Decline</b-button
+              >
+            </div>
+            <div v-else>
+              <h5 class="text-success">Student accepted</h5>
+              <b-button
+                variant="danger"
+                v-on:click="Delete(Student.id)"
+                >Delete</b-button
+              >
+            </div>
           </div>
         </md-tab>
       </md-tabs>
@@ -136,15 +144,18 @@ export default {
     fetchStudent(url) {
       this.$emit("fetchStudent", url);
     },
-    status(roles){
-      let stat = 0 ;
-      roles.forEach((r)=>{
-        if (r.pivot.role_id == 2){
-          stat = r.pivot.status
+    Delete(id) {
+      this.$emit("deleteStudent", id);
+    },
+    status(roles) {
+      let stat = 0;
+      roles.forEach((r) => {
+        if (r.pivot.role_id == 2) {
+          stat = r.pivot.status;
         }
-      })
+      });
       return stat;
-    }
+    },
   },
 };
 </script>

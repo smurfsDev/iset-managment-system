@@ -20,7 +20,7 @@ class RoleUser extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->integer('status')->default(0);
-            $table->integer('classe')->default(0);
+            $table->foreignId('classe')->default(0);
             $table->integer('department')->nullable();
         });
     }

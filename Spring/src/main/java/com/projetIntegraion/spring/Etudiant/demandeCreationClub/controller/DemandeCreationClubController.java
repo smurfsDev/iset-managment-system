@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeCreationClubService;
+import com.projetIntegraion.spring.blogClub.entity.Club;
+import com.projetIntegraion.spring.blogClub.service.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class DemandeCreationClubController {
     @Autowired
     private DemandeCreationClubService DemandeCreationClubService;
-
+    @Autowired
+    private ClubService clubService;
     @RequestMapping("/listeDcc")
     public String showList(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -31,7 +34,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("pages", new int[listDcc.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
 
-        return "list";
+        return "demandeCreationClub/list";
     }
 
     @RequestMapping("/showCreateDcc")
@@ -43,7 +46,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
-        return "form";
+        return "demandeCreationClub/form";
     }
 
     @RequestMapping("/saveDcc")
@@ -57,7 +60,7 @@ public class DemandeCreationClubController {
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
             modelMap.addAttribute("Dcc", Dcc);
-            return "form";
+            return "demandeCreationClub/form";
         } else {
             DemandeCreationClub dc = new DemandeCreationClub();
             dc.setNomClub(Dcc.getNomClub());
@@ -101,7 +104,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("edit", true);
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
-        return "form";
+        return "demandeCreationClub/form";
     }
 
     @RequestMapping("/updateDcc")
@@ -116,7 +119,7 @@ public class DemandeCreationClubController {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dcc", bindingResult);
             modelMap.addAttribute("Dcc", Dcc);
             modelMap.addAttribute("edit", true);
-            return "form";
+            return "demandeCreationClub/form";
         } else {
             DemandeCreationClub dc = new DemandeCreationClub();
             dc.setId(Dcc.getId());
@@ -147,6 +150,16 @@ public class DemandeCreationClubController {
         DemandeCreationClub dc = DemandeCreationClubService.getDemandeCreationClub(id);
         dc.setStatus(1);
         DemandeCreationClubService.save(dc);
+        Club c = new Club();
+        c.setNomClub(dc.getNomClub());
+        c.setDateCreation(dc.getDateCreation());
+        c.setPresident(dc.getPresident());
+        c.setVicePresident(dc.getVicePresident());
+        c.setResponsableClub(dc.getResponsableClub());
+        c.setLogo(dc.getLogo());
+        
+        c = clubService.save(c);
+
         modelMap.addAttribute("Dcc", new DemandeCreationClub());
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
@@ -180,7 +193,7 @@ public class DemandeCreationClubController {
         modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("name", name);
-        return "list";
+        return "demandeCreationClub/list";
     }
 
 }

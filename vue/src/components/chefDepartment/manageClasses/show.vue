@@ -53,7 +53,7 @@
             <b-row class="mb-2">
               <b-row>
                 <b-col>
-                  Nom  : {{ Classe.nom }} 
+                  Nom  : <button class="btn white" v-on:click="addmat(Classe.id)"> {{ Classe.nom }} </button>
                 </b-col>
               </b-row>
               <b-row>
@@ -139,6 +139,12 @@ export default {
     fetchClasse(url) {
       this.$emit("fetchClasse", url);
     },
+    addmat(id) {
+      
+      this.$router.push({ name:"GererMatiere", params:{
+            id: id,
+          }});
+    }
   },
 };
 </script>
