@@ -3,6 +3,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.service;
 import java.util.List;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,4 +55,12 @@ public class DemandeCreationClubService {
 	public Page<DemandeCreationClub> getDemandeCreationClubParNom(String nom, int page, int size){
 		return DemandeCreationClubRepository.findByNomClubContains(nom, PageRequest.of(page, size));
 	};
+
+	public Page<DemandeCreationClub> getAuthUserDemandsParPage(User id, int page, int size){
+		return DemandeCreationClubRepository.findByResponsableClub(id, PageRequest.of(page, size));
+	};
+
+	public Boolean dccexists(String id) {
+		return DemandeCreationClubRepository.existsByname(id);	
+	}
 }
