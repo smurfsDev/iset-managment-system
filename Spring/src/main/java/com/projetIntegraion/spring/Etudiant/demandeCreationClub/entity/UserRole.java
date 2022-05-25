@@ -188,5 +188,19 @@ public class UserRole implements Serializable{
     //     this.classe = null;
     //     this.departement = null;
     // }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", user='" + getUser() + "'" +
+            ", role='" + getRole() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", classe='" + getClasse() + "'" +
+            ", departement='" + getDepartement() + "'" +
+            "}";
+    }
+    
     
 }
