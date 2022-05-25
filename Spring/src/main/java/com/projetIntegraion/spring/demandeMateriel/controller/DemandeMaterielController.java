@@ -1,18 +1,20 @@
 package com.projetIntegraion.spring.demandeMateriel.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
 import com.projetIntegraion.spring.demandeMateriel.service.CategorieMaterielService;
 import com.projetIntegraion.spring.demandeMateriel.service.DemandeMaterielService;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserService;
- 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -24,13 +26,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DemandeMaterielController {
 
-	@Autowired
+    @Autowired
     private DemandeMaterielService DemandeMaterielService;
     @Autowired
-    private  CategorieMaterielService CategorieMaterielService;
+    private CategorieMaterielService CategorieMaterielService;
     @Autowired
-    private  UserService UserServise;
-	@RequestMapping("/listeDm")
+    private UserService UserServise;
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
+
+    @RequestMapping("/listeDm")
     public String showList(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
@@ -41,52 +52,56 @@ public class DemandeMaterielController {
 
         return "/demandeMateriel/list";
     }
-	@RequestMapping("/showCreateDm")
-	public String showCreateDm(ModelMap modelMap,
-	@RequestParam(name = "page", defaultValue = "0") int page,
-	@RequestParam(name = "size", defaultValue = "2") int size) {
+
+    @RequestMapping("/showCreateDm")
+    public String showCreateDm(ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
         modelMap.addAttribute("Dmm", new DemandeMateriel());
         modelMap.addAttribute("edit", false);
-       
+
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
         System.out.println(listCategorieMateriel);
         modelMap.addAttribute("CM", listCategorieMateriel);
-       
-            System.out.println(listCategorieMateriel);
+
+        System.out.println(listCategorieMateriel);
         List<User> listUser = UserServise.getAllUser();
         modelMap.addAttribute("Users", listUser);
 
         modelMap.addAttribute("pages",
-        new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
-        
+                new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
+
         modelMap.addAttribute("currentPage", page);
-		return "/demandeMateriel/form";
-	}
-	@RequestMapping("/showEditDm")
-	public String showEditDm(ModelMap modelMap,
-	@RequestParam(name = "page", defaultValue = "0") int page,
-	@RequestParam(name = "size", defaultValue = "2") int size,
-	@RequestParam(name = "id") Long id) {
-		DemandeMateriel Dm = DemandeMaterielService.getdemandeById(id);
-        if(id != null) {
+        return "/demandeMateriel/form";
+    }
+
+    @RequestMapping("/showEditDm")
+    public String showEditDm(ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            @RequestParam(name = "id") Long id) {
+        DemandeMateriel Dm = DemandeMaterielService.getdemandeById(id);
+        if (id != null) {
             Long Categ = Dm.getIdCategorie();
             CategorieMateriel C = CategorieMaterielService.getCategorieById(Categ);
             modelMap.addAttribute("Cat", C);
             User dest = Dm.getDestinataire();
             modelMap.addAttribute("dest", dest);
         }
-		modelMap.addAttribute("Dmm", Dm);
+        modelMap.addAttribute("Dmm", Dm);
 
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
         modelMap.addAttribute("CM", listCategorieMateriel);
         List<User> listUser = UserServise.getAllUser();
         modelMap.addAttribute("Users", listUser);
-		modelMap.addAttribute("edit", true);
-		modelMap.addAttribute("pages", new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
-		return "/demandeMateriel/form";
-	}
-	@RequestMapping("/saveDm")
-	public String saveDm(ModelMap modelMap,
+        modelMap.addAttribute("edit", true);
+        modelMap.addAttribute("pages",
+                new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
+        return "/demandeMateriel/form";
+    }
+
+    @RequestMapping("/saveDm")
+    public String saveDm(ModelMap modelMap,
             @Valid DemandeMateriel Dmm,
             BindingResult bindingResult,
             HttpServletRequest request,
@@ -109,8 +124,8 @@ public class DemandeMaterielController {
             dm.setDateEmploi(Dmm.getDateEmploi());
             dm.setDateDeRemise(Dmm.getDateDeRemise());
             dm.setIdCategorie(Dmm.getIdCategorie());
-			dm.setDestinataire(Dmm.getDestinataire());
-			dm.setResponsableClub(Dmm.getResponsableClub());
+            dm.setDestinataire(Dmm.getDestinataire());
+            dm.setResponsableClub(this.getUser(request));
             dm = DemandeMaterielService.save(dm);
             modelMap.addAttribute("Dmm", new DemandeMateriel());
             modelMap.addAttribute("msg", "Demande de materiel enregistrée avec succès");
@@ -119,8 +134,9 @@ public class DemandeMaterielController {
                     new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
             return this.showList(modelMap, page, size);
         }
-	}
-	@RequestMapping("/updateDmm")
+    }
+
+    @RequestMapping("/updateDmm")
     public String updateDmm(ModelMap modelMap,
             @Valid DemandeMateriel Dmm,
             BindingResult bindingResult,
@@ -142,8 +158,8 @@ public class DemandeMaterielController {
             dm.setDateEmploi(Dmm.getDateEmploi());
             dm.setDateDeRemise(Dmm.getDateDeRemise());
             dm.setIdCategorie(Dmm.getIdCategorie());
-			dm.setDestinataire(Dmm.getDestinataire());
-			dm.setResponsableClub(Dmm.getResponsableClub());
+            dm.setDestinataire(Dmm.getDestinataire());
+            dm.setResponsableClub(Dmm.getResponsableClub());
             dm = DemandeMaterielService.save(dm);
             modelMap.addAttribute("Dmm", new DemandeMateriel());
             modelMap.addAttribute("pages",
@@ -153,21 +169,17 @@ public class DemandeMaterielController {
             return this.showList(modelMap, page, size);
         }
     }
-	@RequestMapping("/deleteDmm")
-	public String deleteDmm(ModelMap modelMap,
-	@RequestParam(name = "id") Long id, 
-	@RequestParam(name = "page", defaultValue = "0") int page,
-	@RequestParam(name = "size", defaultValue = "2") int size) {
-		DemandeMaterielService.deleteById(id);
-		modelMap.addAttribute("type", "danger");
-		modelMap.addAttribute("msg", "Demande de creation de demande Materiel supprimée avec succès");
-		return this.showList(modelMap, page, size);
 
-	}
-    
+    @RequestMapping("/deleteDmm")
+    public String deleteDmm(ModelMap modelMap,
+            @RequestParam(name = "id") Long id,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeMaterielService.deleteById(id);
+        modelMap.addAttribute("type", "danger");
+        modelMap.addAttribute("msg", "Demande de creation de demande Materiel supprimée avec succès");
+        return this.showList(modelMap, page, size);
 
-	
-
-
+    }
 
 }
