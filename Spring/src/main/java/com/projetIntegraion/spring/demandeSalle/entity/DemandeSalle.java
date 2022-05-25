@@ -18,9 +18,10 @@ import org.springframework.lang.Nullable;
 
 @Entity
 public class DemandeSalle {
-    @Id @GeneratedValue 
-	private  Long id;
-	@NotNull
+    @Id
+    @GeneratedValue
+    private Long id;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @FutureOrPresent
@@ -30,16 +31,18 @@ public class DemandeSalle {
     @Temporal(TemporalType.DATE)
     @FutureOrPresent
     private Date dateDeRemise;
-    private Long idResponsable;
+    private Integer idResponsable;
     @Nullable
     private String reponse;
-    @OneToMany(mappedBy="demandeSalle", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "demandeSalle", cascade = CascadeType.ALL)
     private List<DemandeSalleSalle> Salle;
+
     public DemandeSalle() {
         super();
     }
-    
-    public DemandeSalle(Date dateEmploi, Date dateDeRemise, Long idResponsable, String reponse, List<DemandeSalleSalle> salle) {
+
+    public DemandeSalle(Date dateEmploi, Date dateDeRemise, Integer idResponsable, String reponse,
+            List<DemandeSalleSalle> salle) {
         super();
         this.dateEmploi = dateEmploi;
         this.dateDeRemise = dateDeRemise;
@@ -47,45 +50,59 @@ public class DemandeSalle {
         this.reponse = reponse;
         Salle = salle;
     }
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public Date getDateEmploi() {
         return dateEmploi;
     }
+
     public void setDateEmploi(Date dateEmploi) {
         this.dateEmploi = dateEmploi;
     }
+
     public Date getDateDeRemise() {
         return dateDeRemise;
     }
+
     public void setDateDeRemise(Date dateDeRemise) {
         this.dateDeRemise = dateDeRemise;
     }
-    public Long getIdResponsable() {
+
+    public Integer getIdResponsable() {
         return idResponsable;
     }
-    public void setIdResponsable(Long idResponsable) {
+
+    public void setIdResponsable(Integer idResponsable) {
         this.idResponsable = idResponsable;
     }
+
     public String getReponse() {
         return reponse;
     }
+
     public void setReponse(String reponse) {
         this.reponse = reponse;
     }
+
     public List<DemandeSalleSalle> getSalle() {
         return Salle;
     }
+
     public void setSalle(List<DemandeSalleSalle> salle) {
         Salle = salle;
     }
+
     @Override
     public String toString() {
-        return "DemandeSalle [id=" + id + ", dateEmploi=" + dateEmploi + ", dateDeRemise=" + dateDeRemise + ", idResponsable=" + idResponsable + ", reponse=" + reponse + ", Salle=" + Salle + "]";
+        return "DemandeSalle [id=" + id + ", dateEmploi=" + dateEmploi + ", dateDeRemise=" + dateDeRemise
+                + ", idResponsable=" + idResponsable + ", reponse=" + reponse + ", Salle=" + Salle + "]";
     }
-    
+
 }
