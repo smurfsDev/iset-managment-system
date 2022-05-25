@@ -31,7 +31,7 @@
                 <table class="table table-dark table-striped">
                     <thead>
                         <th>ID</th>
-                        <th>Nom club</th>
+                        <th>Nom etudiant</th>
                         <th>Message</th>
                         <th  sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')">Actions</th>
                     </thead>
@@ -39,7 +39,7 @@
 						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
 					<tr th:each="dac:${Dacs.content}">
                         <td th:text="${dac.id}"></td>
-                        <td th:text="${dac.club.nomClub}"></td>
+                        <td th:text="${dac.etudiant.username}"></td>
                         <td th:text="${dac.message}"></td>
                         <td  sec:authorize="hasRole('RESPONSABLE')"  >
                             <div th:if="${dac.status!=1}">
