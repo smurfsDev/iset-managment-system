@@ -80,18 +80,21 @@
                       <a th:href="@{listeClub}">Liste</a>
                     </li>
                     <li>
-                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{demandeAdhesionClubClub}">Mes demande adhesion</a>
+                      <a sec:authorize="hasRole('STUDENT')" th:href="@{demandeAdhesionClub}">Mes demandes d'adhesion</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{demandeAdhesionClubClub}">Demande adhesion de mon club</a>
                     </li>
                   </ul>
                 </div>
               </li>
-              <li >
+              <!-- <li >
                 <a th:href="@{demandeAdhesionClub}">
                   <i class="fa fa-shopping-cart"></i>
                   <span>Demande adhesion club</span>
                 </a>
                 
-              </li>
+              </li> -->
               <li class="sidebar-dropdown">
                 <a >
                   <i class="fa fa-shopping-cart"></i>
