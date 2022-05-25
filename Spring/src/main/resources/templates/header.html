@@ -69,22 +69,31 @@
                   </ul>
                 </div>
               </li>
-              <li>
-                <a th:href="@{listeClub}">
+              <li class="sidebar-dropdown">
+                <a >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Clubs</span>
-                  <!-- <span class="badge badge-pill badge-danger">3</span> -->
                 </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a th:href="@{listeClub}">Liste</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{demandeAdhesionClubClub}">Mes demande adhesion</a>
+                    </li>
+                  </ul>
+                </div>
               </li>
-              <li>
+              <li >
                 <a th:href="@{demandeAdhesionClub}">
                   <i class="fa fa-shopping-cart"></i>
                   <span>Demande adhesion club</span>
-                  <!-- <span class="badge badge-pill badge-danger">3</span> -->
                 </a>
+                
               </li>
               <li class="sidebar-dropdown">
-                <a th:href="@{demandeAdhesionClub}">
+                <a >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Demande adhesion club</span>
                   <!-- <span class="badge badge-pill badge-danger">3</span> -->
