@@ -83,12 +83,21 @@ public class DemandeAdhesionClubController {
             @RequestParam(name = "size", defaultValue = "2") int size,
             @RequestParam(name = "idClub") Long idClub) {
         Boolean c = demandeAdhesionClubService.existsByIds(idClub, this.getUser(request).getId());
+        Boolean isThisClubOwner = clubService.getClubParResponsable(this.getUser(request).getId()).get().getId()==(idClub);
         if (c) {
             Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
             modelMap.addAttribute("Dacs", Dacs);
             modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
             modelMap.addAttribute("currentPage", 0);
             modelMap.addAttribute("exist", 1);
+            return "Club/demandeAdhesionClub/list";
+        }
+        else if(isThisClubOwner){
+            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
+            modelMap.addAttribute("Dacs", Dacs);
+            modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+            modelMap.addAttribute("currentPage", 0);
+            modelMap.addAttribute("clubOwner", 1);
             return "Club/demandeAdhesionClub/list";
         }
         modelMap.addAttribute("Dac", new DemandeAdhesionClub());
