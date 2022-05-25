@@ -6,6 +6,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "users_roles")
@@ -37,10 +40,18 @@ public class UserRole implements Serializable{
     Role role;
 
      @NotNull
-    private Integer status=0;
+    //  @Column(name="status", columnDefinition="int(11) default 0")
+    @ColumnDefault("0")
+    private Integer status;
     
+    
+    @NotNull
+    @ColumnDefault("0")
+    //  @Column(name="classe", columnDefinition="int(11) default 0")
     private Integer classe=0;
     
+    //  @Column(name="department", columnDefinition="int(11) default 0")
+    @ColumnDefault("0")
     private Integer departement=0;
 
 
