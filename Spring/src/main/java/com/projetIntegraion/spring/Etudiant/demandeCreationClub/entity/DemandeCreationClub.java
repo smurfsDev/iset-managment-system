@@ -3,6 +3,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 import java.text.ParseException;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,15 +15,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.annotation.uniqueDccConstraint;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class DemandeCreationClub {
 	
 	private @Id @GeneratedValue Long id;
-	@NotNull
-	@Size(min = 3, max = 30)
+
+	
+	@uniqueDccConstraint
 	private String nomClub;
+	
+	
 	@Lob
 	private String logo;
 	@NotNull
