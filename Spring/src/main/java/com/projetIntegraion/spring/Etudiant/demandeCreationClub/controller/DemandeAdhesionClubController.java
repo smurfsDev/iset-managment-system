@@ -85,7 +85,7 @@ public class DemandeAdhesionClubController {
         Boolean c = demandeAdhesionClubService.existsByIds(idClub, this.getUser(request).getId());
         Boolean isThisClubOwner = clubService.getClubParResponsable(this.getUser(request).getId()).get().getId()==(idClub);
         if (c) {
-            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
+            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
             modelMap.addAttribute("Dacs", Dacs);
             modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
             modelMap.addAttribute("currentPage", 0);
@@ -93,7 +93,7 @@ public class DemandeAdhesionClubController {
             return "Club/demandeAdhesionClub/list";
         }
         else if(isThisClubOwner){
-            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
+            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
             modelMap.addAttribute("Dacs", Dacs);
             modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
             modelMap.addAttribute("currentPage", 0);
