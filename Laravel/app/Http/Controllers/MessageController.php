@@ -20,7 +20,6 @@ class MessageController extends Controller
                             ->orWhere([['receiver_id','=',$user],['user_id','=', $id]])
                             ->get();
 
-
         if (sizeof($messages) > 0) {
             return response()->json( $messages, 200);
         } else
@@ -40,4 +39,18 @@ class MessageController extends Controller
             ], 404);
 
     }
+    public function store(Request $request,$id)
+    {
+        $user = $request->user()->id;
+        $message = new Message();
+        $message->user_id = $user;
+        $message->receiver_id = $id;
+        $message->body = $request->input('body');
+        $message->save();
+        return response()->json([
+            "message" => $message
+        ], 200);
+
+    }
+
 }
