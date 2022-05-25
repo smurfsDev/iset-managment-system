@@ -16,10 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -72,12 +70,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/logout").permitAll()
-		.antMatchers("/listeDcc", "/accept", "/decline", "/categorieMateriel")
+		.antMatchers( "/accept", "/decline", "/categorieMateriel")
 				.hasAnyRole("ADMIN")
-		.antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
+		.antMatchers( "/showCreateDcc", "/deleteDcc",
 				"/modifierDcc", "/blogClub")
 				.hasAnyRole("STUDENT")
-		.antMatchers("/listeDcc", "/showCreateDcc", "/deleteDcc",
+		.antMatchers( "/showCreateDcc", "/deleteDcc",
 				"/modifierDcc", "/blogClub", "/showCreateBlog", "/createAbout", "/deleteAbout", "/modifierAbout",
 				"/showCreateActivity", "/createActivity", "/deleteActivities", "/modifierActivities", "/showManageBlog",
 				"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
@@ -87,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/modifierDS",
 				"/deleteDS")
 				.hasAnyRole("RESPONSABLE")
+				.antMatchers("/listeDcc").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/register").permitAll()
 				.antMatchers("/webjars/**").permitAll()
