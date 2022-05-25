@@ -35,13 +35,15 @@
             submitMessage(id) {
                 this.$http.get("http://localhost:8000/api/message/M/"+id).then(response => {
                 this.messages = response.data;
-                this.$emit('messages', response.data);
+                console.log(id);
+                this.$emit('messages', response.data, id);
                 })
                 .catch(() => {
                     this.messages = [];
-                    this.$emit('messages', []);
+                    this.$emit('messages', [],id);
                 });
-            }
+            },
+            
         }
 
     }
