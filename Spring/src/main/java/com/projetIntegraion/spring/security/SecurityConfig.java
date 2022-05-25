@@ -70,28 +70,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/logout").permitAll()
-		.antMatchers( "/accept", "/decline", "/categorieMateriel")
+				.antMatchers("/accept", "/decline", "/categorieMateriel")
 				.hasAnyRole("ADMIN")
-		.antMatchers( "/showCreateDcc", "/deleteDcc",
-				"/modifierDcc", "/blogClub")
+				.antMatchers("/showCreateDcc", "/deleteDcc",
+						"/modifierDcc", "/blogClub")
 				.hasAnyRole("STUDENT")
-		.antMatchers( "/showCreateDcc", "/deleteDcc",
-				"/modifierDcc", "/blogClub", "/showCreateBlog", "/createAbout", "/deleteAbout", "/modifierAbout",
-				"/showCreateActivity", "/createActivity", "/deleteActivities", "/modifierActivities", "/showManageBlog",
-				"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
-				"/deleteProject", "/modifierProject",
-				"/listeDm", "/showCreateDm", "/showEditDm", "/updateDmm", "/deleteDmm", "/materiel", "/showMateriel",
-				"/deleteMateriel", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
-				"/modifierDS",
-				"/deleteDS")
+				.antMatchers( 
+						"/blogClub", "/showCreateBlog", "/createAbout", "/deleteAbout",
+						"/modifierAbout",
+						"/showCreateActivity", "/createActivity", "/deleteActivities", "/modifierActivities",
+						"/showManageBlog",
+						"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
+						"/deleteProject", "/modifierProject",
+						"/listeDm", "/showCreateDm", "/showEditDm", "/updateDmm", "/deleteDmm", "/materiel",
+						"/showMateriel",
+						"/deleteMateriel", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
+						"/modifierDS",
+						"/deleteDS")
 				.hasAnyRole("RESPONSABLE")
-				.antMatchers("/listeDcc").permitAll()
+				.antMatchers("/listeDcc")
+				.hasAnyRole("RESPONSABLE","STUDENT","ADMIN")
 				.antMatchers("/login").permitAll()
 				.antMatchers("/register").permitAll()
 				.antMatchers("/webjars/**").permitAll()
 				.anyRequest().authenticated();
-		
-
 
 	}
 
@@ -105,8 +107,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 				Authentication authentication) throws IOException, ServletException {
-			
-			response.sendRedirect("/");
+
+			response.sendRedirect("/listeDcc");
 			response.setStatus(HttpServletResponse.SC_OK);
 		}
 
@@ -137,20 +139,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		}
 
 	}
+
 	private class AuthentificationLoginErrorHandler extends
-            SimpleUrlAuthenticationFailureHandler {
-        @Override
-        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                org.springframework.security.core.AuthenticationException exception)
-                throws IOException, ServletException {
+			SimpleUrlAuthenticationFailureHandler {
+		@Override
+		public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+				org.springframework.security.core.AuthenticationException exception)
+				throws IOException, ServletException {
 
-                response.sendRedirect("/login?error=1");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.sendRedirect("/login?error=1");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        }
+		}
 
-    }
-	
+	}
 
 	@Bean
 	public AccessDeniedHandler accessDeniedHandler() {
