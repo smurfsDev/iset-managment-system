@@ -131,7 +131,7 @@ public class DemandeAdhesionClubController {
         Dac.setEtudiant(this.getUser(request));
         demandeAdhesionClubService.save(Dac);
 
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
+        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), 0, 2);
         modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
         modelMap.addAttribute("currentPage", 0);
