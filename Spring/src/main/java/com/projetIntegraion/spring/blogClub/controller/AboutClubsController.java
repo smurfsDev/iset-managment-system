@@ -41,10 +41,15 @@ public class AboutClubsController {
 
     @RequestMapping("/showCreateBlog")
     public String showBlog(ModelMap modelMap,
+            HttpServletRequest request,
+
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size ) {
+
+
+        Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
                
-        Page<About> listDcc = aboutService.getAllAboutsParPage(page, size);
+        Page<About> listDcc = aboutService.getAllAboutsClubParPageClub(club.getId(),page, size);
          modelMap.addAttribute("Dccs", listDcc);
         
         modelMap.addAttribute("pages", new int[listDcc.getTotalPages()]);
@@ -93,11 +98,13 @@ public class AboutClubsController {
             modelMap.addAttribute("pages",
                     new int[aboutService.getAllAboutsParPage(page, size).getTotalPages()]);
             System.out.println("modelMap = " + modelMap.toString());
-                    return this.showBlog(modelMap, page, size);
+                    return this.showBlog(modelMap,request, page, size);
         }
     }
     @RequestMapping("/deleteAbout")
     public String deleteAbout(@RequestParam("id") Long id, ModelMap modelMap,
+            HttpServletRequest request,
+
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
 
@@ -108,7 +115,7 @@ public class AboutClubsController {
             modelMap.addAttribute("type", "danger");
             modelMap.addAttribute("msg", "About non supprimée : Id non trouvé");
         }
-        return this.showBlog(modelMap, page, size);
+        return this.showBlog(modelMap,request, page, size);
 
     }
     @RequestMapping("/modifierAbout")
@@ -129,6 +136,7 @@ public class AboutClubsController {
             
             @Valid About About,
             BindingResult bindingResult,
+            
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             HttpServletRequest request) throws IOException {
@@ -149,7 +157,7 @@ public class AboutClubsController {
                     new int[aboutService.getAllAboutsParPage(page, size).getTotalPages()]);
             modelMap.addAttribute("type", "warning");
             modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
-            return this.showBlog(modelMap, page, size);
+            return this.showBlog(modelMap,request, page, size);
         }
     }
 
