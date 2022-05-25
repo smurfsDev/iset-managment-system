@@ -237,6 +237,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/message'], function () {
         Route::get('/users', [MessageController::class, 'users']);
         Route::get('/M/{id}', [MessageController::class, 'index']);
+        Route::post('/store/{id}', [MessageController::class, 'store']);
 
     });
 });
