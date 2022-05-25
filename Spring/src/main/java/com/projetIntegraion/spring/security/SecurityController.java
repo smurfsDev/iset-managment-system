@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.RoleService;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserService;
 import com.projetIntegraion.spring.annotation.equalPasswordsConstraint;
@@ -92,6 +93,8 @@ public class SecurityController {
     RoleService roleService;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 @GetMapping("/accessDenied")
 public String geterror() {
@@ -121,6 +124,12 @@ public String posterror() {
 
         return "login";
     }
+
+    @GetMapping("/tesa")
+    public String tesa(HttpServletRequest request){
+        return userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getId().toString();
+    }
+
 //  @GetMapping("/login")
 //  public String login(ModelMap modelMap)
 //  {
