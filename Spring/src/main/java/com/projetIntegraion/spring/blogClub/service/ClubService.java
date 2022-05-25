@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.blogClub.service;
 
 import java.util.Optional;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.repository.ClubRepository;
 
@@ -59,5 +60,9 @@ public class ClubService {
 
 	public Optional<Club> getClubParResponsable(int id){
 		return clubRepository.findByResponsableClubId(id);
+	};
+
+	public Boolean isThisClubOwner(Long id, User idResponsable){
+		return clubRepository.findByResponsableClub(idResponsable).equals(clubRepository.findById(id));
 	};
 }

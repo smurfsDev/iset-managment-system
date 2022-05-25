@@ -83,7 +83,7 @@ public class DemandeAdhesionClubController {
             @RequestParam(name = "size", defaultValue = "2") int size,
             @RequestParam(name = "idClub") Long idClub) {
         Boolean c = demandeAdhesionClubService.existsByIds(idClub, this.getUser(request).getId());
-        Boolean isThisClubOwner = clubService.getClubParResponsable(this.getUser(request).getId()).get().getId()==(idClub);
+        Boolean isThisClubOwner = clubService.isThisClubOwner(idClub, this.getUser(request));
         if (c) {
             Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
             modelMap.addAttribute("Dacs", Dacs);
