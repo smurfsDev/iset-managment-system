@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 
 import java.io.Serializable;
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -14,11 +15,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,9 +36,17 @@ public class User implements Serializable, UserDetails {
 private @Id @GeneratedValue Integer id;
 private String username;
 private String password;
+
+private Timestamp created_at;
+
+private Timestamp updated_at;
+
 @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
 inverseJoinColumns = @JoinColumn(name = "role_id"))
+// @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+//     private List<UserRole> User;
+
 
 private Set<Role> roles = new HashSet<>();
 public Integer getId() {
@@ -84,6 +96,18 @@ public boolean isCredentialsNonExpired() {
 	}
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	public Timestamp getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(Timestamp created_at) {
+		this.created_at = created_at;
+	}
+	public Timestamp getUpdated_at() {
+		return updated_at;
+	}
+	public void setUpdated_at(Timestamp updated_at) {
+		this.updated_at = updated_at;
 	}
 	 
 }
