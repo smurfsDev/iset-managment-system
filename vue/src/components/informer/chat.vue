@@ -1,7 +1,7 @@
 <template>
   <div class="container w-100 py-4">
     <!-- form containing one field for messages -->
-        <chatComponents  :messages="msg"></chatComponents>  
+        <chatComponents  :messages="msg" :userId="userId"></chatComponents>  
         <userComponents @messages="submitMessage"></userComponents>  
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
     },
     data() {
         return {
-          // userId:0,
+          userId:0,
           msg:[],
         }
     },
@@ -29,14 +29,11 @@ export default {
         console.log('Component mounted.')
     },
   methods: {
-    submitMessage(messages) {
+    submitMessage(messages,id) {
       this.msg = messages;
+      this.userId = id;
     },
-    // fetchMessages() {
-    //     this.$http.get("http://localhost:8000/api/message/M/"+this.userId).then(response => {
-    //         this.messages = response.data;
-    //      })
-    // },
+    
 
     
   },
