@@ -47,7 +47,7 @@ public class DemandeCreationClubController {
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        if (request.isUserInRole("ROLE_STUDENT")) {
+        if (request.isUserInRole("ROLE_STUDENT")||request.isUserInRole("ROLE_RESPONSABLE")) {
             Page<DemandeCreationClub> listDemandeCreationClub = DemandeCreationClubService
                     .getAuthUserDemandsParPage(this.getUser(request), page, size);
             System.out.println(listDemandeCreationClub);
