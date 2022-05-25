@@ -22,12 +22,12 @@
 						<div class="card-body">
 							<form th:action="${edit}?'updateDmm':'saveDm'" enctype="multipart/form-data" class="form"
 								id="formLogin" name="formLogin" role="form" action="saveDm" method="post">
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label class="control-label">Id Responsable club :</label> <input type="number" name="responsableClub"
 										class="form-control" th:value="${Dmm.responsableClub}" />
 									<span th:errors=${Dmm.responsableClub} class="text-danger">
 									</span>
-								</div>
+								</div> -->
 								<div class="form-group">
 									<label class="control-label"> Destinataire :</label> 
 									<label th:if="${edit}" th:text="${dest.username}"></label>
