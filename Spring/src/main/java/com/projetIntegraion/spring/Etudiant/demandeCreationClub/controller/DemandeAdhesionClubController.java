@@ -38,14 +38,19 @@ public class DemandeAdhesionClubController {
     @Autowired
     private MemberService memberService;
 
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
+
     @GetMapping("/demandeAdhesionClub")
     public String demandeAdhesionClub(ModelMap modelMap,
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Principal principal = request.getUserPrincipal();
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(
-                userRepository.findUserWithName(principal.getName()).get().getId(), page, size);
+
+        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
         modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
@@ -58,9 +63,7 @@ public class DemandeAdhesionClubController {
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Principal principal = request.getUserPrincipal();
-        User user = userRepository.findUserWithName(principal.getName()).get();
-        Club club = clubService.getClubParResponsable(user.getId()).get();
+        Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
 
         Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageClub(club.getId(),
                 page, size);
@@ -79,8 +82,7 @@ public class DemandeAdhesionClubController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             @RequestParam(name = "idClub") Long idClub) {
-        User u = userRepository.findUserWithName(request.getUserPrincipal().getName()).get();
-        Boolean c = demandeAdhesionClubService.existsByIds(idClub, u.getId());
+        Boolean c = demandeAdhesionClubService.existsByIds(idClub, this.getUser(request).getId());
         if (c) {
             Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
             modelMap.addAttribute("Dacs", Dacs);
@@ -117,7 +119,7 @@ public class DemandeAdhesionClubController {
             return "Club/demandeAdhesionClub/form";
         }
         Dac.setClub(clubService.getClub(idClub));
-        Dac.setEtudiant(userRepository.findUserWithName(request.getUserPrincipal().getName()).get());
+        Dac.setEtudiant(this.getUser(request));
         demandeAdhesionClubService.save(Dac);
 
         Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
@@ -131,11 +133,12 @@ public class DemandeAdhesionClubController {
     @GetMapping("/deleteDac")
     public String deleteDac(
             @RequestParam(name = "id") long id,
+            HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             ModelMap modelMap) {
         demandeAdhesionClubService.deleteById(id);
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(page, size);
+        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
         modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
@@ -164,6 +167,7 @@ public class DemandeAdhesionClubController {
     public String editJoinClub(
             @Valid DemandeAdhesionClub Dac,
             BindingResult bindingResult,
+            HttpServletRequest request,
             @RequestParam(name = "nomClub", defaultValue = "") String nomClub,
             @RequestParam(name = "idClub", defaultValue = "") Long idClub,
             ModelMap modelMap) {
@@ -181,7 +185,7 @@ public class DemandeAdhesionClubController {
         daac.setMessage(Dac.getMessage());
         demandeAdhesionClubService.save(daac);
 
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPage(0, 2);
+        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), 0, 2);
         modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
         modelMap.addAttribute("currentPage", 0);
@@ -209,7 +213,7 @@ public class DemandeAdhesionClubController {
 
         Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageClub(club.getId(),
                 page, size);
-        
+
         modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("accept", 1);
         modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
@@ -233,7 +237,7 @@ public class DemandeAdhesionClubController {
 
         Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageClub(club.getId(),
                 page, size);
-        
+
         modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("decline", 1);
         modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
