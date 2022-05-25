@@ -21,7 +21,7 @@
             
             <h4 class="float-start">About</h2>
                        
-                <a sec:authorize="hasRole('STUDENT')" th:href="@{createAbout(
+                <a sec:authorize="hasAuthority('RESPONSABLE')" th:href="@{createAbout(
                 page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Ajouter
                 </a>
@@ -35,14 +35,14 @@
                         <th>ID</th>
                         <th>Paragraphe</th>
                         
-                        <th sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')">Actions</th>
+                        <th sec:authorize="hasAuthority('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(Dccs.content)}">
 						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
 					<tr th:each="about:${Dccs.content}">
                         <td th:text="${about.id}"></td>
                         <td th:text="${about.longDescription}"></td>
-                        <td  sec:authorize="hasRole('STUDENT')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteAbout(id=${about.id},
+                        <td  sec:authorize="hasAuthority('RESPONSABLE')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteAbout(id=${about.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierAbout(id=${about.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
                                 </td>

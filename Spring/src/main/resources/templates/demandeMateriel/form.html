@@ -30,9 +30,9 @@
 								</div>
 								<div class="form-group">
 									<label class="control-label"> Destinataire :</label> 
-									<label th:if="${edit}" th:text="${dest.name}"></label>
+									<label th:if="${edit}" th:text="${dest.username}"></label>
 									<select name="destinataire" th:value="${Dmm.destinataire}">
-                                        <option th:each="user:${Users}" th:value="${user.id}" th:text="${user.name}"></option>
+                                        <option th:each="user:${Users}" th:value="${user.id}" th:text="${user.username}"></option>
 									
 									<span th:errors=${Dmm.destinataire} class="text-danger">
 								</div>
