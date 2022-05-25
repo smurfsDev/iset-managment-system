@@ -59,4 +59,8 @@ public class DemandeCreationClubService {
 	public Page<DemandeCreationClub> getAuthUserDemandsParPage(User id, int page, int size){
 		return DemandeCreationClubRepository.findByResponsableClub(id, PageRequest.of(page, size));
 	};
+
+	public Boolean dccexists(String id) {
+		return DemandeCreationClubRepository.existsByname(id);	
+	}
 }
