@@ -4,7 +4,7 @@
             <div class="card-header">Chats</div>
             <div class="card-body">
                 <chatMessagesComponent  :messages="messages"></chatMessagesComponent>
-                <chatFormComponent></chatFormComponent>
+                <chatFormComponent :messages="messages" :userId="userId"></chatFormComponent>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@ import chatFormComponent from "./chatFormComponent";
             console.log('Component mounted.')
         },
         props: {
-            // userId: Number,
+            userId: Number,
             messages:Array,
         },
         data() {
