@@ -69,6 +69,25 @@
                   </ul>
                 </div>
               </li>
+              <li class="sidebar-dropdown">
+                <a href="#">
+                  <i class="fa fa-file"></i>
+                  <span>Demande Materiel</span>
+                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{showCreateDmm}">Ajouter
+                        <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                      </a>
+                    </li>
+                    <li>
+                      <a th:href="@{listeDm}">Lister</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
               <li>
                 <a th:href="@{listeClub}">
                   <i class="fa fa-shopping-cart"></i>
