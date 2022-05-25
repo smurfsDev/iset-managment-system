@@ -36,7 +36,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" @submit.prevent="postAvis">
+        <form action="" @submit.prevent="postAvis" enctype="multipart/form-data">
     <div>
        <label for="#title" class="mb-3" style="font-weight:bold;">Title</label> <input type="text" name="title" id="title" class="form-control" v-model="form.title" placeholder="Title">
     </div>
@@ -45,12 +45,19 @@
     <textarea name="content" id="content" v-model="form.content" class="form-control mb-3" cols="30" rows="10" placeholder="send Avis...">
     </textarea>
 
-<label for="#image" style="font-weight:bold;">image</label>
-<input type="file" @change="image" name="image" id="image">
+      <label>Logo:</label>
+              <input
+                type="file"
+                class="form-control"
+                @change="convert64"
+                ref="file"
+                name="image"
+                id="image"
+              />
     </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary" oclick="hideModal('postModal')">Save changes</button>
       </div>
 </form>
       </div>
@@ -86,19 +93,31 @@ export default {
     },
         postAvis(){
             this.$http.post('http://127.0.0.1:8000/api/avis/add',{
-                'title':this.form.title,
-                'content':this.form.content,
+               'title':this.form.title,
+               'content':this.form.content,
                 'image':this.form.image
+                
             });
+          //   let id=Number(this.avis[this.avis.length-1].id);
 
+          //  alert(this.$router.push({path:'detailsavis/'+id+1}));
         },
         image(e){
           console.log(e.target.files[0]);
           this.form.image=e.target.files[0].name;
-        }
+        },
+           convert64(e) {
+      var file = e.target.files[0];
+      console.log(file);
+      var reader = new FileReader();
+      reader.onloadend = () => {
+        this.form.image = reader.result;
+      };
+      reader.readAsDataURL(file);
+    },
   },
       mounted() {
-       
+  
             this.fetchAvis();
           
         }

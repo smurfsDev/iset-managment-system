@@ -75,6 +75,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/d/{id}', [DemandeCreationClubController::class, 'decline']);
     });
     // demande adhesion club routes
+    Route::group(['prefix' => '/avis'], function () {
+        Route::get('/show', [posteavisController::class, 'index']);
+        Route::get('/details/{id}', [posteavisController::class, 'show']);
+        Route::post('/update/{id}', [posteavisController::class, 'update']);
+        Route::post('/add', [posteavisController::class, 'store']);
+        Route::post('/delete/{id}', [posteavisController::class, 'destroy']);
+    });
+    
     Route::group(['prefix' => '/dac'], function () {
         Route::prefix('/responsable')->group(function () {
             Route::get('/', [ClubController::class, 'getDemandeAdhesionByClub']);
@@ -243,10 +251,6 @@ Route::group(['prefix' => '/s'], function () {
     Route::post('/accept/{id}', [StudentsController::class, 'accept']);
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
 });
-Route::group(['prefix' => '/avis'], function () {
-    Route::get('/show', [posteavisController::class, 'index']);
-    Route::get('/details/{id}', [posteavisController::class, 'show']);
-    Route::post('/update/{id}', [posteavisController::class, 'update']);
-    Route::post('/add', [posteavisController::class, 'store']);
-    Route::post('/delete/{id}', [posteavisController::class, 'destroy']);
-});
+
+
+

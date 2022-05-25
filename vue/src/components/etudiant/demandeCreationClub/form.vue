@@ -129,6 +129,7 @@ export default {
     },
     convert64(e) {
       var file = e.target.files[0];
+      console.log(file);
       this.srcImage = file;
       var reader = new FileReader();
       reader.onloadend = () => {

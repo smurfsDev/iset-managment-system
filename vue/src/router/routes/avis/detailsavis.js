@@ -5,7 +5,7 @@ export default [
   {
     path: "/detailsavis/:id",
     component:detailsavis,
-    name: "detailsavis",
+    name: "/detailsavis/:id",
     meta: { requiresAorC: true }
   }
 ];

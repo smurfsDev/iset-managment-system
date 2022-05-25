@@ -16,8 +16,10 @@ class CreateAvisTable extends Migration
         Schema::create('avis', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('content');
-            $table->string('image');
+            $table->longText('content');
+            $table->longText('image');
+            $table->bigInteger('from_id')->unsigned();
+            $table->foreign('from_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Models\avis;
+use App\Models\User;
+use Validator;
 
 class posteavisController extends Controller
 {
@@ -15,6 +18,8 @@ class posteavisController extends Controller
      */
     public function index()
     {
+        //  $user = auth()->user();
+        //  dump($user);
         $avis=avis::get();
         return $avis;
     }
@@ -28,19 +33,20 @@ class posteavisController extends Controller
     public function store(Request $request)
     {
 
-        // $validated = $request->validate([
-        //     'title' => 'required|max:255',
-        //     'content' => 'required',
-        // ]);
-
+        // $validator = Validator::make($request->all(), [
+        //     'title' => 'required',
+        //     'content'=>'required',
+        //     'image' => 'require',
+        //  ]);
+     
+$user = $request->user();
         $avis= new avis();
 
-
-            
-        
             $avis->title=$request->get('title');
             $avis->content=$request->get('content');
             $avis->image= $request->get('image');
+            $avis->from_id=$user->id;
+
             // $avis->image=$request->file('image')->hashName();
             $avis->save();
         
@@ -48,7 +54,11 @@ class posteavisController extends Controller
         //return redirect()->route('/listavis');
 
     }
-
+ 
+    public function searchUser($id){
+        $data = users::find($id);
+        return $data;
+    }
     /**
      * Display the specified resource.
      *
