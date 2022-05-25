@@ -2,12 +2,14 @@
     <div>
         <form class="form">
             <textarea 
+                v-on:keyup.enter="saveMessage()"
+                v-model="body"
                 cols="25"
                 rows="5"
                 class="form-input">
             </textarea>
             <span class="notice">
-                Hit Return to send a message
+                Hit Return to send a message 
             </span>
         </form>
     </div>
@@ -15,8 +17,28 @@
 
 <script>
     export default {
+        props: {
+            messages:Array,
+            userId: Number,
+        },
+        data() {
+            return {
+                body: '',
+            }
+        },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+            saveMessage(){
+                this.$http.post("http://localhost:8000/api/message/store/"+this.userId,
+                {
+                body:this.body
+                }).then(response => {
+                    this.messages = response.data;
+                    this.body = '';
+                })
+            }
         }
     }
 </script>
