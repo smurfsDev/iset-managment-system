@@ -7,6 +7,8 @@ layout:decorator="template">
 <title>Connexion</title>
 <link rel="stylesheet" type="text/css"
 	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<script src="jquery.js"></script>
+
 </head>
 <body>
     <div layout:fragment="Mycontent">
@@ -19,6 +21,9 @@ layout:decorator="template">
                     <div class="alert alert-danger" th:if="${error!=null}">
                         <p th:text="${error}"></p>
                     </div>
+                
+
+                    
                     <form th:action="${reg}?@{register}:@{login}" method="post">
                         <div th:if="!${reg}">
                             <div class="form-group">
@@ -55,19 +60,40 @@ layout:decorator="template">
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Role :</label>
-                                <select name="role" class="form-control">
+                                <select name="role" class="form-control" >
                                     <option th:each="role:${roles}" th:value="${role.id}" name="role" th:text="${role.name}"></option>
                                 </select>
                             </div>
+                            <div id="dep" class="form-group ">
+                                <label class="control-label">Departement :</label>
+                                <select name="dep" class="form-control">
+                                    <option th:each="dep:${deps}" th:value="${dep.id}" name="dep" th:text="${dep.titre}"></option>
+                                </select>
+                            </div>
+
 
                             <button class="btn btn-primary">s'inscripre</button>
                             <a href="login" class="btn btn-primary">j'ai un compte</a>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
     </div>
+    <script>
+        // add event listener to the role select element
+        document.querySelector('#dep').style.display = 'none';
+
+        let role = document.querySelector('select[name=role]');
+        role.addEventListener('change', (e) => {
+            if (e.target.value == 4) {
+                document.querySelector('#dep').style.display = 'block';
+            } else {
+                document.querySelector('#dep').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html> 
