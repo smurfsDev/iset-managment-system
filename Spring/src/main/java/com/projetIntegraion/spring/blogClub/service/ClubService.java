@@ -1,5 +1,7 @@
 package com.projetIntegraion.spring.blogClub.service;
 
+import java.util.Optional;
+
 import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.repository.ClubRepository;
 
@@ -54,4 +56,8 @@ public class ClubService {
 	// public Page<Club> getClubParNom(String nom, int page, int size){
 	// 	return clubRepository.findByNomClubContains(nom, page, size); //(nom, PageRequest.of(page, size));
 	// };
+
+	public Optional<Club> getClubParResponsable(int id){
+		return clubRepository.findByResponsableClubId(id);
+	};
 }
