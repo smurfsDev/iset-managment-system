@@ -1,6 +1,6 @@
 package com.projetIntegraion.spring.demandePlannificationEvent.repository;
 
-import java.util.Optional;
+
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeEvent;
@@ -8,7 +8,7 @@ import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeEven
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories
