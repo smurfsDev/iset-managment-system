@@ -94,10 +94,16 @@
                   </ul>
                 </div>
               </li>
-              <li>
+              <li sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{listeChefDepartments}">
                   <i class="fa fa-user"></i>
                   <span>Liste des cd</span>
+                </a>
+              </li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{classe}">
+                  <i class="fa fa-user"></i>
+                  <span>Liste des classes</span>
                 </a>
               </li>
               <!-- <li >
