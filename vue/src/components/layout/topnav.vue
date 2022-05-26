@@ -146,6 +146,26 @@
                     href:'GererReclamation',
                     icon: 'fa fa-file',
                     hidden: !this.isAuth
+                },
+
+                 {
+                    title: 'DemandeDocument',
+                    href:'Gererdemandedocument',
+                    icon: 'fa fa-file',
+                    hidden: !this.isAuth
+                },
+                
+                {
+                    hidden:!this.isAdmin,
+                    title: 'Catégorie document',
+                    icon: 'fa fa-file',
+                    href:'GererCategorie',
+                },
+                 {
+                    hidden:!this.isAdmin,
+                    title: 'Type Reclamation',
+                    icon: 'fa fa-file',
+                    href:'GererTypeCat',
                 }
 
             ]
