@@ -51,4 +51,8 @@ public class ClasseService {
 		return classeRepository.findAll(PageRequest.of(page, size));
 	};
 
+	public Page<Classe> getAllClasseById(Long id, int page, int size) {
+		return classeRepository.findByDepartementId(id, PageRequest.of(page, size));
+	}
+
 }
