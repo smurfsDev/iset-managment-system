@@ -16,8 +16,9 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->string('class');
-            $table->string('categorie');
+            $table->foreignId('classes_id');
+            $table->foreign('classes_id')->references('id')->on('classes');
+            $table->foreignId('document_categories_id');
             $table->longText('file');
             $table->foreignId('idResponsable');
             $table->foreign('idResponsable')->references('id')->on('users');
