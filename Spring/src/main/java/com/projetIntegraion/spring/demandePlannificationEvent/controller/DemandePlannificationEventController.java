@@ -164,6 +164,57 @@ public class DemandePlannificationEventController {
             return this.showList(modelMap, request, page, size);
         }
     }
+    @RequestMapping("/acceptDE")
+    public String acceptDE(@RequestParam("id") Long id, ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            HttpServletRequest request,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeEvent de = DemandeEventService.getDemandeEvent(id);
+        de.setStatus(1);
+        de.setAdmin(this.getUser(request));
+        DemandeEventService.save(de);
+        // Club c = new Club();
+        // de.setNomEvent(de.getNomEvent());
+        // de.setDescription(de.getDescription());
+        // de.setClub(de.getClub());
+        // de.setDateEvent(de.getDateEvent());
+
+        // c.setNomClub(de.getNomClub());
+        // c.setDateCreation(de.getDateCreation());
+        // c.setPresident(de.getPresident());
+        // c.setVicePresident(de.getVicePresident());
+        // c.setResponsableClub(de.getResponsableClub());
+        // c.setLogo(de.getLogo());
+        de.setAdmin(this.getUser(request));
+
+     
+
+        modelMap.addAttribute("DE", new DemandeEvent());
+        modelMap.addAttribute("pages",
+                new int[DemandeEventService.getAllDemandeEventParPage(page, size).getTotalPages()]);
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande de plannification d'evenement acceptée avec succès");
+        return this.showList(modelMap, request, page, size);
+    }
+
+    @RequestMapping("/declineDE")
+    public String declineDE(@RequestParam("id") Long id, ModelMap modelMap,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeEvent dc = DemandeEventService.getDemandeEvent(id);
+        dc.setAdmin(this.getUser(request));
+        dc.setStatus(2);
+        DemandeEventService.save(dc);
+        modelMap.addAttribute("Dcc", new DemandeEvent());
+        modelMap.addAttribute("pages",
+                new int[DemandeEventService.getAllDemandeEventParPage(page, size).getTotalPages()]);
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande de plannification d'evenement refusée avec succès");
+        return this.showList(modelMap, request, page, size);
+    }
+
+    
 
   
     

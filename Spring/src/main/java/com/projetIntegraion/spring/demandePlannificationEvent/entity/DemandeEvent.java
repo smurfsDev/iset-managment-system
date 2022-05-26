@@ -35,6 +35,7 @@ public class DemandeEvent {
     @Size(min = 3, max = 30)
     private String nomEvent;
     @NotNull
+    @Size(min = 3, max = 255)
     private String description;
     private int status;
     @NotNull

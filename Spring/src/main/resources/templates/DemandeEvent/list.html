@@ -61,19 +61,19 @@
                                 <span th:if="${demande.status==2}" th:class="${demande.status==2?'btn bg-danger disabled ':'' }"><i class="fa fa-times"></i></span>
 
                                 </td>
-                        <!-- <td  sec:authorize="hasRole('ADMIN')"  >
+                        <td  sec:authorize="hasRole('ADMIN')"  >
                             <div th:if="${demande.status!=1}">
-                                <a th:class="${demande.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{accept(id=${demande.id},page=${currentPage},size=${param.size})}">
+                                <a th:class="${demande.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{acceptDE(id=${demande.id},page=${currentPage},size=${param.size})}">
                                     <i class="fa fa-check"></i>
                                 </a>
-                                <a th:class="${demande.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{decline(id=${demande.id},page=${currentPage},size=${param.size})}">
+                                <a th:class="${demande.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineDE(id=${demande.id},page=${currentPage},size=${param.size})}">
                                     <i class="fa fa-times"></i>
                                 </a>
                             </div>
                             <div class="text-success" th:if="${demande.status==1}">
                                 Demande acceptée
                             </div>
-                        </td> -->
+                        </td>
 					</tr>
 				</table>
 				<ul class="nav nav-pills">
