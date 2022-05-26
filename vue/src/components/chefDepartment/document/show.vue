@@ -138,9 +138,11 @@ export default {
     fetchDocument(url) {
       this.$emit("fetchDocument", url);
     },
+    
     makeFile(data){
       return data;
     },
+
     checkType(data){
       if(data!=null){
         if(data.indexOf('data:application/pdf') != -1){
