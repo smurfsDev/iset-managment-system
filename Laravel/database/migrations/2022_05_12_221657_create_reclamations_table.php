@@ -17,10 +17,12 @@ class CreateReclamationsTable extends Migration
             $table->id();
             $table->string('titre');
             $table->string('description');
-            $table->string('type');
+            $table->longText('file')->nullable();
+            $table->foreignId('type_cats_id');
+           
             $table->foreignId('idResponsable');
             $table->foreign('idResponsable')->references('id')->on('users');
-            $table->foreignId('idAdmin');
+            $table->foreignId('idAdmin')->nullable();
             $table->foreign('idAdmin')->references('id')->on('users');
             $table->text('reponse')->nullable();
             $table->timestamps();
