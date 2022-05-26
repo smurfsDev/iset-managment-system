@@ -25,6 +25,10 @@
     <div class="alert alert-info">
       {{avis.content}}
   </div>
+  <div class="card" style="border:1px solid black;max-width:450px;">
+  <b>image:</b>
+    <img :src="avis.image" alt="logo" width="350" />
+  </div>
  <div class="text-end">
  <!-- Button trigger modal -->
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-edit"></i></button>

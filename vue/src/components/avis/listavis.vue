@@ -17,14 +17,21 @@
 
  <div class="head">
    <b style="font-weight:bold">Post #000{{avi.id}}</b>
-    <span class="badge badge-danger p-1 m-2">chef departement</span>
+    <span class="badge badge-danger p-1 m-2">{{avi.from_id}}</span>
     </div>
  <small class="form-text ml-1">&nbspWe'll send At {{avi.created_at}}</small>
    <div class="text-end">
      <a :href="'/detailsavis/'+avi.id" class="btn btn-primary"><i class="fa-solid fa-info-circle"></i></a>
 </div>
+<div>
+
+
+</div>
+
 
  </b-card>
+
+
 
 
 <!-- Modal -->
@@ -45,7 +52,7 @@
     <textarea name="content" id="content" v-model="form.content" class="form-control mb-3" cols="30" rows="10" placeholder="send Avis...">
     </textarea>
 
-      <label>Logo:</label>
+      <label>Image</label>
               <input
                 type="file"
                 class="form-control"
@@ -85,9 +92,21 @@ export default {
             } ,
       id: "",
       avis:[],
+      pagination: {},
     };
   },
   methods:{
+      fetchavisx(
+            page_url = "http://127.0.0.1:8000/api/avis/show"
+        ) {
+            let vm = this;
+            this.$http.get(page_url)
+                .then((res) => {
+                    this.clubs = res.data.data;
+                    this.show = false;
+                    vm.makePagination(res.data);
+                });
+        },
      fetchAvis() {
       this.$http.get('http://localhost:8000/api/avis/show').then(response => this.avis= response.data);
     },
@@ -114,7 +133,17 @@ export default {
         this.form.image = reader.result;
       };
       reader.readAsDataURL(file);
-    },
+    },     makePagination(meta) {
+            this.pagination = {
+                current_page: meta.current_page,
+                current_page_url:
+                    "http://localhost:8000/api/avis/show?page=" + meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: meta.next_page_url,
+                prev_page_url: meta.prev_page_url,
+            };
+        },
+
   },
       mounted() {
   
