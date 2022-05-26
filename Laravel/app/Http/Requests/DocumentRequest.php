@@ -27,8 +27,8 @@ class DocumntRequest extends FormRequest
     {
         return [
             'nom' => 'required|string|max:255',
-            'class' => 'required|string|max:255',
-            'categorie' => 'required|string|max:255',
+            'class_iddocument_categories_id' => 'required|string|max:255',
+            'document_categories_id' => 'required|string|max:255',
             'file' => "required"
             
         ];
