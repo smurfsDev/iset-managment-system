@@ -22,10 +22,12 @@ use App\Http\Controllers\SalleController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\DemandeDocumentController;
+use App\Http\Controllers\DocumentCategorieController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ReclamationController;
 use App\Http\Controllers\StudentsController;
-use App\Models\Reclamation;
+use App\Http\Controllers\TypeCatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,7 +154,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{id}', [ClasseController::class, 'updateClass']);
     });
     
-// documents routes
+    // documents routes
 Route::group(['prefix' => '/Document'], function () {
 Route::get('/', [DocumentController::class, 'getDocument']);
 Route::delete('/{id}', [DocumentController::class, 'show']);
@@ -162,19 +164,48 @@ Route::delete('/{id}', [DocumentController::class, 'deleteDocument']);
 
 });
 
-// reclamation routes
+    // reclamation routes
 Route::group(['prefix' => '/reclamation'], function () {
 Route::get('/', [ReclamationController::class, 'getReclamation']);
 Route::post('/', [ReclamationController::class, 'addReclamation']);
 Route::put('/{id}', [ReclamationController::class, 'updateReclamation']);
 Route::delete('/{id}', [ReclamationController::class, 'deleteReclamation']);
+Route::put('/reponse/{id}',[ReclamationController::class,'setReponse']);
+
+});
+
+// DC routes
+Route::group(['prefix' => '/Categorie'], function () {
+Route::get('/all', [DocumentCategorieController::class, 'get']);
+Route::get('/', [DocumentCategorieController::class, 'showDocumentCategorie']);
+Route::post('/', [DocumentCategorieController::class, 'createDocumentCategorie']);
+Route::put('/{id}', [DocumentCategorieController::class, 'updateDocumentCategorie']);
+Route::delete('/{id}', [DocumentCategorieController::class, 'deleteDocumentCategorie']);
+});
+
+// TypeCat routes
+Route::group(['prefix' => '/reclamationCat'], function () {
+Route::get('/all',         [TypeCatController::class, 'get']);
+Route::get('/',            [TypeCatController::class, 'showTypeCat']);
+Route::post('/',           [TypeCatController::class, 'addTypeCat']);
+Route::put('/{id}',        [TypeCatController::class, 'updateTypeCat']);
+Route::delete('/{id}',     [TypeCatController::class, 'deleteTypeCat']);
+});
+
+    // DemandeDocument routes
+Route::group(['prefix' => '/DemandeDocument'], function () {
+Route::get('/all', [DemandeDocumentController::class, 'getDemandeDocument']);
+Route::get('/', [DemandeDocumentController::class, 'showDemandeDocument']);
+Route::post('/', [DemandeDocumentController::class, 'addDemandeDocument']);
+Route::put('/{id}', [DemandeDocumentController::class, 'updateDemandeDocument']);
+Route::delete('/{id}', [DemandeDocumentController::class, 'deleteDemandeDocument']);
+Route::put('/reponse/{id}',[DemandeDocumentController::class,'setReponse']);
 
 });
 
 });
-
-// page club routes
-Route::group(['prefix' => '/pc'], function () {
+    // page club routes
+    Route::group(['prefix' => '/pc'], function () {
     Route::get('/header/{id}', [HeadersController::class, 'show']);
     Route::get('/activities/{id}', [ActivitiesController::class, 'show']);
     Route::get('/projects/{id}', [ProjectsController::class, 'show']);
@@ -183,7 +214,7 @@ Route::group(['prefix' => '/pc'], function () {
     Route::get('/fondator/{id}', [AboutController::class, 'getFondator']);
 });
 
-Route::group(['prefix' => '/m'], function () {
+    Route::group(['prefix' => '/m'], function () {
     Route::get('/M/{id}', [MaterielController::class, 'show']);
     Route::get('/{id}', [MaterielController::class, 'showMaterialsOfCategory']);
     Route::post('/{idM}/{idD}', [MaterielController::class, 'addMateriel']);
@@ -198,15 +229,15 @@ Route::get('/dac', [ClubController::class, 'show']);
 Route::group(['prefix' => '/Salle'], function () {
     Route::get('/{id}', [SalleController::class, 'index']);
 });
-Route::group(['prefix' => '/Departement'], function () {
+    Route::group(['prefix' => '/Departement'], function () {
     Route::get('/', [DepartementController::class, 'index']);
 });
 
-Route::group(['prefix' => '/classe'], function () {
+        Route::group(['prefix' => '/classe'], function () {
     Route::get('/{id}', [ClasseController::class, 'show']);
 });
 
-Route::group(['prefix' => '/s'], function () {
+    Route::group(['prefix' => '/s'], function () {
     Route::get('/', [StudentsController::class, 'show']);
     Route::post('/accept/{id}', [StudentsController::class, 'accept']);
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
