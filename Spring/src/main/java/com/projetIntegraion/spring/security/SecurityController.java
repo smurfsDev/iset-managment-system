@@ -1,6 +1,7 @@
 package com.projetIntegraion.spring.security;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -116,6 +117,10 @@ public class SecurityController {
             modelMap.addAttribute("error", "Veuillez vérifier vos identifiants");
             return "login";
         }
+        if (error==2) {
+            modelMap.addAttribute("error", "Votre compte n'est pas encore activé");
+            return "login";
+        }
         if (logout == 1) {
             System.out.println("error : " + error);
 
@@ -129,7 +134,10 @@ public class SecurityController {
 
     @GetMapping("/tesa")
     public String tesa(HttpServletRequest request) {
-        return userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getId().toString();
+        return userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getRoles().iterator().next().toString();
+        // get first element of a set
+
+        // return userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getId().toString();
     }
 
     // @GetMapping("/login")
