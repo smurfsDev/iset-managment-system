@@ -26,6 +26,9 @@ import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
 import manageDocuments from "./routes/gererDocument";
 import moduleReclamation from "./routes/gererReclamation";
+import manageCategorieDocument from "./routes/gererCategorie";
+import manageDemandeDocument from "./routes/gererDemandeDocument";
+import manageTypeCat from "./routes/gererTypeCat";
 Vue.use(VueRouter);
 
 const routes = [
@@ -65,7 +68,10 @@ const routes = [
   ...manageStudents,
   ...manageClasses,
   ...manageDocuments,
-  ...moduleReclamation
+  ...moduleReclamation,
+  ...manageCategorieDocument,
+  ...manageDemandeDocument,
+  ...manageTypeCat,
 ];
 
 const router = new VueRouter({
