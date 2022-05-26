@@ -19,7 +19,7 @@ class CreateDemandeSallesTable extends Migration
             $table->foreignId("idSalle");
             $table->date("dateEmploi");
             $table->date("dateDeRemise");
-            $table->timestamps();
+    
             $table->foreign('idResponsable')
                 ->references('id')
                 ->on('users')
@@ -28,6 +28,7 @@ class CreateDemandeSallesTable extends Migration
                 ->references('id')
                 ->on('salles')
                 ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
