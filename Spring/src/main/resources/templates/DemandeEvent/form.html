@@ -29,12 +29,16 @@
 									</span>
 								</div>
 								<div class="form-group">
-									<label class="control-label">Description :</label> <input type="date" name="description"
+									<label class="control-label">Description :</label> <input type="text" name="description"
 										class="form-control" th:value="${DE.description}" />
 									<span th:errors=${DE.description} class="text-danger">
 								</div>
 								
-								
+								<div class="form-group">
+									<label class="control-label">Date d'evenement :</label> <input type="date" name="dateEvent"
+										class="form-control" th:value="${#dates.format(DE.dateEvent, 'yyyy-MM-dd')}" />
+									<span th:errors=${DE.dateEvent} class="text-danger">
+								</div>
                                 
 								<input type="hidden" name="id" th:value="${DE.id}" />
 								<input type="hidden" name="page" th:value="${param.page}" />

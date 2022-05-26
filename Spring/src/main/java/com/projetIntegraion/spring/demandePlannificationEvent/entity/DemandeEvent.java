@@ -7,7 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,6 +18,7 @@ import com.projetIntegraion.spring.blogClub.entity.Club;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class DemandeEvent {
@@ -35,23 +37,31 @@ public class DemandeEvent {
     @NotNull
     private String description;
     private int status;
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @FutureOrPresent
-    private Date DateEvent;
+    private Date dateEvent;
     @CreationTimestamp
     private Timestamp created_at;
     @UpdateTimestamp
     private Timestamp updated_at;
-    
     public DemandeEvent() {
     }
-    
-    @Override
-    public String toString() {
-        return "DemandeEvent [admin=" + admin + ", club=" + club + ", created_at=" + created_at + ", description="
-                + description + ", id=" + id + ", nomEvent=" + nomEvent + ", responsableClub=" + responsableClub
-                + ", status=" + status + ", updated_at=" + updated_at + "]";
+    public DemandeEvent(Long id, User responsableClub, User admin, Club club,
+            @NotNull @Size(min = 3, max = 30) String nomEvent, @NotNull String description, int status,
+            @NotNull @FutureOrPresent Date dateEvent, Timestamp created_at, Timestamp updated_at) {
+        this.id = id;
+        this.responsableClub = responsableClub;
+        this.admin = admin;
+        this.club = club;
+        this.nomEvent = nomEvent;
+        this.description = description;
+        this.status = status;
+        this.dateEvent = dateEvent;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
-
     public Long getId() {
         return id;
     }
@@ -94,6 +104,12 @@ public class DemandeEvent {
     public void setStatus(int status) {
         this.status = status;
     }
+    public Date getDateEvent() {
+        return dateEvent;
+    }
+    public void setDateEvent(Date dateEvent) {
+        this.dateEvent = dateEvent;
+    }
     public Timestamp getCreated_at() {
         return created_at;
     }
@@ -106,6 +122,8 @@ public class DemandeEvent {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
+    
+    
     
 
 }
