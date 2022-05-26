@@ -29,46 +29,46 @@
                 v-model="oldDocument.nom"
                 required="required"
               />
-              <label>class:</label>
-              <!-- <div class="form-group">
-                <select name="Categorie" v-model="oldDocument.Categorie">
+              
+             <!-- <label>Class:</label>
+               <div class="form-group">
+                <select name="classe" v-model="oldDocument.classe">
+                  <option>DSI</option>
+                     <option>RSI</option> 
+                      <option>SEM</option>
+                 <option>GM</option>
+                      <option>GE</option>
+                           <option>MM</option>
+                </select>
+              </div>-->
+
+
+
+            <label>Class:</label>
+               <div class="form-group">
+                <select name="classe" v-model="oldDocument.classe">
                   <option
-                    v-for="categorie in categories"
-                    :key="categorie.id"
-                    :value="categorie.id"
+                    v-for="classe in classes"
+                    :key="classe.id"
+                    :value="classe.id"
                   >
-                    {{ categorie.titre }}
+                    {{ classe.abreviation }}
                   </option>
                 </select>
-              </div> -->
-             <input
-                type="text"
-                class="border-0 dcc form-control"
-                placeholder="class"
-                v-model="oldDocument.class"
-                required="required"
-              />
-
-              <label>categorie:</label>
-              <!-- <div class="form-group">
-                <select name="idCategorie" v-model="oldDocument.idCategorie">
+              </div> 
+          
+              <label>Categorie:</label>
+               <div class="form-group">
+                <select name="document_categories" v-model="oldDocument.categorie">
                   <option
                     v-for="categorie in categories"
                     :key="categorie.id"
                     :value="categorie.id"
                   >
-                    {{ categorie.titre }}
+                    {{ categorie.title }}
                   </option>
                 </select>
               </div>
-               -->
-              <input
-                type="text"
-                class="border-0 dcc form-control"
-                placeholder="categorie"
-                v-model="oldDocument.categorie"
-                required="required"
-              />
 
               <label>Fichier:</label>
               <input
@@ -105,7 +105,17 @@ export default {
     edit: Boolean,
   },
   emits: ["addDocument"],
-  mounted() {},
+  mounted() {
+    this.fetchCategories();
+    this.fetchClasses();
+  }, 
+    data() {
+    return {
+      categories:[],
+      classes:[]
+    }
+    },
+
   methods: {
     addDocument() {
       this.$emit("addDocument", this.oldDocument);
@@ -115,6 +125,7 @@ export default {
     resetModal1() {
       $(".dcc").val("");
     },
+
     convert64(e) {
       var file = e.target.files[0];
       this.srcImage = file;
@@ -124,6 +135,31 @@ export default {
       };
       reader.readAsDataURL(file);
     },
+
+    fetchCategories() {
+      let page_url = "http://127.0.0.1:8000/api/Categorie/all";
+      this.$http.get(page_url)
+      .then((res)=> {
+        this.categories = res.data;
+      })
+      .finally(()=> {
+        this.show = false;
+      });
+    },
+    
+    /*fetchClasses() {
+      let page_url = "http://127.0.0.1:8000/api/Classe";
+      this.$http.get(page_url)
+      .then((res)=> {
+        this.classes = res.data.data;
+      })
+      .finally(()=> {
+        this.show = false;
+      });
+    },*/
+    
+
+
   },
 };
 </script>
