@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class DocumentController extends Controller
 {
-   public function getDocument(Request $request){
+  
+  public function getDocument(){
         
         $documents= Document::orderBy('updated_at')->paginate(5);
         if (sizeof($documents) > 0)
@@ -22,7 +23,7 @@ class DocumentController extends Controller
 
     }
 
-public function show($id){
+public function show(){
     $documents = Document::orderBy('updated_at', 'desc')->paginate(5);
             if (sizeof($documents) > 0)
                 return response()->json(
@@ -31,27 +32,20 @@ public function show($id){
                 );
             else
                 return response()->json([], 404);
-
-    /* $documents = Document::where('document', $id)->get();
-        if(empty($documents)){
-            return response()->json(['message' => 'Aucun demande existe'], 404);
-        }
-        return response()->json($documents, 200);*/
     }
-
 
     function createDocument(Request $request){
         $idResponsable = $request->user()->id;
         $nom = $request->input('nom');
-        $class = $request->input('class');
-        $categorie = $request->input('categorie');
+        $class = $request->input('class_id');
+        $categorie = $request->input('document_categories_id');
         $file = $request->input('file');
 
         $newDocument = array(
             "nom" => $nom,
-            "class" => $class,
+            "class_id" => $class,
             "file" => $file,
-            "categorie" => $categorie,
+            "document_categories_id" => $categorie,
             "idResponsable" => $idResponsable
         );
 
@@ -95,9 +89,9 @@ public function show($id){
         if ($documents) {
 
             $documents->nom = $request->input('nom') ? $request->input('nom') : $documents->nom;
-            $documents->class = $request->input('class') ? $request->input('class') : $documents->class;
+            $documents->class = $request->input('class_id') ? $request->input('class_id') : $documents->class;
             $documents->file = $request->input('file') ? $request->input('file') : $documents->file;
-            $documents->categorie = $request->input('categorie') ? $request->input('categorie') : $documents->categorie;
+            $documents->categorie = $request->input('document_categories_id') ? $request->input('document_categories_id') : $documents->categorie;
             
             $documents->save();
             return response()->json([
