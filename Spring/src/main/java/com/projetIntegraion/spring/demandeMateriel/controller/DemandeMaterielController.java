@@ -42,10 +42,11 @@ public class DemandeMaterielController {
     }
 
     @RequestMapping("/listeDm")
-    public String showList(ModelMap modelMap,
+    public String showList(ModelMap modelMap, HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
         modelMap.addAttribute("Dmms", listDm);
         modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
@@ -54,7 +55,7 @@ public class DemandeMaterielController {
     }
 
     @RequestMapping("/showCreateDm")
-    public String showCreateDm(ModelMap modelMap,
+    public String showCreateDm(ModelMap modelMap, HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         modelMap.addAttribute("Dmm", new DemandeMateriel());
@@ -69,14 +70,16 @@ public class DemandeMaterielController {
         modelMap.addAttribute("Users", listUser);
 
         modelMap.addAttribute("pages",
-                new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
+                new int[DemandeMaterielService
+                        .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size)
+                        .getTotalPages()]);
 
         modelMap.addAttribute("currentPage", page);
         return "/demandeMateriel/form";
     }
 
     @RequestMapping("/showEditDm")
-    public String showEditDm(ModelMap modelMap,
+    public String showEditDm(ModelMap modelMap, HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             @RequestParam(name = "id") Long id) {
@@ -96,7 +99,9 @@ public class DemandeMaterielController {
         modelMap.addAttribute("Users", listUser);
         modelMap.addAttribute("edit", true);
         modelMap.addAttribute("pages",
-                new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
+                new int[DemandeMaterielService
+                        .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size)
+                        .getTotalPages()]);
         return "/demandeMateriel/form";
     }
 
@@ -131,8 +136,10 @@ public class DemandeMaterielController {
             modelMap.addAttribute("msg", "Demande de materiel enregistrée avec succès");
             modelMap.addAttribute("type", "success");
             modelMap.addAttribute("pages",
-                    new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
-            return this.showList(modelMap, page, size);
+                    new int[DemandeMaterielService
+                            .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size)
+                            .getTotalPages()]);
+            return this.showList(modelMap, request, page, size);
         }
     }
 
@@ -163,22 +170,24 @@ public class DemandeMaterielController {
             dm = DemandeMaterielService.save(dm);
             modelMap.addAttribute("Dmm", new DemandeMateriel());
             modelMap.addAttribute("pages",
-                    new int[DemandeMaterielService.getAllDemandeParPage(page, size).getTotalPages()]);
+                    new int[DemandeMaterielService
+                            .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size)
+                            .getTotalPages()]);
             modelMap.addAttribute("type", "warning");
             modelMap.addAttribute("msg", "Demande de creation de demande Materiel modifiée avec succès");
-            return this.showList(modelMap, page, size);
+            return this.showList(modelMap, request, page, size);
         }
     }
 
     @RequestMapping("/deleteDmm")
-    public String deleteDmm(ModelMap modelMap,
+    public String deleteDmm(ModelMap modelMap, HttpServletRequest request,
             @RequestParam(name = "id") Long id,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         DemandeMaterielService.deleteById(id);
         modelMap.addAttribute("type", "danger");
         modelMap.addAttribute("msg", "Demande de creation de demande Materiel supprimée avec succès");
-        return this.showList(modelMap, page, size);
+        return this.showList(modelMap, request, page, size);
 
     }
 
