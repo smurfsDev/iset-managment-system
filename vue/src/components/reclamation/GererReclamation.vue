@@ -24,7 +24,7 @@
           </b-alert>
 
           <!-- <b-card> -->
-          <showReclamations @deleteReclamation="deleteReclamation" :Reclamations="Reclamations"
+          <showReclamations @setReponse="setReponse" @deleteReclamation="deleteReclamation" :Reclamations="Reclamations"
             @fetchReclamation="fetchReclamation" @updateReclamation="updateReclamation" :pagination="pagination" />
           <!-- </b-card> -->
         </div>
@@ -169,6 +169,17 @@ export default {
     initModal() {
       this.Reclamation = {};
       this.showModal("ReclamationModal");
+    },
+    setReponse(id,reponse) {
+      this.$http.put("http://127.0.0.1:8000/api/reclamation/reponse/" + id,{reponse:reponse})
+        .then((res) => res.data)
+        .then(() => {
+          this.fetchReclamation();
+            this.alert.variant = "warning";
+            this.alert.msg = "Reponse envoyée avec succès";
+            this.alert.dismissCountDown = 5;
+        })
+        .catch((err) => console.log(err));
     },
   },
 };
