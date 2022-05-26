@@ -6,6 +6,7 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeAd
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 import com.projetIntegraion.spring.administrateur.departement.entity.Departement;
 import com.projetIntegraion.spring.administrateur.departement.repository.DepartementRepository;
 
@@ -36,6 +38,9 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	DemandeCreationClubRepository demandeCreationClubRepository;
+
+	@Autowired
+	UserRoleRepository userRoleRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -76,7 +81,6 @@ public class Application implements CommandLineRunner {
 		departementRepository.save(departement1);
 		departementRepository.save(departement2);
 
-
 		User admin = new User();
 		admin.setUsername("admin@example.com");
 		admin.setPassword(new BCryptPasswordEncoder().encode("password"));
@@ -97,10 +101,39 @@ public class Application implements CommandLineRunner {
 		student1.setPassword(new BCryptPasswordEncoder().encode("password"));
 		student1.getRoles().add(role2);
 
-		userRepository.save(admin);
-		userRepository.save(responsable);
-		userRepository.save(student);
-		userRepository.save(student1);
+		// NotActivated
+		User student2 = new User();
+		student2.setUsername("student2@example.com");
+		student2.setPassword(new BCryptPasswordEncoder().encode("password"));
+		student2.getRoles().add(role2);
+
+
+		admin = userRepository.save(admin);
+		responsable = userRepository.save(responsable);
+		student = userRepository.save(student);
+		student1 = userRepository.save(student1);
+		student2 = userRepository.save(student2);
+
+		// set statuses to 1
+
+		UserRole ur =  userRoleRepository.findFirstByUserId(admin.getId()).get();
+		ur.setStatus(1);
+		userRoleRepository.save(ur);
+
+		UserRole ur1 =  userRoleRepository.findFirstByUserId(responsable.getId()).get();
+		ur1.setStatus(1);
+		userRoleRepository.save(ur1);
+
+		UserRole ur2 =  userRoleRepository.findFirstByUserId(student.getId()).get();
+		ur2.setStatus(1);
+		userRoleRepository.save(ur2);
+
+		UserRole ur3 =  userRoleRepository.findFirstByUserId(student1.getId()).get();
+		ur3.setStatus(1);
+		userRoleRepository.save(ur3);
+		
+		
+
 
 		DemandeCreationClub dcc = new DemandeCreationClub();
 		dcc.setNomClub("Club de l'informatique");
