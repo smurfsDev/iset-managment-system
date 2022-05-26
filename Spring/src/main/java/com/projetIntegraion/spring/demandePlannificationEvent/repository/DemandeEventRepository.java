@@ -8,7 +8,7 @@ import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeEven
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories
@@ -24,6 +24,9 @@ public interface DemandeEventRepository extends JpaRepository<DemandeEvent, Long
     Page<DemandeEvent> findByResponsableClub(User responsableClub, Pageable pageable);
 
     Page<DemandeEvent> findByClubId(Long id, Pageable pageable);
+
+    @Query("select e from DemandeEvent e where e.status = 2")
+	Page<DemandeEvent> findApprouvedEvent(); 
 
 
 }

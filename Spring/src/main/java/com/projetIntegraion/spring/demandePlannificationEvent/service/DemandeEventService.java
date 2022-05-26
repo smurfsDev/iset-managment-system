@@ -9,6 +9,7 @@ import com.projetIntegraion.spring.demandePlannificationEvent.repository.Demande
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,6 +56,10 @@ public class DemandeEventService {
 	public Page<DemandeEvent> getAuthUserDemandsParPage(User id, int page, int size){
 		return DemandeEventRepository.findByResponsableClub(id, PageRequest.of(page, size));
 	};
+
+	public Page<DemandeEvent> findApprouvedEvent(){
+		return DemandeEventRepository.findApprouvedEvent();
+	} 
 
 	
 }
