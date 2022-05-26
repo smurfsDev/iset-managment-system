@@ -147,6 +147,7 @@ public class DemandePlannificationEventController {
             return "demandeEvent/form";
         } else {
             DemandeEvent de = new DemandeEvent();
+            de.setId(DE.getId());
             de.setNomEvent(DE.getNomEvent());
             de.setStatus(0);
             de.setDescription(DE.getDescription());
