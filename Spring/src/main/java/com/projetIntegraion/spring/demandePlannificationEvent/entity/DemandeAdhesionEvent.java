@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.blogClub.entity.Club;
 
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 
 @Entity
 public class DemandeAdhesionEvent {
