@@ -1,11 +1,14 @@
 package com.projetIntegraion.spring.demandePlannificationEvent.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,6 +35,8 @@ public class DemandeEvent {
     @NotNull
     private String description;
     private int status;
+    @FutureOrPresent
+    private Date DateEvent;
     @CreationTimestamp
     private Timestamp created_at;
     @UpdateTimestamp
