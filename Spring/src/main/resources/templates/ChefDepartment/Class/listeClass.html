@@ -15,8 +15,12 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des Classes</h1>
-                </div>
+                <a  th:href="@{showCreateClass(
+                page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
+                        class="fa-solid fa-plus"></i> Ajouter
+                </a>
             </div>
+        </div>
             <div th:if="${message}!='vide'" th:class="'my-4 alert alert'+'-'+${typea}" role="alert"
                 th:text="${message}"></div>
             <div class="row my-4">
