@@ -5,7 +5,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.annotation.uniqueDccConstraint;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeCreationClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
