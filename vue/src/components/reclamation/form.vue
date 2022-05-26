@@ -21,43 +21,52 @@
         <form class="mb-3" @submit.prevent="addReclamation">
           <div class="modal-body">
             <div class="form-group mb-2">
+
               <label>Titre:</label>
               <input
                 type="text"
                 class="border-0 dcc form-control"
-                placeholder="nom"
+                placeholder="Titre"
                 v-model="oldReclamation.titre"
                 required="required"
               />
+
               <label>Description:</label>
               <input
              type="text"
               class="border-0 dcc form-control"
-              placeholder="class"
+              placeholder="Description"
               v-model="oldReclamation.description"
               required="required"
              />
 
-              <label>Type:</label>
-               <!--  <div class="form-group">
-                <select name="idCategorie" v-model="oldDemande.idCategorie">
+               <label>Type:</label>
+               <div class="form-group">
+                <select name="type_cats_id" v-model="oldReclamation.type_cats_id">
                   <option
-                    v-for="categorie in categories"
-                    :key="categorie.id"
-                    :value="categorie.id"
+                    v-for="type in types"
+                    :key="type.id"
+                    :value="type.id"
                   >
-                    {{ categorie.titre }}
+                    {{ type.title }}
+
                   </option>
                 </select>
-              </div>-->
+              </div>  
+          
               
-            <input
-                type="text"
-                class="border-0 dcc form-control"
-                placeholder="type"
-                v-model="oldReclamation.type"
-                required="required"
+            
+        <label>Image:</label>
+              <input
+                type="file"
+                class="form-control"
+                name="backgroundImage"
+                @change="convert64"
+                ref="file"
+                required
+                accept="image/*"
               />
+              
 
             </div>
           </div>
@@ -84,16 +93,21 @@ export default {
     oldReclamation: Object,
     edit: Boolean,
   },
+ data() {
+    return {
+      types: [],
+    };
+  },
   emits: ["addReclamation"],
-  mounted() {},
+  mounted() {
+        this.fetchTypeCat();
+
+  },
   methods: {
     addReclamation() {
       this.$emit("addReclamation", this.oldReclamation);
       this.resetModal1();
       this.hideModal("ReclamationModal");
-    },
-    resetModal1() {
-      $(".dcc").val("");
     },
     convert64(e) {
       var file = e.target.files[0];
@@ -104,8 +118,19 @@ export default {
       };
       reader.readAsDataURL(file);
     },
+    resetModal1() {
+      $(".dcc").val("");
+    },
+     fetchTypeCat() {
+      this.$http.get("http://localhost:8000/api/reclamationCat/all").then((response) => {
+        this.types = response.data;
+      });
+    },
+
   },
 };
+
 </script>
 
-<style></style>
+<style>
+</style>
