@@ -42,7 +42,7 @@ export default {
   components: {
     showDocuments,
     formDocument,
-    //     search
+  
   },
   data() {
     return {
@@ -61,9 +61,9 @@ export default {
     };
   },
   created() {
-    // console.log(typeof $);
     document.title = "Document";
     this.fetchDocument();
+
     if (this.$route.params.add == 1) {
       this.alert.variant = "success";
       this.alert.msg = "Document ajouté avec succès";
@@ -118,6 +118,7 @@ export default {
     resetModal1() {
       this.Document = {};
     },
+    
     addDocument(Document) {
       
       this.show = true;
@@ -133,8 +134,7 @@ export default {
                 err += data.data[property] + "\n\n";
               }
               console.log(err);
-              this.alert.msg = `
-                            ${err}`;
+              this.alert.msg = `${err}`;
               this.alert.dismissCountDown = 5;
             } else {
               this.alert.variant = "success";
@@ -159,7 +159,7 @@ export default {
       this.edit = true;
       this.Document = Document;
     },
-    searchEmploye(search) {
+    searchDOC(search) {
       this.search = search;
       this.fetchDocument();
     },
