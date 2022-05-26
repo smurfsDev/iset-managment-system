@@ -121,16 +121,12 @@ export default {
 
           //  alert(this.$router.push({path:'detailsavis/'+id+1}));
         },
-        image(e){
-          console.log(e.target.files[0]);
-          this.form.image=e.target.files[0].name;
-        },
-           convert64(e) {
-      var file = e.target.files[0];
-      console.log(file);
-      var reader = new FileReader();
-      reader.onloadend = () => {
-        this.form.image = reader.result;
+        convert64(e) {
+         var file = e.target.files[0];
+           console.log(file);
+           var reader = new FileReader();
+            reader.onloadend = () => {
+             this.form.image = reader.result;
       };
       reader.readAsDataURL(file);
     },     makePagination(meta) {

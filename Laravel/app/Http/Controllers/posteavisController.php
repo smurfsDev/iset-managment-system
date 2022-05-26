@@ -83,7 +83,8 @@ $user = $request->user();
         $avis = avis::find($id);
         $avis->title=$request->get('title');
         $avis->content=$request->get('content');
-        $avis->content="xx";
+        $avis->image= $request->image;
+        dd($request->image);
         $avis->save();
     }
 

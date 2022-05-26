@@ -12,7 +12,7 @@
  <b-card v-else class="my-2" :key="avis.id">
  <div class="head">
     <a href="/listavis" class="badge btn-primary"> <i class="fa-solid fa-list"></i></a> <b style="font-weight:bold">Post #000{{avis.id}}</b>
-    <span class="badge btn-danger p-1 m-2">chef departement</span>
+    <span class="badge btn-danger p-1 m-2">{{avis.from_id}}</span>
     </div>
  <small class="form-text ml-1">&nbspWe'll send At {{avis.created_at}}</small>
   <div>
@@ -25,10 +25,14 @@
     <div class="alert alert-info">
       {{avis.content}}
   </div>
-  <div class="card" style="border:1px solid black;max-width:450px;">
-  <b>image:</b>
+  <div>
+    <b>image:</b>
+      <div class="card m-3 p-3" style="border:1px solid black;max-width:450px;">
+  
     <img :src="avis.image" alt="logo" width="350" />
   </div>
+  </div>
+
  <div class="text-end">
  <!-- Button trigger modal -->
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-edit"></i></button>
@@ -57,6 +61,16 @@
     <textarea name="content" id="content" v-model="avis.content" class="form-control mb-3" cols="30" rows="10" placeholder="send Avis..." >
     </textarea>
 
+
+      <label>Image</label>
+              <input
+                type="file"
+                class="form-control"
+                @change="convert64"
+                ref="file"
+                name="image"
+                id="image"
+              />
     </div>
          <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -112,6 +126,7 @@ export default {
      form:{
              title:"",
             content:"",
+            image:""
             } ,
       id: "",
       avis:[]
@@ -128,7 +143,15 @@ export default {
         this.$http.post('http://localhost:8000/api/avis/delete/'+this.id);
         this.$router.push({name:'listavis'});
     },
- 
+    convert64(e) {
+         var file = e.target.files[0];
+           console.log(file);
+           var reader = new FileReader();
+            reader.onloadend = () => {
+             this.form.image = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }, 
 
   },
       mounted() {
