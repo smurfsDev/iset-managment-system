@@ -49,14 +49,13 @@ public class PageWebController {
     @RequestMapping("/blogClub")
     public String showPage(ModelMap modelMap,
         HttpServletRequest request,
-        @RequestParam(name = "idClub", defaultValue = "1") Long idClub
+        @RequestParam(name = "idClub", defaultValue = "0") Long idClub
     ) {
                
-       // Page<About> listDcc = aboutService.getAllAboutsParPage(page, size);
+    
        
-       //Club c = clubService.getClub(idClub);
-       Club c = clubService.getClubParResponsable(this.getUser(request).getId()).get();
-       
+       Club c = clubService.getClub(idClub);
+    
        List<About> Abouts = aboutService.getAboutByClubId(c);
        List<Activity> Activities = activitiesService.getActivityByClubId(c);
        List<Board> Boards = boardService.getBoardByClubId(c);
