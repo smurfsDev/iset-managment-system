@@ -12,9 +12,10 @@ class Reclamation extends Model
     protected $fillable = [
         'titre', 
         'description', 
-        'type',
+        'type_cats_id',
         'idResponsable',
-        'reponse'
-       // 'user_id'
+        'reponse',
+        'file'
+     
     ];
 }
