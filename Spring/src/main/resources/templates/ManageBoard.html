@@ -21,7 +21,7 @@
             
             <h4 class="float-start">Boards</h2>
                        
-                <a sec:authorize="hasAuthority('RESPONSABLE')" th:href="@{createBoard}" class="float-start btn btn-success"> <i
+                <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{createBoard}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Ajouter
                 </a>
                 <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
@@ -36,7 +36,7 @@
                         <th>Poste</th>
                         <th>Photo</th>
                         
-                        <th sec:authorize="hasAuthority('RESPONSABLE')">Actions</th>
+                        <th sec:authorize="hasRole('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(Board.content)}">
 						<td colspan="4" class="text-center ">No Officer found ! </td></tr>
@@ -46,7 +46,7 @@
                         <td th:text="${b.post}"></td>
                         <td ><img th:src="'data:image/png;base64,'+${b.photo}" width="400px" height="400px"/></td>
                        
-                        <td  sec:authorize="hasAuthority('RESPONSABLE')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteBoard(id=${b.id},
+                        <td  sec:authorize="hasRole('RESPONSABLE')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteBoard(id=${b.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierBoard(id=${b.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
                                 </td>

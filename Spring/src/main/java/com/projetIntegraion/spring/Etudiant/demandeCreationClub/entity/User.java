@@ -2,7 +2,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -19,6 +19,8 @@ import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,8 +34,10 @@ public class User implements Serializable, UserDetails {
 private @Id @GeneratedValue Integer id;
 private String username;
 private String password;
+@CreationTimestamp
 
 private Timestamp created_at;
+@UpdateTimestamp
 
 private Timestamp updated_at;
 
