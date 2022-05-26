@@ -57,8 +57,8 @@ public class DemandeEventService {
 		return DemandeEventRepository.findByResponsableClub(id, PageRequest.of(page, size));
 	};
 
-	public Page<DemandeEvent> findApprouvedEvent(){
-		return DemandeEventRepository.findApprouvedEvent();
+	public Page<DemandeEvent> findApprouvedEvent(int page, int size){
+		return DemandeEventRepository.findApprouvedEvent( PageRequest.of(page, size));
 	} 
 
 	
