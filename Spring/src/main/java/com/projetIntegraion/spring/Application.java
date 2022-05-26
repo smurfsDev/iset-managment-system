@@ -89,17 +89,17 @@ public class Application implements CommandLineRunner {
 		student.getRoles().add(role2);
 
 		User cdi = new User();
-		student.setUsername("cdi@example.com");
-		student.setPassword(new BCryptPasswordEncoder().encode("password"));
-		student.getRoles().add(role3);
+		cdi.setUsername("cdi@example.com");
+		cdi.setPassword(new BCryptPasswordEncoder().encode("password"));
+		cdi.getRoles().add(role1);
 		User cdm = new User();
-		student.setUsername("cdm@example.com");
-		student.setPassword(new BCryptPasswordEncoder().encode("password"));
-		student.getRoles().add(role3);
+		cdm.setUsername("cdm@example.com");
+		cdm.setPassword(new BCryptPasswordEncoder().encode("password"));
+		cdm.getRoles().add(role1);
 		User cde = new User();
-		student.setUsername("cde@example.com");
-		student.setPassword(new BCryptPasswordEncoder().encode("password"));
-		student.getRoles().add(role3);
+		cde.setUsername("cde@example.com");
+		cde.setPassword(new BCryptPasswordEncoder().encode("password"));
+		cde.getRoles().add(role1);
 
 		userRepository.save(admin);
 		userRepository.save(responsable);
