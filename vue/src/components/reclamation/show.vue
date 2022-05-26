@@ -18,21 +18,48 @@
             <b-row class="mb-2">
               <b-row>
                 <b-col>
-                  titre  :{{ Reclamation.titre }} 
+                    Titre  :{{ Reclamation.titre }} 
                 </b-col>
               </b-row>
               <b-row>
                 <b-col>
-                  description : {{ Reclamation.description }} 
+                  Description : {{ Reclamation.description }} 
                 </b-col>
               </b-row>
+               
               <b-row>
                 <b-col>
-                  type : {{ Reclamation.type }} 
+                  Type : {{ Reclamation.type }} 
                 </b-col>
               </b-row>
-              
+              <b-row v-if="Reclamation.file!=null">
+                <b-col >
+                   <img :src="Reclamation.file" alt="" width="250">
+                </b-col>
+              </b-row>
+           
+                    <div v-if="$store.getters.isAdmin||$store.getters.isChefDepartement" role="group" class="row" style="align-items: LEFT  ">
+                        <div class="col-md-4 row">
+                      <strong>REPONSE :</strong>
+                        </div>
+                        <div class="col-md-5">
+                            <textarea  v-model="Reclamation.reponse" class="form-control" name="reponse" style="
+                                background-color: rgb(236, 239, 241);
+                                border: 0px !important;
+                                "/>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group-append">
+                                <b-button type="button" variant="warning" v-if="Reclamation.reponse != null" @click="setReponse(Reclamation.id,Reclamation.reponse)">Send</b-button>
+                                <b-button type="button" variant="success" v-else  @click="setReponse(Reclamation.id,Reclamation.reponse )">Add Reponse</b-button>
+                            </div>
+                        </div>
+                    </div>
+                    <b-col v-else class="text-danger">
+                     REPONSE   :  {{ Reclamation.reponse?Reclamation.reponse:"Pas de reponse" }}
+                    </b-col>
             </b-row>
+
             <b-button
               variant="danger"
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
@@ -103,7 +130,8 @@ export default {
       currPage: 1,
     };
   },
-  emits: ["deleteReclamation", "updateReclamation", "fetchReclamation"],
+
+  emits: ["deleteReclamation", "updateReclamation", "fetchReclamation", "setReponse"],
   methods: {
     Delete(id) {
       this.$emit("deleteReclamation", id);
@@ -118,25 +146,15 @@ export default {
     makeFile(data){
       return data;
     },
-    checkType(data){
-      if(data!=null){
-        if(data.indexOf('data:application/pdf') != -1){
-          return 1;
-        }else if(data.indexOf('data:image') != -1){
-          return 2;
-        }
-      }
-    }
+  setReponse(id,reponse) {
+      this.$emit("setReponse", id,reponse);
+    },
   },
 };
 </script>
 
 <style>
 
-.vue-pdf-embed > div {
-  margin-bottom: 8px;
-  box-shadow: 0 2px 8px 4px rgba(0, 0, 0, 0.1);
-}
 
 .app-header {
   padding: 16px;
