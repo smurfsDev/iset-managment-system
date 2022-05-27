@@ -11,6 +11,7 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
+import com.projetIntegraion.spring.demandeMateriel.repository.demandeMaterielRepository;
 import com.projetIntegraion.spring.demandeMateriel.service.CategorieMaterielService;
 import com.projetIntegraion.spring.demandeMateriel.service.DemandeMaterielService;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserService;
@@ -33,6 +34,8 @@ public class DemandeMaterielController {
     @Autowired
     private UserService UserServise;
     @Autowired
+    private demandeMaterielRepository DemandeMaterielRepository;
+    @Autowired
     private UserRepository userRepository;
 
     public User getUser(HttpServletRequest request) {
@@ -52,6 +55,25 @@ public class DemandeMaterielController {
         modelMap.addAttribute("currentPage", page);
 
         return "/demandeMateriel/list";
+    }
+
+    @RequestMapping("/listeDmDestinataire")
+    public String showListDestinataire(ModelMap modelMap, HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request), page, size);
+        List<String> titreMateriel = DemandeMaterielRepository
+                .findMaterielByDestinataireId(this.getUser(request).getId());
+        List<Integer> quantiteMateriel = DemandeMaterielRepository
+                .findQuantiteByDestinataireId(this.getUser(request).getId());
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("titreMateriel", titreMateriel);
+        modelMap.addAttribute("quantiteMateriel", quantiteMateriel);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+
+        return "/demandeMateriel/mesDemandes";
     }
 
     @RequestMapping("/showCreateDm")
@@ -189,6 +211,88 @@ public class DemandeMaterielController {
         modelMap.addAttribute("msg", "Demande de creation de demande Materiel supprimée avec succès");
         return this.showList(modelMap, request, page, size);
 
+    }
+
+    @RequestMapping("/setReponse")
+    public String setReponse(ModelMap modelMap,
+            Long idDemande, String reponse,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            HttpServletRequest request) {
+        DemandeMateriel dm = DemandeMaterielService.getdemandeById(idDemande);
+        System.out.println(dm);
+
+        dm.setReponse(reponse);
+        DemandeMaterielService.save(dm);
+        System.out.println(dm);
+
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "reponse ajouter avec succès");
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request), page, size);
+        List<String> titreMateriel = DemandeMaterielRepository
+                .findMaterielByDestinataireId(this.getUser(request).getId());
+        List<Integer> quantiteMateriel = DemandeMaterielRepository
+                .findQuantiteByDestinataireId(this.getUser(request).getId());
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("titreMateriel", titreMateriel);
+        modelMap.addAttribute("quantiteMateriel", quantiteMateriel);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+
+        return "/demandeMateriel/mesDemandes";
+    }
+
+    @RequestMapping("/approveDmm")
+    public String approveDmm(ModelMap modelMap,
+            @RequestParam(name = "id") Long id,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            HttpServletRequest request) {
+        DemandeMateriel dm = DemandeMaterielService.getdemandeById(id);
+        dm.setStatus(1);
+        DemandeMaterielService.save(dm);
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande Materiel approuvée avec succès");
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request), page, size);
+        List<String> titreMateriel = DemandeMaterielRepository
+                .findMaterielByDestinataireId(this.getUser(request).getId());
+        List<Integer> quantiteMateriel = DemandeMaterielRepository
+                .findQuantiteByDestinataireId(this.getUser(request).getId());
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("titreMateriel", titreMateriel);
+        modelMap.addAttribute("quantiteMateriel", quantiteMateriel);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+
+        return "/demandeMateriel/mesDemandes";
+    }
+
+    @RequestMapping("/refuseDmm")
+    public String refuseDmm(ModelMap modelMap,
+            @RequestParam(name = "id") Long id,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            HttpServletRequest request) {
+        DemandeMateriel dm = DemandeMaterielService.getdemandeById(id);
+        dm.setStatus(2);
+        DemandeMaterielService.save(dm);
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande Materiel refusée avec succès");
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request), page, size);
+        List<String> titreMateriel = DemandeMaterielRepository
+                .findMaterielByDestinataireId(this.getUser(request).getId());
+        List<Integer> quantiteMateriel = DemandeMaterielRepository
+                .findQuantiteByDestinataireId(this.getUser(request).getId());
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("titreMateriel", titreMateriel);
+        modelMap.addAttribute("quantiteMateriel", quantiteMateriel);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+
+        return "/demandeMateriel/mesDemandes";
     }
 
 }
