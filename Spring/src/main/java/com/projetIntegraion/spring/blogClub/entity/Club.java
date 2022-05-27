@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +38,9 @@ public class Club {
     private Timestamp created_at;
     @UpdateTimestamp
     private Timestamp updated_at;
+    @Lob
+	private String logo;
+
 
     public Club(Long id, String nomClub, @NotNull @PastOrPresent Date dateCreation, User responsableClub,
             String president, String vicePresident) {
@@ -48,6 +52,15 @@ public class Club {
         this.vicePresident = vicePresident;
    
     }
+    
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     public Long getId() {
         return id;
     }

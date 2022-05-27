@@ -1,11 +1,16 @@
 package com.projetIntegraion.spring.blogClub.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.entity.Project;
+import com.projetIntegraion.spring.blogClub.service.ClubService;
 import com.projetIntegraion.spring.blogClub.service.ProjectService;
 
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -22,6 +27,18 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProjectsController {
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private ClubService clubService;
+   
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
 
     @RequestMapping("/showCreateProject")
     public String showCreateProject(ModelMap modelMap,
@@ -72,6 +89,10 @@ public class ProjectsController {
             //Project project = new  
             Project p = new Project();
             p.setAffiche(new String(Base64.encodeBase64(multipartFile.getBytes())));
+            Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
+             System.out.println("id club = "+club.toString());
+            p.setClub(club);
+           
            // p.setAffiche(new String(multipartFile.getBytes()));
             System.out.println("p.getAffiche()" + project.getAffiche());
              p = projectService.save(p);

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+<head>
+    <meta charset="utf-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="jquery.js"></script>
+
+</head>
+
+<body>
+    <div layout:fragment="Mycontent">
+        <div class="container mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div th:text="${reg}?'Inscription':'Connexion'" class="card-header"></div>
+                    <div class="card-body">
+
+                        <div class="alert alert-danger" th:if="${error!=null}">
+                            <p th:text="${error}"></p>
+                        </div>
+
+
+
+                        <form th:action="${reg}?@{register}:@{login}" method="post">
+                            <div th:if="!${reg}">
+                                <div class="form-group">
+                                    <label class="control-label">Utilisateur :</label>
+                                    <input type="text" name="username" class="form-control" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Mot de passe :</label>
+                                    <input type="password" name="password" class="form-control"
+                                        placeholder="Mot de passe">
+                                </div>
+                                <button class="btn btn-primary">se connecter</button>
+                                <a href="register" class="btn btn-primary">Ajouter un Compte</a>
+                            </div>
+                            <div th:if="${reg}">
+                                <div class="form-group">
+                                    <label class="control-label">Utilisateur :</label>
+                                    <input type="text" name="username" class="form-control" placeholder="Username"
+                                        th:value="${userForm.username}">
+                                    <span th:errors=${userForm.username} class="text-danger"> </span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Mot de passe :</label>
+                                    <input type="password" name="password" class="form-control" placeholder="Password"
+                                        th:value="${userForm.password}">
+                                    <span th:errors=${userForm.password} class="text-danger"> </span>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Confirm mot de passe :</label>
+                                    <input type="password" name="confirmedPassword" class="form-control"
+                                        placeholder="Confirm mot de passe" th:value="${userForm.confirmedPassword}">
+                                    <span th:errors=${userForm.confirmedPassword} class="text-danger"> </span>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Role :</label>
+                                    <select name="role" class="form-control">
+                                        <option th:each="role:${roles}" th:value="${role.id}" name="role"
+                                            th:text="${role.name}"></option>
+                                    </select>
+                                </div>
+                                <div id="dep" class="form-group ">
+                                    <label class="control-label">Departement :</label>
+                                    <select name="dep" class="form-control">
+                                        <option class="optDep" th:each="dep:${deps}" th:value="${dep.id}" name="dep"
+                                            th:text="${dep.titre}"></option>
+                                    </select>
+                                </div>
+                                <div id="classe" class="form-group ">
+                                    <label class="control-label">Classe :</label>
+                                    <select name="classe" class="form-control">
+                                        <option selected disabled>Choisir un classe</option>
+                                        <option class="classe" th:each="classe:${classes}"
+                                            th:data-index="${classe.departement.id}" th:value="${classe.id}" name="classe"
+                                            th:text="${classe.nom}"></option>
+                                    </select>
+                                </div>
+
+
+
+                                <button class="btn btn-primary">s'inscripre</button>
+                                <a href="login" class="btn btn-primary">j'ai un compte</a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // add event listener to the role select element
+        document.querySelector('#dep').style.display = 'none';
+        document.querySelector('#classe').style.display = 'none';
+
+        let role = document.querySelector('select[name=role]');
+        role.addEventListener('change', (e) => {
+            if (e.target.value == 3 || e.target.value == 4) {
+                document.querySelector('#dep').style.display = 'block';
+            } else {
+                document.querySelector('#dep').style.display = 'none';
+            }
+            if(e.target.value==3){
+                document.querySelector('#classe').style.display = 'block';
+            }else{
+                document.querySelector('#classe').style.display = 'none';
+            }
+        });
+
+        let departement = document.querySelector('select[name=dep]');
+        var options = document.getElementsByClassName('classe');
+        let selectedDep = departement.value;
+
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].dataset.index != selectedDep) {
+                options[i].style.display = 'none';
+            } else {
+                options[i].style.display = 'block';
+            }
+        }
+
+
+        departement.addEventListener('change', (e) => {
+            if (role.value ==3){
+                document.querySelector('#classe').style.display = 'block';
+            }
+
+        for (let i = 0; i < options.length; i++) {
+                console.log(options[i].dataset.index);
+            if (options[i].dataset.index != e.target.value) {
+                options[i].classList.add('d-none');
+                options[i].classList.remove('d-block')
+
+            } else {
+                options[i].classList.remove('d-none');
+                options[i].classList.add('d-block');
+            }
+        }
+
+        });
+
+    </script>
+</body>
+
+</html>

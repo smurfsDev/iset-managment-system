@@ -77,4 +77,5 @@ class ClasseController extends Controller
         }
         return response()->json($classes, 200);
     }
+
 }

@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.blogClub.service;
 
 import java.util.List;
 
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.entity.Project;
 import com.projetIntegraion.spring.blogClub.repository.ProjectRepository;
 
@@ -60,4 +61,8 @@ public class ProjectService {
 	// public Page<Project> getClubParNom(String nom, int page, int size){
 	// 	return ProjectRepository.findByNomClubContains(nom, page, size); //(nom, PageRequest.of(page, size));
 	// };
+
+	public List<Project> getProjectByClubId(Club club) {
+		return ProjectRepository.findByClub(club);
+	}
 }

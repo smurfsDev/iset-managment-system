@@ -21,14 +21,36 @@ import listeClubs from "./routes/listeClubs";
 import demandeAdhesionForm from "./routes/demandeAdhesionForm";
 import deemandeAdhesioClub from "./routes/demandeAdhesionClub";
 import demandeAdhesionResponsable from "./routes/demandeAdhesionResponsable";
+
+import demandePlanificationEvent from "./routes/demandePlanificationEvent";
+
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
+
+import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
+
+import mesDemandesMateriel from "./routes/mesDemandesMateriel";
+import manageTechnicien from "./routes/manageTechnicien";
+import mesDemandesSalle from "./routes/mesDemandesSalles";
+import demandeAdhesionEvent from "./routes/demandeAdhesionEvent";
+import listeEvents from "./routes/listeEvents";
+import demandeAdhesionEventForm from "./routes/demandeAdhesionEventForm";
+import responseDemandeAdhEvent from "./routes/responseDemandeAdhEvent";
+
+import gererCategorieMateriel from "./routes/gererCategorieMateriel";
+import gererMateriel from "./routes/gererMateriel";
+import gererMatieres from "./routes/gererMatieres";
+import manageEnseignant from "./routes/manageEnseignant";
+import consulterClasseEns from "./routes/consulterClasseEns";
+import mesNotes from "./routes/mesNotes";
+
 import manageDocuments from "./routes/gererDocument";
 import moduleReclamation from "./routes/gererReclamation";
 import manageCategorieDocument from "./routes/gererCategorie";
 import manageDemandeDocument from "./routes/gererDemandeDocument";
 import manageTypeCat from "./routes/gererTypeCat";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -64,14 +86,32 @@ const routes = [
   ...deemandeAdhesioClub,
   ...demandeAdhesionResponsable,
   ...demandeSalle,
+  ...demandePlanificationEvent,
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
+  ...demandeEvenementAdmin,
+  ...mesDemandesMateriel,
+  ...demandeEvenementAdmin,
+  ...demandeAdhesionEvent,
+  ...listeEvents,
+  ...demandeAdhesionEventForm,
+  ...responseDemandeAdhEvent,
+  ...manageTechnicien,
+  ...mesDemandesSalle,
+
+  ...gererCategorieMateriel,
+  ...gererMateriel,
+   ...gererMatieres,
+  ...manageEnseignant,
+  ...consulterClasseEns,
+  ...mesNotes,
   ...manageDocuments,
   ...moduleReclamation,
   ...manageCategorieDocument,
   ...manageDemandeDocument,
   ...manageTypeCat,
+
 ];
 
 const router = new VueRouter({
@@ -112,7 +152,19 @@ router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    next({ name: "login", params: { msg: "You must be student or a responsableClub" } });
+    next({ name: "login", params: { msg: "You must be student or a responsableClub"  } });
+  }else if (to.matched.some((record) => record.meta.requiresAorCorT)) {
+    if (store.getters.isAdmin || store.getters.isChefDepartement || store.getters.isTechnicien) {
+      next();
+      return;
+    } 
+    next({ name: "login", params: { msg: "You must be an Admin or a ChefDepartement" } });
+  }else if (to.matched.some((record) => record.meta.requiresAorC)) {
+    if (store.getters.isAdmin || store.getters.isChefDepartement) {
+      next();
+      return;
+    } 
+    next({ name: "login", params: { msg: "You must be an Admin or a ChefDepartement" } });
   } else if (to.matched.some((record) => record.meta.requiresAdmin)) {
     if (store.getters.isAdmin) {
       next();

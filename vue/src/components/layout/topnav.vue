@@ -37,6 +37,12 @@
                     icon: 'fas fa-home',
                 },
                 {
+                    href: '/consulterClasseEns',
+                    title: 'Classes et Matieres',
+                    icon: 'fas fa-home',
+                    hidden: !this.isEnseignant
+                },
+                {
                     href: '/Entreprise',
                     title: 'Entreprise',
                     icon: 'fas fa-building',
@@ -44,6 +50,17 @@
                 },{
                     href: '/cd/manageStudents',
                     title: 'Students',
+                    icon: 'fas fa-user',
+                    hidden: !this.isChefDepartement
+                },{
+                    href: '/manageEnseignant',
+                    title: 'Enseignant',
+                    icon: 'fas fa-user',
+                    hidden: !this.isChefDepartement
+                },
+                {
+                    href: '/cd/manageTechnicien',
+                    title: 'Techniciens',
                     icon: 'fas fa-user',
                     hidden: !this.isChefDepartement
                 },{
@@ -58,12 +75,7 @@
                     icon: 'fas fa-plus',
                     hidden: !this.isStudent
                 },
-                {
-                    href: '/admin/demandeCreationClub',
-                    title: 'Demande creation club',
-                    icon: 'fas fa-building',
-                    hidden: !this.isAdmin
-                },
+                
                 {
                     href: '/admin/manageChefDepartments',
                     title: 'chefDepartements',
@@ -100,18 +112,42 @@
                     ]
                 },
                 {
-                    href: '/etudiant/listeClubs',
+                    href: '/listeClubs',
                     title: 'Clubs',
                     icon: 'fas fa-building',
                     child: [
                         {
-                            href: '/etudiant/demandeAdhesionClub',
+                            href: '/demandeAdhesionClub',
                             title: 'Mes Demandes d\'adhesion',
                             hidden: !this.isStudent
                         },
                         {
-                            href: '/club/demandeAdhesionResponsable',
+                            href: '/demandeAdhesionResponsable',
                             title: 'Demandes d\'adhesion',
+                            hidden: !this.isStudent
+                        },
+                        {
+                            href: '/members',
+                            title: 'membres',
+                            hidden: !this.isResponsableClub
+                        }
+                    ]
+                },
+                {
+                    //href: '/listeEvents',
+                    title: 'Evenements',
+                    icon: 'fas fa-building',
+                    hidden: !this.isStudent,
+                    child: [
+                        
+                        {
+                            href: '/listeEvents',
+                            title: 'Liste des évenements',
+                            hidden: !this.isStudent
+                        },
+                        {
+                            href: '/demandeAdhesionEvent',
+                            title: 'Mes Demandes d\'adhesion',
                             hidden: !this.isStudent
                         }
                     ]
@@ -120,7 +156,12 @@
                     title: 'Demandes',
                     icon: 'fa fa-file',
                     child: [
-        
+                        {
+                            href: '/admin/demandeCreationClub',
+                            title: 'Demande creation club',
+                            icon: 'fas fa-building',
+                            hidden: !this.isAdmin
+                        },
                         {
                             href: 'demandeSalle',
                             title: 'Demande salle',
@@ -132,7 +173,37 @@
                             title: 'Demande materiel',
                             icon: 'fa fa-file',
                             hidden: !this.isStudent && !this.isResponsableClub,
-                        }
+                        },
+                        {
+                            href: 'demandeEvent',
+                            title: 'Plannification évenement',
+                            icon: 'fas fa-file',
+                            hidden: !this.isResponsableClub
+                        },
+                        {
+                            href: '/admin/demandePlannificationEvent',
+                            title: 'Demande évenement',
+                            icon: 'fas fa-file',
+                            hidden: !this.isAdmin
+                        },
+                        {
+                            href: 'MesDemandesMateriel',
+                            title: 'Demande materiel',
+                            icon: 'fa fa-file',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
+                        }, 
+                        {
+                            href: 'MesDemandesSalle',
+                            title: 'Demande Salle',
+                            icon: 'fa fa-file',
+                            hidden: !this.isAdmin && !this.isChefDepartement,
+                        },
+                        {
+                            href: '/responseDemandeAdhEvent',
+                            title: 'Adhesion evenement',
+                            icon: 'fas fa-building',
+                            hidden: !this.isResponsableClub,
+                        },
                     ]
                 },
                 {
@@ -167,6 +238,22 @@
                     title: 'Type Reclamation',
                     icon: 'fa fa-file',
                     href:'GererTypeCat',
+                    href: '/gererCategorieMateriel',
+                    title: 'gererCategorieMateriel',
+                    icon: 'fas fa-file',
+                    hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
+                },
+                {
+                    href: '/gererMateriel',
+                    title: 'gererMateriel',
+                    icon: 'fas fa-file',
+                    hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
+                },
+                {
+                    href: '/mesNotes',
+                    title: 'Mes notes',
+                    icon: 'fas fa-file',
+                    hidden: !this.isStudent,
                 }
 
             ]
@@ -225,6 +312,8 @@ export default {
             student: 'isStudent',
             responsable: 'isResponsableClub',
             chefDepartement: 'isChefDepartement',
+            technicien: 'isTechnicien',
+            enseignant: 'isEnseignant'
         }),
         isAuth: function () {
             return this.auth;
@@ -240,7 +329,14 @@ export default {
         },
         isChefDepartement: function () {
             return this.chefDepartement;
+        },
+        isTechnicien: function () {
+            return this.technicien;
+        },
+        isEnseignant: function(){
+            return this.enseignant;
         }
+
 
     }
 }

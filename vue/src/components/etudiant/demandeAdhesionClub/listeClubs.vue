@@ -8,27 +8,29 @@
                 <md-tab id="tab-home" style="height: auto;!important" md-label="club">
                     <div class="bv-example-row text-center">
                         <b-row class="mb-2">
-                            <b-row>
-                                <router-link :to="{name: 'blogClub', params: {id: club.id}}">page</router-link>                                
+                            <b-row>                                
                                 <b-col>
-                                    Nom du club : {{ club.nomClub }} Date création :
-                                    {{ club.dateCreation }}
+                                    Nom du club : <router-link :to="{name: 'blogClub', params: {id: club.id}}">{{ club.demande_creation_club.nomClub }}</router-link><br> Date création :
+                                    {{ club.demande_creation_club.dateCreation }}
+
                                 </b-col>
                             </b-row>
                             <b-row>
-                                <b-col>Activité : {{ club.dateCreation }}</b-col>
+                                <b-col>Activité : {{ club.demande_creation_club.dateCreation }}</b-col>
                             </b-row>
                             <b-row>
                                 <b-col>
-                                    President : {{ club.president }} Vice president :
-                                    {{ club.vicePresident }}
+
+                                    President : {{ club.demande_creation_club.president }}<br> Vice president :
+                                    {{ club.demande_creation_club.vicePresident }}
                                     <br />
-                                    <img :src="club.logo" alt="logo" width="250" />
+                                    <img :src="club.demande_creation_club.logo" alt="logo" width="250" />
+
                                 </b-col>
                             </b-row>
                         </b-row>
                         <b-button variant="info" 
-                            @click="demandeAdhesion(club.id,club.nom)"
+                            @click="demandeAdhesion(club.id,club.demande_creation_club.nomClub)"
                         >
                             S'inscrire</b-button>
                     </div>

@@ -19,7 +19,7 @@ class Materiel extends Model
     ];
 
     public function categorie(){
-        return $this->hasOne(CategorieMateriel::class,'idCategorie');
+        return $this->hasOne(CategorieMateriel::class,'id','idCategorie');
     }
     public function demande(){
         return $this->belongsToMany(
@@ -28,6 +28,9 @@ class Materiel extends Model
             'idMateriel',
             'idDemande')->withPivot(['quantité'])
             ;
+    }
+    public function responsable(){
+        return $this->belongsTo(User::class,'idResponsable','id');
     }
 
 

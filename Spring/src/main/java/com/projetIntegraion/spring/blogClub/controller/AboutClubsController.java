@@ -1,13 +1,17 @@
 package com.projetIntegraion.spring.blogClub.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.blogClub.entity.About;
-
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.service.AboutService;
+import com.projetIntegraion.spring.blogClub.service.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,14 +26,30 @@ public class AboutClubsController {
     @Autowired
     private AboutService aboutService;
    
-    
+    @Autowired
+    private ClubService clubService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
+
 
     @RequestMapping("/showCreateBlog")
     public String showBlog(ModelMap modelMap,
+            HttpServletRequest request,
+
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size ) {
+
+
+        Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
                
-        Page<About> listDcc = aboutService.getAllAboutsParPage(page, size);
+        Page<About> listDcc = aboutService.getAllAboutsClubParPageClub(club.getId(),page, size);
          modelMap.addAttribute("Dccs", listDcc);
         
         modelMap.addAttribute("pages", new int[listDcc.getTotalPages()]);
@@ -68,6 +88,9 @@ public class AboutClubsController {
             System.out.println("About: "+About.toString());
             about.setLongDescription(About.getLongDescription());
             about.setClub(About.getClub());*/
+        Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
+      //  System.out.println("id club = "+club.getId());
+            About.setClub(club);
             aboutService.save(About);
            // modelMap.addAttribute("About", newAbout);
             modelMap.addAttribute("msg", "About enregistrée avec succès");
@@ -75,11 +98,13 @@ public class AboutClubsController {
             modelMap.addAttribute("pages",
                     new int[aboutService.getAllAboutsParPage(page, size).getTotalPages()]);
             System.out.println("modelMap = " + modelMap.toString());
-                    return this.showBlog(modelMap, page, size);
+                    return this.showBlog(modelMap,request, page, size);
         }
     }
     @RequestMapping("/deleteAbout")
     public String deleteAbout(@RequestParam("id") Long id, ModelMap modelMap,
+            HttpServletRequest request,
+
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
 
@@ -90,7 +115,7 @@ public class AboutClubsController {
             modelMap.addAttribute("type", "danger");
             modelMap.addAttribute("msg", "About non supprimée : Id non trouvé");
         }
-        return this.showBlog(modelMap, page, size);
+        return this.showBlog(modelMap,request, page, size);
 
     }
     @RequestMapping("/modifierAbout")
@@ -111,6 +136,7 @@ public class AboutClubsController {
             
             @Valid About About,
             BindingResult bindingResult,
+            
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             HttpServletRequest request) throws IOException {
@@ -131,7 +157,7 @@ public class AboutClubsController {
                     new int[aboutService.getAllAboutsParPage(page, size).getTotalPages()]);
             modelMap.addAttribute("type", "warning");
             modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
-            return this.showBlog(modelMap, page, size);
+            return this.showBlog(modelMap,request, page, size);
         }
     }
 

@@ -15,10 +15,12 @@ class RoleUser extends Migration
     {
         Schema::create('role_user', function (Blueprint $table) {
             $table->id();
-            $table->integer('role_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->foreignId('role_id');
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->integer('status')->default(0);
-            $table->integer('classe')->default(0);
+            $table->foreignId('classe')->default(0);
             $table->integer('department')->nullable();
         });
     }

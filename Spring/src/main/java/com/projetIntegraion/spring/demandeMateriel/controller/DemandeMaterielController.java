@@ -11,7 +11,7 @@ import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
 import com.projetIntegraion.spring.demandeMateriel.service.CategorieMaterielService;
 import com.projetIntegraion.spring.demandeMateriel.service.DemandeMaterielService;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserServise;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserService;
  
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +29,7 @@ public class DemandeMaterielController {
     @Autowired
     private  CategorieMaterielService CategorieMaterielService;
     @Autowired
-    private  UserServise UserServise;
+    private  UserService UserServise;
 	@RequestMapping("/listeDm")
     public String showList(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -47,9 +47,12 @@ public class DemandeMaterielController {
 	@RequestParam(name = "size", defaultValue = "2") int size) {
         modelMap.addAttribute("Dmm", new DemandeMateriel());
         modelMap.addAttribute("edit", false);
+       
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
         System.out.println(listCategorieMateriel);
         modelMap.addAttribute("CM", listCategorieMateriel);
+       
+            System.out.println(listCategorieMateriel);
         List<User> listUser = UserServise.getAllUser();
         modelMap.addAttribute("Users", listUser);
 
@@ -93,7 +96,10 @@ public class DemandeMaterielController {
             modelMap.addAttribute("org.springframework.validation.BindingResult.Dmm", bindingResult);
             modelMap.addAttribute("Dmm", Dmm);
             List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
+
+            System.out.println(listCategorieMateriel);
             modelMap.addAttribute("CM", listCategorieMateriel);
+
             List<User> listUser = UserServise.getAllUser();
             modelMap.addAttribute("Users", listUser);
 

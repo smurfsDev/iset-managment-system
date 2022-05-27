@@ -1,12 +1,17 @@
 package com.projetIntegraion.spring.blogClub.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.blogClub.entity.Board;
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.service.BoardService;
+import com.projetIntegraion.spring.blogClub.service.ClubService;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +27,19 @@ import org.springframework.web.multipart.MultipartFile;
 public class BoardsController {
     @Autowired
     private BoardService boardService;
-   
+
     
+    @Autowired
+    private ClubService clubService;
+   
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
 
     @RequestMapping("/showCreateBoard")
     public String showBoard(ModelMap modelMap,
@@ -74,6 +90,10 @@ public class BoardsController {
             b.setName(Board.getName());
             b.setPost(Board.getPost());
             b.setPhoto(new String(Base64.encodeBase64(multipartFile.getBytes())));
+            Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
+            //  System.out.println("id club = "+club.getId());
+            b.setClub(club);
+           
            // p.setAffiche(new String(multipartFile.getBytes()));
             //System.out.println("p.getAffiche()" + project.getAffiche());
             // p = projectService.save(p);

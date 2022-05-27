@@ -1,33 +1,48 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Models\DemandeEvent;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SalleController;
+use App\Http\Controllers\ClasseController;
+use App\Http\Controllers\MatiereController;
+
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\BultinController;
 use App\Http\Controllers\MaterielController;
+use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\club\ClubController;
+
+use App\Http\Controllers\EnseignantController;
+use App\Http\Controllers\TechnicienController;
+use App\Http\Controllers\club\MemberController;
+use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\DemandeEventController;
+use App\Http\Controllers\DemandeSalleController;
+use App\Http\Controllers\ChefDepartmentController;
 use App\Http\Controllers\DemandeMaterielController;
+
 use App\Http\Controllers\CategorieMaterielController;
-use App\Http\Controllers\DemandeCreationClubController;
+
+
+
+
 
 use App\Http\Controllers\club\pageClub\AboutController;
 use App\Http\Controllers\club\pageClub\BoardController;
+use App\Http\Controllers\DemandeCreationClubController;
+use App\Http\Controllers\DemandeAdhesionEventController;
 use App\Http\Controllers\club\pageClub\HeadersController;
 use App\Http\Controllers\club\pageClub\ProjectsController;
 use App\Http\Controllers\club\pageClub\ActivitiesController;
 
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\ChefDepartmentController;
-use App\Http\Controllers\club\ClubController;
-use App\Http\Controllers\club\MemberController;
-use App\Http\Controllers\SalleController;
-use App\Http\Controllers\DemandeSalleController;
-use App\Http\Controllers\DepartementController;
-use App\Http\Controllers\ClasseController;
-use App\Http\Controllers\DemandeDocumentController;
+  use App\Http\Controllers\DemandeDocumentController;
 use App\Http\Controllers\DocumentCategorieController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ReclamationController;
-use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TypeCatController;
+use App\Http\Controllers\NoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +93,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
         Route::get('/a', [ClubController::class, 'getDemandeAdhesion']);
         Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
+        Route::get('/getClub/{id}', [ClubController::class, 'getClub']);
     });
     // Route::apiResource('secrets', SecretsController::class);
     Route::get('/test', [DemandeCreationClubController::class, 'test']);
@@ -89,15 +105,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [DemandeSalleController::class, 'store']);
         Route::put('/{id}', [DemandeSalleController::class, 'update']);
         Route::delete('/{id}', [DemandeSalleController::class, 'destroy']);
+        Route::get('/mesDemandeSalle', [DemandeSalleController::class, 'demandeSalleUser']);
+        Route::post('/accept/{id}', [DemandeSalleController::class, 'accept']);
+        Route::post('/refuse/{id}', [DemandeSalleController::class, 'refuse']);
+        Route::put('/reponse/{id}', [DemandeSalleController::class, 'setReponse']);
     });
     // demande materiel routes
 
     Route::group(['prefix' => '/dm'], function () {
         Route::get('/', [DemandeMaterielController::class, 'show']);
-        // Route::get('/{id}',[DemandeMaterielController::class,'showMyDemandes']);
         Route::post('/', [DemandeMaterielController::class, 'create']);
         Route::put('/{id}', [DemandeMaterielController::class, 'update']);
         Route::delete('/{id}', [DemandeMaterielController::class, 'delete']);
+        Route::get('/MesDemandes', [DemandeMaterielController::class, 'getAllDemande']);
+        Route::post('/accept/{id}', [DemandeMaterielController::class, 'accept']);
+        Route::post('/refuse/{id}', [DemandeMaterielController::class, 'refuse']);
+        Route::put('/reponse/{id}', [DemandeMaterielController::class, 'setReponse']);
+
     });
 
     // about routes
@@ -143,7 +167,32 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/members'], function () {
         Route::get('/', [MemberController::class, 'getMembers']);
         Route::delete('/{id}', [MemberController::class, 'deleteMember']);
+        Route::post('/mail/{id}', [MemberController::class, 'sendMail']);
     });
+
+    Route::group(['prefix' => '/demandeEvent'], function () {
+        Route::get('/getAll', [DemandeEventController::class, 'getDemandesEvent']);
+       // Route::get('/resp',[DemandeEventController::class,'index']);
+       Route::get('/getApprouve', [DemandeEventController::class, 'getApprouvedEvent']);
+        Route::get('/getOne/{id}', [DemandeEventController::class, 'getEvent']);
+        Route::post('/create', [DemandeEventController::class, 'createDemandeEvent']);
+        Route::put('/update/{id}', [DemandeEventController::class, 'updateDemandeEvent']);
+        Route::delete('/delete/{id}', [DemandeEventController::class, 'deleteDemandeEvent']);
+        Route::put('/accept/{id}', [DemandeEventController::class, 'accept']);
+        Route::put('/decline/{id}', [DemandeEventController::class, 'decline']);
+        Route::get('/getAllEvents', [DemandeEventController::class, 'show']);
+    });
+
+    Route::group(['prefix' => '/matiere'], function () {
+        Route::get('/{id}', [MatiereController::class, 'getMatiereParClasse']);
+        Route::post('/create/{id}', [MatiereController::class, 'createMatiere']);
+        Route::put('/update/{id}', [MatiereController::class, 'updateMatiere']);
+        Route::delete('/delete/{id}', [MatiereController::class, 'deleteMatiere']);
+        Route::get('/', [MatiereController::class, 'getClassesEnseignéeParEnseignant']);
+
+    });
+
+
 
     // classes routes
 
@@ -173,8 +222,57 @@ Route::post('/', [ReclamationController::class, 'addReclamation']);
 Route::put('/{id}', [ReclamationController::class, 'updateReclamation']);
 Route::delete('/{id}', [ReclamationController::class, 'deleteReclamation']);
 Route::put('/reponse/{id}',[ReclamationController::class,'setReponse']);
-
 });
+    // demande adhesion event routes
+    Route::group(['prefix' => '/demandeAdhesionEvent'], function () {
+
+        //Route::post('/', [ClubController::class, 'DemandeeAdhesion']);
+        Route::get('/get', [DemandeAdhesionEventController::class, 'getDemandeAdhesion']);
+        Route::post('/create/{id}', [DemandeAdhesionEventController::class, 'createDemandeAdhesion']);
+        Route::put('/update/{id}', [DemandeAdhesionEventController::class, 'updateDemandeAdhesion']);
+        Route::get('/parClub', [DemandeAdhesionEventController::class, 'getDemandeAdhesionParClub']);
+        Route::put('/accept/{id}', [DemandeAdhesionEventController::class, 'accept']);
+        Route::put('/decline/{id}', [DemandeAdhesionEventController::class, 'decline']);
+        Route::delete('/delete/{id}', [DemandeAdhesionEventController::class, 'deleteDemandeAdhesion']);
+
+        //Route::delete('/{id}', [ClubController::class, 'deleteDemandeAdhesion']);
+    });
+
+    Route::group(['prefix' => '/technicien'], function () {
+        Route::get('/', [TechnicienController::class, 'show']);
+        Route::post('/accept/{id}', [TechnicienController::class, 'accept']);
+        Route::post('/refuse/{id}', [TechnicienController::class, 'refuse']);
+    });
+
+
+    Route::group(['prefix' => '/c'], function () {
+        Route::post('/', [CategorieMaterielController::class, 'store']);
+        Route::put('/{id}', [CategorieMaterielController::class, 'update']);
+        Route::delete('/{id}', [CategorieMaterielController::class, 'destroy']);
+    });
+  Route::group(['prefix' => '/enseignant'], function () {
+        Route::get('/', [EnseignantController::class, 'show']);
+        Route::post('/accept/{id}', [EnseignantController::class, 'accept']);
+        Route::post('/refuse/{id}', [EnseignantController::class, 'refuse']);
+        Route::get('/approuved', [EnseignantController::class, 'getApprouvedEns']);
+    });
+
+
+    Route::group(['prefix' => '/m'], function () {
+        Route::get('/', [MaterielController::class, 'get']);
+        Route::post('/', [MaterielController::class, 'create']);
+        Route::put('/{id}', [MaterielController::class, 'update']);
+        Route::delete('/{id}', [MaterielController::class, 'destroy']);
+    });
+
+    Route::group(['prefix'=>'/note'],function(){
+        Route::post('/',[NoteController::class,'setNote']);
+        Route::get('/{idMat}/{idStudent}',[NoteController::class,'getNote']);
+        Route::get('/',[NoteController::class,'getMatieres']);
+        Route::get('/getMyNotes', [MatiereController::class, 'getMyMatieres']);
+
+    });
+
 
 // DC routes
 Route::group(['prefix' => '/Categorie'], function () {
@@ -216,7 +314,9 @@ Route::put('/reponse/{id}',[DemandeDocumentController::class,'setReponse']);
     Route::get('/fondator/{id}', [AboutController::class, 'getFondator']);
 });
 
-    Route::group(['prefix' => '/m'], function () {
+//materiel Controllers
+Route::get('/responsablesMatt', [MaterielController::class, 'getAllResponsableMateriel']);
+Route::group(['prefix' => '/m'], function () {
     Route::get('/M/{id}', [MaterielController::class, 'show']);
     Route::get('/{id}', [MaterielController::class, 'showMaterialsOfCategory']);
     Route::post('/{idM}/{idD}', [MaterielController::class, 'addMateriel']);
@@ -243,5 +343,8 @@ Route::group(['prefix' => '/Salle'], function () {
     Route::get('/', [StudentsController::class, 'show']);
     Route::post('/accept/{id}', [StudentsController::class, 'accept']);
     Route::post('/refuse/{id}', [StudentsController::class, 'refuse']);
+    Route::delete('/{id}', [StudentsController::class, 'delete']);
 });
 
+
+Route::post('/bultin', [BultinController::class, 'store']);
