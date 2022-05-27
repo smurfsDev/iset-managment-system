@@ -1,5 +1,6 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	Optional<User> findUserWithName(String username);
     void deleteById(int id);
     Page<User> findByRolesId(long l, Pageable pageable);
+    List<User> findByRolesId(long l);
 }
