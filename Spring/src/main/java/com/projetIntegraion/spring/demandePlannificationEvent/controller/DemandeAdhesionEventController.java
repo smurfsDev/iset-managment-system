@@ -66,7 +66,7 @@ public class DemandeAdhesionEventController {
         if (demandeEventService.existsById(id)) {
 
             Club club = demandeEventService.getDemandeEvent(id).getClub();
-            Boolean c = demandeAdhesionEventService.existsByIds(club.getId(), this.getUser(request).getId());
+            Boolean c = demandeAdhesionEventService.existsByIds(id, this.getUser(request).getId());
             Boolean isThisClubOwner = clubService.isThisClubOwner(club.getId(), this.getUser(request));
             if (c){
                 Page<DemandeEvent> Dacs = demandeEventService.findApprouvedEvent( page, size);
