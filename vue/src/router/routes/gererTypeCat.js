@@ -1,12 +1,12 @@
-const GererTypeCat = () =>
+const gererTypeCat = () =>
   import(
     "../../components/chefDepartment/TypeCat/GererTypeCat.vue"
   );
 export default [
   {
-    path: "/GererTypeCat",
-    component: GererTypeCat,
-    name: "GererTypeCat",
+    path: "/gererTypeCat",
+    component: gererTypeCat,
+    name: "gererTypeCat",
     meta: {requiresAuth  :true}
 
   },
