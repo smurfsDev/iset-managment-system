@@ -53,4 +53,8 @@ public class DemandeMaterielService {
 		return demandeMaterielRepository.findByResponsableClub(use, PageRequest.of(page, size));
 	}
 
+	public Page<DemandeMateriel> getAllDemandeSalleParPageParDestinataire(User use, int page, int size) {
+		return demandeMaterielRepository.findByDestinataire(use, PageRequest.of(page, size));
+	}
+
 }
