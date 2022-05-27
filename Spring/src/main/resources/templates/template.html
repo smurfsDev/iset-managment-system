@@ -52,7 +52,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				</button>
 				<div class="dropdown-menu">
 					<a sec:authorize="hasRole('RESPONSABLE')" class="dropdown-item"  th:href="@{showCreateDm}">Ajouter</a> 
-					<a class="dropdown-item" th:href="@{listeDm}">Lister</a>
+					<a sec:authorize="hasRole('RESPONSABLE')" class="dropdown-item" th:href="@{listeDm}">Lister</a>
+					<a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{listeDmDestinataire}">Lister</a>
 				</div>
 			</li><li class="nav-item dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -61,7 +62,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				</button>
 				<div class="dropdown-menu">
 					<a sec:authorize="hasRole('RESPONSABLE')" class="dropdown-item"  th:href="@{ShowcreateDS}">Ajouter</a> 
-					<a class="dropdown-item" th:href="@{listeDS}">Lister</a>
+					<a sec:authorize="hasRole('RESPONSABLE')" class="dropdown-item" th:href="@{listeDS}">Lister</a>
 				</div>
 			</li>
 			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
