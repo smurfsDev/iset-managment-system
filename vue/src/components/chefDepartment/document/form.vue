@@ -9,7 +9,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="DocumentModalLabel">Créer une Document</h5>
+          <h5 class="modal-title" id="DocumentModalLabel">
+            Créer une Document
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -18,6 +20,7 @@
             @click="hideModal('DocumentModal')"
           ></button>
         </div>
+
         <form class="mb-3" @submit.prevent="addDocument">
           <div class="modal-body">
             <div class="form-group mb-2">
@@ -25,27 +28,13 @@
               <input
                 type="text"
                 class="border-0 dcc form-control"
-                placeholder="nom"
+                placeholder="Title"
                 v-model="oldDocument.nom"
                 required="required"
               />
-              
-             <!-- <label>Class:</label>
-               <div class="form-group">
-                <select name="classe" v-model="oldDocument.classe">
-                  <option>DSI</option>
-                     <option>RSI</option> 
-                      <option>SEM</option>
-                 <option>GM</option>
-                      <option>GE</option>
-                           <option>MM</option>
-                </select>
-              </div>-->
 
-
-
-            <label>Class:</label>
-               <div class="form-group">
+              <label>Class:</label>
+              <div class="form-group">
                 <select name="classe" v-model="oldDocument.classe">
                   <option
                     v-for="classe in classes"
@@ -55,11 +44,14 @@
                     {{ classe.abreviation }}
                   </option>
                 </select>
-              </div> 
-          
+              </div>
+
               <label>Categorie:</label>
-               <div class="form-group">
-                <select name="document_categories" v-model="oldDocument.categorie">
+              <div class="form-group">
+                <select
+                  name="document_categories"
+                  v-model="oldDocument.categorie"
+                >
                   <option
                     v-for="categorie in categories"
                     :key="categorie.id"
@@ -105,16 +97,18 @@ export default {
     edit: Boolean,
   },
   emits: ["addDocument"],
+
   mounted() {
     this.fetchCategories();
     this.fetchClasses();
-  }, 
-    data() {
+  },
+
+  data() {
     return {
-      categories:[],
-      classes:[]
-    }
-    },
+      categories: [],
+      classes: [],
+    };
+  },
 
   methods: {
     addDocument() {
@@ -138,28 +132,27 @@ export default {
 
     fetchCategories() {
       let page_url = "http://127.0.0.1:8000/api/Categorie/all";
-      this.$http.get(page_url)
-      .then((res)=> {
-        this.categories = res.data;
-      })
-      .finally(()=> {
-        this.show = false;
-      });
+      this.$http
+        .get(page_url)
+        .then((res) => {
+          this.categories = res.data;
+        })
+        .finally(() => {
+          this.show = false;
+        });
     },
-    
-    /*fetchClasses() {
+
+    fetchClasses() {
       let page_url = "http://127.0.0.1:8000/api/Classe";
-      this.$http.get(page_url)
-      .then((res)=> {
-        this.classes = res.data.data;
-      })
-      .finally(()=> {
-        this.show = false;
-      });
-    },*/
-    
-
-
+      this.$http
+        .get(page_url)
+        .then((res) => {
+          this.classes = res.data.data;
+        })
+        .finally(() => {
+          this.show = false;
+        });
+    },
   },
 };
 </script>
