@@ -33,7 +33,8 @@
                         <th>Salle</th>
                         <th>Date d'emploi</th>
                         <th>Date de remise</th>
-                        <th>reponse</th>
+                        <th>Reponse</th>
+                        <th>Status</th>
                         <th sec:authorize="hasRole('RESPONSABLE')||hasRole('ADMIN')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(demandeSalle.content)}">
@@ -48,9 +49,11 @@
                         <td th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></td>
                         <td th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}"></td>
                         <td th:text="${demande.reponse}"></td>
-
-						<td  sec:authorize="hasRole('RESPONSABLE')" ><a class="btn btn-danger " onclick="confirm('Etes-vous sur ?')" th:href="@{deleteDS(id=${demande.id},
-								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{showEditDS(id=${demande.id},
+                        <td th:if="${demande.status == 0}" class="text-warning"><b>en attente</b></td>
+                        <td th:if="${demande.status == 1}" class="text-success"><b>acceptée</b></td>
+                        <td th:if="${demande.status == 2}" class="text-danger"><b>refusée</b></td>
+						<td><a th:class="${demande.status!=0?'btn btn-danger disabled ':'btn btn-danger' }" onclick="confirm('Etes-vous sur ?')" th:href="@{deleteDS(id=${demande.id},
+								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a th:class="${demande.status!=0?'btn btn-warning disabled ':'btn btn-warning' }" th:href="@{showEditDS(id=${demande.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
                                 <!-- <span th:if="${demande.status==1}" th:class="${demande.status==1?'btn btn-success disabled ':'' }"><i class="fa fa-check"></i></span>
                                 <span th:if="${demande.status==2}" th:class="${demande.status==2?'btn btn-danger disabled ':'' }"><i class="fa fa-times"></i></span> -->
