@@ -176,7 +176,7 @@ public class SecurityController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role,int dep, ModelMap modelMap) {
+    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role,int dep,int classe, ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
             List<Role> roles = roleRepository.findAll();
             List<Departement> departements = departementRepository.findAll();
@@ -196,6 +196,13 @@ public class SecurityController {
             ur.setDepartement(dep);
             userRoleRepository.save(ur);
         }
+        if (role==3) {
+            UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
+            ur.setDepartement(dep);
+            ur.setClasse(classe);
+            userRoleRepository.save(ur);
+        }
+
         return "redirect:/login";
     }
     // @GetMapping("/register")
