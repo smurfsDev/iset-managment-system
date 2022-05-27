@@ -11,6 +11,31 @@
       v-for="Reclamation in Reclamations"
       :key="Reclamation.id"
     >
+     <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'success',
+          title: 'Student accepted',
+          placement: 'topright',
+        }"
+        v-if="Reclamation.reponse != null"
+        icon="check-square"
+        scale="2"
+        variant="success"
+      ></b-icon>
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'danger',
+          title: 'Student not accepted',
+          placement: 'topright',
+        }"
+        v-if="Reclamation.reponse == null"
+        icon="x-square"
+        scale="2"
+        variant="danger"
+      ></b-icon>
+      
       <md-tabs style="height: auto;!important">
         <md-tab
           id="tab-home"
@@ -94,6 +119,7 @@
             >
             <b-button
               v-if="!$store.getters.isAdmin"
+              :class="[{ disabled: Reclamation.reponse }]"
               variant="warning"
               v-on:click="Update(Reclamation)"
             >
