@@ -9,6 +9,7 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleR
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeAdhesionClubService;
 import com.projetIntegraion.spring.blogClub.service.ClubService;
+import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeAdhesionEvent;
 import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeEvent;
 import com.projetIntegraion.spring.demandePlannificationEvent.service.DemandeEventService;
 
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -49,4 +51,21 @@ public class DemandeAdhesionEventController {
 
         return "demandeAdhesion/list";
     }
+
+    @GetMapping("/joinEvent")
+    public String joinEvent(
+            ModelMap modelMap,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            @RequestParam(name = "idClub") Long idClub) {
+                modelMap.addAttribute("DAE", new DemandeAdhesionEvent());
+                modelMap.addAttribute("edit", false);
+               
+                modelMap.addAttribute("currentPage", page);
+                modelMap.addAttribute("idClub", idClub);
+                modelMap.addAttribute("nomClub", clubService.getClub(idClub).getNomClub());
+                return "Club/demandeAdhesionClub/form";
+               
+            }
 }
