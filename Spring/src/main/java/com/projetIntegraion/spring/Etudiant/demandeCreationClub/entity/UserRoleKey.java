@@ -22,6 +22,10 @@ class UserRoleKey implements Serializable {
         this.userId = userId;
     }
 
+
+    public UserRoleKey() {
+    }
+
     public Integer getRoleId() {
         return roleId;
     }

@@ -1,12 +1,17 @@
 package com.projetIntegraion.spring.blogClub.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.blogClub.entity.Activity;
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
+import com.projetIntegraion.spring.blogClub.service.ClubService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +27,17 @@ public class ActivitiesController {
     private ActivitiesService activitiesService;
    
     
+    @Autowired
+    private ClubService clubService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
 
     @RequestMapping("/showCreateActivity")
     public String showActivities(ModelMap modelMapAct,
@@ -68,6 +84,10 @@ public class ActivitiesController {
             System.out.println("About: "+About.toString());
             about.setLongDescription(About.getLongDescription());
             about.setClub(About.getClub());*/
+            Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
+            //  System.out.println("id club = "+club.getId());
+            activity.setClub(club);
+             
            activitiesService.save(activity);
            // modelMapAct.addAttribute("About", newAbout);
             modelMapAct.addAttribute("msg", "About enregistrée avec succès");

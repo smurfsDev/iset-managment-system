@@ -67,4 +67,8 @@ public class AboutService {
 	public List<About> getAboutByClubId(Club club) {
 		return aboutRepository.findByClub(club);
 	}
+
+	public Page<About> getAllAboutsClubParPageClub(Long id, int page, int size){
+		return aboutRepository.findByClubId(id, PageRequest.of(page, size));
+	};
 }

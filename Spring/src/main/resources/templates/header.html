@@ -50,7 +50,7 @@
               <li class="header-menu">
                 <span>Demandes</span>
               </li>
-              <li class="sidebar-dropdown">
+              <li sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')" class="sidebar-dropdown">
                 <a href="#">
                   <i class="fa fa-file"></i>
                   <span>Demande Creation Club</span>
@@ -114,21 +114,57 @@
                 </div>
               </li>
               <li>
-                <a th:href="@{listeClub}">
+                <a >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Clubs</span>
-                  <!-- <span class="badge badge-pill badge-danger">3</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a th:href="@{listeClub}">Liste</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT')" th:href="@{demandeAdhesionClub}">Mes demandes d'adhesion</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{demandeAdhesionClubClub}">Demande adhesion de mon club</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{showManageBlog}">Gérer mon blog club</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{blogClubConnected}">Consulter mon blog page</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{listeChefDepartments}">
+                  <i class="fa fa-user"></i>
+                  <span>Liste des cd</span>
                 </a>
               </li>
-              <li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{classe}">
+                  <i class="fa fa-user"></i>
+                  <span>Liste des classes</span>
+                </a>
+              </li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{listeStudents}" >
+                  <i class="fa fa-user"></i>
+                  <span>Liste des etudiants</span>
+                </a>
+              </li>
+              <!-- <li >
                 <a th:href="@{demandeAdhesionClub}">
                   <i class="fa fa-shopping-cart"></i>
                   <span>Demande adhesion club</span>
-                  <!-- <span class="badge badge-pill badge-danger">3</span> -->
                 </a>
-              </li>
+                
+              </li> -->
               <li class="sidebar-dropdown">
-                <a th:href="@{demandeAdhesionClub}">
+                <a >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Demande adhesion club</span>
                   <!-- <span class="badge badge-pill badge-danger">3</span> -->

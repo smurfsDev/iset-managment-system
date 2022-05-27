@@ -23,7 +23,7 @@ public class DemandeAdhesionClubService {
 		return DemandeAdhesionClubRepository.existsById(id);
 	}
 
-	public Boolean existsByIds(Long idClub, Long idEtudiant) {
+	public Boolean existsByIds(Long idClub, int idEtudiant) {
 		return DemandeAdhesionClubRepository.findByClubIdAndEtudiantId(idClub, idEtudiant)!=null;
 	}
 
@@ -53,5 +53,13 @@ public class DemandeAdhesionClubService {
 
 	public Page<DemandeAdhesionClub> getAllDemandeAdhesionClubParPage(int page, int size){
 		return DemandeAdhesionClubRepository.findAll(PageRequest.of(page, size));
+	};
+
+	public Page<DemandeAdhesionClub> getAllDemandeAdhesionClubParPageEtudiant(int id, int page, int size){
+		return DemandeAdhesionClubRepository.findByEtudiantId(id, PageRequest.of(page, size));
+	};
+
+	public Page<DemandeAdhesionClub> getAllDemandeAdhesionClubParPageClub(Long id, int page, int size){
+		return DemandeAdhesionClubRepository.findByClubId(id, PageRequest.of(page, size));
 	};
 }

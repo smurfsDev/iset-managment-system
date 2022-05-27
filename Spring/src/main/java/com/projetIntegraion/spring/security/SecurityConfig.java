@@ -9,6 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final String AUTHORITIES_CLAIM_NAME = "roles";
 	@Autowired
 	UserService userDetailsService;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	UserRoleRepository userRoleRepository;
 	// @Autowired
 	// private AccessDeniedHandler accessDeniedHandler;
 
@@ -70,13 +78,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/logout").permitAll()
-				.antMatchers("/accept", "/decline", "/categorieMateriel")
+
+				.antMatchers("/accept", "/decline","/listeChefDepartments","/acceptCD","/declineCD")
 				.hasAnyRole("ADMIN")
+				.antMatchers("/classe","/deleteClass","/showCreateClass","/createClass","/modifierClass","/updateClass")
+				.hasAnyRole("CHEFDEPARTEMENT")
 				.antMatchers("/showCreateDcc", "/deleteDcc",
 						"/modifierDcc", "/blogClub")
 				.hasAnyRole("STUDENT")
-				.antMatchers("/showCreateDcc", "/deleteDcc",
-						"/modifierDcc", "/blogClub", "/showCreateBlog", "/createAbout", "/deleteAbout",
+				.antMatchers(
+						"/blogClub", "/showCreateBlog", "/createAbout", "/deleteAbout",
 						"/modifierAbout",
 						"/showCreateActivity", "/createActivity", "/deleteActivities", "/modifierActivities",
 						"/showManageBlog",
@@ -87,9 +98,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/modifierDS", "/listeDm", "/showCreateDm", "/showEditDm",
 						"/updateDmm", "/setQuantite", "/deleteMateriel",
 						"/deleteDmm",
+
 						"/deleteDS")
 				.hasAnyRole("RESPONSABLE")
-				.antMatchers("/listeDcc").permitAll()
+				.antMatchers("/listeDcc")
+				.hasAnyRole("RESPONSABLE", "STUDENT", "ADMIN")
 				.antMatchers("/login").permitAll()
 				.antMatchers("/register").permitAll()
 				.antMatchers("/webjars/**").permitAll()
@@ -108,8 +121,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 				Authentication authentication) throws IOException, ServletException {
 
-			response.sendRedirect("/");
-			response.setStatus(HttpServletResponse.SC_OK);
+			String username = request.getParameter("username");
+			User user = userRepository.findUserWithName(username).get();
+			UserRole ur = userRoleRepository.findFirstByUserId(user.getId()).isPresent() ? userRoleRepository.findFirstByUserId(user.getId()).get() : null;
+			response.sendRedirect(ur!=null?ur.getStatus()!=1?"/login?error=2":"/listeDcc":"/listeDcc");
+			response.setStatus(ur!=null?ur.getStatus()!=1?HttpServletResponse.SC_UNAUTHORIZED:HttpServletResponse.SC_OK:HttpServletResponse.SC_OK);
 		}
 
 	}
@@ -117,15 +133,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			org.springframework.security.core.AuthenticationException exception)
 			throws IOException, ServletException {
-		// String password = request.getParameter("password");
-		// String username = request.getParameter("username");
-		// UserDetails user = userDetailsService.loadUserByUsername(username);
-		// if (user == null || !user.getPassword().equals(password)) {
-		// response.sendRedirect("/produits/login?error=1");
-		// response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		// }
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		// System.out.println(request.toString());
 		response.sendRedirect("/login?error=1");
 	}
 

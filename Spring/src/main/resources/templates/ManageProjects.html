@@ -21,9 +21,9 @@
             
             <h4 class="float-start">
                 Projets
-            </h2>
+            </h4>
                        
-                <a sec:authorize="hasAuthority('RESPONSABLE')" th:href="@{createProject(
+                <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{createProject(
                 page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Ajouter
                 </a>
@@ -38,7 +38,7 @@
                         <th>Affiche</th>
                         
                         
-                        <th sec:authorize="hasAuthority('RESPONSABLE')">Actions</th>
+                        <th sec:authorize="hasRole('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(listProjects.content)}">
 						<td colspan="4" class="text-center ">No Projects found ! </td></tr>
@@ -47,7 +47,7 @@
                        
                         
                         <td ><img th:src="'data:image/png;base64,'+${project.affiche}" width="400px" height="400px"/></td>
-                        <td  sec:authorize="hasAuthority('RESPONSABLE')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteProject(id=${project.id},
+                        <td  sec:authorize="hasRole('RESPONSABLE')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteProject(id=${project.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierProject(id=${project.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
                                 </td>
