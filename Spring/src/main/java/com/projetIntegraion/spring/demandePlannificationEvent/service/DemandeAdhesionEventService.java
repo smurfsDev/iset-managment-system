@@ -23,10 +23,12 @@ public class DemandeAdhesionEventService {
 		return DemandeAdhesionEventRepository.existsById(id);
 	}
 
-	public Boolean existsByIds(Long idClub, int idEtudiant) {
-		return DemandeAdhesionEventRepository.findByClubIdAndEtudiantId(idClub, idEtudiant)!=null;
+	public Boolean existsByIds(Long idEvent, int idEtudiant) {
+		return DemandeAdhesionEventRepository.findByEventIdAndEtudiantId(idEvent, idEtudiant)!=null;
 	}
-
+	public DemandeAdhesionEvent getByIds(Long idEvent, int idEtudiant) {
+		return DemandeAdhesionEventRepository.findByEventIdAndEtudiantId(idEvent, idEtudiant);
+	}
 	public DemandeAdhesionEvent updateDemandeAdhesionEvent(Long id, DemandeAdhesionEvent p) {
 		return null;
 	}

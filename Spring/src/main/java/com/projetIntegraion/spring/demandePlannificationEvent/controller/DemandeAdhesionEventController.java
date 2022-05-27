@@ -84,12 +84,12 @@ public class DemandeAdhesionEventController {
                     return "demandeAdhesion/list";
                 }
             DemandeAdhesionEvent adh = new DemandeAdhesionEvent();
-
+            DemandeEvent event= demandeEventService.getDemandeEvent(id);
             adh.setStatus(0);
             adh.setEtudiant(this.getUser(request));
             
             adh.setClub(club);
-           
+           adh.setEvent(event);
             adh = demandeAdhesionEventService.save(adh);
             modelMap.addAttribute("add", 1);
          
@@ -101,8 +101,120 @@ public class DemandeAdhesionEventController {
         return this.showList(modelMap, request, page, size);
 
     }
+    // @GetMapping("/deleteDA")
+    // public String deleteDA(
+    //         @RequestParam(name = "id") long id,
+    //         HttpServletRequest request,
+    //         @RequestParam(name = "page", defaultValue = "0") int page,
+    //         @RequestParam(name = "size", defaultValue = "2") int size,
+    //         ModelMap modelMap) {
+    //             //modelMap.addAttribute("add", 1);
+    //            System.out.println("id demandes = "+id);
+    //            if (demandeAdhesionEventService.deleteById(id)) {
+    //             modelMap.addAttribute("type", "danger");
+    //             modelMap.addAttribute("msg", "Demande de plannification d'evenement supprimée avec succès");
+    //             modelMap.addAttribute("del", 1);
+    //             Page<DemandeEvent> Dacs = demandeEventService.findApprouvedEvent( page, size);
+    //             modelMap.addAttribute("DE", Dacs);
+    //             modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+    //             modelMap.addAttribute("currentPage", page);
+    //            // modelMap.addAttribute("del", 1);
+                
+    //         } else {
+    //             modelMap.addAttribute("type", "danger");
+    //             modelMap.addAttribute("msg", "Demande de plannification d'evenement non supprimée : Id non trouvé");
+    //         }
+    //     // demandeAdhesionEventService.deleteById(id);
+    //     // Page<DemandeEvent> Dacs = demandeEventService.findApprouvedEvent( page, size);
+    //     // modelMap.addAttribute("DE", Dacs);
+    //     // modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+    //     // modelMap.addAttribute("currentPage", page);
+    //     // modelMap.addAttribute("del", 1);
+    //     return "demandeAdhesion/list";
+    // }
+    @GetMapping("/deleteDA")
+    public String deleteDA(
+            @RequestParam(name = "id") long id,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            ModelMap modelMap) {
+                if (demandeAdhesionEventService.existsByIds(id,this.getUser(request).getId())) {
+                    DemandeAdhesionEvent d=  demandeAdhesionEventService.getByIds(id, this.getUser(request).getId());
+                    //demandeEventService.deleteById(id);
+                   
+                    demandeAdhesionEventService.deleteById(d.getId());
+                    Page<DemandeEvent> DE = demandeEventService.findApprouvedEvent(page, size);
+                    modelMap.addAttribute("DE", DE);
+                    modelMap.addAttribute("pages", new int[DE.getTotalPages()]);
+                    modelMap.addAttribute("currentPage", page);
+                    modelMap.addAttribute("del", 1);
+                    
+                }
+                else {
+                    Page<DemandeEvent> DE = demandeEventService.findApprouvedEvent(page, size);
+                    modelMap.addAttribute("DE", DE);
+                    modelMap.addAttribute("pages", new int[DE.getTotalPages()]);
+                    modelMap.addAttribute("currentPage", page);
+                    modelMap.addAttribute("introuvable", 1);
+                }
+        return "demandeAdhesion/list";
+    }
 
-    // @GetMapping("/joinEvent")
+    // // @GetMapping("/acceptDac")
+    // public String acceptDac(
+    //         @RequestParam(name = "id") long id,
+    //         HttpServletRequest request,
+    //         @RequestParam(name = "page", defaultValue = "0") int page,
+    //         @RequestParam(name = "size", defaultValue = "2") int size,
+    //         ModelMap modelMap) {
+    //     DemandeAdhesionEvent Dac = demandeEventService.getDemandeAdhesionEvent(id);
+    //     Dac.setStatus(1);
+    //     Member m = new Member();
+    //     m.setClub(Dac.getClub());
+    //     m.setEtudiant(Dac.getEtudiant());
+    //     memberService.save(m);
+    //     demandeEventService.save(Dac);
+    //     Principal principal = request.getUserPrincipal();
+    //     User user = userRepository.findUserWithName(principal.getName()).get();
+    //     Club club = clubService.getClubParResponsable(user.getId()).get();
+
+    //     Page<DemandeAdhesionClub> Dacs = demandeEventService.getAllDemandeAdhesionClubParPageClub(club.getId(),
+    //             page, size);
+
+    //     modelMap.addAttribute("Dacs", Dacs);
+    //     modelMap.addAttribute("accept", 1);
+    //     modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+    //     modelMap.addAttribute("currentPage", page);
+    //     return "Club/demandeAdhesionClub/listDms";
+    // }
+
+    // @GetMapping("/declineDac")
+    // public String declineDac(
+    //         @RequestParam(name = "id") long id,
+    //         HttpServletRequest request,
+    //         @RequestParam(name = "page", defaultValue = "0") int page,
+    //         @RequestParam(name = "size", defaultValue = "2") int size,
+    //         ModelMap modelMap) {
+    //     DemandeAdhesionClub Dac = demandeAdhesionClubService.getDemandeAdhesionClub(id);
+    //     Dac.setStatus(2);
+    //     demandeAdhesionClubService.save(Dac);
+    //     Principal principal = request.getUserPrincipal();
+    //     User user = userRepository.findUserWithName(principal.getName()).get();
+    //     Club club = clubService.getClubParResponsable(user.getId()).get();
+
+    //     Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageClub(club.getId(),
+    //             page, size);
+
+    //     modelMap.addAttribute("Dacs", Dacs);
+    //     modelMap.addAttribute("decline", 1);
+    //     modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+    //     modelMap.addAttribute("currentPage", page);
+    //     return "Club/demandeAdhesionClub/listDms";
+    // }
+
+
+    // // @GetMapping("/joinEvent")
     // public String joinEvent(
     //         ModelMap modelMap,
     //         HttpServletRequest request,

@@ -12,6 +12,7 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserR
 import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.service.ClubService;
 import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeEvent;
+import com.projetIntegraion.spring.demandePlannificationEvent.service.DemandeAdhesionEventService;
 import com.projetIntegraion.spring.demandePlannificationEvent.service.DemandeEventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,10 @@ public class DemandePlannificationEventController {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private DemandeAdhesionEventService demandeAdhesionEventService;
+    
 
     public User getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -110,8 +115,12 @@ public class DemandePlannificationEventController {
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
+                //demandeEventService.
+            DemandeEvent d = DemandeEventService.getDemandeEvent(id);
+           
 
-        if (DemandeEventService.deleteById(id)) {
+        if (demandeAdhesionEventService.deleteById(id)) {
+            
             modelMap.addAttribute("type", "danger");
             modelMap.addAttribute("msg", "Demande de plannification d'evenement supprimée avec succès");
         } else {

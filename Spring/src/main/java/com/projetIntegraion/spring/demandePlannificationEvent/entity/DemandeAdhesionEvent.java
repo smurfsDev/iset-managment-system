@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
@@ -21,13 +22,16 @@ public class DemandeAdhesionEvent {
 	private User etudiant;
 	@ManyToOne
 	private Club club;
+    @ManyToOne
+    private DemandeEvent event;
     public DemandeAdhesionEvent() {
     }
-    public DemandeAdhesionEvent(Long id, int status, User etudiant, Club club) {
+    public DemandeAdhesionEvent(Long id, int status, User etudiant, Club club, DemandeEvent event) {
         this.id = id;
         this.status = status;
         this.etudiant = etudiant;
         this.club = club;
+        this.event = event;
     }
     public Long getId() {
         return id;
@@ -53,6 +57,13 @@ public class DemandeAdhesionEvent {
     public void setClub(Club club) {
         this.club = club;
     }
+    public DemandeEvent getEvent() {
+        return event;
+    }
+    public void setEvent(DemandeEvent event) {
+        this.event = event;
+    }
+
 
     
 
