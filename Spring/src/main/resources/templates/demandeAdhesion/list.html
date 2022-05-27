@@ -31,7 +31,7 @@
             <div th:if="${decline==1}" class="my-4 alert alert-warning" role="alert">Demande refusée</div>
             <div th:if="${accept==1}" class="my-4 alert alert-warning" role="alert">Demande acceptée</div>
             <div th:if="${exist==1}" class="my-4 alert alert-warning" role="alert">Vous avez envoyez deja une demande</div>
-         
+            <div th:if="${clubOwner==1}" class="my-4 alert alert-warning" role="alert">Vous etes le responsable de ce club</div>
             
             <div class="row my-4">
                 <table class="table table-dark table-striped">
