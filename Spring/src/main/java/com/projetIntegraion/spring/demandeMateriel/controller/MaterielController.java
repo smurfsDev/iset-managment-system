@@ -113,6 +113,23 @@ public class MaterielController {
             return "/demandeMateriel/list";
         }
         return null;
+    }
 
+    @RequestMapping("/getMaterielofDemande")
+    // getMaterielofDemande
+    public String getMaterielofDemande(ModelMap modelMap, HttpServletRequest request, Long idDemande,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        DemandeMateriel dm = DemandeMaterielService.getdemandeById(idDemande);
+        List<DemandeMaterielMateriel> listDmMateriel = DemandeMaterielMaterielRepository
+                .findByDemandeMaterielId(idDemande);
+        modelMap.addAttribute("listDmMateriel", listDmMateriel);
+        modelMap.addAttribute("dm", dm);
+        return "/demandeMateriel/MesDemandes";
     }
 }
