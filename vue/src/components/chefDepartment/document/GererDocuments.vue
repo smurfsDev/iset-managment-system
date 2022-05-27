@@ -57,7 +57,7 @@
               <b-col cols="8">
                 <button
                   v-if="
-                    $store.getters.isAdmin || $store.getters.isChefDepartement
+                    $store.getters.isChefDepartement //$store.getters.isAdmin || 
                   "
                   type="button"
                   class="btn btn-primary mx-1 float-start"
