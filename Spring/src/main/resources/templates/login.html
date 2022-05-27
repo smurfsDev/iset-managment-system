@@ -103,7 +103,11 @@
         let role = document.querySelector('select[name=role]');
         role.addEventListener('change', (e) => {
             console.log(e.target.value);
-            if (e.target.value == 3 || e.target.value == 2) {
+            if(e.target.value == 4){
+                document.querySelector('#classe').style.display = 'none';
+
+            }
+            if (e.target.value == 3 || e.target.value == 4) {
                 document.querySelector('#dep').style.display = 'block';
             } else {
                 document.querySelector('#dep').style.display = 'none';
@@ -113,7 +117,9 @@
         let departement = document.querySelector('select[name=dep]');
         var options = document.getElementsByClassName('classe');
         departement.addEventListener('change', (e) => {
-            document.querySelector('#classe').style.display = 'block';
+            if (role.value ==3){
+                document.querySelector('#classe').style.display = 'block';
+            }
 
         for (let i = 0; i < options.length; i++) {
                 console.log(options[i].dataset.index);
