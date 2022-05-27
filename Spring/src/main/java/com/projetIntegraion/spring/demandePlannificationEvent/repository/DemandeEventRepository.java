@@ -25,7 +25,7 @@ public interface DemandeEventRepository extends JpaRepository<DemandeEvent, Long
 
     Page<DemandeEvent> findByClubId(Long id, Pageable pageable);
 
-    @Query("select e from DemandeEvent e where e.status = 2")
+    @Query("select e from DemandeEvent e where e.status = 1")
 	Page<DemandeEvent> findApprouvedEvent(Pageable pageable); 
 
 
