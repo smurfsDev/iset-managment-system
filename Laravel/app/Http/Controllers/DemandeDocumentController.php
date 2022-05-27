@@ -39,7 +39,7 @@ class DemandeDocumentController extends Controller
     }
   
     public function showDemandeDocument(){
-        $DDs = DemandeDocument::orderBy('updated_at', 'desc')->paginate(5);
+        $DDs = DemandeDocument::with('categorie')->orderBy('updated_at', 'desc')->paginate(5);
                 if (sizeof($DDs) > 0)
                     return response()->json(
                         $DDs,
