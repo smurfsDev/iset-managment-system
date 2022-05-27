@@ -91,6 +91,7 @@ public class DemandeAdhesionEventController {
             adh.setClub(club);
            
             adh = demandeAdhesionEventService.save(adh);
+            modelMap.addAttribute("add", 1);
          
           
         } else {
