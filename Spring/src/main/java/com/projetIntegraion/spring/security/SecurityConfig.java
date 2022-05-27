@@ -78,8 +78,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/logout").permitAll()
-				.antMatchers("/accept", "/decline", "/categorieMateriel")
+				.antMatchers("/accept", "/decline", "/categorieMateriel","/listeChefDepartments","/acceptCD","/declineCD")
 				.hasAnyRole("ADMIN")
+				.antMatchers("/classe","/deleteClass","/showCreateClass","/createClass","/modifierClass","/updateClass")
+				.hasAnyRole("CHEFDEPARTEMENT")
 				.antMatchers("/showCreateDcc", "/deleteDcc",
 						"/modifierDcc", "/blogClub")
 				.hasAnyRole("STUDENT")
