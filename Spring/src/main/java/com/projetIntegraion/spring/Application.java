@@ -2,6 +2,7 @@ package com.projetIntegraion.spring;
 
 import java.util.Date;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
@@ -14,6 +15,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
@@ -41,6 +43,9 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	UserRoleRepository userRoleRepository;
 
+	@Autowired
+	ClasseRepository classeRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -65,10 +70,10 @@ public class Application implements CommandLineRunner {
 		Role role1 = new Role("ROLE_RESPONSABLE");
 		Role role2 = new Role("ROLE_STUDENT");
 		Role role3 = new Role("ROLE_CHEFDEPARTEMENT");
-		roleRepository.save(role1);
-		roleRepository.save(role2);
-		roleRepository.save(role);
-		roleRepository.save(role3);
+		role = roleRepository.save(role1);
+		role1 = roleRepository.save(role2);
+		role2 = roleRepository.save(role);
+		role3 = roleRepository.save(role3);
 		Departement departement = new Departement();
 		departement.setTitre("Department Informatique");
 		Departement departement1 = new Departement();
@@ -106,12 +111,18 @@ public class Application implements CommandLineRunner {
 		student2.setPassword(new BCryptPasswordEncoder().encode("password"));
 		student2.getRoles().add(role2);
 
+		User chefDepartmnet = new User();
+		chefDepartmnet.setUsername("cd@example.com");
+		chefDepartmnet.setPassword(new BCryptPasswordEncoder().encode("password"));
+		chefDepartmnet.getRoles().add(role3);
+
 
 		admin = userRepository.save(admin);
 		responsable = userRepository.save(responsable);
 		student = userRepository.save(student);
 		student1 = userRepository.save(student1);
 		student2 = userRepository.save(student2);
+		chefDepartmnet = userRepository.save(chefDepartmnet);
 
 		// set statuses to 1
 
@@ -130,6 +141,11 @@ public class Application implements CommandLineRunner {
 		UserRole ur3 =  userRoleRepository.findFirstByUserId(student1.getId()).get();
 		ur3.setStatus(1);
 		userRoleRepository.save(ur3);
+
+		UserRole ur4 =  userRoleRepository.findFirstByUserId(chefDepartmnet.getId()).get();
+		ur4.setStatus(1);
+		ur4.setDepartement(5);
+		userRoleRepository.save(ur4);
 		
 		
 
@@ -146,6 +162,31 @@ public class Application implements CommandLineRunner {
 		dcc.setResponsableClub(student);
 
 		demandeCreationClubRepository.save(dcc);
+
+		Classe ti1 = new Classe();
+		ti1.setAbreviation("TI1");
+		ti1.setNom("Tronc Inferieur 1");
+		ti1.setDepartement(departement);
+
+		Classe ti2 = new Classe();
+		ti2.setAbreviation("TI2");
+		ti2.setNom("Tronc Inferieur 2");
+		ti2.setDepartement(departement);
+
+		Classe ti3 = new Classe();
+		ti3.setAbreviation("TI3");
+		ti3.setNom("Tronc Inferieur 3");
+		ti3.setDepartement(departement1);
+
+		Classe ti4 = new Classe();
+		ti4.setAbreviation("TI4");
+		ti4.setNom("Tronc Inferieur 4");
+		ti4.setDepartement(departement1);
+
+		classeRepository.save(ti1);
+		classeRepository.save(ti2);
+		classeRepository.save(ti3);
+		classeRepository.save(ti4);
 
 	}
 
