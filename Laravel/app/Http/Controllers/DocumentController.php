@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class DocumentController extends Controller
 {
-  
-  public function getDocument(){
-        
-        $documents= Document::orderBy('updated_at')->paginate(5);
+
+    public function getDocument()
+    {
+
+        $documents = Document::orderBy('updated_at')->paginate(5);
         if (sizeof($documents) > 0)
             return response()->json(
                 $documents,
@@ -20,36 +21,37 @@ class DocumentController extends Controller
             return response()->json([
                 null
             ], 404);
-
     }
 
-public function show(){
-    $documents = Document::orderBy('updated_at', 'desc')->paginate(5);
-            if (sizeof($documents) > 0)
-                return response()->json(
-                    $documents,
-                    200
-                );
-            else
-                return response()->json([], 404);
+    public function show()
+    {
+        $documents = Document::orderBy('updated_at', 'desc')->paginate(5);
+        if (sizeof($documents) > 0)
+            return response()->json(
+                $documents, 
+                200
+            );
+        else
+            return response()->json([], 404);
     }
 
-    function createDocument(Request $request){
+    function createDocument(Request $request)
+    {
         $idResponsable = $request->user()->id;
         $nom = $request->input('nom');
-        $class = $request->input('class_id');
+        $class = $request->input('classes_id');
         $categorie = $request->input('document_categories_id');
         $file = $request->input('file');
 
         $newDocument = array(
             "nom" => $nom,
-            "class_id" => $class,
+            "classes_id" => $class,
             "file" => $file,
             "document_categories_id" => $categorie,
             "idResponsable" => $idResponsable
         );
 
-         $createNewDocument = Document::create($newDocument);
+        $createNewDocument = Document::create($newDocument);
 
         if ($createNewDocument) {
             return response()->json([
@@ -61,38 +63,38 @@ public function show(){
             ], 201);
         }
         return "Document Ajouté avec succès";
+    }
 
-}
-
- public function deleteDocument($id){
+    public function deleteDocument($id)
+    {
 
         $documents = Document::find($id);
 
-        if ($documents){
+        if ($documents) {
             $documents->delete();
             return response()->json([
                 'type' => 'Document',
                 'message' => 'Document Supprimé! '
             ], 204);
-        }
-        else {
+        } else {
             return response()->json([
                 'type' => 'Document',
-                'message' => 'Document n existe pas'
+                'message' => "Document n'existe pas"
             ], 404);
         }
     }
 
- public function updateDocument($id, Request $request){
+    public function updateDocument($id, Request $request)
+    {
 
         $documents = Document::find($id);
         if ($documents) {
 
             $documents->nom = $request->input('nom') ? $request->input('nom') : $documents->nom;
-            $documents->class = $request->input('class_id') ? $request->input('class_id') : $documents->class;
+            $documents->classes_id = $request->input('classes_id') ? $request->input('classes_id') : $documents->class;
             $documents->file = $request->input('file') ? $request->input('file') : $documents->file;
-            $documents->categorie = $request->input('document_categories_id') ? $request->input('document_categories_id') : $documents->categorie;
-            
+            $documents->document_categories_id = $request->input('document_categories_id') ? $request->input('document_categories_id') : $documents->categorie;
+
             $documents->save();
             return response()->json([
                 'message' => 'Document mis à jour',
@@ -106,4 +108,67 @@ public function show(){
         }
     }
 
+
+    public function search(Request $request)
+    {
+
+        $search = $request->search??"";
+        $categorie = $request->categorie??"";
+        $class = $request->class??"";
+        $documents =[];
+        if($search==""&&$categorie=="all"&&$class=="all"){
+            $documents = Document::paginate(5);
+        }   
+        else if($categorie=="all"){
+            if ($search!=""){
+                //with('classe')->with('categorie')->
+
+                $documents = Document::where('nom', 'like', '%' . $search . '%')
+                ->where('classes_id', 'like', '%' . $class . '%')
+                ->orderBy('updated_at', 'desc')
+                ->paginate(5);
+            }else{
+                $documents = Document::where('classes_id', '=', $class )
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate(5);
+            }
+        }else{
+            if ($search!=""){
+                if ($class=="all"){
+                    $documents = Document::where('nom', 'like', '%' . $search . '%')
+                        ->where('document_categories_id', '=', $categorie )
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate(5);
+                }else{
+                    $documents = Document::where('nom', 'like', '%' . $search . '%')
+                        ->where('document_categories_id', '=', $categorie )
+                        ->where('classes_id', '=',  $class )
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate(5);
+                }
+            }else{
+                if ($class=="all"){
+                    $documents = Document::where('document_categories_id', 'like', '%' . $categorie . '%')
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate(5);
+                }else{
+                    $documents = Document::where('document_categories_id', 'like', '%' . $categorie . '%')
+                        ->where('classes_id', 'like', '%' . $class . '%')
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate(5);
+                }
+            }
+
+        }
+
+        if (sizeof($documents) > 0)
+            return response()->json(
+                $documents,
+                200
+            );
+        else
+            return response()->json([
+                null
+            ], 404);
+    }
 }
