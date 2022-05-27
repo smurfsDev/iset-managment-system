@@ -57,7 +57,7 @@ public class ChefDepartmentController {
 
     }
 
-    @GetMapping(value = "acceptCD")
+    @GetMapping(value = "/acceptCD")
     public String accept(@RequestParam int idCD,
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -97,7 +97,7 @@ public class ChefDepartmentController {
         return "admin/gererChefDepartments/listeChefDepartments";
     }
 
-    @GetMapping(value = "declineCD")
+    @GetMapping(value = "/declineCD")
     public String decline(@RequestParam int idCD,
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
