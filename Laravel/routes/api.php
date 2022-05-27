@@ -74,7 +74,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/a/{id}', [DemandeCreationClubController::class, 'accept']);
         Route::put('/d/{id}', [DemandeCreationClubController::class, 'decline']);
     });
-    // demande adhesion club routes
+    // post avis 
     Route::group(['prefix' => '/avis'], function () {
         Route::get('/show', [posteavisController::class, 'index']);
         Route::get('/details/{id}', [posteavisController::class, 'show']);

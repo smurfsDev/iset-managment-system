@@ -144,6 +144,8 @@ export default {
       mounted() {
   
             this.fetchAvis();
+           
+
           
         }
 }

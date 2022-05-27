@@ -18,9 +18,11 @@ class posteavisController extends Controller
      */
     public function index()
     {
-        //  $user = auth()->user();
-        //  dump($user);
+          $user = auth()->user();
+
         $avis=avis::get();
+
+        // dd($avis);
         return $avis;
     }
 
