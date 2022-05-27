@@ -146,6 +146,64 @@ public class DemandeAdhesionEventController {
 
         return "ResponsedemandeAdhesionEvent/list";
     }
+    @RequestMapping("/acceptAdh")
+    public String acceptAdh(@RequestParam("id") Long id, ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            HttpServletRequest request,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeAdhesionEvent de = demandeAdhesionEventService.getDemandeAdhesionEvent(id);
+        de.setStatus(1);
+        //de.setAdmin(this.getUser(request));
+        demandeAdhesionEventService.save(de);
+        // Club c = new Club();
+        // de.setNomEvent(de.getNomEvent());
+        // de.setDescription(de.getDescription());
+        // de.setClub(de.getClub());
+        // de.setDateEvent(de.getDateEvent());
+
+        // c.setNomClub(de.getNomClub());
+        // c.setDateCreation(de.getDateCreation());
+        // c.setPresident(de.getPresident());
+        // c.setVicePresident(de.getVicePresident());
+        // c.setResponsableClub(de.getResponsableClub());
+        // c.setLogo(de.getLogo());
+        
+
+     
+
+        modelMap.addAttribute("DEMANDES", new DemandeAdhesionEvent());
+        Optional<Club> c =clubService.getClubParResponsable(this.getUser(request).getId());
+        
+        //Page<DemandeAdhesionEvent> listEvent = demandeAdhesionEventService.findNonApprouvedDemandesParClub(c.get(),page, size);
+   
+        modelMap.addAttribute("pages",
+                new int[demandeAdhesionEventService.findNonApprouvedDemandesParClub(c.get() ,page, size).getTotalPages()]);
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande d'adhesion acceptée avec succès");
+        return this.showDemandesParCLub(modelMap, request, page, size);
+    }
+
+    @RequestMapping("/declineAdh")
+    public String declineAdh(@RequestParam("id") Long id, ModelMap modelMap,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeAdhesionEvent de = demandeAdhesionEventService.getDemandeAdhesionEvent(id);
+
+       
+        de.setStatus(2);
+        demandeAdhesionEventService.save(de);
+        Optional<Club> c =clubService.getClubParResponsable(this.getUser(request).getId());
+
+        modelMap.addAttribute("Dcc", new DemandeAdhesionEvent());
+        modelMap.addAttribute("pages",
+                new int[demandeAdhesionEventService.findNonApprouvedDemandesParClub(c.get() ,page, size).getTotalPages()]);
+
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("msg", "Demande d'adhesion refusée !");
+        return this.showDemandesParCLub(modelMap, request, page, size);
+    }
+
     
 
    

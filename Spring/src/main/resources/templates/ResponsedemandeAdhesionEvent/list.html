@@ -38,19 +38,19 @@
                         <td th:text="${d.etudiant.username}"></td>
                          <td th:text="${d.event.nomEvent}"></td>
 
-                        <!-- <td  sec:authorize="hasRole('RESPONSABLE')"  >
-                            <div th:if="${dac.status!=1}">
-                                <a th:class="${dac.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{acceptDac(id=${dac.id},page=${currentPage},size=${param.size})}">
+                        <td  sec:authorize="hasRole('RESPONSABLE')"  >
+                            <div th:if="${d.status!=1}">
+                                <a th:class="${d.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{acceptAdh(id=${d.id},page=${currentPage},size=${param.size})}">
                                     <i class="fa fa-check"></i>
                                 </a>
-                                <a th:class="${dac.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineDac(id=${dac.id},page=${currentPage},size=${param.size})}">
+                                <a th:class="${d.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineAdh(id=${d.id},page=${currentPage},size=${param.size})}">
                                     <i class="fa fa-times"></i>
                                 </a>
                             </div>
-                            <div class="text-success" th:if="${dac.status==1}">
-                                dac acceptée
+                            <div class="text-success" th:if="${d.status==1}">
+                                demande adhesion acceptée
                             </div>
-                        </td> -->
+                        </td>
 
                         
 					</tr>
