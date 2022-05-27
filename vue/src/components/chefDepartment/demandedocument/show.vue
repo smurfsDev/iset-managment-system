@@ -12,6 +12,31 @@
       v-for="DemandeDocument in DemandeDocuments"
       :key="DemandeDocument.id"
     >
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'success',
+          title: '',
+          placement: 'topright',
+        }"
+        v-if="DemandeDocument.file != null"
+        icon="check-square"
+        scale="2"
+        variant="success"
+      ></b-icon>
+      <b-icon
+        class="float-end"
+        v-b-tooltip.hover="{
+          variant: 'danger',
+          title: '',
+          placement: 'topright',
+        }"
+        v-if="DemandeDocument.file == null"
+        icon="x-square"
+        scale="2"
+        variant="danger"
+      ></b-icon>
+      
       <md-tabs style="height: auto;!important">
         <md-tab
           id="tab-home"
@@ -28,7 +53,7 @@
               </b-row>
 
               <b-row>
-                <b-col> Categorie : {{ DemandeDocument.categorie }} </b-col>
+                <b-col> Categorie : {{ DemandeDocument.categorie.title}} </b-col>
               </b-row>
               <div
                 v-if="
@@ -87,12 +112,13 @@
 
             <b-button
               variant="danger"
-              v-if="$store.getters.isAdmin || $store.getters.isChefDepartement"
+              v-if="$store.getters.isStudent"
               v-on:click="Delete(DemandeDocument.id)"
             >
               Delete</b-button
             >
             <b-button
+              :class="[{ disabled: DemandeDocument.file }]"
               v-if="!$store.getters.isAdmin"
               variant="warning"
               v-on:click="Update(DemandeDocument)"
