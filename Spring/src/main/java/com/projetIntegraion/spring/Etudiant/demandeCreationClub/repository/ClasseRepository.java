@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface ClasseRepository extends JpaRepository<Classe, Long>{
     Page<Classe> findByDepartementId(Long id,Pageable pageable);
+    Boolean existsByNom(String nom);
+    Boolean existsByAbreviation(String abreviation);
 }
