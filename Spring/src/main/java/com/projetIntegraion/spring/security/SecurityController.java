@@ -1,6 +1,7 @@
 package com.projetIntegraion.spring.security;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -176,7 +177,7 @@ public class SecurityController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role,int dep,int classe, ModelMap modelMap) {
+    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role,int dep,Optional<Integer> classe, ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
             List<Role> roles = roleRepository.findAll();
             List<Departement> departements = departementRepository.findAll();
@@ -199,7 +200,7 @@ public class SecurityController {
         if (role==3) {
             UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
             ur.setDepartement(dep);
-            ur.setClasse(classe);
+            ur.setClasse(classe.get());
             userRoleRepository.save(ur);
         }
 
