@@ -187,6 +187,14 @@ public class Application implements CommandLineRunner {
 		classeRepository.save(ti2);
 		classeRepository.save(ti3);
 		classeRepository.save(ti4);
+		ur2.setClasse(Integer.parseInt(ti1.getId().toString()));
+		ur2.setDepartement(Integer.parseInt(departement.getId().toString()));
+		ur3.setClasse(Integer.parseInt(ti2.getId().toString()));
+		ur3.setDepartement(Integer.parseInt(departement.getId().toString()));
+		
+
+		userRoleRepository.save(ur2);
+		userRoleRepository.save(ur3);
 
 	}
 

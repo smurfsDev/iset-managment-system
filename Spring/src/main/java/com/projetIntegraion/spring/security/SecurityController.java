@@ -10,9 +10,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
@@ -97,6 +99,8 @@ public class SecurityController {
     private DepartementRepository departementRepository;
     @Autowired
     private UserRoleRepository userRoleRepository;
+    @Autowired
+    private ClasseRepository classeRepository;
 
     @GetMapping("/accessDenied")
     public String geterror() {
@@ -160,9 +164,11 @@ public class SecurityController {
     public String showRegister(ModelMap modelMap) {
         List<Role> roles = roleRepository.findAll();
         List<Departement> departements = departementRepository.findAll();
+        List<Classe> classes = classeRepository.findAll();
         modelMap.addAttribute("roles", roles);
         System.out.println("deps : " + departements);
         modelMap.addAttribute("deps", departements);
+        modelMap.addAttribute("classes", classes);
         modelMap.addAttribute("userForm", new UserForm());
         modelMap.addAttribute("reg", true);
 
@@ -170,13 +176,15 @@ public class SecurityController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role,int dep, ModelMap modelMap) {
+    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role,int dep,int classe, ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
             List<Role> roles = roleRepository.findAll();
             List<Departement> departements = departementRepository.findAll();
+            List<Classe> classes = classeRepository.findAll();
             modelMap.addAttribute("deps", departements);
             System.out.println(roles);
             modelMap.addAttribute("roles", roles);
+            modelMap.addAttribute("classes", classes);    
             modelMap.addAttribute("reg", true);
             modelMap.addAttribute("userForm", userForm);
             return "login";
@@ -188,6 +196,13 @@ public class SecurityController {
             ur.setDepartement(dep);
             userRoleRepository.save(ur);
         }
+        if (role==3) {
+            UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
+            ur.setDepartement(dep);
+            ur.setClasse(classe);
+            userRoleRepository.save(ur);
+        }
+
         return "redirect:/login";
     }
     // @GetMapping("/register")

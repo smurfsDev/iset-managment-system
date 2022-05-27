@@ -48,6 +48,8 @@ public class ChefDepartmentController {
         modelMap.addAttribute("listChefDepartments", listChefDepartments);
         modelMap.addAttribute("listUserRole", listUserRole);
         modelMap.addAttribute("listDepartement", listDepartement);
+        modelMap.addAttribute("pages", new int[listChefDepartments.getTotalPages()]);
+
         modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("typea","");
         modelMap.addAttribute("message", "vide");
@@ -91,6 +93,7 @@ public class ChefDepartmentController {
         modelMap.addAttribute("listChefDepartments", listChefDepartments);
         modelMap.addAttribute("listUserRole", listUserRole);
         modelMap.addAttribute("listDepartement", listDepartement);
+        modelMap.addAttribute("pages", new int[listChefDepartments.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("size", size);
 
@@ -121,6 +124,7 @@ public class ChefDepartmentController {
         modelMap.addAttribute("listChefDepartments", listChefDepartments);
         modelMap.addAttribute("listUserRole", listUserRole);
         modelMap.addAttribute("listDepartement", listDepartement);
+        modelMap.addAttribute("pages", new int[listChefDepartments.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("size", size);
 
