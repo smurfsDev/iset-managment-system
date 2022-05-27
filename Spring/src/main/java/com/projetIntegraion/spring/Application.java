@@ -3,7 +3,6 @@ package com.projetIntegraion.spring;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import java.util.Date;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
@@ -52,9 +51,6 @@ public class Application implements CommandLineRunner {
 	CategorieMaterielRepository categorieMaterielRepository;
 	@Autowired
 	MaterielRepository materielRepository;
-
-	@Autowired
-	DepartementRepository departementRepository;
 
 	@Autowired
 	DemandeCreationClubRepository demandeCreationClubRepository;
@@ -136,7 +132,6 @@ public class Application implements CommandLineRunner {
 		chefDepartmnet.setPassword(new BCryptPasswordEncoder().encode("password"));
 		chefDepartmnet.getRoles().add(role3);
 
-
 		admin = userRepository.save(admin);
 		responsable = userRepository.save(responsable);
 		student = userRepository.save(student);
@@ -146,29 +141,26 @@ public class Application implements CommandLineRunner {
 
 		// set statuses to 1
 
-		UserRole ur =  userRoleRepository.findFirstByUserId(admin.getId()).get();
+		UserRole ur = userRoleRepository.findFirstByUserId(admin.getId()).get();
 		ur.setStatus(1);
 		userRoleRepository.save(ur);
 
-		UserRole ur1 =  userRoleRepository.findFirstByUserId(responsable.getId()).get();
+		UserRole ur1 = userRoleRepository.findFirstByUserId(responsable.getId()).get();
 		ur1.setStatus(1);
 		userRoleRepository.save(ur1);
 
-		UserRole ur2 =  userRoleRepository.findFirstByUserId(student.getId()).get();
+		UserRole ur2 = userRoleRepository.findFirstByUserId(student.getId()).get();
 		ur2.setStatus(1);
 		userRoleRepository.save(ur2);
 
-		UserRole ur3 =  userRoleRepository.findFirstByUserId(student1.getId()).get();
+		UserRole ur3 = userRoleRepository.findFirstByUserId(student1.getId()).get();
 		ur3.setStatus(1);
 		userRoleRepository.save(ur3);
 
-		UserRole ur4 =  userRoleRepository.findFirstByUserId(chefDepartmnet.getId()).get();
+		UserRole ur4 = userRoleRepository.findFirstByUserId(chefDepartmnet.getId()).get();
 		ur4.setStatus(1);
 		ur4.setDepartement(5);
 		userRoleRepository.save(ur4);
-		
-		
-
 
 		DemandeCreationClub dcc = new DemandeCreationClub();
 		dcc.setNomClub("Club de l'informatique");
@@ -211,23 +203,24 @@ public class Application implements CommandLineRunner {
 		ur2.setDepartement(Integer.parseInt(departement.getId().toString()));
 		ur3.setClasse(Integer.parseInt(ti2.getId().toString()));
 		ur3.setDepartement(Integer.parseInt(departement.getId().toString()));
-		
 
 		userRoleRepository.save(ur2);
 		userRoleRepository.save(ur3);
-    
-    
-    	CategorieMateriel cat1 = new CategorieMateriel("informatique");
+
+		CategorieMateriel cat1 = new CategorieMateriel("informatique");
 		CategorieMateriel cat2 = new CategorieMateriel("bureautique");
 		CategorieMateriel cat3 = new CategorieMateriel("robotique");
 		categorieMaterielRepository.save(cat1);
 		categorieMaterielRepository.save(cat2);
 		categorieMaterielRepository.save(cat3);
 
-		Materiel mat1 = new Materiel("ordinateur", 12, "aaaaaaaa", chefDepartmnet, cat1, new ArrayList<DemandeMaterielMateriel>());
-		Materiel mat2 = new Materiel("imprimante", 12, "aaaaaaaa", chefDepartmnet, cat1, new ArrayList<DemandeMaterielMateriel>());
-		Materiel mat3 = new Materiel("scanner", 12, "aaaaaaaa", chefDepartmnet, cat2, new ArrayList<DemandeMaterielMateriel>());
-	
+		Materiel mat1 = new Materiel("ordinateur", 12, "aaaaaaaa", chefDepartmnet, cat1,
+				new ArrayList<DemandeMaterielMateriel>());
+		Materiel mat2 = new Materiel("imprimante", 12, "aaaaaaaa", chefDepartmnet, cat1,
+				new ArrayList<DemandeMaterielMateriel>());
+		Materiel mat3 = new Materiel("scanner", 12, "aaaaaaaa", chefDepartmnet, cat2,
+				new ArrayList<DemandeMaterielMateriel>());
+
 		materielRepository.save(mat1);
 		materielRepository.save(mat2);
 		materielRepository.save(mat3);
