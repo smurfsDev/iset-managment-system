@@ -139,8 +139,9 @@
                     title:'Documents',
                     icon: 'fa fa-file',
                     href: 'GererDocument',
-                    hidden: !this.isAuth
+                    hidden: !this.isChefDepartement && !this.isStudent
                 },
+
                 {
                     title: 'Reclamation',
                     href:'GererReclamation',
