@@ -30,7 +30,7 @@ class DemandeDocumentController extends Controller
           $DD = new DemandeDocument();
           $DD->Titre = "Titre";
           $DD->Description = "Description";
-          $DD->type = "type";
+          $DD->document_categories_id = "document_categories_id";
           $DD->idAdmin = "idAdmin";
           $DD->save();
           
@@ -67,7 +67,7 @@ class DemandeDocumentController extends Controller
         $DD = new DemandeDocument();
         $DD->titre = $request->input('titre');
         $DD->description = $request->input('description');
-        $DD->type = $request->input('type');
+        $DD->document_categories_id = $request->input('document_categories_id');
         $DD->idResponsable = $request->user()->id;
         $DD->save();
         return response()->json([
@@ -96,7 +96,7 @@ class DemandeDocumentController extends Controller
 
             $DDs->titre = $request->input('titre') ? $request->input('titre') : $DDs->titre;
             $DDs->description = $request->input('description') ? $request->input('description') : $DDs->description;
-            $DDs->type = $request->input('type') ? $request->input('type') : $DDs->type;
+            $DDs->document_categories_id = $request->input('document_categories_id') ? $request->input('document_categories_id') : $DDs->document_categories_id;
             $DDs->save();
             return response()->json([
                 'message' => 'Demande Document mis à jour',

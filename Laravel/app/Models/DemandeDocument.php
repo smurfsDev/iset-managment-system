@@ -12,7 +12,7 @@ class DemandeDocument extends Model
     protected $fillable = [
     'titre', 
     'description',
-    'type', 
+    'document_categories_id', 
     'idResponsable',
     'file',
     'reponse'

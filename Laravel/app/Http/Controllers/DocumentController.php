@@ -28,14 +28,14 @@ class DocumentController extends Controller
         $documents = Document::orderBy('updated_at', 'desc')->paginate(5);
         if (sizeof($documents) > 0)
             return response()->json(
-                $documents, 
+                $documents,
                 200
             );
         else
             return response()->json([], 404);
     }
 
-function createDocument(Request $request)
+    function createDocument(Request $request)
     {
         $idResponsable = $request->user()->id;
         $nom = $request->input('nom');
@@ -112,53 +112,50 @@ function createDocument(Request $request)
     public function search(Request $request)
     {
 
-        $search = $request->search??"";
-        $categorie = $request->categorie??"";
-        $class = $request->class??"";
-        $documents =[];
-        if($search==""&&$categorie=="all"&&$class=="all"){
-            $documents = Document::paginate(5);
-        }   
-        else if($categorie=="all"){
-            if ($search!=""){
-                //with('classe')->with('categorie')->
+        $search = $request->search ?? "";
+        $categorie = $request->categorie ?? "";
+        $class = $request->class ?? "";
+        $documents = [];
+        if ($search == "" && $categorie == "all" && $class == "all") {
+            $documents = Document::with('class')->with('categorie')->paginate(5);
+        } else if ($categorie == "all") {
+            if ($search != "") {
 
                 $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
-                ->where('classes_id', 'like', '%' . $class . '%')
-                ->orderBy('updated_at', 'desc')
-                ->paginate(5);
-            }else{
-                $documents = Document::with('class')->with('categorie')->where('classes_id', '=', $class )
+                    ->where('classes_id', 'like', '%' . $class . '%')
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate(5);
+            } else {
+                $documents = Document::with('class')->with('categorie')->where('classes_id', '=', $class)
                     ->orderBy('updated_at', 'desc')
                     ->paginate(5);
             }
-        }else{
-            if ($search!=""){
-                if ($class=="all"){
+        } else {
+            if ($search != "") {
+                if ($class == "all") {
                     $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
-                        ->where('document_categories_id', '=', $categorie )
+                        ->where('document_categories_id', '=', $categorie)
                         ->orderBy('updated_at', 'desc')
                         ->paginate(5);
-                }else{
+                } else {
                     $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
-                        ->where('document_categories_id', '=', $categorie )
-                        ->where('classes_id', '=',  $class )
+                        ->where('document_categories_id', '=', $categorie)
+                        ->where('classes_id', '=',  $class)
                         ->orderBy('updated_at', 'desc')
                         ->paginate(5);
                 }
-            }else{
-                if ($class=="all"){
+            } else {
+                if ($class == "all") {
                     $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
                         ->orderBy('updated_at', 'desc')
                         ->paginate(5);
-                }else{
+                } else {
                     $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
                         ->where('classes_id', 'like', '%' . $class . '%')
                         ->orderBy('updated_at', 'desc')
                         ->paginate(5);
                 }
             }
-
         }
 
         if (sizeof($documents) > 0)
