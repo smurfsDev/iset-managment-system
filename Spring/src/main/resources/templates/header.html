@@ -95,13 +95,15 @@
                 </div>
               </li>
 
-              <li>
+              <li sec:authorize="hasRole('ADMIN')">
+
                 <a th:href="@{listeChefDepartments}">
                   <i class="fa fa-user"></i>
                   <span>Liste des cd</span>
                 </a>
               </li>
 
+              <li>
                       <li class="sidebar-dropdown">
                 <a >
                   <i class="fa fa-shopping-cart"></i>
@@ -120,6 +122,12 @@
                 <a th:href="@{listeEvent}">
                   <i class="fa fa-user"></i>
                   <span>Liste des evenements</span>
+
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{classe}">
+                  <i class="fa fa-user"></i>
+                  <span>Liste des classes</span>
+
                 </a>
               </li>
               <!-- <li >
