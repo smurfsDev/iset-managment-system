@@ -9,7 +9,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="ReclamationModalLabel">Faire une Reclamation</h5>
+          <h5 class="modal-title" id="ReclamationModalLabel">
+            Faire une Reclamation
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -21,7 +23,6 @@
         <form class="mb-3" @submit.prevent="addReclamation">
           <div class="modal-body">
             <div class="form-group mb-2">
-
               <label>Titre:</label>
               <input
                 type="text"
@@ -33,30 +34,26 @@
 
               <label>Description:</label>
               <input
-             type="text"
-              class="border-0 dcc form-control"
-              placeholder="Description"
-              v-model="oldReclamation.description"
-              required="required"
-             />
+                type="text"
+                class="border-0 dcc form-control"
+                placeholder="Description"
+                v-model="oldReclamation.description"
+                required="required"
+              />
 
-               <label>Type:</label>
-               <div class="form-group">
-                <select name="type_cats_id" v-model="oldReclamation.type_cats_id">
-                  <option
-                    v-for="type in types"
-                    :key="type.id"
-                    :value="type.id"
-                  >
+              <label>Type:</label>
+              <div class="form-group">
+                <select
+                  name="type_cats_id"
+                  v-model="oldReclamation.type_cats_id"
+                >
+                  <option v-for="type in types" :key="type.id" :value="type.id">
                     {{ type.title }}
-
                   </option>
                 </select>
-              </div>  
-          
-              
-            
-        <label>Image:</label>
+              </div>
+
+              <label>Image:</label>
               <input
                 type="file"
                 class="form-control"
@@ -66,8 +63,6 @@
                 required
                 accept="image/*"
               />
-              
-
             </div>
           </div>
           <div class="modal-footer">
@@ -93,15 +88,14 @@ export default {
     oldReclamation: Object,
     edit: Boolean,
   },
- data() {
+  data() {
     return {
       types: [],
     };
   },
   emits: ["addReclamation"],
   mounted() {
-        this.fetchTypeCat();
-
+    this.fetchTypeCat();
   },
   methods: {
     addReclamation() {
@@ -121,15 +115,15 @@ export default {
     resetModal1() {
       $(".dcc").val("");
     },
-     fetchTypeCat() {
-      this.$http.get("http://localhost:8000/api/reclamationCat/all").then((response) => {
-        this.types = response.data;
-      });
+    fetchTypeCat() {
+      this.$http
+        .get("http://localhost:8000/api/reclamationCat/all")
+        .then((response) => {
+          this.types = response.data;
+        });
     },
-
   },
 };
-
 </script>
 
 <style>
