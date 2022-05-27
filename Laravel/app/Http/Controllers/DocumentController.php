@@ -35,12 +35,12 @@ class DocumentController extends Controller
             return response()->json([], 404);
     }
 
-    function createDocument(Request $request)
+function createDocument(Request $request)
     {
         $idResponsable = $request->user()->id;
         $nom = $request->input('nom');
-        $class = $request->input('classes_id');
-        $categorie = $request->input('document_categories_id');
+        $class = $request->input('classe');
+        $categorie = $request->input('categorie');
         $file = $request->input('file');
 
         $newDocument = array(
@@ -91,9 +91,9 @@ class DocumentController extends Controller
         if ($documents) {
 
             $documents->nom = $request->input('nom') ? $request->input('nom') : $documents->nom;
-            $documents->classes_id = $request->input('classes_id') ? $request->input('classes_id') : $documents->class;
+            $documents->classes_id = $request->input('classes_id') ? $request->input('classe') : $documents->class;
             $documents->file = $request->input('file') ? $request->input('file') : $documents->file;
-            $documents->document_categories_id = $request->input('document_categories_id') ? $request->input('document_categories_id') : $documents->categorie;
+            $documents->document_categories_id = $request->input('categorie') ? $request->input('document_categories_id') : $documents->categorie;
 
             $documents->save();
             return response()->json([
@@ -103,7 +103,7 @@ class DocumentController extends Controller
             ], 201);
         } else {
             return response()->json([
-                "Document n existe pas"
+                "Document n'existe pas"
             ], 404);
         }
     }
@@ -123,24 +123,24 @@ class DocumentController extends Controller
             if ($search!=""){
                 //with('classe')->with('categorie')->
 
-                $documents = Document::where('nom', 'like', '%' . $search . '%')
+                $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
                 ->where('classes_id', 'like', '%' . $class . '%')
                 ->orderBy('updated_at', 'desc')
                 ->paginate(5);
             }else{
-                $documents = Document::where('classes_id', '=', $class )
+                $documents = Document::with('class')->with('categorie')->where('classes_id', '=', $class )
                     ->orderBy('updated_at', 'desc')
                     ->paginate(5);
             }
         }else{
             if ($search!=""){
                 if ($class=="all"){
-                    $documents = Document::where('nom', 'like', '%' . $search . '%')
+                    $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
                         ->where('document_categories_id', '=', $categorie )
                         ->orderBy('updated_at', 'desc')
                         ->paginate(5);
                 }else{
-                    $documents = Document::where('nom', 'like', '%' . $search . '%')
+                    $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
                         ->where('document_categories_id', '=', $categorie )
                         ->where('classes_id', '=',  $class )
                         ->orderBy('updated_at', 'desc')
@@ -148,11 +148,11 @@ class DocumentController extends Controller
                 }
             }else{
                 if ($class=="all"){
-                    $documents = Document::where('document_categories_id', 'like', '%' . $categorie . '%')
+                    $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
                         ->orderBy('updated_at', 'desc')
                         ->paginate(5);
                 }else{
-                    $documents = Document::where('document_categories_id', 'like', '%' . $categorie . '%')
+                    $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
                         ->where('classes_id', 'like', '%' . $class . '%')
                         ->orderBy('updated_at', 'desc')
                         ->paginate(5);
