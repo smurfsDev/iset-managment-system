@@ -51,8 +51,6 @@ public class ChefDepartmentController {
         modelMap.addAttribute("pages", new int[listChefDepartments.getTotalPages()]);
 
         modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("typea","");
-        modelMap.addAttribute("message", "vide");
         modelMap.addAttribute("size", size);
 
         return "admin/gererChefDepartments/listeChefDepartments";
@@ -70,34 +68,22 @@ public class ChefDepartmentController {
             if (userRole1.isPresent()){
                 userRole.get().setStatus(3);
                 userRoleRepository.save(userRole.get());
-                modelMap.addAttribute("typea","danger");
-                modelMap.addAttribute("message", "La departement admet deja un chef de departement, Demande va etre rejeter");
+                modelMap.addAttribute("type","danger");
+                modelMap.addAttribute("msg", "La departement admet deja un chef de departement, Demande va etre rejeter");
 
 
             }else{
                 userRole.get().setStatus(1);
                 userRoleRepository.save(userRole.get());
-                modelMap.addAttribute("typea","success");
-                modelMap.addAttribute("message", "Le chef de département a été accepté");
+                modelMap.addAttribute("type","success");
+                modelMap.addAttribute("msg", "Le chef de département a été accepté");
             }
     
         }else{
-            modelMap.addAttribute("typea","danger");
-            modelMap.addAttribute("message", "Une erreur est survenue");
+            modelMap.addAttribute("type","danger");
+            modelMap.addAttribute("msg", "Une erreur est survenue");
         }
-        Page<User> listChefDepartments = userRepository.findByRolesId(4L, PageRequest.of(page, size));
-        Set<Integer> ids = listChefDepartments.stream().map(u -> u.getId())
-                .collect(java.util.stream.Collectors.toSet());
-        List<UserRole> listUserRole = userRoleRepository.findByUserIdInAndRoleId(ids, 4L);
-        List<Departement> listDepartement = departementRepository.findAll();
-        modelMap.addAttribute("listChefDepartments", listChefDepartments);
-        modelMap.addAttribute("listUserRole", listUserRole);
-        modelMap.addAttribute("listDepartement", listDepartement);
-        modelMap.addAttribute("pages", new int[listChefDepartments.getTotalPages()]);
-        modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("size", size);
-
-        return "admin/gererChefDepartments/listeChefDepartments";
+       return this.showAll(modelMap, page, size);
     }
 
     @GetMapping(value = "/declineCD")
@@ -109,26 +95,15 @@ public class ChefDepartmentController {
         if (userRole.isPresent()) {
             userRole.get().setStatus(2);
             userRoleRepository.save(userRole.get());
-            modelMap.addAttribute("typea","success");
-            modelMap.addAttribute("message", "Le chef de département a été refusée");
+            modelMap.addAttribute("type","success");
+            modelMap.addAttribute("msg", "Le chef de département a été refusée");
     
         }else{
-            modelMap.addAttribute("typea","danger");
-            modelMap.addAttribute("message", "Une erreur est survenue");
+            modelMap.addAttribute("type","danger");
+            modelMap.addAttribute("msg", "Une erreur est survenue");
         }
-        Page<User> listChefDepartments = userRepository.findByRolesId(4L, PageRequest.of(page, size));
-        Set<Integer> ids = listChefDepartments.stream().map(u -> u.getId())
-                .collect(java.util.stream.Collectors.toSet());
-        List<UserRole> listUserRole = userRoleRepository.findByUserIdInAndRoleId(ids, 4L);
-        List<Departement> listDepartement = departementRepository.findAll();
-        modelMap.addAttribute("listChefDepartments", listChefDepartments);
-        modelMap.addAttribute("listUserRole", listUserRole);
-        modelMap.addAttribute("listDepartement", listDepartement);
-        modelMap.addAttribute("pages", new int[listChefDepartments.getTotalPages()]);
-        modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("size", size);
+        return this.showAll(modelMap, page, size);
 
-        return "admin/gererChefDepartments/listeChefDepartments";
     }
 
 
