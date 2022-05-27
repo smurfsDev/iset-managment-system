@@ -165,11 +165,17 @@ public class ClasseController {
 
     @RequestMapping("/updateClass")
     public String updateClass(ModelMap modelMap,
-            @Valid Classe classe,
+            Classe classe,
             BindingResult bindingResult,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             HttpServletRequest request) throws IOException {
+                if(classe.getAbreviation().length() < 3 || classe.getAbreviation().length()>50){
+                        bindingResult.rejectValue("abreviation", "abreviation.size", "Abreviation doit contenir entre 3 et 50 caractères");
+                }
+                if(classe.getNom().length() < 3 || classe.getNom().length()>50){
+                        bindingResult.rejectValue("nom", "nom.size", "Nom doit contenir entre 3 et 50 caractères");
+                }
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.classe", bindingResult);
             modelMap.addAttribute("classe", classe);
