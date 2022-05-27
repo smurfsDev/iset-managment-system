@@ -23,4 +23,10 @@ class DemandeDocument extends Model
     {
         return $this->belongsTo('App\Models\User', 'idResponsable');
     }
+
+    public function categorie()   
+    {
+        return $this->belongsTo('App\Models\DocumentCategorie', 'document_categories_id');
+    }
+
 }
