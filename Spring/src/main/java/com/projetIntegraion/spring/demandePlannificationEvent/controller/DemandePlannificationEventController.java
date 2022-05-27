@@ -51,7 +51,7 @@ public class DemandePlannificationEventController {
             modelMap.addAttribute("DE", listDemandeEvent);
             modelMap.addAttribute("currentPage", page);
             modelMap.addAttribute("size", size);
-            return "demandeEvent/list";
+            return "DemandeEvent/list";
         }
 
         Page<DemandeEvent> listDemandeEvent = DemandeEventService.getAllDemandeEventParPage(page, size);
@@ -59,7 +59,7 @@ public class DemandePlannificationEventController {
         modelMap.addAttribute("pages", new int[listDemandeEvent.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
 
-        return "demandeEvent/list";
+        return "DemandeEvent/list";
     }
 
     @RequestMapping("/showCreateDE")
@@ -71,7 +71,7 @@ public class DemandePlannificationEventController {
         modelMap.addAttribute("pages",
                 new int[DemandeEventService.getAllDemandeEventParPage(page, size).getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
-        return "demandeEvent/form";
+        return "DemandeEvent/form";
     }
 
     @RequestMapping("/saveDE")
@@ -84,13 +84,14 @@ public class DemandePlannificationEventController {
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.DE", bindingResult);
             modelMap.addAttribute("DE", DE);
-            return "demandeEvent/form";
+            return "DemandeEvent/form";
         } else {
             DemandeEvent de = new DemandeEvent();
             de.setNomEvent(DE.getNomEvent());
             de.setStatus(0);
             de.setDescription(DE.getDescription());
             de.setAdmin(null);
+            de.setDateEvent(DE.getDateEvent());
             Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
             de.setResponsableClub(this.getUser(request));
             de.setClub(club);
@@ -130,7 +131,7 @@ public class DemandePlannificationEventController {
         modelMap.addAttribute("edit", true);
         modelMap.addAttribute("pages",
                 new int[DemandeEventService.getAllDemandeEventParPage(page, size).getTotalPages()]);
-        return "demandeEvent/form";
+        return "DemandeEvent/form";
     }
 
     @RequestMapping("/updateDE")
@@ -144,7 +145,7 @@ public class DemandePlannificationEventController {
             modelMap.addAttribute("org.springframework.validation.BindingResult.DE", bindingResult);
             modelMap.addAttribute("DE", DE);
             modelMap.addAttribute("edit", true);
-            return "demandeEvent/form";
+            return "DemandeEvent/form";
         } else {
             DemandeEvent de = new DemandeEvent();
             de.setId(DE.getId());
@@ -152,6 +153,7 @@ public class DemandePlannificationEventController {
             de.setStatus(0);
             de.setDescription(DE.getDescription());
             de.setAdmin(null);
+            de.setDateEvent(DE.getDateEvent());
             Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
             de.setResponsableClub(this.getUser(request));
             de.setClub(club);
