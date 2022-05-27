@@ -13,7 +13,7 @@ class Document extends Model
     protected $table = 'documents';
     protected $fillable = [
         'nom', 
-        'class_id', 
+        'classes_id', 
         'document_categories_id', 
         'file', 
         'idResponsable'
@@ -24,9 +24,8 @@ class Document extends Model
         return $this->belongsTo('App\Models\TypeCat', 'document_categories_id',);
     }
 
-    public function classe()
-    {
-        return $this->belongsTo('App\Models\Classe', 'class_id');
+    public function class(){
+        return $this->belongsTo('App\Models\Classe', 'classes_id');
     }
     
 }
