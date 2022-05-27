@@ -20,6 +20,7 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
     Optional<UserRole> findFirstByUserId(int userId);
 
     List<UserRole> findByUserIdInAndRoleId(Set<Integer> userId, Long roleId);
+    List<UserRole> findByUserIdInAndRoleIdAndDepartement(Set<Integer> userId, Long roleId, int departmentId);
     Optional<UserRole> findByRoleIdAndDepartementAndStatus(Long roleId, int department, int status);
 
         
