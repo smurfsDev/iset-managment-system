@@ -50,12 +50,24 @@ public class DemandeSalleController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         Page<DemandeSalle> listDemandeSalle = demandeSalleService
-                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request).getId(), page, size);
+                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
+        modelMap.addAttribute("demandeSalle", listDemandeSalle);
+        modelMap.addAttribute("pages", new int[listDemandeSalle.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        return "demandeSalle/list";
+    }
+
+    @RequestMapping("/listeDsDestinataire")
+    public String getMesDemandeSalle(ModelMap modelMap, HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Page<DemandeSalle> listDemandeSalle = demandeSalleService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request).getId(), page, size);
         modelMap.addAttribute("demandeSalle", listDemandeSalle);
 
         modelMap.addAttribute("pages", new int[listDemandeSalle.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
-        return "demandeSalle/list";
+        return "demandeSalle/mesDemandes";
     }
 
     @RequestMapping("/ShowcreateDS")
@@ -117,18 +129,22 @@ public class DemandeSalleController {
             DemandeSalleSalle dms = new DemandeSalleSalle();
             dm.setDateEmploi(demandeSalle.getDateEmploi());
             dm.setDateDeRemise(demandeSalle.getDateDeRemise());
-            dm.setIdResponsable(this.getUser(request).getId());
+            dm.setResponsable(this.getUser(request));
             dms.setDemandeSalle(dm);
             dms.setSalle(salleService.getSalleById(salle));
             demandeSalleService.save(dm);
             demandeSalleSalleRepository.save(dms);
             dm = demandeSalleService.save(dm);
-            modelMap.addAttribute("demandeSalle", new DemandeSalle());
+            // modelMap.addAttribute("demandeSalle", new DemandeSalle());
             modelMap.addAttribute("msg", "Demande de Salle enregistrée avec succès");
             modelMap.addAttribute("type", "success");
+            Page<DemandeSalle> listDemandeSalle = demandeSalleService
+                    .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
+            modelMap.addAttribute("demandeSalle", listDemandeSalle);
             modelMap.addAttribute("pages",
                     new int[demandeSalleService.getAllDemandeSalleParPage(page, size).getTotalPages()]);
-            return this.getDemandeSalle(modelMap, request, page, size);
+
+            return "redirect:/listeDS?page=" + page + "&size=" + size;
         }
     }
 
@@ -154,7 +170,7 @@ public class DemandeSalleController {
             dm.setId(demandeSalle.getId());
             dm.setDateEmploi(demandeSalle.getDateEmploi());
             dm.setDateDeRemise(demandeSalle.getDateDeRemise());
-            dm.setIdResponsable(this.getUser(request).getId());
+            dm.setResponsable(this.getUser(request));
             // dm.setSalle((demandeSalle.getSalle()));
             dms.setSalle(salleService.getSalleById(salle));
             dm = demandeSalleService.save(dm);
@@ -164,14 +180,14 @@ public class DemandeSalleController {
             modelMap.addAttribute("type", "success");
             modelMap.addAttribute("pages",
                     new int[demandeSalleService.getAllDemandeSalleParPage(page, size).getTotalPages()]);
-            // return this.getDemandeSalle(modelMap, page, size);
-            // redirectTo
+
             return "redirect:/listeDS?page=" + page + "&size=" + size;
         }
     }
 
     @RequestMapping("/deleteDS")
-    public String deleteDS(ModelMap modelMap, Long id, HttpServletRequest request,
+    public String deleteDS(ModelMap modelMap, Long id,
+            HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         DemandeSalle demandeSalle = demandeSalleService.getDemandeSalleById(id);
@@ -181,6 +197,63 @@ public class DemandeSalleController {
         modelMap.addAttribute("pages",
                 new int[demandeSalleService.getAllDemandeSalleParPage(page, size).getTotalPages()]);
         return this.getDemandeSalle(modelMap, request, page, size);
+    }
+
+    @RequestMapping("setReponseDS")
+    public String setReponseDS(ModelMap modelMap, Long idDemande, String reponse,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeSalle demandeSalle = demandeSalleService.getDemandeSalleById(idDemande);
+        demandeSalle.setReponse(reponse);
+        demandeSalleService.save(demandeSalle);
+        modelMap.addAttribute("msg", "Demande de Salle modifiée avec succès");
+        modelMap.addAttribute("type", "success");
+        Page<DemandeSalle> listDemandeSalle = demandeSalleService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request).getId(), page, size);
+        modelMap.addAttribute("demandeSalle", listDemandeSalle);
+
+        modelMap.addAttribute("pages", new int[listDemandeSalle.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        return "demandeSalle/mesDemandes";
+    }
+
+    @RequestMapping("/approveDS")
+    public String approveDS(ModelMap modelMap, Long id,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeSalle demandeSalle = demandeSalleService.getDemandeSalleById(id);
+        demandeSalle.setStatus(1);
+        demandeSalleService.save(demandeSalle);
+        modelMap.addAttribute("msg", "Demande de Salle acceptée avec succès");
+        modelMap.addAttribute("type", "success");
+        Page<DemandeSalle> listDemandeSalle = demandeSalleService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request).getId(), page, size);
+        modelMap.addAttribute("demandeSalle", listDemandeSalle);
+
+        modelMap.addAttribute("pages", new int[listDemandeSalle.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        return "demandeSalle/mesDemandes";
+    }
+
+    @RequestMapping("/refuseDS")
+    public String refuseDS(ModelMap modelMap, Long id,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        DemandeSalle demandeSalle = demandeSalleService.getDemandeSalleById(id);
+        demandeSalle.setStatus(2);
+        demandeSalleService.save(demandeSalle);
+        modelMap.addAttribute("msg", "Demande de Salle refusée avec succès");
+        modelMap.addAttribute("type", "success");
+        Page<DemandeSalle> listDemandeSalle = demandeSalleService
+                .getAllDemandeSalleParPageParDestinataire(this.getUser(request).getId(), page, size);
+        modelMap.addAttribute("demandeSalle", listDemandeSalle);
+
+        modelMap.addAttribute("pages", new int[listDemandeSalle.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        return "demandeSalle/mesDemandes";
     }
 
 }
