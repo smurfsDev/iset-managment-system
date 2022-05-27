@@ -91,15 +91,15 @@ public class Application implements CommandLineRunner {
 		User cdi = new User();
 		cdi.setUsername("cdi@example.com");
 		cdi.setPassword(new BCryptPasswordEncoder().encode("password"));
-		cdi.getRoles().add(role1);
+		cdi.getRoles().add(role3);
 		User cdm = new User();
 		cdm.setUsername("cdm@example.com");
 		cdm.setPassword(new BCryptPasswordEncoder().encode("password"));
-		cdm.getRoles().add(role1);
+		cdm.getRoles().add(role3);
 		User cde = new User();
 		cde.setUsername("cde@example.com");
 		cde.setPassword(new BCryptPasswordEncoder().encode("password"));
-		cde.getRoles().add(role1);
+		cde.getRoles().add(role3);
 
 		userRepository.save(admin);
 		userRepository.save(responsable);
