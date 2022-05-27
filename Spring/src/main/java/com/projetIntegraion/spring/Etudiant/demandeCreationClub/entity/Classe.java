@@ -7,6 +7,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.annotation.uniqueClassAbv;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.annotation.uniqueClassName;
 import com.projetIntegraion.spring.administrateur.departement.entity.Departement;
 
 
@@ -15,9 +17,11 @@ public class Classe {
     private @Id @GeneratedValue Long id;
     @NotNull
 	@Size(min = 3, max = 50)
+    @uniqueClassAbv
 	private String abreviation;
 
     @NotNull
+    @uniqueClassName
 	@Size(min = 3, max = 50)
 	private String nom;
 
