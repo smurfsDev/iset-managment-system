@@ -12,15 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CategorieMaterielControler {
-    @Autowired  
+    @Autowired
     private CategorieMaterielService CategorieMaterielService;
-    
-    @RequestMapping("/categorieMateriel")
-    public String getCategorieMateriel (ModelMap modelMap) {
-        List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
-        modelMap.addAttribute("CM", listCategorieMateriel);
-        return "demandeMateriel/form";
-    }
-    
 
 }
