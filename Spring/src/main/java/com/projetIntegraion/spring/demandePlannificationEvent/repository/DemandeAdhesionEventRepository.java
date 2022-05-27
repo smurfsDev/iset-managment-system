@@ -17,6 +17,6 @@ public interface DemandeAdhesionEventRepository extends JpaRepository<DemandeAdh
     Page<DemandeAdhesionEvent> findByEtudiantId(int id, Pageable pageable);
     Page<DemandeAdhesionEvent> findByClubId(Long id, Pageable pageable);
 
-    @Query("select e from DemandeAdhesionEvent e where e.status = 0")
-	Page<DemandeAdhesionEvent> findNonApprouvedDemandes(Pageable pageable); 
+    @Query("select e from DemandeAdhesionEvent e where e.status = 0 and e.club = ?1")
+	Page<DemandeAdhesionEvent> findNonApprouvedDemandesParClub(Long id,Pageable pageable); 
 }
