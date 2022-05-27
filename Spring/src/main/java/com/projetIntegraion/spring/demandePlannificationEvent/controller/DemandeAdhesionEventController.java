@@ -1,6 +1,7 @@
 package com.projetIntegraion.spring.demandePlannificationEvent.controller;
 
 import java.security.Principal;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -129,6 +130,21 @@ public class DemandeAdhesionEventController {
                     modelMap.addAttribute("introuvable", 1);
                 }
         return "demandeAdhesion/list";
+    }
+    @RequestMapping("/listeDemande")
+    public String showDemandesParCLub(ModelMap modelMap,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        
+        Optional<Club> c =clubService.getClubParResponsable(this.getUser(request).getId());
+        
+        Page<DemandeAdhesionEvent> listEvent = demandeAdhesionEventService.findNonApprouvedDemandesParClub(c.get(),page, size);
+        modelMap.addAttribute("DEMANDES", listEvent);
+        modelMap.addAttribute("pages", new int[listEvent.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+
+        return "ResponsedemandeAdhesionEvent/list";
     }
     
 

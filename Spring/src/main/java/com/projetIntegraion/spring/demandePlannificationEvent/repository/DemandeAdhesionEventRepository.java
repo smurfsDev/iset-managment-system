@@ -1,5 +1,6 @@
 package com.projetIntegraion.spring.demandePlannificationEvent.repository;
 
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeAdhesionEvent;
 
 
@@ -18,5 +19,5 @@ public interface DemandeAdhesionEventRepository extends JpaRepository<DemandeAdh
     Page<DemandeAdhesionEvent> findByClubId(Long id, Pageable pageable);
 
     @Query("select e from DemandeAdhesionEvent e where e.status = 0 and e.club = ?1")
-	Page<DemandeAdhesionEvent> findNonApprouvedDemandesParClub(Long id,Pageable pageable); 
+	Page<DemandeAdhesionEvent> findNonApprouvedDemandesParClub(Club id,Pageable pageable); 
 }

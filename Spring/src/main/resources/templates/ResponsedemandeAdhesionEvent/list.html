@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Liste des demandes</title>
+</head>
+
+<body>
+
+    <div layout:fragment="Mycontent">
+        <div class="">
+            <div class="row my-4">
+                <div class="col">
+                    <h1 class="text-center">Liste des demandes</h1>
+                </div>
+            </div>
+            <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">club Creation Club deleted</div>
+            <div th:if="${add==1}" class="my-4 alert alert-success" role="alert">Demande envoyée avec success</div>
+            <div class="row my-4">
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <th>ID</th>
+                        <th>Nom etudiant</th>
+                        <th>Evenement</th>
+                        
+                        <th sec:authorize="hasRole('RESPONSABLE')">Actions</th>
+                    </thead>
+                    <tr th:if="${#arrays.isEmpty(DEMANDES.content)}">
+						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
+					<tr th:each="d:${DEMANDES.content}">
+                        <td th:text="${d.id}"></td>
+                        <td th:text="${d.etudiant.username}"></td>
+                         <td th:text="${d.event.nomEvent}"></td>
+
+                        <!-- <td  sec:authorize="hasRole('RESPONSABLE')"  >
+                            <div th:if="${dac.status!=1}">
+                                <a th:class="${dac.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{acceptDac(id=${dac.id},page=${currentPage},size=${param.size})}">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                                <a th:class="${dac.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineDac(id=${dac.id},page=${currentPage},size=${param.size})}">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            <div class="text-success" th:if="${dac.status==1}">
+                                dac acceptée
+                            </div>
+                        </td> -->
+
+                        
+					</tr>
+				</table>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}"><a
+							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+							th:href="@{ listeClub(page=${status.index}, size=${param.size} ) }" 
+							th:text="${status.index+1 }"></a></li>
+				</ul>
+			</div>
+		</div>
+    </div>
+</body>
+
+</html>

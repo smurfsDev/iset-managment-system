@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.demandePlannificationEvent.service;
 
 import java.util.List;
 
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeAdhesionEvent;
 import com.projetIntegraion.spring.demandePlannificationEvent.repository.DemandeAdhesionEventRepository;
 
@@ -65,7 +66,7 @@ public class DemandeAdhesionEventService {
 		return DemandeAdhesionEventRepository.findByClubId(id, PageRequest.of(page, size));
 	};
 
-	public Page<DemandeAdhesionEvent> findNonApprouvedDemandes(Long id,int page, int size){
+	public Page<DemandeAdhesionEvent> findNonApprouvedDemandesParClub(Club id,int page, int size){
 		return DemandeAdhesionEventRepository.findNonApprouvedDemandesParClub(id, PageRequest.of(page, size));
 	} 
 
