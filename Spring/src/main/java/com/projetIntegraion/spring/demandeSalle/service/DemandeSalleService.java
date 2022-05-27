@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.demandeSalle.service;
 
 import java.util.List;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.demandeSalle.entity.DemandeSalle;
 import com.projetIntegraion.spring.demandeSalle.repository.DemandeSalleRepository;
 
@@ -46,8 +47,12 @@ public class DemandeSalleService {
         return demandeSalleRepository.findAll(PageRequest.of(page, size));
     }
 
-    public Page<DemandeSalle> getAllDemandeSalleParPageParResponsableClub(Integer id, int page, int size) {
-        return demandeSalleRepository.findByIdResponsable(id, PageRequest.of(page, size));
+    public Page<DemandeSalle> getAllDemandeSalleParPageParResponsableClub(User user, int page, int size) {
+        return demandeSalleRepository.findByResponsable(user, PageRequest.of(page, size));
+    }
+
+    public Page<DemandeSalle> getAllDemandeSalleParPageParDestinataire(Integer id, int page, int size) {
+        return demandeSalleRepository.findByDestinataire(id, PageRequest.of(page, size));
     }
 
 }
