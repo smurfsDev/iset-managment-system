@@ -14,6 +14,7 @@ import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
 import com.projetIntegraion.spring.demandeMateriel.repository.demandeMaterielRepository;
 import com.projetIntegraion.spring.demandeMateriel.service.CategorieMaterielService;
 import com.projetIntegraion.spring.demandeMateriel.service.DemandeMaterielService;
+import com.projetIntegraion.spring.demandeMateriel.service.MaterielService;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class DemandeMaterielController {
         @Autowired
         private demandeMaterielRepository DemandeMaterielRepository;
         @Autowired
+        private MaterielService materielService;
+        @Autowired
         private UserRepository userRepository;
 
         public User getUser(HttpServletRequest request) {
@@ -49,7 +52,7 @@ public class DemandeMaterielController {
                         @RequestParam(name = "page", defaultValue = "0") int page,
                         @RequestParam(name = "size", defaultValue = "2") int size) {
                 Page<DemandeMateriel> listDm = DemandeMaterielService
-                                .getAllDemandeMaterielParPageParDestinataire(this.getUser(request), page, size);
+                                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
                 modelMap.addAttribute("Dmms", listDm);
                 modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
                 modelMap.addAttribute("currentPage", page);
@@ -88,7 +91,7 @@ public class DemandeMaterielController {
                 modelMap.addAttribute("CM", listCategorieMateriel);
 
                 System.out.println(listCategorieMateriel);
-                List<User> listUser = UserServise.getAllUser();
+                List<User> listUser = materielService.getAllResponsableMateriel();
                 modelMap.addAttribute("Users", listUser);
 
                 modelMap.addAttribute("pages",
@@ -118,7 +121,9 @@ public class DemandeMaterielController {
 
                 List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
                 modelMap.addAttribute("CM", listCategorieMateriel);
-                List<User> listUser = UserServise.getAllUser();
+                // List<User> listUser = UserServise.getAllUser();
+                // modelMap.addAttribute("Users", listUser);
+                List<User> listUser = materielService.getAllResponsableMateriel();
                 modelMap.addAttribute("Users", listUser);
                 modelMap.addAttribute("edit", true);
                 modelMap.addAttribute("pages",
@@ -144,9 +149,10 @@ public class DemandeMaterielController {
                         System.out.println(listCategorieMateriel);
                         modelMap.addAttribute("CM", listCategorieMateriel);
 
-                        List<User> listUser = UserServise.getAllUser();
+                        // List<User> listUser = UserServise.getAllUser();
+                        // modelMap.addAttribute("Users", listUser);
+                        List<User> listUser = materielService.getAllResponsableMateriel();
                         modelMap.addAttribute("Users", listUser);
-
                         return "/demandeMateriel/form";
                 } else {
                         DemandeMateriel dm = new DemandeMateriel();
@@ -180,7 +186,9 @@ public class DemandeMaterielController {
                         modelMap.addAttribute("Dmm", Dmm);
                         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
                         modelMap.addAttribute("CM", listCategorieMateriel);
-                        List<User> listUser = UserServise.getAllUser();
+                        // List<User> listUser = UserServise.getAllUser();
+                        // modelMap.addAttribute("Users", listUser);
+                        List<User> listUser = materielService.getAllResponsableMateriel();
                         modelMap.addAttribute("Users", listUser);
                         modelMap.addAttribute("edit", true);
                         return "/demandeMateriel/form";
