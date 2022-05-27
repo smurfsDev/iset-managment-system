@@ -82,7 +82,7 @@ export default {
 
   methods: {
     fetchTypecat(
-      page_url = "http://127.0.0.1:8000/api/Typecat/"
+      page_url = "http://127.0.0.1:8000/api/reclamationCat"
     ) {
       let vm = this;
       this.$http.get(page_url)
@@ -100,7 +100,7 @@ export default {
       this.pagination = {
         current_page: meta.current_page,
         current_page_url:
-          "http://localhost:8000/api/Typecat?page=" + meta.current_page,
+          "http://localhost:8000/api/reclamationCat?page=" + meta.current_page,
         last_page: meta.last_page,
         next_page_url: meta.next_page_url,
         prev_page_url: meta.prev_page_url,
@@ -110,7 +110,7 @@ export default {
     deleteTypecat(id) {
       if (confirm("Delete Typecat " + id)) {
         this.show = true;
-        this.$http.delete("http://localhost:8000/api/Typecat/" + id)
+        this.$http.delete("http://localhost:8000/api/reclamationCat/" + id)
         .then(() => {
           this.fetchTypecat();
             this.alert.variant = "danger";
@@ -128,7 +128,7 @@ export default {
       
       this.show = true;
       if (!this.edit) {
-       this.$http.post('http://localhost:8000/api/Typecat',
+       this.$http.post('http://localhost:8000/api/reclamationCat',
         (Typecat))
         .then((data) => {
           data = data.data;
@@ -149,7 +149,7 @@ export default {
             this.fetchTypecat();
         });
       } else {
-        this.$http.put("http://localhost:8000/api/Typecat/" + Typecat.id,
+        this.$http.put("http://localhost:8000/api/reclamationCat/" + Typecat.id,
         (Typecat))
         .then(() => {
           this.fetchTypecat();
