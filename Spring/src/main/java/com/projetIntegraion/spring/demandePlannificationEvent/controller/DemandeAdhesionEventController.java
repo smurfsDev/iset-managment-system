@@ -130,25 +130,31 @@ public class DemandeAdhesionEventController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size,
             ModelMap modelMap) {
-                if (demandeAdhesionEventService.existsByIds(id,this.getUser(request).getId())) {
-                    DemandeAdhesionEvent d=  demandeAdhesionEventService.getByIds(id, this.getUser(request).getId());
-                    //demandeEventService.deleteById(id);
+                // if (demandeAdhesionEventService.existsByIds(id,this.getUser(request).getId())) {
+                //     DemandeAdhesionEvent d=  demandeAdhesionEventService.getByIds(id, this.getUser(request).getId());
+                //     //demandeEventService.deleteById(id);
                    
-                    demandeAdhesionEventService.deleteById(d.getId());
-                    Page<DemandeEvent> DE = demandeEventService.findApprouvedEvent(page, size);
-                    modelMap.addAttribute("DE", DE);
-                    modelMap.addAttribute("pages", new int[DE.getTotalPages()]);
-                    modelMap.addAttribute("currentPage", page);
-                    modelMap.addAttribute("del", 1);
+                //     demandeAdhesionEventService.deleteById(d.getId());
+                //     Page<DemandeEvent> DE = demandeEventService.findApprouvedEvent(page, size);
+                //     modelMap.addAttribute("DE", DE);
+                //     modelMap.addAttribute("pages", new int[DE.getTotalPages()]);
+                //     modelMap.addAttribute("currentPage", page);
+                //     modelMap.addAttribute("del", 1);
                     
-                }
-                else {
-                    Page<DemandeEvent> DE = demandeEventService.findApprouvedEvent(page, size);
-                    modelMap.addAttribute("DE", DE);
-                    modelMap.addAttribute("pages", new int[DE.getTotalPages()]);
-                    modelMap.addAttribute("currentPage", page);
-                    modelMap.addAttribute("introuvable", 1);
-                }
+                // }
+                // else {
+                //     Page<DemandeEvent> DE = demandeEventService.findApprouvedEvent(page, size);
+                //     modelMap.addAttribute("DE", DE);
+                //     modelMap.addAttribute("pages", new int[DE.getTotalPages()]);
+                //     modelMap.addAttribute("currentPage", page);
+                //     modelMap.addAttribute("introuvable", 1);
+                // }
+                demandeAdhesionEventService.deleteById(id);
+                Page<DemandeAdhesionEvent> Dacs = demandeAdhesionEventService.getAllDemandeAdhesionEventParPageEtudiant(this.getUser(request).getId(), page, size);
+                modelMap.addAttribute("DE", Dacs);
+                modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+                modelMap.addAttribute("currentPage", page);
+                modelMap.addAttribute("del", 1);
         return "demandeAdhesion/list";
     }
     @RequestMapping("/listeDemande")

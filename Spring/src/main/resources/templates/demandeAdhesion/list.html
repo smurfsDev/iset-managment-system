@@ -54,7 +54,7 @@
                         <td th:text="${demande.description}"></td>
                         <td th:text="${#dates.format(demande.dateEvent, 'yyyy-MM-dd')}"></td>
                         <td th:text="${demande.club.nomClub}"></td>
-                        <td>
+                        <td sec:authorize="hasRole('STUDENT')">
                             <a class="btn btn-success" th:href="@{joinEvent(id=${demande.id},
                             page=${currentPage},size=${param.size})}"
                             >
@@ -63,11 +63,7 @@
                         </td>
                         
 						<td  sec:authorize="hasRole('STUDENT')" >
-                            <a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDA(id=${demande.id},
-								page=${currentPage},size=${param.size})}"
-                                >
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
+                           
                             <!-- <a class="btn btn-warning " th:href="@{modifierDE(id=${demande.id},
 								page=${currentPage},size=${param.size})}"
                                 th:class="${demande.status!=0?'btn btn-warning disabled ':'' }">
