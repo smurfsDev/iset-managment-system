@@ -7,59 +7,62 @@ use Illuminate\Http\Request;
 
 class TypeCatController extends Controller
 {
-     public function get (){
-        $categories = TypeCat::all();
-       if($categories->isEmpty()){
-           return response()->json(['message' => 'Aucune catégorie de document n\'est disponible'], 404);
+    public function get()
+    {
+        $type = TypeCat::all();
+        if ($type->isEmpty()) {
+            return response()->json(['message' => 'Aucune catégorie de document n\'est disponible'], 404);
         }
-        return response()->json($categories, 200);
-}
-      public function showDocumentCategorie(){
-        $DC = TypeCat::orderBy("updated_at","desc")->paginate(5);
-        if(sizeof($DC)>0){
-        return response()->json(["data"=>$DC], 200);
-        }
-        else
+        return response()->json($type, 200);
+    }
+    public function showTypeCat()
+    {
+        $TC = TypeCat::orderBy("updated_at", "desc")->paginate(5);
+        if (sizeof($TC) > 0) {
+            return response()->json(["data" => $TC], 200);
+        } else
             return response()->json([
                 "aucune Categorie"
             ], 404);
     }
 
-     function createDocumentCategorie(Request $request){
+    function createTypeCat(Request $request)
+    {
         $idResponsable = $request->user()->id;
         $title = $request->input('title');
-        
-        $newDC= array(
+
+        $newTC = array(
             "title" => $title,
             "idResponsable" => $idResponsable
         );
 
-         $createNewDC = TypeCat::create($newDC);
+        $createNewTC = TypeCat::create($newTC);
 
-        if ($createNewDC) {
+        if ($createNewTC) {
             return response()->json([
                 'data' => [
                     'message' => 'Categorie Ajouté avec succès',
-                    'id' => $createNewDC->id,
-                    'attributes' => $createNewDC
+                    'id' => $createNewTC->id,
+                    'attributes' => $createNewTC
                 ]
             ], 201);
         }
         return "Categorie Ajouté avec succès";
-}
+    }
 
- public function updateDocumentCategorie($id, Request $request){
+    public function updateTypeCat($id, Request $request)
+    {
 
-        $dc = TypeCat::find($id);
-        if ($dc) {
+        $TC = TypeCat::find($id);
+        if ($TC) {
 
-            $dc->title = $request->input('title') ? $request->input('title') : $dc->title;
-           
-            $dc->save();
+            $TC->title = $request->input('title') ? $request->input('title') : $TC->title;
+
+            $TC->save();
             return response()->json([
                 'message' => 'Categorie mis à jour',
-                'id' => $dc->id,
-                'attributes' => $dc
+                'id' => $TC->id,
+                'attributes' => $TC
             ], 201);
         } else {
             return response()->json([
@@ -67,21 +70,21 @@ class TypeCatController extends Controller
             ], 404);
         }
     }
-    
-public function deleteDocumentCategorie($id){
 
-        $dc = TypeCat::find($id);
+    public function deleteTypeCat($id)
+    {
 
-        if ($dc){
-            $dc->delete();
+        $TC = TypeCat::find($id);
+
+        if ($TC) {
+            $TC->delete();
             return response()->json([
-                'type' => 'CategorieDocument',
+                'type' => 'CategorierReclamation',
                 'message' => 'Categorie Supprimé! '
             ], 204);
-        }
-        else {
+        } else {
             return response()->json([
-                'type' => 'CategorieDocument',
+                'type' => 'CategorieReclamation',
                 'message' => "Categorie n'existe pas"
             ], 404);
         }
