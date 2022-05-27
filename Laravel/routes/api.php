@@ -149,14 +149,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix' => '/Classe'], function () {
         Route::get('/', [ClasseController::class, 'getClasses']);
+        Route::get('/all', [ClasseController::class, 'getAll']);
         Route::post('/', [ClasseController::class, 'createClasse']);
         Route::delete('/{id}', [ClasseController::class, 'deleteClass']);
         Route::put('/{id}', [ClasseController::class, 'updateClass']);
+        
     });
     
     // documents routes
 Route::group(['prefix' => '/Document'], function () {
-Route::get('/', [DocumentController::class, 'getDocument']);
+Route::post('/search', [DocumentController::class, 'search']);
 Route::delete('/{id}', [DocumentController::class, 'show']);
 Route::post('/', [DocumentController::class, 'createDocument']);
 Route::put('/{id}', [DocumentController::class, 'updateDocument']);
