@@ -21,9 +21,12 @@
             <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
             <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Materiel deleted</div>
+            <div class="card card-body my-5 py-5 text-center shadow p-3 mb-5 bg-white rounded " style="color: rgb(76, 14, 14);" th:if="${#arrays.isEmpty(Dmms.content)}">
+                <h3>il y'a aucune demande</h3>
+              </div>
                 <div class="card my-2 shadow p-3 mb-5 bg-white rounded" th:each="demande:${Dmms.content}">
                     <div class="card-body">
-            
+                        
                         <div class="md-tabs md-alignment-left md-theme-default">
                             <div class="row col-12">
                                     <div class="col-6">
@@ -54,13 +57,17 @@
                                             <b>Materiel :</b> <br>
                                             <!-- <p th:text="${demande.id}"></p> -->
                                             <div class="row">
-                                                <div class="row col-12">
-                                                    <div th:each="materiel:${titreMateriel}" class="row col-12 text-center">
-                                                        <div >
-                                                            <b th:text="${materiel}"></b>
+                                                <div class="col-2"> </div>
+                                                <div class="row col-8 ">
+                                                    <div th:each="materiel:${demande.materiel}" class="row col-12 text-center">
+                                                        <div class="row col-6">
+                                                            <p class="col-6" th:text="${materiel.materiel.titre}"></p> <b class="col-6"> De Quantité :</b>
                                                         </div>
+                                                            <p class="col-6" th:text="${materiel.quantite}"></p>
                                                     </div>
                                                 </div>
+                                                <div class="col-2"> </div>
+
                                             </div>
                                             <div class="row mt-3">
                                                 <div  class="col-12 row mb-3" style="align-items: center;">
