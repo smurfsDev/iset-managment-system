@@ -21,7 +21,7 @@ class Document extends Model
 
     public function categorie()
     {
-        return $this->belongsTo('App\Models\TypeCat', 'document_categories_id',);
+        return $this->belongsTo('App\Models\DocumentCategorie', 'document_categories_id',);
     }
 
     public function class(){
