@@ -64,4 +64,9 @@ public class DemandeAdhesionEventService {
 	public Page<DemandeAdhesionEvent> getAllDemandeAdhesionEventParPageClub(Long id, int page, int size){
 		return DemandeAdhesionEventRepository.findByClubId(id, PageRequest.of(page, size));
 	};
+
+	public Page<DemandeAdhesionEvent> findNonApprouvedDemandes(int page, int size){
+		return DemandeAdhesionEventRepository.findNonApprouvedDemandes( PageRequest.of(page, size));
+	} 
+
 }
