@@ -40,7 +40,7 @@
              
               <label>Type:</label>
                <div class="form-group">
-                <select name="categorie" v-model="oldDemandeDocument.categorie">
+                <select name="document_categories_id" v-model="oldDemandeDocument.document_categories_id">
                   <option
                     v-for="categorie in categories"
                     :key="categorie.id"
