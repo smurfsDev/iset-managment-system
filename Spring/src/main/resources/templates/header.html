@@ -130,6 +130,13 @@
 
                 </a>
               </li>
+              <li sec:authorize="hasRole('RESPONSABLE')">
+                <a th:href="@{listeDemande}">
+                  <i class="fa fa-user"></i>
+                  <span>Demandes adhesion evenement</span>
+
+                </a>
+              </li>
               <!-- <li >
                 <a th:href="@{demandeAdhesionClub}">
                   <i class="fa fa-shopping-cart"></i>
