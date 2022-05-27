@@ -136,6 +136,12 @@
                   <span>Demandes adhesion evenement</span>
 
                 </a>
+              </li><li sec:authorize="hasRole('STUDENT')">
+                <a th:href="@{myDemandes}">
+                  <i class="fa fa-user"></i>
+                  <span>Mes Demandes adhesion evenement</span>
+
+                </a>
               </li>
               <!-- <li >
                 <a th:href="@{demandeAdhesionClub}">

@@ -56,6 +56,21 @@ public class DemandeAdhesionEventController {
 
         return "demandeAdhesion/list";
     }
+    @RequestMapping("/myDemandes")
+    public String showMyDemandes(ModelMap modelMap,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        
+
+        Page<DemandeAdhesionEvent> listEvent = demandeAdhesionEventService.getAllDemandeAdhesionEventParPageEtudiant(this.getUser(request).getId() ,page, size);
+        modelMap.addAttribute("DE", listEvent);
+        modelMap.addAttribute("pages", new int[listEvent.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+
+        return "demandeAdhesion/myDemandes";
+    }
+
     @RequestMapping("/joinEvent")
     public String joinEvent(@RequestParam("id") Long id, ModelMap modelMap,
             HttpServletRequest request,
@@ -69,20 +84,25 @@ public class DemandeAdhesionEventController {
             Boolean c = demandeAdhesionEventService.existsByIds(id, this.getUser(request).getId());
             Boolean isThisClubOwner = clubService.isThisClubOwner(club.getId(), this.getUser(request));
             if (c){
-                Page<DemandeEvent> Dacs = demandeEventService.findApprouvedEvent( page, size);
-                        modelMap.addAttribute("DE", Dacs);
-                        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+                //Page<DemandeEvent> Dacs = demandeEventService.findApprouvedEvent( page, size);
+                        Page<DemandeAdhesionEvent> listEvent = demandeAdhesionEventService.getAllDemandeAdhesionEventParPageEtudiant(this.getUser(request).getId() ,page, size);
+
+                        modelMap.addAttribute("DE", listEvent);
+                        modelMap.addAttribute("pages", new int[listEvent.getTotalPages()]);
                         modelMap.addAttribute("currentPage", 0);
                         modelMap.addAttribute("exist", 1);
-                        return "demandeAdhesion/list";
+                        return this.showMyDemandes(modelMap, request, page, size);
             }
             else if(isThisClubOwner){
-                    Page<DemandeEvent> Dacs = demandeEventService.findApprouvedEvent( page, size);
-                    modelMap.addAttribute("DE", Dacs);
-                    modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
+                   
+                // Page<DemandeEvent> Dacs = demandeEventService.findApprouvedEvent( page, size);
+                    Page<DemandeAdhesionEvent> listEvent = demandeAdhesionEventService.getAllDemandeAdhesionEventParPageEtudiant(this.getUser(request).getId() ,page, size);
+                   
+                     modelMap.addAttribute("DE", listEvent);
+                    modelMap.addAttribute("pages", new int[listEvent.getTotalPages()]);
                     modelMap.addAttribute("currentPage", 0);
                     modelMap.addAttribute("clubOwner", 1);
-                    return "demandeAdhesion/list";
+                    return this.showMyDemandes(modelMap, request, page, size);
                 }
             DemandeAdhesionEvent adh = new DemandeAdhesionEvent();
             DemandeEvent event= demandeEventService.getDemandeEvent(id);
@@ -99,7 +119,7 @@ public class DemandeAdhesionEventController {
             modelMap.addAttribute("type", "danger");
             modelMap.addAttribute("msg", "Demande de plannification d'evenement non supprimée : Id non trouvé");
         }
-        return this.showList(modelMap, request, page, size);
+        return this.showMyDemandes(modelMap, request, page, size);
 
     }
  
