@@ -18,4 +18,9 @@ class Reclamation extends Model
         'file'
      
     ];
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\TypeCat', 'type_cats_id');
+    }
 }
