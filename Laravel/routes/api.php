@@ -189,7 +189,7 @@ Route::delete('/{id}', [DocumentCategorieController::class, 'deleteDocumentCateg
 Route::group(['prefix' => '/reclamationCat'], function () {
 Route::get('/all',         [TypeCatController::class, 'get']);
 Route::get('/',            [TypeCatController::class, 'showTypeCat']);
-Route::post('/',           [TypeCatController::class, 'addTypeCat']);
+Route::post('/',           [TypeCatController::class, 'createTypeCat']);
 Route::put('/{id}',        [TypeCatController::class, 'updateTypeCat']);
 Route::delete('/{id}',     [TypeCatController::class, 'deleteTypeCat']);
 });
