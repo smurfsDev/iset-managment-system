@@ -10,14 +10,14 @@ class ReclamationController extends Controller
 
     public function getReclamation(Request $request){
             if ($request->user()->roles()->get()->contains('name', "admin")) {
-            $reclamtion = Reclamation::orderBy('created_at', 'desc')
+            $reclamtion = Reclamation::with('type')->orderBy('created_at', 'desc')
                 ->paginate(5);
             if (empty($reclamtion)) {
                 return response()->json(['message' => 'No reclamation found'], 404);
             }
             return response()->json($reclamtion, 200);
         }else{
-            $reclamtion = $request->user()->Reclamation()->orderBy('updated_at', 'desc')->paginate(5);
+            $reclamtion = $request->user()->Reclamation()->with('type')->orderBy('updated_at', 'desc')->paginate(5);
             if (empty($reclamtion)) {
                 return response()->json(['message' => 'No reclamation found'], 404);
             }
