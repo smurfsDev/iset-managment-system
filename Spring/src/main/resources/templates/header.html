@@ -50,7 +50,7 @@
               <li class="header-menu">
                 <span>Club</span>
               </li>
-              <li class="sidebar-dropdown">
+              <li sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')" class="sidebar-dropdown">
                 <a href="#">
                   <i class="fa fa-file"></i>
                   <span>Demande Creation Club</span>
@@ -104,6 +104,12 @@
                 <a th:href="@{classe}">
                   <i class="fa fa-user"></i>
                   <span>Liste des classes</span>
+                </a>
+              </li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{listeStudents}" >
+                  <i class="fa fa-user"></i>
+                  <span>Liste des etudiants</span>
                 </a>
               </li>
               <!-- <li >
