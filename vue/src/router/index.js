@@ -43,6 +43,7 @@ import gererMatieres from "./routes/gererMatieres";
 import manageEnseignant from "./routes/manageEnseignant";
 import consulterClasseEns from "./routes/consulterClasseEns";
 import mesNotes from "./routes/mesNotes";
+import dashboards from "./routes/dashboard";
 
 
 Vue.use(VueRouter);
@@ -99,7 +100,8 @@ const routes = [
    ...gererMatieres,
   ...manageEnseignant,
   ...consulterClasseEns,
-  ...mesNotes
+  ...mesNotes,
+  ...dashboards,
 
 
 
