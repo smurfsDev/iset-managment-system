@@ -31,6 +31,10 @@ class Classe extends Model
         return $this->hasMany('App\Models\RoleUser','classe','id');
     }
 
+    public function emploie()
+    {
+        return $this->hasOne(EmploieDeTemp::class);
+    }
 
 
 }
