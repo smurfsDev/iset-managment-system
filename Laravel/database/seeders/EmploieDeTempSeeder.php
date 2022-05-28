@@ -14,6 +14,7 @@ class EmploieDeTempSeeder extends Seeder
      */
     public function run()
     {
-        EmploieDeTemp::factory(5)->create();
+        EmploieDeTemp::factory(2)->create();
     }
+
 }
