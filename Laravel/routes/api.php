@@ -40,9 +40,11 @@ use App\Http\Controllers\club\pageClub\ActivitiesController;
   use App\Http\Controllers\DemandeDocumentController;
 use App\Http\Controllers\DocumentCategorieController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\EmploieDeTempController;
 use App\Http\Controllers\ReclamationController;
 use App\Http\Controllers\TypeCatController;
 use App\Http\Controllers\NoteController;
+use App\Models\EmploieDeTemp;
 
 /*
 |--------------------------------------------------------------------------
@@ -300,6 +302,14 @@ Route::post('/', [DemandeDocumentController::class, 'addDemandeDocument']);
 Route::put('/{id}', [DemandeDocumentController::class, 'updateDemandeDocument']);
 Route::delete('/{id}', [DemandeDocumentController::class, 'deleteDemandeDocument']);
 Route::put('/reponse/{id}',[DemandeDocumentController::class,'setReponse']);
+});
+
+// EDT routes
+Route::group(['prefix' => '/EDT'], function () {
+Route::get('/', [EmploieDeTempController::class, 'getEDT']);
+Route::post('/', [EmploieDeTempController::class, 'addEDT']);
+Route::put('/{id}', [EmploieDeTempController::class, 'updateEDT']);
+Route::delete('/{id}', [EmploieDeTempController::class, 'deleteEDT']);
 
 });
 
