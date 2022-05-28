@@ -1,12 +1,17 @@
 package com.projetIntegraion.spring.demandeMateriel.controller;
 
-
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMaterielMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.Materiel;
 import com.projetIntegraion.spring.demandeMateriel.repository.DemandeMaterielMaterielRepository;
+import com.projetIntegraion.spring.demandeMateriel.service.CategorieMaterielService;
 import com.projetIntegraion.spring.demandeMateriel.service.DemandeMaterielService;
 import com.projetIntegraion.spring.demandeMateriel.service.MaterielService;
 
@@ -14,12 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MaterielController {
-    @Autowired 
+    @Autowired
     MaterielService MaterielService;
 
     @Autowired
@@ -27,49 +33,63 @@ public class MaterielController {
 
     @Autowired
     DemandeMaterielMaterielRepository DemandeMaterielMaterielRepository;
+    @Autowired
+    CategorieMaterielService CategorieMaterielService;
 
     @RequestMapping("/materiel")
-    public String getMateriel (ModelMap modelMap) {
+    public String getMateriel(ModelMap modelMap) {
         List<Materiel> listMateriel = MaterielService.getAllMateriel();
         modelMap.addAttribute("Materiels", listMateriel);
         return "materiel";
-    } 
+    }
+
+    @RequestMapping("/showListMateriel")
+    public String showListMateriel(ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Page<Materiel> listMateriel = MaterielService.getAllMaterielParPage(page, size);
+        modelMap.addAttribute("listMateriel", listMateriel);
+        modelMap.addAttribute("pages", new int[listMateriel.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+
+        return "/demandeMateriel/materiel/list";
+    }
+
     @RequestMapping("/showMateriel")
-    public String getMaterielParCategorie (ModelMap modelMap,
-    @RequestParam(name = "id", defaultValue = "0") Long idCategorie,
-    @RequestParam(name = "idDemande", defaultValue = "0") Long idDemande
-    ) {
+    public String getMaterielParCategorie(ModelMap modelMap,
+            @RequestParam(name = "id", defaultValue = "0") Long idCategorie,
+            @RequestParam(name = "idDemande", defaultValue = "0") Long idDemande) {
         List<Materiel> listMateriel = MaterielService.getAllMaterielByIdCategorie(idCategorie);
         modelMap.addAttribute("Materiels", listMateriel);
         modelMap.addAttribute("edit", false);
         return "/demandeMateriel/MaterielForm";
     }
 
-    @RequestMapping("/saveMateriel")
+    @RequestMapping("/saveMaterielDemande")
     public String saveMateriel(ModelMap modelMap, Long idMateriel, Long idDemande,
-    @RequestParam(name = "page", defaultValue = "0") int page,
-    @RequestParam(name = "size", defaultValue = "2") int size){
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
         DemandeMaterielMateriel materiel = new DemandeMaterielMateriel();
         Materiel Mat = MaterielService.getMaterielById(idMateriel);
-        DemandeMateriel dm =  DemandeMaterielService.getdemandeById(idDemande);
+        DemandeMateriel dm = DemandeMaterielService.getdemandeById(idDemande);
         materiel.setMateriel(Mat);
         materiel.setDemandeMateriel(dm);
-        if(DemandeMaterielMaterielRepository.findByDemandeMaterielIdAndMaterielId(idDemande, idMateriel) == null){
+        if (DemandeMaterielMaterielRepository.findByDemandeMaterielIdAndMaterielId(idDemande, idMateriel) == null) {
             Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
-        modelMap.addAttribute("Dmms", listDm);
-        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
-        modelMap.addAttribute("currentPage", page);
-        DemandeMaterielMaterielRepository.save(materiel);
-        return  "/demandeMateriel/list";
-        }
-        else{
-            return this.getMaterielParCategorie(modelMap,idMateriel,idDemande);
+            modelMap.addAttribute("Dmms", listDm);
+            modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+            modelMap.addAttribute("currentPage", page);
+            DemandeMaterielMaterielRepository.save(materiel);
+            return "/demandeMateriel/list";
+        } else {
+            return this.getMaterielParCategorie(modelMap, idMateriel, idDemande);
         }
     }
-    @RequestMapping("/deleteMateriel")
+
+    @RequestMapping("/deleteMaterielDemande")
     public String deleteMateriel(ModelMap modelMap, Long idMateriel, Long idDemande,
-    @RequestParam(name = "page", defaultValue = "0") int page,
-    @RequestParam(name = "size", defaultValue = "2") int size){
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
         Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
         modelMap.addAttribute("Dmms", listDm);
         modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
@@ -77,17 +97,20 @@ public class MaterielController {
         DemandeMaterielMaterielRepository.deleteById(idMateriel);
         return "/demandeMateriel/list";
     }
+
     @RequestMapping("/setQuantite")
     public String setQuantite(ModelMap modelMap, Long idMateriel, Long idDemande, int quantite,
-    @RequestParam(name = "page", defaultValue = "0") int page,
-    @RequestParam(name = "size", defaultValue = "2") int size){
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
         Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
         modelMap.addAttribute("Dmms", listDm);
         modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
-        //DemandeMaterielMateriel materiel = DemandeMaterielMaterielRepository.findByMaterielId(idMateriel);
-        DemandeMaterielMateriel Dm = DemandeMaterielMaterielRepository.findByDemandeMaterielIdAndMaterielId(idDemande,idMateriel);
-        if(Dm != null){
+        // DemandeMaterielMateriel materiel =
+        // DemandeMaterielMaterielRepository.findByMaterielId(idMateriel);
+        DemandeMaterielMateriel Dm = DemandeMaterielMaterielRepository.findByDemandeMaterielIdAndMaterielId(idDemande,
+                idMateriel);
+        if (Dm != null) {
             Dm.setQuantite(quantite);
             DemandeMaterielMaterielRepository.save(Dm);
             return "/demandeMateriel/list";
@@ -95,4 +118,101 @@ public class MaterielController {
         return null;
 
     }
+
+    @RequestMapping("/showCretateMaterielForm")
+    public String showCretateMaterielForm(ModelMap modelMap) {
+        modelMap.addAttribute("Materiel", new Materiel());
+        modelMap.addAttribute("edit", false);
+
+        List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
+        System.out.println(listCategorieMateriel);
+        modelMap.addAttribute("CM", listCategorieMateriel);
+        return "/demandeMateriel/materiel/createMaterielForm";
+    }
+
+    @RequestMapping("/saveMateriel")
+    public String saveMateriel(ModelMap modelMap,
+            @Valid Materiel materiel,
+            BindingResult bindingResult,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
+        if (bindingResult.hasErrors()) {
+            modelMap.addAttribute("org.springframework.validation.BindingResult.materiel", bindingResult);
+            modelMap.addAttribute("materiel", materiel);
+            List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
+
+            System.out.println(listCategorieMateriel);
+            modelMap.addAttribute("CM", listCategorieMateriel);
+            return "/demandeMateriel/materiel/createMaterielForm";
+        } else {
+            Materiel m = new Materiel();
+            m.setTitre(materiel.getTitre());
+            m.setDescription(materiel.getDescription());
+            m.setQuantite(materiel.getQuantite());
+            m.setCategorie(materiel.getCategorie());
+            m = MaterielService.save(m);
+            modelMap.addAttribute("materiel", new DemandeMateriel());
+            modelMap.addAttribute("msg", "Demande de materiel enregistrée avec succès");
+            modelMap.addAttribute("type", "success");
+            modelMap.addAttribute("pages",
+                    new int[MaterielService.getAllMaterielParPage(page, size).getTotalPages()]);
+            return this.showListMateriel(modelMap, page, size);
+        }
+    }
+
+    @RequestMapping("/showEditMaterielForm")
+    public String showEditMaterielForm(ModelMap modelMap, Long id) {
+        modelMap.addAttribute("Materiel", MaterielService.getMaterielById(id));
+        modelMap.addAttribute("edit", true);
+        List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
+        System.out.println(listCategorieMateriel);
+        modelMap.addAttribute("CM", listCategorieMateriel);
+        return "/demandeMateriel/materiel/createMaterielForm";
+    }
+
+    @RequestMapping("/updateMateriel")
+    public String updateMateriel(ModelMap modelMap,
+            @Valid Materiel materiel,
+            BindingResult bindingResult,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
+        if (bindingResult.hasErrors()) {
+            modelMap.addAttribute("org.springframework.validation.BindingResult.materiel", bindingResult);
+            modelMap.addAttribute("materiel", materiel);
+            List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
+
+            System.out.println(listCategorieMateriel);
+            modelMap.addAttribute("CM", listCategorieMateriel);
+            return "/demandeMateriel/materiel/createMaterielForm";
+        } else {
+            Materiel m = MaterielService.getMaterielById(materiel.getId());
+            m.setTitre(materiel.getTitre());
+            m.setDescription(materiel.getDescription());
+            m.setQuantite(materiel.getQuantite());
+            m.setCategorie(materiel.getCategorie());
+            m = MaterielService.save(m);
+            modelMap.addAttribute("materiel", new DemandeMateriel());
+            modelMap.addAttribute("msg", "Demande de materiel enregistrée avec succès");
+            modelMap.addAttribute("type", "success");
+            modelMap.addAttribute("pages",
+                    new int[MaterielService.getAllMaterielParPage(page, size).getTotalPages()]);
+            return this.showListMateriel(modelMap, page, size);
+        }
+    }
+
+    @RequestMapping("/deleteMateriel")
+    public String deleteMateriel(ModelMap modelMap, Long id,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        MaterielService.deleteById(id);
+        modelMap.addAttribute("materiel", new DemandeMateriel());
+        modelMap.addAttribute("msg", "Demande de materiel supprimée avec succès");
+        modelMap.addAttribute("type", "success");
+        modelMap.addAttribute("pages",
+                new int[MaterielService.getAllMaterielParPage(page, size).getTotalPages()]);
+        return this.showListMateriel(modelMap, page, size);
+    }
+
 }
