@@ -254,6 +254,12 @@
                     title: 'Mes notes',
                     icon: 'fas fa-file',
                     hidden: !this.isStudent,
+                },
+                   {
+                    href: '/GererEmploideTemp',
+                    title: 'GererEmploideTemp',
+                    icon: 'fas fa-calendar-alt',
+                    hidden: !this.isAuth,
                 }
 
             ]
