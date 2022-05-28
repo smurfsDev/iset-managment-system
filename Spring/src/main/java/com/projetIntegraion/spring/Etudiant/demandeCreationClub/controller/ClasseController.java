@@ -2,22 +2,16 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Matiere;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.ClasseService;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.MatiereService;
-import com.projetIntegraion.spring.administrateur.departement.repository.DepartementRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,21 +28,16 @@ public class ClasseController {
     @Autowired
     private ClasseService classeService;
 
-    @Autowired
-    private MatiereService matiereService;
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    
     
 
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-    @Autowired
-    private DepartementRepository departementRepository;
 
     public User getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -68,8 +57,6 @@ public class ClasseController {
                 page, size);
         modelMap.addAttribute("pageClasses", pageClasses);
         modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("typea", "");
-        modelMap.addAttribute("message", "vide");
         modelMap.addAttribute("size", size);
         modelMap.addAttribute("pages",
                 new int[classeService.getAllClasseById(Long.parseLong(userRole.getDepartement().toString()),
@@ -86,23 +73,9 @@ public class ClasseController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         classeService.deleteById(id);
-
-        User user = this.getUser(request);
-        UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-
-        Page<Classe> pageClasses = classeService.getAllClasseById(Long.parseLong(userRole.getDepartement().toString()),
-                page, size);
-        modelMap.addAttribute("pageClasses", pageClasses);
-        modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("pages",
-                new int[classeService.getAllClasseById(Long.parseLong(userRole.getDepartement().toString()),
-                        page, size).getTotalPages()]);
-
-        modelMap.addAttribute("typea", "danger");
-        modelMap.addAttribute("message", "Classe supprimé avec succès");
-        modelMap.addAttribute("size", size);
-
-        return "ChefDepartment/Class/listeClass";
+        modelMap.addAttribute("type", "danger");
+        modelMap.addAttribute("msg", "Classe supprimé avec succès");
+        return this.getAllClasses(modelMap, request, page, size);
     }
 
     @RequestMapping("/showCreateClass")
@@ -134,26 +107,9 @@ public class ClasseController {
             modelMap.addAttribute("classe", classe);
             return "ChefDepartment/Class/form";
         } else {
-            User user = this.getUser(request);
-            UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-
-            classe.setDepartement(departementRepository.getById(Long.parseLong(userRole.getDepartement().toString())));
-            classeService.save(classe);
-            Page<Classe> pageClasses = classeService.getAllClasseById(
-                    Long.parseLong(userRole.getDepartement().toString()),
-                    page, size);
-            modelMap.addAttribute("pageClasses", pageClasses);
-            modelMap.addAttribute("currentPage", page);
-            modelMap.addAttribute("typea", "success");
-            modelMap.addAttribute("pages",
-                    new int[classeService.getAllClasseById(Long.parseLong(userRole.getDepartement().toString()),
-                            page, size).getTotalPages()]);
-
-            modelMap.addAttribute("message", "Classe ajoutée avec succès");
-            modelMap.addAttribute("size", size);
-
-            return "ChefDepartment/Class/listeClass";
-
+            modelMap.addAttribute("type", "success");
+            modelMap.addAttribute("msg", "Classe ajoutée avec succès");
+            return this.getAllClasses(modelMap, request, page, size);
         }
 
     }
@@ -194,25 +150,9 @@ public class ClasseController {
             modelMap.addAttribute("edit", true);
             return "ChefDepartment/Class/form";
         } else {
-            User user = this.getUser(request);
-            UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-
-            classe.setDepartement(departementRepository.getById(Long.parseLong(userRole.getDepartement().toString())));
-            classeService.save(classe);
-            Page<Classe> pageClasses = classeService.getAllClasseById(
-                    Long.parseLong(userRole.getDepartement().toString()),
-                    page, size);
-            modelMap.addAttribute("pageClasses", pageClasses);
-            modelMap.addAttribute("currentPage", page);
-            modelMap.addAttribute("typea", "warning");
-            modelMap.addAttribute("pages",
-                    new int[classeService.getAllClasseById(Long.parseLong(userRole.getDepartement().toString()),
-                            page, size).getTotalPages()]);
-
-            modelMap.addAttribute("message", "Classe modifiée avec succès");
-            modelMap.addAttribute("size", size);
-
-            return "ChefDepartment/Class/listeClass";
+            modelMap.addAttribute("type", "warning");
+            modelMap.addAttribute("msg", "Classe modifiée avec succès");
+            return this.getAllClasses(modelMap, request, page, size);
         }
     }
 

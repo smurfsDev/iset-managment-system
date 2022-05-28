@@ -104,11 +104,8 @@ public class DemandeCreationClubController {
             dc.setResponsableClub(this.getUser(request));
             dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
             dc = DemandeCreationClubService.save(dc);
-            modelMap.addAttribute("Dcc", new DemandeCreationClub());
             modelMap.addAttribute("msg", "Demande de création de club enregistrée avec succès");
             modelMap.addAttribute("type", "success");
-            modelMap.addAttribute("pages",
-                    new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
             return this.showList(modelMap, request, page, size);
         }
     }
@@ -169,9 +166,6 @@ public class DemandeCreationClubController {
                 dc.setLogo(DemandeCreationClubService.getDemandeCreationClub(Dcc.getId()).getLogo());
             }
             dc = DemandeCreationClubService.save(dc);
-            modelMap.addAttribute("Dcc", new DemandeCreationClub());
-            modelMap.addAttribute("pages",
-                    new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
             modelMap.addAttribute("type", "warning");
             modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
             return this.showList(modelMap, request, page, size);
@@ -207,9 +201,6 @@ public class DemandeCreationClubController {
             userRole.get().setStatus(1);
             userRoleRepository.save(userRole.get());
         }
-        modelMap.addAttribute("Dcc", new DemandeCreationClub());
-        modelMap.addAttribute("pages",
-                new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
         modelMap.addAttribute("type", "success");
         modelMap.addAttribute("msg", "Demande de creation de club acceptée avec succès");
         return this.showList(modelMap, request, page, size);
@@ -224,9 +215,6 @@ public class DemandeCreationClubController {
         dc.setAdmin(this.getUser(request));
         dc.setStatus(2);
         DemandeCreationClubService.save(dc);
-        modelMap.addAttribute("Dcc", new DemandeCreationClub());
-        modelMap.addAttribute("pages",
-                new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
         modelMap.addAttribute("type", "success");
         modelMap.addAttribute("msg", "Demande de creation de club refusée avec succès");
         return this.showList(modelMap, request, page, size);
