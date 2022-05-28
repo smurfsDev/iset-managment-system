@@ -6,11 +6,10 @@ import java.util.Set;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import groovy.cli.Option;
 
 @EnableJpaRepositories
 
@@ -21,6 +20,7 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
 
     List<UserRole> findByUserIdInAndRoleId(Set<Integer> userId, Long roleId);
     List<UserRole> findByUserIdInAndRoleIdAndDepartement(Set<Integer> userId, Long roleId, int departmentId);
+    List<UserRole> findByUserIdInAndRoleIdAndDepartement(Set<Integer> userId, Long roleId, int departmentId,Pageable pageable);
     Optional<UserRole> findByRoleIdAndDepartementAndStatus(Long roleId, int department, int status);
 
         
