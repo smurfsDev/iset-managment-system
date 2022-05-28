@@ -7,9 +7,11 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 
@@ -35,6 +37,9 @@ public class EnseignantController {
     @Autowired
     private ClasseRepository classeRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     public User  getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         User user = userRepository.findUserWithName(principal.getName()).get();
@@ -48,14 +53,15 @@ public class EnseignantController {
             @RequestParam(name = "size", defaultValue = "2") int size) {
 
         User user = this.getUser(request);
+        Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
         UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-        List<User> listeEnseignants = userRepository.findByRolesId(19L);
+        List<User> listeEnseignants = userRepository.findByRolesId(role.getId());
         List<User> listeEnseignantsFiltered = new ArrayList<>();
 
        // int[] response = new int[2000];
         List<Integer> response = new ArrayList<>();
         for (User ens : listeEnseignants) {
-            UserRole ii = userRoleRepository.findByRoleIdAndUserId(19L, ens.getId()).get();
+            UserRole ii = userRoleRepository.findByRoleIdAndUserId(role.getId(), ens.getId()).get();
             if (ii.getDepartement() == userRole.getDepartement()) {
                 listeEnseignantsFiltered.add(ens);
             //    respone[ens.getId()] = userRole.getStatus();
@@ -85,7 +91,9 @@ public class EnseignantController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(19L, idEns);
+        Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
+
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(role.getId(), idEns);
         userRole.get().setStatus(1);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","success");
@@ -101,7 +109,10 @@ public class EnseignantController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(19L, idEns);
+                
+        Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
+
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(role.getId(), idEns);
         userRole.get().setStatus(2);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","danger");

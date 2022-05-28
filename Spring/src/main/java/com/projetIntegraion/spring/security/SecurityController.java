@@ -192,17 +192,29 @@ public class SecurityController {
         }
         User su = userService.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword(), role);
 
-        if (role==4) {
+        // if (role==4) {
+        //     UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
+        //     ur.setDepartement(dep);
+        //     userRoleRepository.save(ur);
+        // }
+        // if (role==19) {
+        //     UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
+        //     ur.setDepartement(dep);
+        //     userRoleRepository.save(ur);
+        // }
+        // if (role==3) {
+        //     UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
+        //     ur.setDepartement(dep);
+        //     ur.setClasse(classe.get());
+        //     userRoleRepository.save(ur);
+        // }
+        Role r = roleRepository.findById(role).get();
+        if (r.getName().equals("ROLE_CHEFDEPARTEMENT")||r.getName().equals("ROLE_ENSEIGNANT")){
             UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
             ur.setDepartement(dep);
             userRoleRepository.save(ur);
         }
-        if (role==19) {
-            UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
-            ur.setDepartement(dep);
-            userRoleRepository.save(ur);
-        }
-        if (role==3) {
+        if (r.getName().equals("ROLE_STUDENT")) {
             UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
             ur.setDepartement(dep);
             ur.setClasse(classe.get());
