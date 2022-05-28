@@ -3,6 +3,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -87,9 +88,19 @@ public class MatiereController {
         // List<User> enseignents = userRepository.findAll();
         Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
         
-        List<User> enseignents = userRepository.findByRolesId(role.getId());
+      //  List<User> enseignents = userRepository.findByRolesId(role.getId());
 
-        modelMap.addAttribute("enseignants", enseignents);
+        
+        Optional<UserRole> enseignents = userRoleRepository.findByRoleIdAndStatus(role.getId(), 1);
+        if (enseignents.isPresent()){
+            modelMap.addAttribute("enseignants", enseignents.get().getUser());
+            modelMap.addAttribute("ens", true);
+
+        }
+        else {
+            modelMap.addAttribute("ens", false);
+        }
+        
         // Matiere matiere = new Matiere();
         // Classe c =  classeRepository.findById(idC).get();
         // matiere.setClasse(c);
