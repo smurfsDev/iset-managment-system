@@ -112,16 +112,20 @@ public class DemandeSalleController {
             @Valid DemandeSalle demandeSalle,
             Long salle,
             BindingResult bindingResult,
+
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
+            @RequestParam(name = "size", defaultValue = "2") int size) {
         if (bindingResult.hasErrors()) {
+
             modelMap.addAttribute("org.springframework.validation.BindingResult.demandeSalle", bindingResult);
             modelMap.addAttribute("demandeSalle", demandeSalle);
             List<Departement> listDepartement = departementService.getAllDepartement();
             System.out.println(listDepartement);
             modelMap.addAttribute("Departements", listDepartement);
-
+            List<Salle> salles = salleService.getAllSalle();
+            modelMap.addAttribute("sallesdep", salles);
+            System.out.println(salles);
             return "demandeSalle/form";
         } else {
 
