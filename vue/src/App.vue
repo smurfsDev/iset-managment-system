@@ -3,8 +3,7 @@
 overflow-y: scroll;">
     <top-nav />
     <div id="nav">
-
-      <router-link to="/">Home</router-link> |
+<router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
       <router-link to="/demandeMateriel"> demandeMateriel</router-link>
       <router-link to="/members"> members</router-link>
