@@ -96,11 +96,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/showManageBlog",
 						"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
 						"/deleteProject", "/modifierProject",
-						"/listeDm", "/showCreateDm", "/showEditDm", "/updateDmm", "/deleteDmm", "/materiel",
-						"/showMateriel",
-						"/deleteMaterielDemande", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS",
-						"/updateDS",
-						"/modifierDS",
+						"/materiel", "/showMateriel",
+						"/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
+						"/modifierDS", "/listeDm", "/showCreateDm", "/showEditDm",
+						"/updateDmm", "/setQuantite", "/deleteMateriel",
+						"/deleteDmm",
+
 						"/deleteDS")
 				.hasAnyRole("RESPONSABLE")
 				.antMatchers("/listeDcc")

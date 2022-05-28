@@ -48,7 +48,7 @@
           <div class="sidebar-menu">
             <ul>
               <li class="header-menu">
-                <span>Club</span>
+                <span>Demandes</span>
               </li>
               <li sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')" class="sidebar-dropdown">
                 <a href="#">
@@ -70,6 +70,50 @@
                 </div>
               </li>
               <li class="sidebar-dropdown">
+                <a href="#">
+                  <i class="fa fa-file"></i>
+                  <span>Demande Materiel</span>
+                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{showCreateDm}">Ajouter
+                        <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                      </a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{listeDm}">Lister</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('ADMIN') || hasRole('CHEFDEPARTEMENT')" th:href="@{listeDmDestinataire}">Lister</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="#">
+                  <i class="fa fa-file"></i>
+                  <span>Demande Salle</span>
+                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{ShowcreateDS}">Ajouter
+                        <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                      </a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{listeDS}">Lister</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('ADMIN') || hasRole('CHEFDEPARTEMENT')" th:href="@{listeDsDestinataire}">Lister</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
                 <a >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Clubs</span>

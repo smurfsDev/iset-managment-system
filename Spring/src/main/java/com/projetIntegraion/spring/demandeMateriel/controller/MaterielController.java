@@ -1,12 +1,16 @@
 package com.projetIntegraion.spring.demandeMateriel.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
+import java.security.Principal;
+import java.util.List;
+
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMaterielMateriel;
 import com.projetIntegraion.spring.demandeMateriel.entity.Materiel;
@@ -35,6 +39,15 @@ public class MaterielController {
     DemandeMaterielMaterielRepository DemandeMaterielMaterielRepository;
     @Autowired
     CategorieMaterielService CategorieMaterielService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
 
     @RequestMapping("/materiel")
     public String getMateriel(ModelMap modelMap) {
@@ -66,7 +79,7 @@ public class MaterielController {
     }
 
     @RequestMapping("/saveMaterielDemande")
-    public String saveMateriel(ModelMap modelMap, Long idMateriel, Long idDemande,
+    public String saveMateriel(ModelMap modelMap, Long idMateriel, Long idDemande, HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         DemandeMaterielMateriel materiel = new DemandeMaterielMateriel();
@@ -75,7 +88,8 @@ public class MaterielController {
         materiel.setMateriel(Mat);
         materiel.setDemandeMateriel(dm);
         if (DemandeMaterielMaterielRepository.findByDemandeMaterielIdAndMaterielId(idDemande, idMateriel) == null) {
-            Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
+            Page<DemandeMateriel> listDm = DemandeMaterielService
+                    .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
             modelMap.addAttribute("Dmms", listDm);
             modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
             modelMap.addAttribute("currentPage", page);
@@ -87,10 +101,11 @@ public class MaterielController {
     }
 
     @RequestMapping("/deleteMaterielDemande")
-    public String deleteMateriel(ModelMap modelMap, Long idMateriel, Long idDemande,
+    public String deleteMateriel(ModelMap modelMap, HttpServletRequest request, Long idMateriel, Long idDemande,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
         modelMap.addAttribute("Dmms", listDm);
         modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
@@ -99,10 +114,13 @@ public class MaterielController {
     }
 
     @RequestMapping("/setQuantite")
-    public String setQuantite(ModelMap modelMap, Long idMateriel, Long idDemande, int quantite,
+
+    public String setQuantite(ModelMap modelMap, HttpServletRequest request, Long idMateriel, Long idDemande,
+            int quantite,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Page<DemandeMateriel> listDm = DemandeMaterielService.getAllDemandeParPage(page, size);
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
         modelMap.addAttribute("Dmms", listDm);
         modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
@@ -116,7 +134,24 @@ public class MaterielController {
             return "/demandeMateriel/list";
         }
         return null;
+    }
 
+    @RequestMapping("/getMaterielofDemande")
+    // getMaterielofDemande
+    public String getMaterielofDemande(ModelMap modelMap, HttpServletRequest request, Long idDemande,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Page<DemandeMateriel> listDm = DemandeMaterielService
+                .getAllDemandeSalleParPageParResponsableClub(this.getUser(request), page, size);
+        modelMap.addAttribute("Dmms", listDm);
+        modelMap.addAttribute("pages", new int[listDm.getTotalPages()]);
+        modelMap.addAttribute("currentPage", page);
+        DemandeMateriel dm = DemandeMaterielService.getdemandeById(idDemande);
+        List<DemandeMaterielMateriel> listDmMateriel = DemandeMaterielMaterielRepository
+                .findByDemandeMaterielId(idDemande);
+        modelMap.addAttribute("listDmMateriel", listDmMateriel);
+        modelMap.addAttribute("dm", dm);
+        return "/demandeMateriel/MesDemandes";
     }
 
     @RequestMapping("/showCretateMaterielForm")

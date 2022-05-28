@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+    <head>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <title>Liste des DemandeSalle</title>
+    </head>
+    
+    <body>
+    
+        <div layout:fragment="Mycontent">
+            <div class="container">
+                <div class="row my-4">
+                    <div class="col">
+                        <h1 class="text-center">Liste des Demandes Salle</h1>
+                    </div>
+                </div>
+                <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
+                <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
+                <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
+                <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Salle deleted</div>
+                <div class="card card-body my-5 py-5 text-center shadow p-3 mb-5 bg-white rounded " style="color: rgb(76, 14, 14);" th:if="${#arrays.isEmpty(demandeSalle.content)}">
+                    <h3>il y'a aucune demande</h3>
+                  </div>
+                    <div class="card my-2 shadow p-3 mb-5 bg-white rounded" th:each="demande:${demandeSalle.content}">
+                        <div class="card-body">
+                
+                            <div class="md-tabs md-alignment-left md-theme-default">
+                                <div class="row col-12">
+                                        <div class="col-6">
+                                            <div class="md-button-content">
+                                                <b>demande</b>
+                                            </div> 
+                                        </div>
+                                        <div class="col-6">
+                                            <button th:if="${demande.status==1}" class="btn btn-success float-right disabled"><i class="fa-solid fa-check"></i></button>
+                                            <button th:if="${demande.status==0}" class="btn btn-warning float-right disabled"><i class="fa-solid fa-check"></i></button>
+                                            <button th:if="${demande.status==2}" class="btn btn-danger float-right disabled"><i class="fa-solid fa-x"></i></button>
+                                        </div>
+                                </div> 
+                                <div class="container">
+                                    <div class="container" >
+                                        <div class="md-tab">
+                                            <div class="bv-example-row text-center">
+                                                <div class="row mb-2"  >
+                                                    <div class="col">
+                                                        <b>Responsable : </b><p th:text="${demande.responsable.username}"></p> 
+                                                    </div>
+                                                    <div class="col">
+                                                        <b>Date d'emploi : </b><p th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></p>                                                
+                                                    </div>
+                                                    <div class="col">
+                                                        <b>Date de remise : </b><p th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}">
+                                                    </div>
+                                                </div>
+                                                <div th:each="S:${demande.salle}" class="row mb-2">
+                                                    <div class="col">
+                                                        <b>Departement : </b>
+                                                        <p th:text="${S.salle.departement.titre}"></p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <b>Salle : </b>
+                                                        <p th:text="${S.salle.titre}"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div  class="col-12 row mb-2" style="align-items: center;">
+                                                        <div class="col-4">
+                                                            <strong>Reponse :</strong>
+                                                        </div>
+                                                        <div class="col">
+                                                            <form class="form-inline " method="post" action="setReponseDS">
+                                                                <input type="hidden" name="idDemande" th:value="${demande.id}">
+                                                                <textarea name="reponse" class="form-control" th:value="${demande.reponse}" th:text="${demande.reponse}" style="background-color: rgb(236, 239, 241); border: 0px !important;"></textarea>
+                                                                <button type="submit" class="btn btn-warning  ml-2"  th:if="${demande.reponse != null}" >Edit Reponse</button>
+                                                                <button type="submit" class="btn btn-primary  ml-2"  th:if="${demande.reponse == null}" >Add Reponse</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <a th:href="@{ approveDS(id=${demande.id}) }" th:class="${demande.status==1?'btn btn-success disabled ml-2':'btn btn-success' }">Approve</a>
+                                                    <a th:href="@{ refuseDS(id=${demande.id}) }" th:class="${demande.status==2?'btn btn-danger disabled ml-2':'btn btn-danger' }">Desapprove</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                    </div>
+                </div>
+                <ul class="nav nav-pills container" >
+                                    <li th:each="page,status:${pages}"><a
+                                            th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+                                            th:href="@{ listeDm(page=${status.index}, size=${param.size} ) }" 
+                                            th:text="${status.index+1 }"></a></li>
+                                </ul>
+            </div>
+                    
+            
+    </body>
+    
+</body>
+
+</html>
+
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Liste des Produits</title>
+</head>
+
+<body>
+
+    <div layout:fragment="Mycontent">
+        <div class="container">
+            <div class="row my-4">
+                <div class="col">
+                    <h1 class="text-center">Liste des Demandes Materiel</h1>
+                </div>
+            </div>
+            <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Materiel deleted</div>
+                <div class="card my-2 shadow p-3 mb-5 bg-white rounded" th:each="demande:${demandeSalle.content}">
+                    <div class="card-body">
+            
+                        <div class="md-tabs md-alignment-left md-theme-default">
+                            <div class="row col-12">
+                                    <div class="col-6">
+                                        <div class="md-button-content">
+                                            <b>demande</b>
+                                        </div> 
+                                    </div>
+                                    <div class="col-6">
+                                        <button th:if="${demande.status==1}" class="btn btn-success float-right disabled"><i class="fa-solid fa-check"></i></button>
+                                        <button th:if="${demande.status==0}" class="btn btn-warning float-right disabled"><i class="fa-solid fa-check"></i></button>
+                                        <button th:if="${demande.status==2}" class="btn btn-danger float-right disabled"><i class="fa-solid fa-x"></i></button>
+                                    </div>
+                            </div> 
+                            <div class="container">
+                                <div class="container" >
+                                    <div class="md-tab">
+                                        <div class="bv-example-row text-center">
+                                            <div class="row mb-2"  >
+                                                <div class="col">
+                                                    <b>Responsable : </b><p th:text="${${demande.responsable.username}"></p> 
+                                                </div>
+                                                <div class="col">
+                                                    <b>Date d'emploi : </b><p th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></p>                                                
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="m-auto">
+                                                <b>Date de remise : </b><p th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}">
+                                            </div>
+                                            <div th:each="S:${demande.salle}">
+                                                <b>Departement : </b>
+                                                <p th:text="${S.salle.departement.titre}"></p>
+                                                <b>Salle : </b>
+                                                <p th:text="${S.salle.titre}"></p>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div  class="col-12 row mb-3" style="align-items: center;">
+                                                    <div class="col-4 row">
+                                                        <strong>Reponse :</strong>
+                                                    </div>
+                                                    
+                                                    <form class="form-inline " method="post" action="setReponse">
+                                                        <input type="hidden" name="idDemande" th:value="${demande.id}">
+                                                        <textarea name="reponse" class="form-control" th:value="${demande.reponse}" th:text="${demande.reponse}" style="background-color: rgb(236, 239, 241); border: 0px !important;"></textarea>
+                                                        <button type="submit" class="btn btn-warning  ml-2"  th:if="${demande.reponse != null}" >Edit Reponse</button>
+                                                        <button type="submit" class="btn btn-primary  ml-2"  th:if="${demande.reponse == null}" >Add Reponse</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                                <a th:href="@{ approveDmm(id=${demande.id}) }" th:class="${demande.status==1?'btn btn-success disabled ml-2':'btn btn-success' }">Approve</a>
+                                                <a th:href="@{ refuseDmm(id=${demande.id}) }" th:class="${demande.status==2?'btn btn-danger disabled ml-2':'btn btn-danger' }">Desapprove</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                </div>
+            </div>
+            <ul class="nav nav-pills container" >
+                                <li th:each="page,status:${pages}"><a
+                                        th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+                                        th:href="@{ listeDm(page=${status.index}, size=${param.size} ) }" 
+                                        th:text="${status.index+1 }"></a></li>
+                            </ul>
+        </div>
+				
+		
+</body>
+
+</html> -->

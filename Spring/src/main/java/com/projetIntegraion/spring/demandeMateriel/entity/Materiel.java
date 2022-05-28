@@ -37,9 +37,14 @@ public class Materiel {
 	private List<DemandeMaterielMateriel> demandeMateriel;
 
 	public Materiel(@NotNull @Size(min = 3, max = 30) String titre, @NotNull int quantite,
-			@NotNull @Size(min = 3, max = 150) String description) {
-		super();
-
+			@NotNull @Size(min = 3, max = 150) String description, User responsable, CategorieMateriel categorie,
+			List<DemandeMaterielMateriel> demandeMateriel) {
+		this.titre = titre;
+		this.quantite = quantite;
+		this.description = description;
+		this.responsable = responsable;
+		this.categorie = categorie;
+		this.demandeMateriel = demandeMateriel;
 	}
 
 	public String getTitre() {

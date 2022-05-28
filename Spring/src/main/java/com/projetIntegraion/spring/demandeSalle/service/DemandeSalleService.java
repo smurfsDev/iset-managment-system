@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.demandeSalle.service;
 
 import java.util.List;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.demandeSalle.entity.DemandeSalle;
 import com.projetIntegraion.spring.demandeSalle.repository.DemandeSalleRepository;
 
@@ -12,31 +13,46 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DemandeSalleService {
-    @Autowired DemandeSalleRepository demandeSalleRepository;
-    public DemandeSalle save(DemandeSalle demandeSalle){
+    @Autowired
+    DemandeSalleRepository demandeSalleRepository;
+
+    public DemandeSalle save(DemandeSalle demandeSalle) {
         return demandeSalleRepository.save(demandeSalle);
     }
-    public boolean existsById(Long id){
+
+    public boolean existsById(Long id) {
         return demandeSalleRepository.existsById(id);
     }
-    public void delete(DemandeSalle demandeSalle){
+
+    public void delete(DemandeSalle demandeSalle) {
         demandeSalleRepository.delete(demandeSalle);
     }
-    public DemandeSalle deleteById(Long id){
+
+    public DemandeSalle deleteById(Long id) {
         if (demandeSalleRepository.existsById(id)) {
             demandeSalleRepository.deleteById(id);
         }
         return null;
     }
-    public DemandeSalle getDemandeSalleById(Long id){
+
+    public DemandeSalle getDemandeSalleById(Long id) {
         return demandeSalleRepository.existsById(id) ? demandeSalleRepository.findById(id).get() : null;
     }
-    public List<DemandeSalle> getAllDemandeSalle(){
+
+    public List<DemandeSalle> getAllDemandeSalle() {
         return demandeSalleRepository.findAll();
     }
-    public Page<DemandeSalle> getAllDemandeSalleParPage(int page , int size){
+
+    public Page<DemandeSalle> getAllDemandeSalleParPage(int page, int size) {
         return demandeSalleRepository.findAll(PageRequest.of(page, size));
     }
 
+    public Page<DemandeSalle> getAllDemandeSalleParPageParResponsableClub(User user, int page, int size) {
+        return demandeSalleRepository.findByResponsable(user, PageRequest.of(page, size));
+    }
+
+    public Page<DemandeSalle> getAllDemandeSalleParPageParDestinataire(Integer id, int page, int size) {
+        return demandeSalleRepository.findByDestinataire(id, PageRequest.of(page, size));
+    }
 
 }

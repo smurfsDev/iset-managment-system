@@ -8,12 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.PositiveOrZero;
+
 @Entity
 @Table(name = "demande_materiel_materiel")
 
-public class DemandeMaterielMateriel implements  Serializable{
-    @Id @GeneratedValue
-    private  Long id;
+public class DemandeMaterielMateriel implements Serializable {
+    @Id
+    @GeneratedValue
+    private Long id;
 
     // @Id
     @ManyToOne
@@ -23,31 +26,39 @@ public class DemandeMaterielMateriel implements  Serializable{
     @ManyToOne
     @JoinColumn(name = "idMateriel")
     private Materiel materiel;
-    private int quantite =0;
+    @PositiveOrZero
+    private int quantite = 0;
+
     public DemandeMateriel getDemandeMateriel() {
         return demandeMateriel;
     }
+
     public void setDemandeMateriel(DemandeMateriel demandeMateriel) {
         this.demandeMateriel = demandeMateriel;
     }
+
     public Materiel getMateriel() {
         return materiel;
     }
+
     public void setMateriel(Materiel materiel) {
         this.materiel = materiel;
     }
+
     public int getQuantite() {
         return quantite;
     }
+
     public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
+
 }
