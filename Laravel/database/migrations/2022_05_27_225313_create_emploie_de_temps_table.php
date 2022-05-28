@@ -18,6 +18,8 @@ class CreateEmploieDeTempsTable extends Migration
             $table->string('title');
             $table->foreignId('classes_id');
             $table->foreign('classes_id')->references('id')->on('classes');
+            $table->foreignId('idResponsable');
+            $table->foreign('idResponsable')->references('id')->on('users');
             $table->timestamps();
         });
     }
