@@ -16,15 +16,16 @@
           <b-container class="bv-example-row py-0">
             <b-row class="text-center">
               <b-col cols="8">
+
                 <button
-                  v-if="!$store.getters.isAdmin"
+                  v-if="!$store.getters.ischefdepartement"
                   type="button"
                   class="btn btn-primary mx-1 float-start"
                   data-bs-toggle="modal"
                   @click="initModal()"
                   data-bs-target="#EmploideTempModal"
                 >
-                  Nouvelle EmploideTemp
+                  Nouvelle Emploie de Temps
                 </button>
               </b-col>
               <b-col></b-col>
@@ -59,13 +60,12 @@
 <script>
 import showEmploideTemps from "./show.vue";
 import formEmploideTemp from "./form.vue";
-// import search from '../search.vue';
 
 export default {
   components: {
     showEmploideTemps,
     formEmploideTemp,
-    //     search
+
   },
   data() {
     return {
@@ -85,7 +85,7 @@ export default {
   },
 
   created() {
-    // console.log(typeof $);
+  
     window.title = "EmploideTemp";
     this.fetchEmploideTemp();
     if (this.$route.params.add == 1) {
