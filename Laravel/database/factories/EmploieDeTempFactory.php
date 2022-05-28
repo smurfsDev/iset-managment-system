@@ -16,8 +16,9 @@ class EmploieDeTempFactory extends Factory
         return [
             "title" => $this->faker->word(),
             "classes_id" => $this->faker->randomDigit(),   
-            "idResponsable" => $this->faker->randomDigit(),  
             "file" => $this->faker->word(),
+            "idResponsable" => $this->faker->randomDigit(),  
+            
         ];
     }
 }
