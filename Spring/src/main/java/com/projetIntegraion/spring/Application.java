@@ -201,6 +201,20 @@ public class Application implements CommandLineRunner {
 		userRoleRepository.save(ur3);
 		Role role4 = new Role("ROLE_ENSEIGNANT");
 		role4 = roleRepository.save(role4);
+
+		// new enseignant user
+		User user4 = new User();
+		user4.setUsername("enseignant@example.com");
+		user4.setPassword(new BCryptPasswordEncoder().encode("password"));
+		user4.getRoles().add(role4);
+		user4 = userRepository.save(user4);
+
+		UserRole ur5 =  userRoleRepository.findFirstByUserId(user4.getId()).get();
+		ur5.setStatus(1);
+		ur5.setDepartement(5);
+		userRoleRepository.save(ur5);
+		
+
 	}
 
 	// @Bean
