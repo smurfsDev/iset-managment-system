@@ -40,50 +40,7 @@ public class EnseignantController {
         User user = userRepository.findUserWithName(principal.getName()).get();
         return user;
     }
-    
-    // @RequestMapping(value = "/listeEnseignant")
-    // public String showAllEnseignant(ModelMap modelMap,
-    //         HttpServletRequest request,
-    //         @RequestParam(name = "page", defaultValue = "0") int page,
-    //         @RequestParam(name = "size", defaultValue = "2") int size) {
-
-    //     // User user = this.getUser(request);
-    //     // UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-    //     List<UserRole> listEnseignant = userRoleRepository.findByRoleIdList(5L);
-    //   //   System.out.println("liste ens "+listEnseignant.get(0).getUser()+" "+listEnseignant.get(1).getUser());
-    //   //  List<User> listEnseignantFiltered = new ArrayList<>();
-    //     // for (User enseignant : listEnseignant.get().getUser()) {
-    //     //     UserRole ii = userRoleRepository.findByRoleIdAndUserId(5L, enseignant.getId()).get();
-    //     //     if (ii.getDepartement() == userRole.getDepartement()) {
-    //     //         listEnseignantFiltered.add(enseignant);
-    //     //     }
-    //     // }
-    //     // Page<User> pagei = new PageImpl<>(listEnseignantFiltered, PageRequest.of(page, size),
-    //     //     listEnseignantFiltered.size());
-    //     // Optional<UserRole> l = userRoleRepository.findByRoleId(5L);
-    //     // System.out.println("liste ens "+l);
-
-    //     // List<User> listEnseignant = userRepository.findByRolesId(5L);
-    //     // System.out.println("liste ens "+listEnseignant);
-    //     // List<User> listEnseignantFiltered = new ArrayList<>();
-    //     // for (User enseignant : listEnseignant) {
-    //     //     UserRole ii = userRoleRepository.findByRoleIdAndUserId(5L, enseignant.getId()).get();
-    //     //     if (ii.getDepartement() == userRole.getDepartement()) {
-    //     //         listEnseignantFiltered.add(enseignant);
-    //     //     }
-    //     // }
-    //     // Page<User> pagei = new PageImpl<>(listEnseignantFiltered, PageRequest.of(page, size),
-    //     //     listEnseignantFiltered.size());
-    //     // List<Object[]> listClasse = classeRepository.findByDep(userRole.getDepartement());
-    //     // modelMap.addAttribute("listChefDepartments", pagei);
-    //     // modelMap.addAttribute("listeEnseignants", listStudentsFiltered);
-    //     // modelMap.addAttribute("listClasse", listClasse);
-    //     // modelMap.addAttribute("currentPage", page);
-    //     // modelMap.addAttribute("pages", new int[pagei.getTotalPages()]);
-    //     // modelMap.addAttribute("size", size);
-
-    //     return "ChefDepartment/gererStudents/liste";
-    // }
+ 
     @RequestMapping(value = "/listeEnseignants")
     public String showAllEnseignant(ModelMap modelMap,
             HttpServletRequest request,
@@ -118,13 +75,13 @@ public class EnseignantController {
     }
 
     @GetMapping(value = "/acceptEns")
-    public String accept(@RequestParam int idCD,
+    public String accept(@RequestParam int idEns,
             HttpServletRequest request,
 
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idCD);
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idEns);
         userRole.get().setStatus(1);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","success");
@@ -134,13 +91,13 @@ public class EnseignantController {
     }
 
     @GetMapping(value = "/declineEns")
-    public String decline(@RequestParam int idCD,
+    public String decline(@RequestParam int idEns,
             HttpServletRequest request,
 
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idCD);
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idEns);
         userRole.get().setStatus(2);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","success");

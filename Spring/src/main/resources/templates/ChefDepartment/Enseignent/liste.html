@@ -48,10 +48,10 @@
                                 <i class="fa fa-times"></i>
                             </a> -->
                                 <div >
-                                    <a th:href="@{acceptEns(idCD=${demande.id},page=${currentPage},size=${param.size})}">
+                                    <a th:href="@{acceptEns(idEns=${demande.id},page=${currentPage},size=${param.size})}">
                                         <i class="fa fa-check"></i>
                                     </a>
-                                    <a th:href="@{declineEns(idCD=${demande.id},page=${currentPage},size=${param.size})}">
+                                    <a th:href="@{declineEns(idEns=${demande.id},page=${currentPage},size=${param.size})}">
                                         <i class="fa fa-times"></i>
                                     </a>
                                     <!-- <a th:class="${listClasse[iter.count][2].status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineSTD(idSTD=${demande.id},page=${currentPage},size=${param.size})}">
@@ -72,7 +72,7 @@
 				<ul class="nav nav-pills">
 					<li th:each="page,status:${pages}"><a
 							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
-							th:href="@{ listeStudents(page=${status.index}, size=${param.size} ) }" 
+							th:href="@{ listeEnseignants(page=${status.index}, size=${param.size} ) }" 
 							th:text="${status.index+1 }"></a></li>
 				</ul>
 			</div>
