@@ -18,22 +18,6 @@
           title: '',
           placement: 'topright',
         }"
-        v-if="EmploideTemp.reponse != null"
-        icon="check-square"
-        scale="2"
-        variant="success"
-      ></b-icon>
-      <b-icon
-        class="float-end"
-        v-b-tooltip.hover="{
-          variant: 'danger',
-          title: '',
-          placement: 'topright',
-        }"
-        v-if="EmploideTemp.reponse == null"
-        icon="x-square"
-        scale="2"
-        variant="danger"
       ></b-icon>
 
       <md-tabs style="height: auto;!important">
@@ -45,14 +29,14 @@
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
               <b-row>
-                <b-col> Titre :{{ EmploideTemp.titre }} </b-col>
+                <b-col> Titre :{{ EmploideTemp.title }} </b-col>
               </b-row>
               <b-row>
-                <b-col> Classe : {{ EmploideTemp.class}} </b-col>
+                <b-col> Classe : {{ EmploideTemp.classes.abreviation }} </b-col>
               </b-row>
               <b-row v-if="EmploideTemp.file != null">
                 <b-col>
-                  <img :src="EmploideTemp.file" alt="" width="250" />
+                  <img :src="EmploideTemp.file" alt="" width="%50" />
                 </b-col>
               </b-row>
             </b-row>
@@ -127,12 +111,7 @@ export default {
     };
   },
 
-  emits: [
-    "deleteEmploideTemp",
-    "updateEmploideTemp",
-    "fetchEmploideTemp",
-
-  ],
+  emits: ["deleteEmploideTemp", "updateEmploideTemp", "fetchEmploideTemp"],
   methods: {
     Delete(id) {
       this.$emit("deleteEmploideTemp", id);
