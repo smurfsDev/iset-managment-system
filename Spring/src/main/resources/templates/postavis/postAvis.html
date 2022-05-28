@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>listavis</title>
+</head>
+<body>
+    <form action="" >
+        <div>
+           <label for="#title" class="mb-3" style="font-weight:bold;">Title</label> <input type="text" name="title" id="title" class="form-control" v-model="form.title" placeholder="Title">
+        </div>
+        <div>
+        <label for="#desc" style="font-weight:bold;" class="mb-3">Description</label> 
+        <textarea name="content" id="content" v-model="form.content" class="form-control mb-3" cols="30" rows="10" placeholder="send Avis...">
+        </textarea>
+    
+          <label>Image</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    ref="file"
+                    name="image"
+                    id="image"
+                  />
+        </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" @click="hideModal('postModal')">Save changes</button>
+          </div>
+    </form>
+</body>
+</html>
