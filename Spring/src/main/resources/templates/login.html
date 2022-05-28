@@ -104,7 +104,7 @@
 
         let role = document.querySelector('select[name=role]');
         role.addEventListener('change', (e) => {
-            if (e.target.value == 3 || e.target.value == 4 || e.target.value == 19) {
+            if (e.target.value == 3 || e.target.value == 4 || e.target.value == 5) {
                 document.querySelector('#dep').style.display = 'block';
             } else {
                 document.querySelector('#dep').style.display = 'none';
@@ -121,7 +121,7 @@
         let selectedDep = departement.value;
 
         for (let i = 0; i < options.length; i++) {
-            if (options[i].dataset.index != selectedDep) {
+            if (options[i].dataset.index != 1) {
                 options[i].style.display = 'none';
             } else {
                 options[i].style.display = 'block';
