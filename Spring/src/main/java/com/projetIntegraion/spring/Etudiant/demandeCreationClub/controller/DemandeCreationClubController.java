@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Optional;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +11,10 @@ import javax.validation.Valid;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeCreationClubService;
 import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.service.ClubService;
@@ -35,6 +38,8 @@ public class DemandeCreationClubController {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     public User getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -197,6 +202,11 @@ public class DemandeCreationClubController {
         r.getRoles().add(res);
         userRepository.save(r);
 
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(res.getId(), r.getId());
+        if (userRole.isPresent()) {
+            userRole.get().setStatus(1);
+            userRoleRepository.save(userRole.get());
+        }
         modelMap.addAttribute("Dcc", new DemandeCreationClub());
         modelMap.addAttribute("pages",
                 new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
