@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -9,24 +10,23 @@ import com.projetIntegraion.spring.blogClub.entity.Club;
 
 @Entity
 public class Member {
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
-	private User etudiant;
+    private User etudiant;
     @OneToOne
     private Club club;
 
-
     public Member() {
     }
-
 
     public Member(Long id, User etudiant, Club club) {
         this.id = id;
         this.etudiant = etudiant;
         this.club = club;
     }
-
 
     public Long getId() {
         return this.id;
@@ -52,14 +52,13 @@ public class Member {
         this.club = club;
     }
 
-
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", etudiant='" + getEtudiant() + "'" +
-            ", club='" + getClub() + "'" +
-            "}";
+                " id='" + getId() + "'" +
+                ", etudiant='" + getEtudiant() + "'" +
+                ", club='" + getClub() + "'" +
+                "}";
     }
-    
+
 }

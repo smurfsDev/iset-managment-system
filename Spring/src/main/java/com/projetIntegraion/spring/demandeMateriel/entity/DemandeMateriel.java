@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.ManyToOne;
@@ -22,8 +23,9 @@ import org.springframework.lang.Nullable;
 
 @Entity
 public class DemandeMateriel {
-	@Id @GeneratedValue 
-	private  Long id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Nullable
 	private String reponse;
     private int status =0;

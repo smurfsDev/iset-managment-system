@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
@@ -13,8 +14,10 @@ import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 @Entity
 public class Matiere {
 
-	private @Id @GeneratedValue Long id;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     @NotNull
     @Min(value=1, message="must be equal or greater than 1")  
     private double coefficient;

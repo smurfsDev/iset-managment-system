@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -11,27 +12,26 @@ import com.projetIntegraion.spring.Etudiant.demandeCreationClub.annotation.uniqu
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.annotation.uniqueClassName;
 import com.projetIntegraion.spring.administrateur.departement.entity.Departement;
 
-
 @Entity
 public class Classe {
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @NotNull
-	@Size(min = 3, max = 50)
+    @Size(min = 3, max = 50)
     @uniqueClassAbv
-	private String abreviation;
+    private String abreviation;
 
     @NotNull
     @uniqueClassName
-	@Size(min = 3, max = 50)
-	private String nom;
+    @Size(min = 3, max = 50)
+    private String nom;
 
     @OneToOne
     private Departement departement;
 
-
     public Classe() {
     }
-
 
     public Classe(Long id, String abreviation, String nom, Departement departement) {
         this.id = id;
@@ -39,7 +39,6 @@ public class Classe {
         this.nom = nom;
         this.departement = departement;
     }
-
 
     public Long getId() {
         return this.id;
@@ -73,17 +72,14 @@ public class Classe {
         this.departement = departement;
     }
 
-
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", abreviation='" + getAbreviation() + "'" +
-            ", nom='" + getNom() + "'" +
-            ", departement='" + getDepartement() + "'" +
-            "}";
+                " id='" + getId() + "'" +
+                ", abreviation='" + getAbreviation() + "'" +
+                ", nom='" + getNom() + "'" +
+                ", departement='" + getDepartement() + "'" +
+                "}";
     }
-
-
 
 }
