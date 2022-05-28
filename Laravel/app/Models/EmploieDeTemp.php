@@ -12,6 +12,8 @@ class EmploieDeTemp extends Model
     protected $fillable = [
         'title', 
         'classes_id',
+        'file',
+        'idResponsable',
     ];
     
     public function classes()
