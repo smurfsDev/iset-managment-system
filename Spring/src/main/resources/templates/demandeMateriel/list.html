@@ -54,10 +54,10 @@
                                                 <p th:text="${demande.destinataire.username}"></p>  
                                             </div>
                                             <div class="col">
-                                                <b>Date d'emploi : </b><p th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></p>                                                </div>
+                                                <b>Date d'emploi : </b><p th:text="${demande.dateEmploi}"></p>                                                </div>
                                         </div>
                                         <div class="m-auto">
-                                             <b>Date de remise : </b><p th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}">
+                                             <b>Date de remise : </b><p th:text="${demande.dateDeRemise}">
                                         </div>
                                         <b>Reponse :</b>
                                         <p style="color: rgb(169, 0, 0);" th:text="${demande.reponse}"></p>

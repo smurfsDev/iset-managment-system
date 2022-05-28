@@ -33,12 +33,13 @@
 									<label th:if="${edit}" th:text="${dest.username}"></label>
 									<select name="destinataire" th:value="${Dmm.destinataire}">
                                         <option th:each="user:${Users}" th:value="${user.id}" th:text="${user.username}"></option>
-									
+									</select>
 									<span th:errors=${Dmm.destinataire} class="text-danger">
 								</div>
 								<div class="form-group">
-									<label class="control-label">Date Emploi :</label> <input type="date"
-										name="dateEmploi" class="form-control" th:value="${#dates.format(Dmm.dateEmploi, 'yyyy-MM-dd')}" /> 
+									<label class="control-label">Date Emploi :</label> 
+									<input type="date"
+										name="dateEmploi" class="form-control" th:value="${Dmm.dateEmploi}" /> 
 									<span th:errors=${Dmm.dateEmploi} class="text-danger">
 								</div>
                                 <div class="form-group">
