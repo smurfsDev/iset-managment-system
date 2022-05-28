@@ -16,5 +16,4 @@ class EmploieDeTempSeeder extends Seeder
     {
         EmploieDeTemp::factory(2)->create();
     }
-
 }
