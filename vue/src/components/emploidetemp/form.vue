@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="EmploideTempModalLabel">
-            Ajouté une Emploi de Temp
+            Ajouté une Emploi de Temps
           </h5>
           <button
             type="button"
@@ -27,14 +27,14 @@
               <input
                 type="text"
                 class="border-0 dcc form-control"
-                placeholder="Titre"
-                v-model="oldEmploideTemp.titre"
+                placeholder="Title"
+                v-model="oldEmploideTemp.title"
                 required="required"
               />
 
-              <label>class:</label>
+              <label>Classe:</label>
               <div class="form-group">
-                <select name="classe" v-model="oldEmploideTemp.classe">
+                <select name="classe" v-model="oldEmploideTemp.classes_id">
                   <option
                     v-for="classe in classes"
                     :key="classe.id"
@@ -108,7 +108,7 @@ export default {
       $(".dcc").val("");
     },
     fetchClasses() {
-      let page_url = "http://127.0.0.1:8000/api/classe";
+      let page_url = "http://127.0.0.1:8000/api/Classe";
       this.$http
         .get(page_url)
         .then((res) => {
