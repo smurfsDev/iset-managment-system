@@ -78,9 +78,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/logout").permitAll()
-				.antMatchers("/accept", "/decline", "/categorieMateriel","/listeChefDepartments","/acceptCD","/declineCD")
+				.antMatchers("/accept", "/decline", "/categorieMateriel", "/listeChefDepartments", "/acceptCD",
+						"/declineCD",
+						"/showListCategories", "/showCreateCategorieForm", "/saveCategorieMateriel",
+						"/showEditCategorieForm", "/updateCategorieMateriel", "/deleteCategorieMateriel")
 				.hasAnyRole("ADMIN")
-				.antMatchers("/classe","/deleteClass","/showCreateClass","/createClass","/modifierClass","/updateClass")
+				.antMatchers("/classe", "/deleteClass", "/showCreateClass", "/createClass", "/modifierClass",
+						"/updateClass")
 				.hasAnyRole("CHEFDEPARTEMENT")
 				.antMatchers("/showCreateDcc", "/deleteDcc",
 						"/modifierDcc", "/blogClub")
@@ -94,7 +98,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/deleteProject", "/modifierProject",
 						"/listeDm", "/showCreateDm", "/showEditDm", "/updateDmm", "/deleteDmm", "/materiel",
 						"/showMateriel",
-						"/deleteMateriel", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
+						"/deleteMaterielDemande", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS",
+						"/updateDS",
 						"/modifierDS",
 						"/deleteDS")
 				.hasAnyRole("RESPONSABLE")
@@ -120,9 +125,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			String username = request.getParameter("username");
 			User user = userRepository.findUserWithName(username).get();
-			UserRole ur = userRoleRepository.findFirstByUserId(user.getId()).isPresent() ? userRoleRepository.findFirstByUserId(user.getId()).get() : null;
-			response.sendRedirect(ur!=null?ur.getStatus()!=1?"/login?error=2":"/listeDcc":"/listeDcc");
-			response.setStatus(ur!=null?ur.getStatus()!=1?HttpServletResponse.SC_UNAUTHORIZED:HttpServletResponse.SC_OK:HttpServletResponse.SC_OK);
+			UserRole ur = userRoleRepository.findFirstByUserId(user.getId()).isPresent()
+					? userRoleRepository.findFirstByUserId(user.getId()).get()
+					: null;
+			response.sendRedirect(ur != null ? ur.getStatus() != 1 ? "/login?error=2" : "/listeDcc" : "/listeDcc");
+			response.setStatus(
+					ur != null ? ur.getStatus() != 1 ? HttpServletResponse.SC_UNAUTHORIZED : HttpServletResponse.SC_OK
+							: HttpServletResponse.SC_OK);
 		}
 
 	}
