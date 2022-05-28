@@ -112,6 +112,12 @@
                   <span>Liste des etudiants</span>
                 </a>
               </li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{listeEnseignants}" >
+                  <i class="fa fa-user"></i>
+                  <span>Liste des enseignants</span>
+                </a>
+              </li>
               <!-- <li >
                 <a th:href="@{demandeAdhesionClub}">
                   <i class="fa fa-shopping-cart"></i>
