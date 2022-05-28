@@ -1,21 +1,20 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,6 +33,9 @@ public class StudentController {
     @Autowired
     private ClasseRepository classeRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     public User getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         User user = userRepository.findUserWithName(principal.getName()).get();
@@ -45,27 +47,13 @@ public class StudentController {
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-
         User user = this.getUser(request);
         UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-        List<User> listStudents = userRepository.findByRolesId(3L);
-        List<User> listStudentsFiltered = new ArrayList<>();
-        for (User student : listStudents) {
-            UserRole ii = userRoleRepository.findByRoleIdAndUserId(3L, student.getId()).get();
-            if (ii.getDepartement() == userRole.getDepartement()) {
-                listStudentsFiltered.add(student);
-            }
-        }
-        Page<User> pagei = new PageImpl<>(listStudentsFiltered, PageRequest.of(page, size),
-                listStudentsFiltered.size());
-        List<Object[]> listClasse = classeRepository.findByDep(userRole.getDepartement());
-        modelMap.addAttribute("listChefDepartments", pagei);
-        modelMap.addAttribute("listStudents", listStudentsFiltered);
-        modelMap.addAttribute("listClasse", listClasse);
+        Page<Object[]> ListStudent = classeRepository.findByDepAndRoleStudent(userRole.getDepartement(), PageRequest.of(page, size));
+        modelMap.addAttribute("ListStudent", ListStudent);
         modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("pages", new int[pagei.getTotalPages()]);
+        modelMap.addAttribute("pages", new int[ListStudent.getTotalPages()]);
         modelMap.addAttribute("size", size);
-
         return "ChefDepartment/gererStudents/liste";
     }
 
@@ -75,7 +63,9 @@ public class StudentController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole1 = userRoleRepository.findByRoleIdAndUserId(3L,
+        Role r = roleRepository.findByName("ROLE_STUDENT");
+
+        Optional<UserRole> userRole1 = userRoleRepository.findByRoleIdAndUserId(r.getId(),
                 idSTD);
         if (userRole1.isPresent()) {
             userRole1.get().setStatus(1);
@@ -96,7 +86,9 @@ public class StudentController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole1 = userRoleRepository.findByRoleIdAndUserId(3L,
+        Role r = roleRepository.findByName("ROLE_STUDENT");
+
+        Optional<UserRole> userRole1 = userRoleRepository.findByRoleIdAndUserId(r.getId(),
                 idSTD);
         if (userRole1.isPresent()) {
             userRole1.get().setStatus(2);
