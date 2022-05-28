@@ -30,7 +30,6 @@ class CreateDemandeSallesTable extends Migration
                 ->references('id')
                 ->on('salles')
                 ->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
