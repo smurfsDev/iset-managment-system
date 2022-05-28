@@ -36,15 +36,12 @@
                                         name="coefficient" class="form-control" th:value="${matiere.coefficient}" /> 
 									<span th:errors=${matiere.coefficient} class="text-danger">
                                 </div>
-                                <!-- <div id="enseignant" class="form-group ">
-                                    <label class="control-label">Enseignant :</label>
-                                    <select th:name="enseignant" class="form-control">
-                                        <option selected disabled>Choisir un enseignant</option>
-                                        <option class="enseignant" th:each="enseignant:${enseignants}"
-                                            th:data-index="${enseignant.id}" th:value="${enseignant.id}" name="enseignant"
-                                            th:text="${enseignant.username}"></option>
-                                    </select>
-                                </div> -->
+                                <div class="form-group">
+                                    <label class="control-label">Semestre :</label> <input type="number"
+                                        name="semestre" class="form-control" th:value="${matiere.semestre}" />  
+									<span th:errors=${matiere.semestre} class="text-danger">
+                                </div>
+                                
                                 <div class="form-group">
                                     <label class="control-label">Enseignant :</label>
                                     <select name="enseignant" class="form-control">
@@ -55,11 +52,7 @@
                                 
 								<label type="hidden" name="id" th:value="${matiere.id}" />
 								<input type="hidden" name="idC" th:value="${idC}"/>
-                                <p th:text="${idC}"></p>
-                              
 
-								<!-- <input type="hidden" name="page" th:value="${matiere.page}" />
-								<input type="hidden" name="size" th:value="${matiere.size}" /> -->
 								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
 								type="submit" >
 							</form>
