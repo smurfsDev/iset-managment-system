@@ -38,7 +38,7 @@
 					<tr th:each="demande,iter:${listChefDepartments.content}">
                             <td th:class="${listUserRole[iter.index].status==3}?striked:''" th:text="${demande.id}"></td>
                             <td th:class="${listUserRole[iter.index].status==3}?striked:''" th:text="${demande.username}"></td>
-                        <td th:class="${listUserRole[iter.index].status==3}?striked:''" th:text="${listDepartement[listUserRole[iter.index].departement-5].titre}"></td>
+                        <td th:class="${listUserRole[iter.index].status==3}?striked:''" th:text="${listDepartement[listUserRole[iter.index].departement-6].titre}"></td>
 
                         <td>
                             <div th:if="${listUserRole[iter.index].status!=3}">

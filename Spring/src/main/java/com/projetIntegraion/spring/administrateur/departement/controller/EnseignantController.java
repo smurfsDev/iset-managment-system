@@ -52,12 +52,14 @@ public class EnseignantController {
         List<User> listeEnseignants = userRepository.findByRolesId(5L);
         List<User> listeEnseignantsFiltered = new ArrayList<>();
 
-        
+       // int[] response = new int[2000];
+        List<Integer> response = new ArrayList<>();
         for (User ens : listeEnseignants) {
             UserRole ii = userRoleRepository.findByRoleIdAndUserId(5L, ens.getId()).get();
             if (ii.getDepartement() == userRole.getDepartement()) {
                 listeEnseignantsFiltered.add(ens);
-               
+            //    respone[ens.getId()] = userRole.getStatus();
+                response.add(ii.getStatus());
 
             }
         }
@@ -65,6 +67,8 @@ public class EnseignantController {
                 listeEnseignantsFiltered.size());
         // List<Object[]> listClasse = classeRepository.findByDep(userRole.getDepartement());
         modelMap.addAttribute("listEns", pagei);
+        modelMap.addAttribute("response", response);
+        
         modelMap.addAttribute("listeEnseignants", listeEnseignantsFiltered);
         modelMap.addAttribute("listClasse", userRole.getStatus());
         modelMap.addAttribute("currentPage", page);
@@ -100,7 +104,7 @@ public class EnseignantController {
         Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idEns);
         userRole.get().setStatus(2);
                 userRoleRepository.save(userRole.get());
-                modelMap.addAttribute("typea","success");
+                modelMap.addAttribute("typea","danger");
                 modelMap.addAttribute("message", "L'enseignant a été refusé");
 
         return this.showAllEnseignant(modelMap, request, page, size);
