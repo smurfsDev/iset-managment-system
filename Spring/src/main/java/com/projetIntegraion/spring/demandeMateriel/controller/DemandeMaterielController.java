@@ -187,6 +187,12 @@ public class DemandeMaterielController {
                         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
                         modelMap.addAttribute("CM", listCategorieMateriel);
                         // List<User> listUser = UserServise.getAllUser();
+                        User dest = Dmm.getDestinataire();
+                        modelMap.addAttribute("dest", dest);
+                        Long Categ = Dmm.getIdCategorie();
+                        CategorieMateriel C = CategorieMaterielService.getCategorieById(Categ);
+                        modelMap.addAttribute("Cat", C);
+
                         // modelMap.addAttribute("Users", listUser);
                         List<User> listUser = materielService.getAllResponsableMateriel();
                         modelMap.addAttribute("Users", listUser);
@@ -199,7 +205,7 @@ public class DemandeMaterielController {
                         dm.setDateDeRemise(Dmm.getDateDeRemise());
                         dm.setIdCategorie(Dmm.getIdCategorie());
                         dm.setDestinataire(Dmm.getDestinataire());
-                        dm.setResponsableClub(Dmm.getResponsableClub());
+                        dm.setResponsableClub(this.getUser(request));
                         dm = DemandeMaterielService.save(dm);
                         modelMap.addAttribute("Dmm", new DemandeMateriel());
                         modelMap.addAttribute("pages",
