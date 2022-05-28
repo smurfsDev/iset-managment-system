@@ -197,7 +197,7 @@ public class SecurityController {
             ur.setDepartement(dep);
             userRoleRepository.save(ur);
         }
-        if (role==5) {
+        if (role==19) {
             UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
             ur.setDepartement(dep);
             userRoleRepository.save(ur);

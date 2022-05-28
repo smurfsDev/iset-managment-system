@@ -49,13 +49,13 @@ public class EnseignantController {
 
         User user = this.getUser(request);
         UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-        List<User> listeEnseignants = userRepository.findByRolesId(5L);
+        List<User> listeEnseignants = userRepository.findByRolesId(19L);
         List<User> listeEnseignantsFiltered = new ArrayList<>();
 
        // int[] response = new int[2000];
         List<Integer> response = new ArrayList<>();
         for (User ens : listeEnseignants) {
-            UserRole ii = userRoleRepository.findByRoleIdAndUserId(5L, ens.getId()).get();
+            UserRole ii = userRoleRepository.findByRoleIdAndUserId(19L, ens.getId()).get();
             if (ii.getDepartement() == userRole.getDepartement()) {
                 listeEnseignantsFiltered.add(ens);
             //    respone[ens.getId()] = userRole.getStatus();
@@ -85,7 +85,7 @@ public class EnseignantController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idEns);
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(19L, idEns);
         userRole.get().setStatus(1);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","success");
@@ -101,7 +101,7 @@ public class EnseignantController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idEns);
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(19L, idEns);
         userRole.get().setStatus(2);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","danger");
