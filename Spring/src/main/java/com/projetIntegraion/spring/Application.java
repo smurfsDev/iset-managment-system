@@ -70,13 +70,13 @@ public class Application implements CommandLineRunner {
 		Role role1 = new Role("ROLE_RESPONSABLE");
 		Role role2 = new Role("ROLE_STUDENT");
 		Role role3 = new Role("ROLE_CHEFDEPARTEMENT");
-		Role role4 = new Role("ROLE_ENSEIGNANT");
+		
 
 		role = roleRepository.save(role);
 		role1 = roleRepository.save(role1);
 		role2 = roleRepository.save(role2);
 		role3 = roleRepository.save(role3);
-		role4 = roleRepository.save(role4);
+		
 
 		Departement departement = new Departement();
 		departement.setTitre("Department Informatique");
@@ -199,7 +199,8 @@ public class Application implements CommandLineRunner {
 
 		userRoleRepository.save(ur2);
 		userRoleRepository.save(ur3);
-
+		Role role4 = new Role("ROLE_ENSEIGNANT");
+		role4 = roleRepository.save(role4);
 	}
 
 	// @Bean
