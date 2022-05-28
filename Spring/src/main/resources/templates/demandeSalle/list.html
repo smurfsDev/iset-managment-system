@@ -46,8 +46,8 @@
                             <td th:text="${S.salle.departement.titre}"></td>
                             <td th:text="${S.salle.titre}"></td>
                         </div>
-                        <td th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${demande.dateEmploi}"></td>
+                        <td th:text="${demande.dateDeRemise}"></td>
                         <td th:text="${demande.reponse}"></td>
                         <td th:if="${demande.status == 0}" class="text-warning"><b>en attente</b></td>
                         <td th:if="${demande.status == 1}" class="text-success"><b>acceptée</b></td>
