@@ -128,27 +128,21 @@ public class MatiereController {
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.matiere", bindingResult);
             modelMap.addAttribute("matiere", matiere);
-            return "ChefDepartment/Class/createMatiere";
+        modelMap.addAttribute("idC", idC);
+
+           return "ChefDepartment/Class/createMatiere";
         } else {
-            // User user = this.getUser(request);
-            // UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
+          
             User ens = userRepository.getById(enseignant);
             matiere.setEnseignant(ens);
            Classe c =  classeRepository.getById(idC);
-             matiere.setClasse(c);
-            // classe.setDepartement(departementRepository.getById(Long.parseLong(userRole.getDepartement().toString())));
-           // System.out.println("id classe : "+matiere.getClasse().getNom());
-          //  Classe c = matiere.getClasse();
+            matiere.setClasse(c);
           System.out.println("matiereeee : "+matiere);
             matiereService.save(matiere);
-            // Page<Matiere> matieres = matiereService.getAllMatiereByClasseId(matiere.getClasse().getId(), page, size);
-
-            // modelMap.addAttribute("matieres", matieres);
+        
             modelMap.addAttribute("currentPage", page);
             modelMap.addAttribute("typea", "success");
-            // modelMap.addAttribute("pages",
-            // new int[matiereService.getAllMatiereByClasseId(matiere.getClasse().getId(),
-            // page, size).getTotalPages()]);
+          
 
             modelMap.addAttribute("message", "Matiere ajoutée avec succès");
             modelMap.addAttribute("size", size);
@@ -158,6 +152,121 @@ public class MatiereController {
         }
 
     }
+
+    @GetMapping(value = "/deleteMatiere")
+    public String DeleteMatiere(ModelMap modelMap,
+            HttpServletRequest request,
+            @RequestParam(name = "id", defaultValue = "0") Long id,
+            @RequestParam(name = "idC", defaultValue = "0") Long idC,
+
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        matiereService.deleteById(id);
+
+        User user = this.getUser(request);
+        UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
+
+        // Page<Classe> pageClasses = matiereService.getAllMatiereByClasseId(Long.parseLong(userRole.getDepartement().toString()),
+        //         page, size);
+        Page<Matiere> matieres = matiereService.getAllMatiereByClasseId(idC, page, size);
+
+        modelMap.addAttribute("matieres", matieres);
+        modelMap.addAttribute("currentPage", page);
+        modelMap.addAttribute("pages",
+                new int[matiereService.getAllMatiereByClasseId(idC,
+                page, size).getTotalPages()]);
+        modelMap.addAttribute("typea", "danger");
+        modelMap.addAttribute("message", "Matiere supprimé avec succès");
+        modelMap.addAttribute("size", size);
+
+        return "ChefDepartment/Class/matieres";
+
+    }
+
+    @RequestMapping("/modifierMatiere")
+           // @RequestParam(name = "idC", defaultValue = "0") Long idC,
+            public String showUpdateDcc(@RequestParam("id") Long id,
+            @RequestParam(name = "idC") Long idC, ModelMap modelMap,
+            HttpServletRequest request,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Matiere matiere = matiereService.getMatiere(id);
+        User user = this.getUser(request);
+        UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
+        Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
+        
+        //  List<User> enseignents = userRepository.findByRolesId(role.getId());
+  
+          
+          Optional<UserRole> enseignents = userRoleRepository.findByRoleIdAndStatus(role.getId(), 1);
+          if (enseignents.isPresent()){
+              modelMap.addAttribute("enseignants", enseignents.get().getUser());
+              modelMap.addAttribute("ens", true);
+  
+          }
+          else {
+              modelMap.addAttribute("ens", false);
+          }
+        modelMap.addAttribute("idC", idC);
+
+        modelMap.addAttribute("matiere", matiere);
+        modelMap.addAttribute("edit", true);
+        modelMap.addAttribute("pages",
+            new int[matiereService.getAllMatiereByClasseId(idC,
+            page, size).getTotalPages()]);
+            return "ChefDepartment/Class/createMatiere";
+
+    }
+
+    @RequestMapping("/updateMatiere")
+    public String updateMatiere(@RequestParam(name = "idC") Long idC,
+    @RequestParam(name="id") Long id,
+            ModelMap modelMap,
+            Matiere matiere,
+            BindingResult bindingResult,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size,
+            HttpServletRequest request) throws IOException {
+                
+        if (bindingResult.hasErrors()) {
+            modelMap.addAttribute("org.springframework.validation.BindingResult.matiere", bindingResult);
+            modelMap.addAttribute("matiere", matiere);
+            modelMap.addAttribute("edit", true);
+            return "ChefDepartment/Class/createMatiere";
+
+        } else {
+            User user = this.getUser(request);
+            UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
+
+            Matiere matieree = new Matiere();
+            matieree.setId(id);
+            matieree.setCoefficient(matiere.getCoefficient());
+            matieree.setEnseignant(matiere.getEnseignant());
+            matieree.setSemestre(matiere.getSemestre());
+            matieree.setNom(matiere.getNom());
+            matieree.setClasse(classeRepository.findById(idC).get());
+
+            matiereService.save(matieree);
+            // Page<Classe> matieres = matiereService.getAllClasseById(
+            //         Long.parseLong(userRole.getDepartement().toString()),
+            //         page, size);
+        Page<Matiere> matieres = matiereService.getAllMatiereByClasseId(idC, page, size);
+
+            modelMap.addAttribute("matieres", matieres);
+            modelMap.addAttribute("currentPage", page);
+            modelMap.addAttribute("typea", "warning");
+            modelMap.addAttribute("pages",
+            new int[matiereService.getAllMatiereByClasseId(idC,
+            page, size).getTotalPages()]);
+
+            modelMap.addAttribute("message", "Matiere modifiée avec succès");
+            modelMap.addAttribute("size", size);
+
+            return this.getAllMatieres(modelMap, idC, request, page, size);
+
+        }
+    }
+
 
     
 }

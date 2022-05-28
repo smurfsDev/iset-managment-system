@@ -23,7 +23,7 @@
 							<h3 th:text="${edit}?'Modifier Matiere':'Créer Matiere'" class="mb-0"></h3>
 						</div>
 						<div class="card-body">
-							<form th:action="${edit}?'updateMatiere':'createMatiere'"  class="form"
+							<form th:action="${edit}?'updateMatiere?id='+${matiere.id}+'&idC='+${idC}:'createMatiere'"  class="form"
 								id="formLogin" name="formLogin" role="form"  method="post">
 								<div class="form-group">
 									<label class="control-label">Nom Matiere :</label> <input type="text" name="nom"
@@ -32,7 +32,7 @@
 									</span>
 								</div>
                                 <div class="form-group">
-                                    <label class="control-label">Coefficient :</label> <input type="number"
+                                    <label class="control-label">Coefficient :</label> <input type="number" step="0.5"
                                         name="coefficient" class="form-control" th:value="${matiere.coefficient}" /> 
 									<span th:errors=${matiere.coefficient} class="text-danger">
                                 </div>

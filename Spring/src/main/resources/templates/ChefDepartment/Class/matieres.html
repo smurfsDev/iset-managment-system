@@ -32,6 +32,7 @@
                         <th >Semestre</th>
                         <th >Enseignant</th>
                         <th >Classe</th>
+                        <th >Actions</th>
 
                     </thead>
                     <tr th:if="${#arrays.isEmpty(matieres.content)}">
@@ -45,7 +46,14 @@
                        
                         <td th:text="${m.classe.abreviation}"></td>
                         <td>
-                           
+                            <a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteMatiere(id=${m.id},idC=${idC},
+                            page=${currentPage},size=${param.size})}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                        <a class="btn btn-warning " th:href="@{modifierMatiere(id=${m.id},,idC=${idC},
+                            page=${currentPage},size=${param.size})}">
+                            <i class="fa-solid fa-pen"></i>
+                        </a> 
                         </td>
 					</tr>
 				</table>

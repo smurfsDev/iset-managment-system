@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
@@ -14,19 +16,22 @@ public class Matiere {
 	private @Id @GeneratedValue Long id;
 
     @NotNull
-    private int coefficient;
+    @Min(value=1, message="must be equal or greater than 1")  
+    private double coefficient;
     @NotNull
 	@Size(min = 3, max = 30)
     private String nom;
     @NotNull
-    private double semestre;
+    @Min(value=1, message="must be equal or greater than 1")  
+    @Max(value=2, message="must be equal or less than 2")  
+    private int semestre;
     @ManyToOne
     private Classe classe;
     @ManyToOne
     private User enseignant;
     public Matiere() {
     }
-    public Matiere(Long id, int coefficient, @Size(min = 3, max = 30) String nom, double semestre, Classe classe,
+    public Matiere(Long id, double coefficient, @Size(min = 3, max = 30) String nom, int semestre, Classe classe,
             User enseignant) {
         this.id = id;
         this.coefficient = coefficient;
@@ -41,10 +46,10 @@ public class Matiere {
     public void setId(Long id) {
         this.id = id;
     }
-    public int getCoefficient() {
+    public double getCoefficient() {
         return coefficient;
     }
-    public void setCoefficient(int coefficient) {
+    public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
     }
     public String getNom() {
@@ -53,10 +58,10 @@ public class Matiere {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    public double getSemestre() {
+    public int getSemestre() {
         return semestre;
     }
-    public void setSemestre(double semestre) {
+    public void setSemestre(int semestre) {
         this.semestre = semestre;
     }
     public Classe getClasse() {
@@ -71,12 +76,8 @@ public class Matiere {
     public void setEnseignant(User enseignant) {
         this.enseignant = enseignant;
     }
-    @Override
-    public String toString() {
-        return "Matiere [classe=" + classe + ", coefficient=" + coefficient + ", enseignant=" + enseignant + ", id="
-                + id + ", nom=" + nom + ", semestre=" + semestre + "]";
-    }
-
+    
+    
     
 
 
