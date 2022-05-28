@@ -52,6 +52,8 @@ import manageDemandeDocument from "./routes/gererDemandeDocument";
 import manageTypeCat from "./routes/gererTypeCat";
 
 import gererEmploideTemp from "./routes/gererEmploideTemp";
+import monEmploi from "./routes/monEmploi";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -113,6 +115,7 @@ const routes = [
   ...manageDemandeDocument,
   ...manageTypeCat,
   ...gererEmploideTemp,
+  ...monEmploi,
 ];
 
 const router = new VueRouter({
