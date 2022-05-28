@@ -3,7 +3,6 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
