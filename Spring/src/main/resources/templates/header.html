@@ -122,21 +122,22 @@
               <li class="sidebar-dropdown">
                 <a >
                   <i class="fa fa-shopping-cart"></i>
-                  <span>Demande adhesion club</span>
+                  <span sec:authorize="hasRole('ADMIN')">Categorie Materiel</span>
                   <!-- <span class="badge badge-pill badge-danger">3</span> -->
                 </a>
                 <div class="sidebar-submenu">
                   <ul>
-                    <li>
-                      <a href="#">
-    
+                    <li sec:authorize="hasRole('ADMIN')">
+                      <a th:href="@{showListCategories}">
+                        <i class="fa fa-user"></i>
+                        <span>Liste Categorie</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="#">Orders</a>
-                    </li>
-                    <li>
-                      <a href="#">Credit cart</a>
+                    <li sec:authorize="hasRole('ADMIN')">
+                      <a th:href="@{showCreateCategorieForm}">
+                        <i class="fa fa-user"></i>
+                        <span>Ajouter Categorie</span>
+                      </a>
                     </li>
                   </ul>
                 </div>
