@@ -17,9 +17,14 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.demandeMateriel.annotation.myDateConstraint;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
+
+@myDateConstraint.List({
+		@myDateConstraint(DateDemploi = "dateEmploi", DateDeRemise = "dateDeRemise", message = "Date remise doit etre apres date d'emploi!")
+})
 
 @Entity
 public class DemandeMateriel {
@@ -30,15 +35,15 @@ public class DemandeMateriel {
 	private String reponse;
 	private int status = 0;
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	@FutureOrPresent
-	private Date dateEmploi;
+	// @DateTimeFormat(pattern = "yyyy-MM-dd")
+	// @Temporal(TemporalType.DATE)
+	// @FutureOrPresent
+	private String dateEmploi;
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	@FutureOrPresent
-	private Date dateDeRemise;
+	// @DateTimeFormat(pattern = "yyyy-MM-dd")
+	// @Temporal(TemporalType.DATE)
+	// @FutureOrPresent
+	private String dateDeRemise;
 	@ManyToOne
 	private User responsableClub;
 	@ManyToOne
@@ -88,19 +93,19 @@ public class DemandeMateriel {
 		this.status = status;
 	}
 
-	public Date getDateEmploi() {
+	public String getDateEmploi() {
 		return dateEmploi;
 	}
 
-	public void setDateEmploi(Date dateEmploi) {
+	public void setDateEmploi(String dateEmploi) {
 		this.dateEmploi = dateEmploi;
 	}
 
-	public Date getDateDeRemise() {
+	public String getDateDeRemise() {
 		return dateDeRemise;
 	}
 
-	public void setDateDeRemise(Date dateDeRemise) {
+	public void setDateDeRemise(String dateDeRemise) {
 		this.dateDeRemise = dateDeRemise;
 	}
 
