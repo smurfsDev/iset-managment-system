@@ -19,4 +19,8 @@ public interface ClasseRepository extends JpaRepository<Classe, Long>{
     @Query("select u , c,r from User u join UserRole r on u.id = r.user.id join Classe c on r.classe = c.id where r.departement = ?1")
     List<Object[]> findByDep(int id);
 
+    // find users and their class having role name "ROLE_STUDENT" and belongs to specific department
+    @Query("select u , c,r from User u join UserRole r on u.id = r.user.id join Classe c on r.classe = c.id where r.departement = ?1 and r.role.name = 'ROLE_STUDENT'")
+    Page<Object[]> findByDepAndRoleStudent(int id,Pageable pageable);
+
 }
