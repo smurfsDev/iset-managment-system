@@ -17,8 +17,12 @@
                     <h1 class="text-center">Liste des Classes</h1>
                 <a  th:href="@{showCreateClass(
                 page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
-                        class="fa-solid fa-plus"></i> Ajouter
+                        class="fa-solid fa-plus"></i> Ajouter une classe
                 </a>
+                <a  th:href="@{showCreateMatieres(
+                    page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
+                            class="fa-solid fa-plus"></i> Ajouter une matiere
+                    </a>
             </div>
         </div>
             <div th:if="${message}!='vide'" th:class="'my-4 alert alert'+'-'+${typea}" role="alert"
@@ -29,7 +33,10 @@
                         <th>ID</th>
                         <th>Abreviation</th>
                         <th>Nom</th>
+                        <th >Matieres</th>
+
                         <th >Actions</th>
+
                     </thead>
                     <tr th:if="${#arrays.isEmpty(pageClasses.content)}">
 						<td colspan="4" class="text-center ">No clase found ! </td></tr>
@@ -37,6 +44,12 @@
                         <td th:text="${Classe.id}"></td>
                         <td th:text="${Classe.abreviation}"></td>
                         <td th:text="${Classe.nom}"></td>
+                        <td>
+                            <a class="btn btn-success " th:href="@{matieres(idC=${Classe.id},
+                            page=${currentPage},size=${param.size})}">
+                            <i class="fa-solid fa-angles-right"></i>
+                            </a>
+                        </td>
                         <td>
                             <a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteClass(id=${Classe.id},
 								page=${currentPage},size=${param.size})}">
@@ -46,7 +59,9 @@
 								page=${currentPage},size=${param.size})}">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
+                            
                         </td>
+                       
 					</tr>
 				</table>
 				<ul class="nav nav-pills">

@@ -2,16 +2,21 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Matiere;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.ClasseService;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.MatiereService;
 import com.projetIntegraion.spring.administrateur.departement.repository.DepartementRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +35,14 @@ public class ClasseController {
     private ClasseService classeService;
 
     @Autowired
+    private MatiereService matiereService;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+    
 
     @Autowired
     private UserRoleRepository userRoleRepository;

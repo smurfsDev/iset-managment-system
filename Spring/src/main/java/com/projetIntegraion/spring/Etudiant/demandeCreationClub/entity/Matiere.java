@@ -71,6 +71,11 @@ public class Matiere {
     public void setEnseignant(User enseignant) {
         this.enseignant = enseignant;
     }
+    @Override
+    public String toString() {
+        return "Matiere [classe=" + classe + ", coefficient=" + coefficient + ", enseignant=" + enseignant + ", id="
+                + id + ", nom=" + nom + ", semestre=" + semestre + "]";
+    }
 
     
 
