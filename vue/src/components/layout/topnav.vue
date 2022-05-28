@@ -259,7 +259,13 @@
                     href: '/GererEmploideTemp',
                     title: 'GererEmploideTemp',
                     icon: 'fas fa-calendar-alt',
-                    hidden: !this.isAuth,
+                    hidden: !this.isChefDepartement,
+                },
+                {
+                    href: '/monEmploi',
+                    title: 'Mon emploi',
+                    icon: 'fas fa-calendar-alt',
+                    hidden: !this.isStudent,
                 }
 
             ]
