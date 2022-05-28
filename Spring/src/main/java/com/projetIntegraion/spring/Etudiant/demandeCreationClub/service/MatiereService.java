@@ -45,7 +45,7 @@ public class MatiereService {
 		return matiereRepository.findByClasseId(id, PageRequest.of(page, size));
 	}
 
-    public Page<Matiere> getAllMatiereByEnseignantId(Long id, int page, int size) {
+    public Page<Matiere> getAllMatiereByEnseignantId(Integer id, int page, int size) {
 		return matiereRepository.findByEnseignantId(id, PageRequest.of(page, size));
 	}
 

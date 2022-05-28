@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 
 import org.springframework.data.domain.Page;
@@ -32,6 +33,11 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
     // List<Object[]> findAllApprovedEnseignants();
 
     Optional<UserRole> findByRoleIdAndStatus(Long roleId, int status);
+    
+    // Optional<UserRole> findByClasseId(Long classe);
+
+    
+
 
 
 
