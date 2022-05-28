@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	Optional<User> findUserWithName(String username);
     void deleteById(int id);
     Page<User> findByRolesId(long l, Pageable pageable);
-   
+
     List<User> findByRolesId(long l);
 }
