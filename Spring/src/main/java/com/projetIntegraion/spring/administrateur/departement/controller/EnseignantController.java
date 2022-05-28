@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -116,7 +117,38 @@ public class EnseignantController {
         return "ChefDepartment/Enseignent/liste";
     }
 
-    
+    @GetMapping(value = "/acceptEns")
+    public String accept(@RequestParam int idCD,
+            HttpServletRequest request,
+
+            ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idCD);
+        userRole.get().setStatus(1);
+                userRoleRepository.save(userRole.get());
+                modelMap.addAttribute("typea","success");
+                modelMap.addAttribute("message", "L'enseignant a été accepté");
+
+        return this.showAllEnseignant(modelMap, request, page, size);
+    }
+
+    @GetMapping(value = "/declineEns")
+    public String decline(@RequestParam int idCD,
+            HttpServletRequest request,
+
+            ModelMap modelMap,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(5L, idCD);
+        userRole.get().setStatus(2);
+                userRoleRepository.save(userRole.get());
+                modelMap.addAttribute("typea","success");
+                modelMap.addAttribute("message", "L'enseignant a été refusé");
+
+        return this.showAllEnseignant(modelMap, request, page, size);
+    }
+
 
 
 
