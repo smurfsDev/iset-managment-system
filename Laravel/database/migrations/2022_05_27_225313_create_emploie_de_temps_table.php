@@ -16,11 +16,12 @@ class CreateEmploieDeTempsTable extends Migration
         Schema::create('emploie_de_temps', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->longText('file')->nullable();
             $table->foreignId('classes_id');
-            $table->foreign('classes_id')->references('id')->on('classes');
             $table->foreignId('idResponsable');
-            $table->foreign('idResponsable')->references('id')->on('users');
             $table->timestamps();
+            $table->foreign('idResponsable')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('classes_id')->references('id')->on('classes')->onDelete('cascade');
         });
     }
 
