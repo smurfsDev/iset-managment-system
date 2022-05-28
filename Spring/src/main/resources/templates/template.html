@@ -8,15 +8,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<link rel="stylesheet" type="text/css"
 	href="bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
 	<script src="jquery.js"></script>
     <script src="bootstrap.js"></script>
         <script src="popper.min.js"></script>
+		<script src="script.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 	<meta charset="utf-8" />
 	<title>Gestion des Produits</title>
 </head>
 
 <body>
+	
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<a class="navbar-brand" th:href="@{listeDcc}">PROJECT</a>
 		<ul class="navbar-nav">
@@ -26,7 +30,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Demande Creation Club
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateDcc}">Ajouter</a> <a class="dropdown-item"
+					<a sec:authorize="hasAuthority('STUDENT')" class="dropdown-item"  th:href="@{showCreateDcc}">Ajouter</a> <a class="dropdown-item"
 						th:href="@{listeDcc}">Lister</a>
 				</div>
 			</li>
@@ -36,19 +40,28 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Blog Club
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showManageBlog}">Gérer</a> 
+					<a sec:authorize="hasAuthority('RESPONSABLE')" class="dropdown-item"  th:href="@{showManageBlog}">Gérer</a> 
 					<a class="dropdown-item"
 						th:href="@{blogClub}">Consulter</a>
 				</div>
 			</li>
-         <li class="nav-item dropdown">
+			<li class="nav-item dropdown">
 				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Demande Materiel
 				</button>
 				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateDm}">Ajouter</a> 
+					<a sec:authorize="hasAuthority('RESPONSABLE')" class="dropdown-item"  th:href="@{showCreateDm}">Ajouter</a> 
 					<a class="dropdown-item" th:href="@{listeDm}">Lister</a>
+				</div>
+			</li><li class="nav-item dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Demande Salle
+				</button>
+				<div class="dropdown-menu">
+					<a sec:authorize="hasAuthority('RESPONSABLE')" class="dropdown-item"  th:href="@{ShowcreateDS}">Ajouter</a> 
+					<a class="dropdown-item" th:href="@{listeDS}">Lister</a>
 				</div>
 			</li>
 			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
@@ -66,11 +79,24 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					<a sec:authorize="!isAuthenticated()" class="dropdown-item" th:href="@{login}">login</a>
 					<a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{logout}">logout</a>
 					<a class="dropdown-item" href="@{login}">Profile</a>
+					<a sec:authorize="!isAuthenticated()" class="dropdown-item"
+					th:href="@{register}">register</a>
 				</div>
 			</li>
 		</ul>
 	</nav>
-	<section layout:fragment="Mycontent"></section>
+	<div class="page-wrapper chiller-theme toggled">
+		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+		  <i class="fas fa-bars"></i>
+		</a>
+		<div th:replace="header :: header">...</div>
+		<!-- sidebar-wrapper  -->
+		<main class="page-content">
+		  <div class="container-fluid">
+			<section layout:fragment="Mycontent"></section>
+		  </div>
+		</main>
+	
 </body>
 
 </html>

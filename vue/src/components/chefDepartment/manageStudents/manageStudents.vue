@@ -10,7 +10,7 @@
           </b-alert>
 
           <!-- <b-card> -->
-          <showStudents @acceptStudent="acceptStudent" :Students="Students"
+          <showStudents @deleteStudent="deleteStudent" @acceptStudent="acceptStudent" :Students="Students"
             @fetchStudent="fetchStudents" @declineStudent="declineStudent" :pagination="pagination" />
           <!-- </b-card> -->
         </div>
@@ -82,6 +82,16 @@ export default {
         this.alert.dismissCountDown = 5;
       });
     },
+    deleteStudent(id){
+      this.$http.delete("http://localhost:8000/api/s/" + id)
+      .then(() => {
+        this.fetchStudents();
+        this.edit = false;
+        this.alert.variant = "warning";
+        this.alert.msg = "Student supprimée avec succès";
+        this.alert.dismissCountDown = 5;
+      });
+    }
   },
 };
 </script>

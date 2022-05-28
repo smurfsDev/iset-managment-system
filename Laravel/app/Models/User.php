@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
 
     public function roles(){
-        return $this->belongsToMany('App\Models\Role')->withPivot(['status','department','classe']);    }
+        return $this->belongsToMany('App\Models\Role')->withPivot(['status','department','classe']);}
 
     public function demandeAdhesionClub(){
         return $this->HasMany('App\Models\DemandeAdhesionClub', 'user_id');
@@ -65,9 +65,35 @@ class User extends Authenticatable
         return $this->HasMany('App\Models\DemandeMateriel', 'idResponsableClub');
     }
 
-    public function Reclamation(){
-        return $this->HasMany('App\Models\Reclamation', 'idResponsable');
+    Public function materiel(){
+        return $this->hasMany('App\Models\Materiel', 'idResponsable');
+    }
+    public function department(){
+        return $this->hasOne('App\Models\Departement','chef_departement_id');
+    }
+  public function DemandeEventResponsable(){
+        return $this->HasMany('App\Models\DemandeEvent', 'responsableClubId');
+    }
+    public function DemandeEventAdmin(){
+        return $this->HasMany('App\Models\DemandeEvent', 'administrateurId');
     }
 
+    public function DemandeAdhesionEventStudent(){
+        return $this->HasMany('App\Models\DemandeAdhesionEvent', 'idStudent');
+    }
 
+    public function matiere(){
+        return $this->HasOne('App\Models\Matiere','idEnseignant');
+    }
+
+    public function classe(){
+        return $this->belongsToMany(Role::class)->using(RoleUser::class)->with("RoleUser.class");
+    }
+
+    public function note(){
+        return $this->HasMany('App\Models\Note', 'student_id');
+    }
+     public function Reclamation(){
+        return $this->HasMany('App\Models\Reclamation', 'idResponsable');
+    }
 }

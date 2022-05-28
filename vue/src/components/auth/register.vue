@@ -1,29 +1,31 @@
 <template>
     <div class="login-form container">
+         <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
+            @dismissed="alert.dismissCountDown = 0">
+            <p>{{ alert.msg }}</p>
+        </b-alert>
         <form @submit.prevent="register">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" v-model="form.name" placeholder="Name">
+                <input required type="text" class="form-control" id="name" v-model="form.name" placeholder="Name">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" v-model="form.email" placeholder="Email">
+                <input required type="email" class="form-control" id="email" v-model="form.email" placeholder="Email">
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" v-model="form.password"
-                    placeholder="Password">
-            </div>
+            
             <div class="form-group">
                 <label for="role">Role</label>
-                <select class="form-control" id="role" v-model="form.role">
+                <select required class="form-control" id="role" v-model="form.role">
                     <option value="2">Etudiant</option>
+                    <option value="6">Technicien</option>
                     <option value="5">Chef departement</option>
+                    <option value="7">Enseignant</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="department">Department</label>
-                <select class="form-control" id="department" @change="fetchClasses(form.department)" v-model="form.department">
+                <select required class="form-control" id="department" @change="fetchClasses(form.department)" v-model="form.department">
                   <option 
                     v-for="departement in departements"
                     :key="departement.id"
@@ -35,7 +37,7 @@
             </div>
             <div v-if="form.role==2" class="form-group">
                 <label for="department">Classe</label>
-                <select class="form-control"  id="department" v-model="form.classe">
+                <select required class="form-control"  id="department" v-model="form.classe">
                   <option 
                     v-for="classe in classes"
                     :key="classe.id"
@@ -46,8 +48,13 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="password">Password</label>
+                <input required type="password" class="form-control" id="password" v-model="form.password"
+                    placeholder="Password">
+            </div>
+            <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm_password" v-model="form.confirm_password"
+                <input required type="password" class="form-control" id="confirm_password" v-model="form.confirm_password"
                     placeholder="Confirm Password">
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
@@ -64,7 +71,13 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                confirm_password: ''
+                confirm_password: '',
+                classe :0
+            },
+            alert: {
+                dismissCountDown: 0,
+                variant: "",
+                msg: "",
             },
             departements: [],
             classes: [],
@@ -80,7 +93,20 @@ export default {
             this.LogOut();
         },
         register() {
-            this.Register(this.form);
+            if(this.form.password != this.form.confirm_password){
+                this.alert.dismissCountDown = 5;
+                this.alert.variant = "danger";
+                this.alert.msg = "Password and Confirm Password are not the same";
+                return;
+            }else{
+                this.Register(this.form).then(()=>{
+                    if(this.$store.getters.regStatus==2){
+                        this.alert.dismissCountDown = 3;
+                        this.alert.variant = "danger";
+                        this.alert.msg = this.$store.getters.regMessage;
+                    }
+                });
+            }
         },
         fetchDepartements() {
             fetch("http://localhost:8000/api/Departement")
@@ -96,6 +122,7 @@ export default {
                     this.classes = data;
                 });
         }
+        
     }
 
 

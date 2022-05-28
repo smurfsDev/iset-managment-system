@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\DemandeCreationClub;
+use App\Models\DemandeSalle;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +35,24 @@ class AuthController extends BaseController
                     return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
                 }
             }
+            if (
+                $user->roles->contains('name', "technicien")
+            ) {
+                if ($user->roles->where('name', 'technicien')->first()->pivot->status == 0) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre compte n\'est pas encore activé']);
+                }else if ($user->roles->where('name', 'technicien')->first()->pivot->status == 2) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
+                }
+            }
+            if (
+                $user->roles->contains('name', "enseignant")
+            ) {
+                if ($user->roles->where('name', 'enseignant')->first()->pivot->status == 0) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre compte n\'est pas encore activé']);
+                }else if ($user->roles->where('name', 'enseignant')->first()->pivot->status == 2) {
+                    return $this->sendError('Unauthorised.', ['error' => 'Votre demande est refusée']);
+                }
+            }
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
             $success['user'] = $user;
@@ -40,17 +60,26 @@ class AuthController extends BaseController
             $success['isAdmin'] = false;
             $success['isResponsableClub'] = false;
             $success['isChefDepartement'] = false;
+            $success['isTechnicien'] = false;
+            $success['isEnseignant'] = false;
 
             if ($user->roles->contains('name', "student")) {
                 $success['isStudent'] = true;
             } else if ($user->roles->contains('name', "admin")) {
                 $success['isAdmin'] = true;
             }
-            if ($user->roles->contains('name', "responsableClub")) {
+            if ($user->roles->contains('name', "responsableClub")||DemandeCreationClub::where('responsableClubId', '=', $user->id)->where('status','=',1)->first()) {
+
                 $success['isResponsableClub'] = true;
             }
             if ($user->roles->contains('name', "chefDepartement")) {
                 $success['isChefDepartement'] = true;
+            }
+            if ($user->roles->contains('name', "technicien")) {
+                $success['isTechnicien'] = true;
+            }
+            if ($user->roles->contains('name', "enseignant")) {
+                $success['isEnseignant'] = true;
             }
 
             return $this->sendResponse($success, 'User signed in');
@@ -62,20 +91,26 @@ class AuthController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'role' => 'required|exists:roles,id',
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Error validation', $validator->errors());
+            // recover all validation message into string
+            $messages = $validator->errors()->all();
+            // concatenate all validation message into one string
+            $messages = implode("\n", $messages);
+
+            return $this->sendError('Error validation', ['error' =>$messages]);
         }
+
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $user->roles()->attach($request->role, ['department' => $input['department'],'classe' => $input['classe']?$input['classe']:null]);
+        $user->roles()->attach($request->role, ['department' => $input['department'],'classe' => $input['classe']?$input['classe']:0]);
 
         $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
         $success['name'] =  $user->name;

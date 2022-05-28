@@ -3,6 +3,7 @@ package com.projetIntegraion.spring.blogClub.service;
 import java.util.List;
 
 import com.projetIntegraion.spring.blogClub.entity.Activity;
+import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.repository.ActivitiesRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,4 +61,8 @@ public class ActivitiesService {
 	// public Page<Club> getClubParNom(String nom, int page, int size){
 	// 	return clubRepository.findByNomClubContains(nom, page, size); //(nom, PageRequest.of(page, size));
 	// };
+
+	public List<Activity> getActivityByClubId(Club club) {
+		return activitiesRepository.findByClub(club);
+	}
 }

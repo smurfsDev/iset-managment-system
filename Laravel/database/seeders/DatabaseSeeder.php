@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Database\Seeders\DemandeAdhesionEventSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -34,7 +35,9 @@ class DatabaseSeeder extends Seeder
         $this->call(DocumentCategorieSeeder::class);
         $this->call(DocumentSeeder::class);
         $this->call(DemandeDocumentSeeder::class);
-      
-
+        $this->call(DemandeEventSeeder::class);
+        $this->call(DemandeAdhesionEventSeeder::class);
+        $this->call(MatiereSeeder::class);
+    //    $this->call(NoteSeeder::class);
     }
 }

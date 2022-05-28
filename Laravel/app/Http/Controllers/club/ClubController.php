@@ -12,8 +12,16 @@ use Illuminate\Http\Request;
 class ClubController extends Controller
 {
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function show(){
-        $Clubs = club::paginate(5);
+        // return club with demandeCreationClub where demandeCreationClub's status=1
+        $Clubs = club::whereHas('demandeCreationClub', function($query){
+            $query->where('status', 1);
+        })->with('demandeCreationClub')->paginate(5);
         if (empty($Clubs)) {
             return response()->json(['message' => 'No clubs found'], 404);
         }else{
@@ -21,6 +29,25 @@ class ClubController extends Controller
         }
     }
 
+    /**
+     * get club with id
+     * @param Integer $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getClub($id){
+        $club = club::find($id);
+        if (empty($club)) {
+            return response()->json(['message' => 'No club found'], 404);
+        }else{
+            return response()->json($club, 200);
+        }
+    }
+
+    /**
+     * create new demandeAdhesionClub
+     * @param DemandeAdhesionClubRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function DemandeeAdhesion(DemandeAdhesionClubRequest $request){
         $user_id = $request->user_id;
         $club_id = $request->input('club_id');
@@ -35,6 +62,11 @@ class ClubController extends Controller
         return response()->json(['success'=>'Demande envoyée avec succès']);
     }
 
+    /**
+     * Get all demandeAdhesionClub of auth users' club
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function getDemandeAdhesion(Request $request){
         $demandes = $request->user()->DemandeAdhesionClub()->with('club')->paginate(5);
         if (empty($demandes)) {
@@ -44,6 +76,11 @@ class ClubController extends Controller
         }
     }
 
+    /**
+     * delete demandeAdhesionClub
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function deleteDemandeAdhesion(Request $request){
         $demande = $request->user()->DemandeAdhesionClub()->find($request->id);
         if (empty($demande)) {
@@ -54,6 +91,11 @@ class ClubController extends Controller
         }
     }
 
+    /**
+     * get all demande adhesion by club
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function getDemandeAdhesionByClub(Request $request){
         $demandes = $request->user()->club()->with('DemandeAdhesionClub')->with('DemandeAdhesionClub.user')->paginate(5);
         return $demandes;
@@ -64,6 +106,11 @@ class ClubController extends Controller
         }
     }
 
+    /**
+     * accept demandeAdhesionClub
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function acceptDemandeAdhesion(Request $request,$id){
         $demande = DemandeAdhesionClub::find($id);
         if (empty($demande)) {
@@ -80,6 +127,11 @@ class ClubController extends Controller
         }
     }
 
+    /**
+     * refuse demandeAdhesionClub
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function refuserDemandeAdhesion(Request $request,$id){
         $demande = DemandeAdhesionClub::find($id);
         if (empty($demande)) {

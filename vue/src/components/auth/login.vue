@@ -1,5 +1,6 @@
 <template>
-    <div class="login-form">
+    <div class="login-form container">
+
         <div v-if="error" class="alert alert-danger">
             {{ error }}
         </div>

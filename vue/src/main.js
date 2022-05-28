@@ -47,14 +47,18 @@ Vue.mixin({
   methods: {
     showModal: function (id) {
       $(`#${id}`).modal("show");
+
     },
     hideModal: function (id) {
       $(`#${id}`).modal("hide");
+      this.Mat = [];
     },
   },
 });
 
-
+window.Vue = require('vue').default;
+// window.VueResource = require('vue-resource');
+// window.Vue.use(window.VueResource);
 // importing the helper
 import interceptorsSetup from './helpers/interceptors';
 

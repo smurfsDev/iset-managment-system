@@ -8,6 +8,7 @@ overflow-y: scroll;">
       <router-link to="/demandeMateriel"> demandeMateriel</router-link>
       <router-link to="/members"> members</router-link>
       <router-link to="/dashboard"> dashboardClub</router-link>
+      <router-link to="/club/demandeEvent"> demandeEvent</router-link>
     </div>
     <router-view />
   </div>
