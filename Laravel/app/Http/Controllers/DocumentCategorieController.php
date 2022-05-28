@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DocumentCategorieRequest;
 use App\Models\DocumentCategorie;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class DocumentCategorieController extends Controller
             ], 404);
     }
 
-     function createDocumentCategorie(Request $request){
+     function createDocumentCategorie(DocumentCategorieRequest $request){
         $idResponsable = $request->user()->id;
         $title = $request->input('title');
         
@@ -50,7 +51,7 @@ class DocumentCategorieController extends Controller
         return "Categorie Ajouté avec succès";
 }
 
- public function updateDocumentCategorie($id, Request $request){
+ public function updateDocumentCategorie($id, DocumentCategorieRequest $request){
 
         $dc = DocumentCategorie::find($id);
         if ($dc) {
