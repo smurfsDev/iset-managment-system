@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmploieDeTempRequest;
 use App\Models\EmploieDeTemp;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EmploieDeTempController extends Controller
@@ -10,65 +12,28 @@ class EmploieDeTempController extends Controller
 
     public function getEDT(Request $request)
     {
-        if ($request->user()->roles()->get()->contains('name', "admin")) {
-            $EDT = EmploieDeTemp::with('classes')->orderBy('created_at', 'desc')
+        if ($request->user()->roles()->get()->contains('name', "chefDepartement")) {
+            $EDT = $request->user()->emploieDeTemp()->with("classes")->orderBy('created_at', 'desc')
                 ->paginate(5);
             if (empty($EDT)) {
                 return response()->json(['message' => 'No Emploi de Temp found'], 404);
             }
             return response()->json($EDT, 200);
         } else {
-            $EDT = $request->user()->EmploieDeTemp()->with('classes')->orderBy('updated_at', 'desc')->paginate(5);
-            if (empty($EDT)) {
-                return response()->json(['message' => 'No Emploi de Temp found'], 404);
-            }
+            $User = $request->user();
+            $usr = User::with("classe")->find($User->id);
+            $classId = $usr->classe[0]->roleUser->class->id;
+
+            $EDT = EmploieDeTemp::where('classes_id', $classId)->with("classes")->orderBy('created_at', 'desc')
+                ->first();
             return response()->json($EDT, 200);
         }
     }
 
-    public function createEDT()
+    public function addEDT(EmploieDeTempRequest $request)
     {
         $EDT = new EmploieDeTemp();
-        $EDT->Titre = "title";
-        $EDT->classes_id = "classes_id";
-        $EDT->file = "file";
-        $EDT->idResponsableidResponsable = "idResponsable";
-     
-        $EDT->save();
-
-        return response()->json($EDT, 201);
-    }
-
-    public function show()
-    {
-        $EDTs = EmploieDeTemp::orderBy('updated_at', 'desc')->paginate(5);
-        if (sizeof($EDTs) > 0)
-            return response()->json(
-                $EDTs,
-                200
-            );
-        else
-            return response()->json([], 404);
-    }
-
-    public function showAll()
-    {
-        $EDT = EmploieDeTemp::all();
-        if (sizeof($EDT) > 0) {
-            return response()->json(["data" => $EDT], 200);
-        } else
-            return response()->json(
-                [
-                    "aucun Emploi de Temp"
-                ],
-                404
-            );
-    }
-
-    public function addEDT(Request $request)
-    {
-        $EDT = new EmploieDeTemp();
-        $EDT->titre = $request->input('title');
+        $EDT->title = $request->input('title');
         $EDT->classes_id = $request->input('classes_id');
         $EDT->idResponsable = $request->user()->id;
         $EDT->file = $request->input('file')?$request->input('file'):null;
