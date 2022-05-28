@@ -21,9 +21,9 @@
                         <div class="alert alert-danger" th:if="${error!=null}">
                             <p th:text="${error}"></p>
                         </div>
+                        
 
-
-
+                        <!-- error -->
                         <form th:action="${reg}?@{register}:@{login}" method="post">
                             <div th:if="!${reg}">
                                 <div class="form-group">
@@ -39,6 +39,8 @@
                                 <a href="register" class="btn btn-primary">Ajouter un Compte</a>
                             </div>
                             <div th:if="${reg}">
+                                <div class="alert alert-danger" th:if="${err}" th:text=${err}>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label">Utilisateur :</label>
                                     <input type="text" name="username" class="form-control" placeholder="Username"
@@ -61,21 +63,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Role :</label>
-                                    <select name="role" class="form-control">
+                                    <select   name="role" class="form-control" required="required">
                                         <option th:each="role:${roles}" th:value="${role.id}" name="role"
                                             th:text="${role.name}"></option>
                                     </select>
                                 </div>
                                 <div id="dep" class="form-group ">
                                     <label class="control-label">Departement :</label>
-                                    <select name="dep" class="form-control">
+                                    <select   name="dep" class="form-control "required="required">
                                         <option class="optDep" th:each="dep:${deps}" th:value="${dep.id}" name="dep"
                                             th:text="${dep.titre}"></option>
                                     </select>
                                 </div>
                                 <div id="classe" class="form-group ">
                                     <label class="control-label">Classe :</label>
-                                    <select name="classe" class="form-control">
+                                    <select   name="classe" class="form-control" required="required">
                                         <option selected disabled>Choisir un classe</option>
                                         <option class="classe" th:each="classe:${classes}"
                                             th:data-index="${classe.departement.id}" th:value="${classe.id}" name="classe"
