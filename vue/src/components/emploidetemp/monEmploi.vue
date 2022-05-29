@@ -8,7 +8,11 @@
         style="height: auto;!important"
         md-label="emploi"
       >
-        <div class="bv-example-row text-center">
+      <div class="my-5 py-5 text-center" v-if="emploi.length == 0">
+            <h3>Il y'a aucune Emploi</h3>
+      </div>
+
+        <div class="bv-example-row text-center" v-else>
           <b-row class="mb-2">
             <b-row>
               <b-col> Titre :{{ emploi.title }} </b-col>
@@ -32,7 +36,15 @@
 export default {
   data() {
     return {
-      emploi: {},
+      emploi: {
+        id: 0,
+        title: "",
+        file: "",
+        classes: {
+          id: 0,
+          abreviation: "",
+        },
+      },
     };
   },
   created() {
@@ -42,6 +54,8 @@ export default {
     getEmploi() {
       this.$http.get("http://localhost:8000/api/EDT").then((response) => {
         this.emploi = response.data;
+      }).catch(() => {
+        this.emploi = [];
       });
     },
   },
