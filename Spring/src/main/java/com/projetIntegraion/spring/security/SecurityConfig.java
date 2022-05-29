@@ -106,7 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/showEditCategorieForm", "/updateCategorieMateriel", "/deleteCategorieMateriel",
 						"/showListMateriel", "/showCreateMaterielForm", "/saveMateriel", "/showEditMaterielForm",
 						"/updateMateriel", "/deleteMateriel")
-				.hasAnyRole("ADMIN", "CHEFDEPARTEMENT")
+				.hasAnyRole("ADMIN", "CHEFDEPARTEMENT", "TECHNICIEN")
 				.antMatchers("/listeDcc")
 				.hasAnyRole("RESPONSABLE", "STUDENT", "ADMIN")
 				.antMatchers("/login").permitAll()

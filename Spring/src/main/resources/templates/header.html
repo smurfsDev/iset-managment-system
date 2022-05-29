@@ -166,17 +166,17 @@
               <li class="sidebar-dropdown">
                 <a >
                   <i class="fa fa-shopping-cart"></i>
-                  <span sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')">Categorie Materiel</span>
+                  <span sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">Categorie Materiel</span>
                   <!-- <span class="badge badge-pill badge-danger">3</span> -->
                 </a>
                 <div class="sidebar-submenu">
                   <ul>
-                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')">
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
                       <a th:href="@{showListCategories}">
                         <span>Liste Categorie</span>
                       </a>
                     </li>
-                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')">
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
                       <a th:href="@{showCreateCategorieForm}">
                         <span>Ajouter Categorie</span>
                       </a>
@@ -187,16 +187,16 @@
               <li class="sidebar-dropdown">
                 <a href="#">
                   <i class="far fa-gem"></i>
-                  <span>Materiel</span>
+                  <span sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">Materiel</span>
                 </a>
                 <div class="sidebar-submenu">
                   <ul>
-                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')">
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
                       <a th:href="@{showListMateriel}">
                         <span>Liste Materiel</span>
                       </a>
                     </li>
-                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')">
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
                       <a th:href="@{showCretateMaterielForm}">
                         <span>Ajouter Materiel</span>
                       </a>

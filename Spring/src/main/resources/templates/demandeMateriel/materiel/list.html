@@ -15,7 +15,7 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste Materiel</h1>
-                    <a sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')" th:href="@{showCretateMaterielForm(
+                    <a sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')" th:href="@{showCretateMaterielForm(
                     page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
                             class="fa-solid fa-plus"></i> Ajouter
                     </a>
@@ -34,7 +34,7 @@
                         <th>Quantité</th>
                         <th>Categorie</th>
                         
-                        <th sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')">Actions</th>
+                        <th sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(listMateriel.content)}">
 						<td colspan="4" class="text-center ">No DM found ! </td></tr>
@@ -46,7 +46,7 @@
                         <td th:text="${materiel.quantite}"></td>
                         <td th:text="${materiel.categorie.titre}"></td>
                         
-						<td sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')"  ><a  onclick="confirm('Etes-vous sur ?')" class="btn btn-danger " th:href="@{deleteMateriel(id=${materiel.id},
+						<td sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')"  ><a  onclick="confirm('Etes-vous sur ?')" class="btn btn-danger " th:href="@{deleteMateriel(id=${materiel.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning"  th:href="@{showEditMaterielForm(id=${materiel.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
                             </td>
