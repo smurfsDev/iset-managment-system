@@ -26,7 +26,7 @@ class EmploieDeTempRequest extends FormRequest
     {
         return [
             'title' => 'string|max:255|unique:emploie_de_temps',
-            'file' => "string"      
+            'classes_id' => 'required|integer|unique:emploie_de_temps',
         ];
     }
     public function failedValidation(Validator $validator)
