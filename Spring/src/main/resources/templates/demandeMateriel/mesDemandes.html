@@ -49,10 +49,10 @@
                                                     <b>Nom du Responsable : </b><p th:text="${demande.responsableClub.username}"></p> 
                                                 </div>
                                                 <div class="col">
-                                                    <b>Date d'emploi : </b><p th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></p>                                                </div>
+                                                    <b>Date d'emploi : </b><p th:text="${demande.dateEmploi}"></p>                                                </div>
                                             </div>
                                             <div class="m-auto">
-                                                 <b>Date de remise : </b><p th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}">
+                                                 <b>Date de remise : </b><p th:text="${demande.dateDeRemise}">
                                             </div>
                                             <b>Materiel :</b> <br>
                                             <!-- <p th:text="${demande.id}"></p> -->

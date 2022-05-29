@@ -49,10 +49,10 @@
                                                         <b>Responsable : </b><p th:text="${demande.responsable.username}"></p> 
                                                     </div>
                                                     <div class="col">
-                                                        <b>Date d'emploi : </b><p th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></p>                                                
+                                                        <b>Date d'emploi : </b><p th:text="${demande.dateEmploi}"></p>                                                
                                                     </div>
                                                     <div class="col">
-                                                        <b>Date de remise : </b><p th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}">
+                                                        <b>Date de remise : </b><p th:text="${demande.dateDeRemise}">
                                                     </div>
                                                 </div>
                                                 <div th:each="S:${demande.salle}" class="row mb-2">
