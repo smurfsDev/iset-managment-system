@@ -29,6 +29,9 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
     @Query("select u ,r,d from User u join UserRole r on u.id = r.user.id join Departement d on d.id = r.departement where r.role.name = 'ROLE_CHEFDEPARTEMENT'")
     Page<Object[]> findAllChefDepartments(Pageable pageable);
 
+    // @Query("select u,c,m from UserRole u join Classe c on u.classe.id = c.id join Matiere m on m.classe.id = c.id where u.user.id = ?1")
+    // Page<Object[]> findAllClassesParEnseignant( int userId, Pageable pageable);
+
     // @Query("select u ,r from User u join UserRole r on u.id = r.user.id where r.role.name = 'ROLE_ENSEIGNANT' & r.status = 1")
     // List<Object[]> findAllApprovedEnseignants();
 

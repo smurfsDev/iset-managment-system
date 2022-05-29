@@ -126,6 +126,62 @@ public class EnseignantController {
 
         return this.showAllEnseignant(modelMap, request, page, size);
     }
+    // @RequestMapping(value = "/listeClassesEnseignes")
+    // public String showAllClassesEnseignes(ModelMap modelMap,
+    //         HttpServletRequest request,
+    //         @RequestParam(name = "page", defaultValue = "0") int page,
+    //         @RequestParam(name = "size", defaultValue = "2") int size) {
+
+    //     Page<Object[]> listeClasses = classeRepository.findByDepAndRoleStudent(this.getUser(request).getId(), PageRequest.of(page, size));
+    //     modelMap.addAttribute("listeClasses", listeClasses);
+    //     System.out.println("liste classes : "+listeClasses);
+    //     modelMap.addAttribute("currentPage", page);
+    //     modelMap.addAttribute("pages", new int[listeClasses.getTotalPages()]);
+    //     modelMap.addAttribute("size", size);
+    //     // User user = this.getUser(request);
+    //     // Page<Classe> classes = userRoleRepository.getClasses(user.getId(), PageRequest.of(page, size));
+    //     // modelMap.addAttribute("classes",classes);
+    //     // Page<Object[]> ListClasse = classeRepository.findAllClassesParEnseignant( this.getUser(request).getId(),PageRequest.of(page, size));
+
+    //     // Page<Matiere> matieres = matiereService.getAllMatiereByEnseignantId(this.getUser(request).getId(), page, size);
+    //     //  modelMap.addAttribute("ListClasse",ListClasse);
+    //     //    System.out.println("matieres: "+ListClasse.getContent());
+    //     //    modelMap.addAttribute("currentPage", page);
+    //     // modelMap.addAttribute("pages", new int[ListClasse.getTotalPages()]);
+    //     // modelMap.addAttribute("size", size);
+    //     return "ChefDepartment/Enseignent/classesEnseignes";
+    // //     User user = this.getUser(request);
+    // //     Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
+    // //     UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
+    // //     List<User> listeEnseignants = userRepository.findByRolesId(role.getId());
+    // //     List<User> listeEnseignantsFiltered = new ArrayList<>();
+
+    // //    // int[] response = new int[2000];
+    // //     List<Integer> response = new ArrayList<>();
+    // //     for (User ens : listeEnseignants) {
+    // //         UserRole ii = userRoleRepository.findByRoleIdAndUserId(role.getId(), ens.getId()).get();
+    // //         if (ii.getDepartement() == userRole.getDepartement()) {
+    // //             listeEnseignantsFiltered.add(ens);
+    // //         //    respone[ens.getId()] = userRole.getStatus();
+    // //             response.add(ii.getStatus());
+
+    // //         }
+    // //     }
+    // //     Page<User> pagei = new PageImpl<>(listeEnseignantsFiltered, PageRequest.of(page, size),
+    // //             listeEnseignantsFiltered.size());
+    // //     // List<Object[]> listClasse = classeRepository.findByDep(userRole.getDepartement());
+    // //     modelMap.addAttribute("listEns", pagei);
+    // //     modelMap.addAttribute("response", response);
+        
+    // //     modelMap.addAttribute("listeEnseignants", listeEnseignantsFiltered);
+    // //     modelMap.addAttribute("listClasse", userRole.getStatus());
+    // //     modelMap.addAttribute("currentPage", page);
+    // //     modelMap.addAttribute("pages", new int[pagei.getTotalPages()]);
+    // //     modelMap.addAttribute("size", size);
+
+    //    // return "ChefDepartment/Enseignent/liste";
+    // }
+
     @RequestMapping(value = "/listeClassesEnseignes")
     public String showAllClassesEnseignes(ModelMap modelMap,
             HttpServletRequest request,
@@ -143,39 +199,7 @@ public class EnseignantController {
         modelMap.addAttribute("pages", new int[matiereService.getAllMatiereByEnseignantId(this.getUser(request).getId(), page, size).getTotalPages()]);
         modelMap.addAttribute("size", size);
         return "ChefDepartment/Enseignent/classesEnseignes";
-    //     User user = this.getUser(request);
-    //     Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
-    //     UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
-    //     List<User> listeEnseignants = userRepository.findByRolesId(role.getId());
-    //     List<User> listeEnseignantsFiltered = new ArrayList<>();
-
-    //    // int[] response = new int[2000];
-    //     List<Integer> response = new ArrayList<>();
-    //     for (User ens : listeEnseignants) {
-    //         UserRole ii = userRoleRepository.findByRoleIdAndUserId(role.getId(), ens.getId()).get();
-    //         if (ii.getDepartement() == userRole.getDepartement()) {
-    //             listeEnseignantsFiltered.add(ens);
-    //         //    respone[ens.getId()] = userRole.getStatus();
-    //             response.add(ii.getStatus());
-
-    //         }
-    //     }
-    //     Page<User> pagei = new PageImpl<>(listeEnseignantsFiltered, PageRequest.of(page, size),
-    //             listeEnseignantsFiltered.size());
-    //     // List<Object[]> listClasse = classeRepository.findByDep(userRole.getDepartement());
-    //     modelMap.addAttribute("listEns", pagei);
-    //     modelMap.addAttribute("response", response);
-        
-    //     modelMap.addAttribute("listeEnseignants", listeEnseignantsFiltered);
-    //     modelMap.addAttribute("listClasse", userRole.getStatus());
-    //     modelMap.addAttribute("currentPage", page);
-    //     modelMap.addAttribute("pages", new int[pagei.getTotalPages()]);
-    //     modelMap.addAttribute("size", size);
-
-       // return "ChefDepartment/Enseignent/liste";
     }
-
-
 
 
 

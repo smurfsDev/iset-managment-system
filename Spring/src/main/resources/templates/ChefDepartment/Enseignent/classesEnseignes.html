@@ -46,6 +46,7 @@
                         
                         
                         
+                            <!-- <td th:text="${c.id}"></td> -->
                             <td th:text="${c.id}"></td>
                             <td th:text="${c.nom}"></td>
                             <td th:text="${c.classe.abreviation}"></td>
@@ -87,7 +88,7 @@
                         th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
                         th:href="@{ listeClassesEnseignes(page=${status.index}, size=${param.size} ) }" 
                         
-                        th:text="${status.index}"></a></li>
+                        th:text="${status.index+1}"></a></li>
 				</ul>
 			</div>
 		</div>
