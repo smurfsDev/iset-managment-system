@@ -14,6 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public interface MaterielRepository extends JpaRepository<Materiel, Long> {
     List<Materiel> findByCategorieId(Long id);
 
+    Boolean existsByTitre(String titre);
+
     @Query("select u from User u join Materiel m on m.responsable=u where m.responsable=u group by u")
     List<User> findByResponsable();
 
