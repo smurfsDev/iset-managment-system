@@ -126,9 +126,7 @@ export default {
     makeFile(data) {
       return data;
     },
-    setReponse(id, reponse) {
-      this.$emit("setReponse", id, reponse);
-    },
+
   },
 };
 </script>

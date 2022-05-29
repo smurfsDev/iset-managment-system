@@ -18,7 +18,7 @@
             </b-row>
             <b-row v-if="emploi.file != null">
               <b-col>
-                <img :src="emploi.file" alt="" width="100%" />
+                <img :src="emploi.file" alt="" width="70%" />
               </b-col>
             </b-row>
           </b-row>
