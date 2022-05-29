@@ -16,6 +16,7 @@ import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMaterielMaterie
 import com.projetIntegraion.spring.demandeMateriel.entity.Materiel;
 import com.projetIntegraion.spring.demandeMateriel.repository.CategorieMaterielRepository;
 import com.projetIntegraion.spring.demandeMateriel.repository.MaterielRepository;
+import com.projetIntegraion.spring.demandeSalle.entity.Salle;
 import com.projetIntegraion.spring.demandeSalle.repository.SalleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	MatiereRepository matiereRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -268,6 +270,33 @@ public class Application implements CommandLineRunner {
 		materielRepository.save(mat1);
 		materielRepository.save(mat2);
 		materielRepository.save(mat3);
+
+		// create 10 salles 
+		for (int i = 0; i < 10; i++) {
+			Salle salle = new Salle();
+			salle.setTitre("I " + i);
+			salle.setDepartement(departement);
+			salleRepository.save(salle);
+		}
+
+		// create 10 salles
+		for (int i = 0; i < 10; i++) {
+			Salle salle = new Salle();
+			salle.setTitre("E " + i);
+			salle.setDepartement(departement1);
+			salleRepository.save(salle);
+		}
+
+		// create 10 salles
+		for (int i = 0; i < 10; i++) {
+			Salle salle = new Salle();
+			salle.setTitre("M " + i);
+			salle.setDepartement(departement2);
+			salleRepository.save(salle);
+		}
+
+		departement.setChefDepartment(chefDepartmnet);
+		departementRepository.save(departement);
 
 	}
 
