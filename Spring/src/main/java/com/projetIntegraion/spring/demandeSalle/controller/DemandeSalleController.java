@@ -110,12 +110,12 @@ public class DemandeSalleController {
     @RequestMapping("/saveDS")
     public String saveDS(ModelMap modelMap,
             @Valid DemandeSalle demandeSalle,
-            Long salle,
             BindingResult bindingResult,
-
             HttpServletRequest request,
+            Long salle,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         if (bindingResult.hasErrors()) {
 
             modelMap.addAttribute("org.springframework.validation.BindingResult.demandeSalle", bindingResult);
