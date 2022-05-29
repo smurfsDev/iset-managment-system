@@ -105,13 +105,13 @@
 
               <li>
                       <li class="sidebar-dropdown">
-                <a >
+                <a  sec:authorize="hasRole('RESPONSABLE')" >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Demandes</span>
                 </a>
                 <div class="sidebar-submenu">
                   <ul>
-                    <li>
+                    <li >
                       <a th:href="@{listeDE}">Demande plannification event</a>
                     </li>
                    

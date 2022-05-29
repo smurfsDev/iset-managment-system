@@ -2,6 +2,7 @@ package com.projetIntegraion.spring.demandePlannificationEvent.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -97,7 +98,9 @@ public class DemandePlannificationEventController {
             de.setDescription(DE.getDescription());
             de.setAdmin(null);
             de.setDateEvent(DE.getDateEvent());
-            Club club = clubService.getClubParResponsable(this.getUser(request).getId()).get();
+            Optional<Club> c = clubService.getClubParResponsable(this.getUser(request).getId());
+
+            Club club = c.get();
             de.setResponsableClub(this.getUser(request));
             de.setClub(club);
             de = DemandeEventService.save(de);
