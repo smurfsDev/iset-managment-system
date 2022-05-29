@@ -38,47 +38,29 @@
                     
                         
 					<tr th:each="demande,iter:${listEns.content}">
-                        <td th:text="${demande.id}"></td>
-                        
-                        
-                            <td th:text="${demande.username}"></td>
-                        
-
+                        <td th:text="${demande[0].id}"></td> 
+                        <td th:text="${demande[0].username}"></td>
                         <td>
-                            <!-- <a th:class="${listUserRole[iter.count].status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{acceptCD(idCD=${demande.id},page=${currentPage},size=${param.size})}">
-                                <i class="fa fa-check"></i>
-                            </a>
-                            <a th:class="${listUserRole[iter.count].status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineCD(idCD=${demande.id},page=${currentPage},size=${param.size})}">
-                                <i class="fa fa-times"></i>
-                            </a> -->
                                 <div >
-                                    <a th:class="${response[iter.index]==1?'btn btn-success disabled ':'btn btn-success' }" th:href="@{acceptEns(idEns=${demande.id},page=${currentPage},size=${param.size})}">
+                                    <a th:class="${demande[2].status==1?'btn btn-success disabled ':'btn btn-success' }" th:href="@{acceptEns(idEns=${demande[0].id},page=${currentPage},size=${param.size})}">
                                         <i class="fa fa-check"></i>
                                     </a>
-                                    <a th:class="${response[iter.index]==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineEns(idEns=${demande.id},page=${currentPage},size=${param.size})}">
+                                    <a th:class="${demande[2].status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineEns(idEns=${demande[0].id},page=${currentPage},size=${param.size})}">
                                         <i class="fa fa-times"></i>
                                     </a>
-                                    <!-- <a th:class="${listClasse[iter.count][2].status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineSTD(idSTD=${demande.id},page=${currentPage},size=${param.size})}">
-                                        <i class="fa fa-times"></i>
-                                    </a> -->
+                                  
                                 </div>
-                                <!-- <div class="text-success" th:if="${listClasse[iter.index][2].status==1}">
-                                    Demande acceptée
-                                </div>
-                          </div> -->
-                            <!-- <div th:if="${listClasse[iter.index][2].status==3}" class="text-danger stri">
-                                DEMANDE REJETÉE
-                            </div> -->
+                              
 
                         </td>
 					</tr>
 				</table>
 				<ul class="nav nav-pills">
-					<!-- <li th:each="page,status:${pages}"><a
+					<li th:each="page,status:${pages}"><a
                         th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
                         th:href="@{ listeEnseignants(page=${status.index}, size=${param.size} ) }" 
                         
-                        th:text="${status.index}"></a></li> -->
+                        th:text="${status.index+1}"></a></li>
 				</ul>
 			</div>
 		</div>

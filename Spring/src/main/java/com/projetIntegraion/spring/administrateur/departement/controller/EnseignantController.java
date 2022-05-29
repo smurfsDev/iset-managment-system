@@ -62,29 +62,31 @@ public class EnseignantController {
         Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
         UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
         List<User> listeEnseignants = userRepository.findByRolesId(role.getId());
-        List<User> listeEnseignantsFiltered = new ArrayList<>();
+    //     List<User> listeEnseignantsFiltered = new ArrayList<>();
 
-       // int[] response = new int[2000];
-        List<Integer> response = new ArrayList<>();
-        for (User ens : listeEnseignants) {
-            UserRole ii = userRoleRepository.findByRoleIdAndUserId(role.getId(), ens.getId()).get();
-            if (ii.getDepartement() == userRole.getDepartement()) {
-                listeEnseignantsFiltered.add(ens);
-            //    respone[ens.getId()] = userRole.getStatus();
-                response.add(ii.getStatus());
+    //    // int[] response = new int[2000];
+    //     List<Integer> response = new ArrayList<>();
+    //     for (User ens : listeEnseignants) {
+    //         UserRole ii = userRoleRepository.findByRoleIdAndUserId(role.getId(), ens.getId()).get();
+    //         if (ii.getDepartement() == userRole.getDepartement()) {
+    //             listeEnseignantsFiltered.add(ens);
+    //         //    respone[ens.getId()] = userRole.getStatus();
+    //             response.add(ii.getStatus());
 
-            }
-        }
-        Page<User> pagei = new PageImpl<>(listeEnseignantsFiltered, PageRequest.of(page, size),
-                listeEnseignantsFiltered.size());
+    //         }
+    //     }
+    //     Page<User> pagei = new PageImpl<>(listeEnseignantsFiltered, PageRequest.of(page, size),
+    //             listeEnseignantsFiltered.size());
+    Page<Object[]> ListEnseignant = userRoleRepository.findByDepAndRoleEnseignant(userRole.getDepartement(), PageRequest.of(page, size));
+
         // List<Object[]> listClasse = classeRepository.findByDep(userRole.getDepartement());
-        modelMap.addAttribute("listEns", pagei);
-        modelMap.addAttribute("response", response);
+        modelMap.addAttribute("listEns", ListEnseignant);
+        // modelMap.addAttribute("response", response);
         
-        modelMap.addAttribute("listeEnseignants", listeEnseignantsFiltered);
+        // modelMap.addAttribute("listeEnseignants", listeEnseignantsFiltered);
         modelMap.addAttribute("listClasse", userRole.getStatus());
         modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("pages", new int[pagei.getTotalPages()]);
+        modelMap.addAttribute("pages", new int[ListEnseignant.getTotalPages()]);
         modelMap.addAttribute("size", size);
 
         return "ChefDepartment/Enseignent/liste";
@@ -97,9 +99,12 @@ public class EnseignantController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
+        // Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
         Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
 
         Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(role.getId(), idEns);
+
+        // Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(role.getId(), idEns);
         userRole.get().setStatus(1);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","success");
@@ -116,9 +121,11 @@ public class EnseignantController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
                 
-        Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
+         Role role = roleRepository.findByName("ROLE_ENSEIGNANT");
 
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(role.getId(), idEns);
+         Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(role.getId(), idEns);
+        // Optional<UserRole> userRole = userRoleRepository.findById(idEns);
+        
         userRole.get().setStatus(2);
                 userRoleRepository.save(userRole.get());
                 modelMap.addAttribute("typea","danger");
