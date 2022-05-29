@@ -86,12 +86,12 @@
                       <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{listeDm}">Lister</a>
                     </li>
                     <li>
-                      <a sec:authorize="hasRole('ADMIN') || hasRole('CHEFDEPARTEMENT')" th:href="@{listeDmDestinataire}">Lister</a>
+                      <a sec:authorize="hasAnyRole('ADMIN','CHEFDEPARTEMENT','TECHNICIEN')" th:href="@{listeDmDestinataire}">Lister</a>
                     </li>
                   </ul>
                 </div>
               </li>
-              <li class="sidebar-dropdown">
+              <li sec:authorize="hasRole('ADMIN') || hasRole('STUDENT')|| hasRole('CHEFDEPARTEMENT')" class="sidebar-dropdown">
                 <a href="#">
                   <i class="fa fa-file"></i>
                   <span>Demande Salle</span>
@@ -100,12 +100,12 @@
                 <div class="sidebar-submenu">
                   <ul>
                     <li>
-                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{ShowcreateDS}">Ajouter
+                      <a sec:authorize="hasRole('STUDENT')" th:href="@{ShowcreateDS}">Ajouter
                         <!-- <span class="badge badge-pill badge-success">Pro</span> -->
                       </a>
                     </li>
                     <li>
-                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{listeDS}">Lister</a>
+                      <a sec:authorize="hasRole('STUDENT')" th:href="@{listeDS}">Lister</a>
                     </li>
                     <li>
                       <a sec:authorize="hasRole('ADMIN') || hasRole('CHEFDEPARTEMENT')" th:href="@{listeDsDestinataire}">Lister</a>

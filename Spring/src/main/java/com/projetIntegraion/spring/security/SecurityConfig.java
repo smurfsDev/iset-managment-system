@@ -85,6 +85,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/updateClass")
 				.hasAnyRole("CHEFDEPARTEMENT")
 				.antMatchers("/showCreateDcc", "/deleteDcc",
+						"/materiel", "/showMateriel",
+						"/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
+						"/modifierDS", "/listeDm", "/showCreateDm", "/showEditDm",
+						"/updateDmm", "/setQuantite", "/deleteMaterielDemande",
+						"/deleteDmm",
 						"/modifierDcc", "/blogClub")
 				.hasAnyRole("STUDENT")
 				.antMatchers(
@@ -94,11 +99,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/showManageBlog",
 						"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
 						"/deleteProject", "/modifierProject",
-						"/materiel", "/showMateriel",
-						"/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
-						"/modifierDS", "/listeDm", "/showCreateDm", "/showEditDm",
-						"/updateDmm", "/setQuantite", "/deleteMaterielDemande",
-						"/deleteDmm",
 
 						"/deleteDS")
 				.hasAnyRole("RESPONSABLE")

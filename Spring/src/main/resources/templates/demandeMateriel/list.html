@@ -15,7 +15,7 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des Demandes Materiel</h1>
-                    <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{showCreateDm(
+                    <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateDm(
                             page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
                             class="fa-solid fa-plus"></i> Ajouter
                     </a>
@@ -75,9 +75,9 @@
                                                         <form class="form-inline col-8" th:action="setQuantite" method="post">
                                                             <input type="hidden" name="idDemande" th:value="${demande.id}">
                                                             <input type="hidden" name="idMateriel" th:value="${m.id}">
-                                                            <input class=" col-8" min="1" name="quantite" type="number" th:value="${materiel.quantite}">
-                                                            <a th:class="${demande.status!=0?'btn btn-danger disabled ml-2':'btn btn-danger  ml-2' }" style="float:right" onclick="confirm('Etes-vous sur de supprimer ce materiel ?')" th:href="@{deleteMaterielDemande(idMateriel=${materiel.id},idDemande=${demande.id})}"><i class="fa-solid fa-trash"></i></a> 
-                                                            <input th:class="${demande.status!=0?'btn btn-primary disabled ml-2':'btn btn-primary  ml-2' }" style="float:right" type="submit" th:value="Add"></input>
+                                                            <input th:disabled="${demande.status!=0}" class=" col-8" min="1" name="quantite" type="number" th:value="${materiel.quantite}">
+                                                            <a  th:disabled="${demande.status!=0}" th:class="${demande.status!=0?'btn btn-danger disabled ml-2':'btn btn-danger  ml-2' }" style="float:right" onclick="confirm('Etes-vous sur de supprimer ce materiel ?')" th:href="@{deleteMaterielDemande(idMateriel=${materiel.id},idDemande=${demande.id})}"><i class="fa-solid fa-trash"></i></a> 
+                                                            <input th:disabled="${demande.status!=0}" th:class="${demande.status!=0?'btn btn-primary disabled ml-2':'btn btn-primary  ml-2' }" style="float:right" type="submit" th:value="Add"></input>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -85,7 +85,7 @@
                                         </div>
                                         
                                         
-                                        <div class=" row ml-auto mr-auto mb-3 text-center" sec:authorize="hasRole('RESPONSABLE')"> 
+                                        <div class=" row ml-auto mr-auto mb-3 text-center" sec:authorize="hasRole('STUDENT')"> 
                                             <div class="col-4">
                                                 
                                             </div>
