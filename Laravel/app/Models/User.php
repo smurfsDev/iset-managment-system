@@ -93,5 +93,7 @@ class User extends Authenticatable
     public function note(){
         return $this->HasMany('App\Models\Note', 'student_id');
     }
-
+     public function Reclamation(){
+        return $this->HasMany('App\Models\Reclamation', 'idResponsable');
+    }
 }

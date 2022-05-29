@@ -48,9 +48,9 @@
           <div class="sidebar-menu">
             <ul>
               <li class="header-menu">
-                <span>Club</span>
+                <span>Demandes</span>
               </li>
-              <li class="sidebar-dropdown">
+              <li sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')" class="sidebar-dropdown">
                 <a href="#">
                   <i class="fa fa-file"></i>
                   <span>Demande Creation Club</span>
@@ -70,6 +70,50 @@
                 </div>
               </li>
               <li class="sidebar-dropdown">
+                <a href="#">
+                  <i class="fa fa-file"></i>
+                  <span>Demande Materiel</span>
+                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{showCreateDm}">Ajouter
+                        <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                      </a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" th:href="@{listeDm}">Lister</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasAnyRole('ADMIN','CHEFDEPARTEMENT','TECHNICIEN')" th:href="@{listeDmDestinataire}">Lister</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li sec:authorize="hasRole('ADMIN') || hasRole('STUDENT')|| hasRole('CHEFDEPARTEMENT')" class="sidebar-dropdown">
+                <a href="#">
+                  <i class="fa fa-file"></i>
+                  <span>Demande Salle</span>
+                  <!-- <span class="badge badge-pill badge-warning">New</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT')" th:href="@{ShowcreateDS}">Ajouter
+                        <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                      </a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('STUDENT')" th:href="@{listeDS}">Lister</a>
+                    </li>
+                    <li>
+                      <a sec:authorize="hasRole('ADMIN') || hasRole('CHEFDEPARTEMENT')" th:href="@{listeDsDestinataire}">Lister</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
                 <a >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Clubs</span>
@@ -103,7 +147,13 @@
                 </a>
               </li>
 
-              <li>
+              <li sec:authorize="hasRole('ENSEIGNANT')">
+                <a th:href="@{listeClassesEnseignes}">
+                  <i class="fa fa-user"></i>
+                  <span>Liste matieres et classes enseignes</span>
+                </a>
+              </li>
+       <li>
                       <li class="sidebar-dropdown">
                 <a  sec:authorize="hasRole('RESPONSABLE')" >
                   <i class="fa fa-shopping-cart"></i>
@@ -122,7 +172,6 @@
                 <a th:href="@{listeEvent}">
                   <i class="fa fa-user"></i>
                   <span>Liste des evenements</span>
-
               <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
                 <a th:href="@{classe}">
                   <i class="fa fa-user"></i>
@@ -143,6 +192,18 @@
 
                 </a>
               </li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{listeStudents}" >
+                  <i class="fa fa-user"></i>
+                  <span>Liste des etudiants</span>
+                </a>
+              </li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{listeEnseignants}" >
+                  <i class="fa fa-user"></i>
+                  <span>Liste des enseignants</span>
+                </a>
+              </li>
               <!-- <li >
                 <a th:href="@{demandeAdhesionClub}">
                   <i class="fa fa-shopping-cart"></i>
@@ -153,21 +214,20 @@
               <li class="sidebar-dropdown">
                 <a >
                   <i class="fa fa-shopping-cart"></i>
-                  <span>Demande adhesion club</span>
+                  <span sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">Categorie Materiel</span>
                   <!-- <span class="badge badge-pill badge-danger">3</span> -->
                 </a>
                 <div class="sidebar-submenu">
                   <ul>
-                    <li>
-                      <a href="#">
-    
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
+                      <a th:href="@{showListCategories}">
+                        <span>Liste Categorie</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="#">Orders</a>
-                    </li>
-                    <li>
-                      <a href="#">Credit cart</a>
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
+                      <a th:href="@{showCreateCategorieForm}">
+                        <span>Ajouter Categorie</span>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -175,24 +235,19 @@
               <li class="sidebar-dropdown">
                 <a href="#">
                   <i class="far fa-gem"></i>
-                  <span>Components</span>
+                  <span sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">Materiel</span>
                 </a>
                 <div class="sidebar-submenu">
                   <ul>
-                    <li>
-                      <a href="#">General</a>
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
+                      <a th:href="@{showListMateriel}">
+                        <span>Liste Materiel</span>
+                      </a>
                     </li>
-                    <li>
-                      <a href="#">Panels</a>
-                    </li>
-                    <li>
-                      <a href="#">Tables</a>
-                    </li>
-                    <li>
-                      <a href="#">Icons</a>
-                    </li>
-                    <li>
-                      <a href="#">Forms</a>
+                    <li sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')||hasRole('TECHNICIEN')">
+                      <a th:href="@{showCretateMaterielForm}">
+                        <span>Ajouter Materiel</span>
+                      </a>
                     </li>
                   </ul>
                 </div>

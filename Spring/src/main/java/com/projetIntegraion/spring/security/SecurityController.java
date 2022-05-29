@@ -1,7 +1,7 @@
 package com.projetIntegraion.spring.security;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +10,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
@@ -97,6 +99,8 @@ public class SecurityController {
     private DepartementRepository departementRepository;
     @Autowired
     private UserRoleRepository userRoleRepository;
+    @Autowired
+    private ClasseRepository classeRepository;
 
     @GetMapping("/accessDenied")
     public String geterror() {
@@ -117,7 +121,7 @@ public class SecurityController {
             modelMap.addAttribute("error", "Veuillez vérifier vos identifiants");
             return "login";
         }
-        if (error==2) {
+        if (error == 2) {
             modelMap.addAttribute("error", "Votre compte n'est pas encore activé");
             return "login";
         }
@@ -134,22 +138,14 @@ public class SecurityController {
 
     @GetMapping("/tesa")
     public String tesa(HttpServletRequest request) {
-        return userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getRoles().iterator().next().toString();
+        return userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getRoles().iterator().next()
+                .toString();
         // get first element of a set
 
-        // return userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getId().toString();
+        // return
+        // userRepository.findUserWithName(request.getUserPrincipal().getName()).get().getId().toString();
     }
 
-    // @GetMapping("/login")
-    // public String login(ModelMap modelMap)
-    // {
-    // modelMap.addAttribute("login", true);
-    // // List<Role> roles ;
-    // // roles = roleService.getAllRole();
-    // // modelMap.addAttribute("roles", roles);
-
-    // return "login";
-    // }
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) throws ServletException {
         request.logout();
@@ -160,9 +156,11 @@ public class SecurityController {
     public String showRegister(ModelMap modelMap) {
         List<Role> roles = roleRepository.findAll();
         List<Departement> departements = departementRepository.findAll();
+        List<Classe> classes = classeRepository.findAll();
         modelMap.addAttribute("roles", roles);
         System.out.println("deps : " + departements);
         modelMap.addAttribute("deps", departements);
+        modelMap.addAttribute("classes", classes);
         modelMap.addAttribute("userForm", new UserForm());
         modelMap.addAttribute("reg", true);
 
@@ -170,58 +168,47 @@ public class SecurityController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role,int dep, ModelMap modelMap) {
+    public String register(@Valid UserForm userForm, BindingResult bindingResult, Long role, int dep,
+            Optional<Integer> classe, ModelMap modelMap) {
+                Role r = roleRepository.findById(role).get();
+                if (r.getName().equals("ROLE_STUDENT")) {
+                    if (!classe.isPresent()) {
+                        bindingResult.reject("errorCode");
+                        modelMap.addAttribute("err", "Etudiant doit selectioner un classe");
+                    }
+                }        
         if (bindingResult.hasErrors()) {
             List<Role> roles = roleRepository.findAll();
             List<Departement> departements = departementRepository.findAll();
+            List<Classe> classes = classeRepository.findAll();
             modelMap.addAttribute("deps", departements);
             System.out.println(roles);
             modelMap.addAttribute("roles", roles);
+            modelMap.addAttribute("classes", classes);
             modelMap.addAttribute("reg", true);
             modelMap.addAttribute("userForm", userForm);
             return "login";
         }
-        User su = userService.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword(), role);
-
-        if (role==4) {
+        User su = userService.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword(),
+                role);
+        if (r.getName().equals("ROLE_CHEFDEPARTEMENT") || r.getName().equals("ROLE_ENSEIGNANT")) {
             UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
             ur.setDepartement(dep);
             userRoleRepository.save(ur);
         }
+        if (r.getName().equals("ROLE_STUDENT")) {
+            if (!classe.isPresent()) {
+                bindingResult.rejectValue("classe", "classe.empty",
+                        "Etudiant doit selectioner un classe");
+            }
+
+            UserRole ur = userRoleRepository.findByRoleIdAndUserId(role, su.getId()).get();
+            ur.setDepartement(dep);
+            ur.setClasse(classe.get());
+            userRoleRepository.save(ur);
+        }
+
         return "redirect:/login";
     }
-    // @GetMapping("/register")
-    // public String register(ModelMap modelMap) {
-    // modelMap.addAttribute("user", new UserForm());
-    // // modelMap.addAttribute("r", new Role());
-    // modelMap.addAttribute("login", false);
-    // // System.out.println("logiiin : "+modelMap.getAttribute("login"));
-    // // List<Role> roles ;
-    // // roles = roleService.getAllRole();
-    // // modelMap.addAttribute("roles", roles);
-    // List<Role> roles = roleRepository.findAll();
-    // modelMap.addAttribute("roles", roles);
-    // return "login";
-    // }
-    // @PostMapping("/register")
-    // public String register(@Valid UserForm user,Long role,
-    // BindingResult bindingResult,
-    // ModelMap modelMap) {
-    // if (bindingResult.hasErrors()) {
-    // List<Role> roles = roleRepository.findAll();
-    // System.out.println(roles);
-    // modelMap.addAttribute("roles", roles);
-    // return "register";
-    // }
-    // // UserForm userForm = new UserForm();
-    // // userForm.setUsername(user.getUsername());
-    // // userForm.setPassword(user.getPassword());
-    // // userForm.setConfirmedPassword(user.getPassword());
-    // userService.saveUser(user.getUsername(),user.getPassword(),user.getConfirmedPassword(),role);
-
-    // //Role r1 = roleService.getRole(r.getId());
-    // // System.out.println(r1.getName() );
-    // modelMap.addAttribute("login", true);
-    // return "login";
-    // }
+    
 }
