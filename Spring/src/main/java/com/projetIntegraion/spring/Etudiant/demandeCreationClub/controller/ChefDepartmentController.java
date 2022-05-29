@@ -5,7 +5,10 @@ import java.util.Optional;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
+import com.projetIntegraion.spring.administrateur.departement.entity.Departement;
+import com.projetIntegraion.spring.administrateur.departement.repository.DepartementRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +28,12 @@ public class ChefDepartmentController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    DepartementRepository departementRepository;
 
     @GetMapping(value = "/listeChefDepartments")
     public String showAll(ModelMap modelMap,
@@ -60,6 +69,9 @@ public class ChefDepartmentController {
             }else{
                 userRole.get().setStatus(1);
                 userRoleRepository.save(userRole.get());
+                Departement d = departementRepository.findById(Long.parseLong(userRole.get().getDepartement().toString())).get();
+                d.setChefDepartment(userRepository.findById(userRole.get().getUser().getId()).get());
+                departementRepository.save(d);
                 modelMap.addAttribute("type","success");
                 modelMap.addAttribute("msg", "Le chef de département a été accepté");
             }
