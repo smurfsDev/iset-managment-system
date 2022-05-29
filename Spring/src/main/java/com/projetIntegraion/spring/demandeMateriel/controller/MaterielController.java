@@ -156,13 +156,13 @@ public class MaterielController {
 
     @RequestMapping("/showCretateMaterielForm")
     public String showCretateMaterielForm(ModelMap modelMap) {
-        modelMap.addAttribute("Materiel", new Materiel());
+        modelMap.addAttribute("materiel", new Materiel());
         modelMap.addAttribute("edit", false);
 
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
         System.out.println(listCategorieMateriel);
         modelMap.addAttribute("CM", listCategorieMateriel);
-        return "/demandeMateriel/materiel/createMaterielForm";
+        return "/demandeMateriel/materiel/form";
     }
 
     @RequestMapping("/saveMateriel")
@@ -179,13 +179,14 @@ public class MaterielController {
 
             System.out.println(listCategorieMateriel);
             modelMap.addAttribute("CM", listCategorieMateriel);
-            return "/demandeMateriel/materiel/createMaterielForm";
+            return "/demandeMateriel/materiel/form";
         } else {
             Materiel m = new Materiel();
             m.setTitre(materiel.getTitre());
             m.setDescription(materiel.getDescription());
             m.setQuantite(materiel.getQuantite());
             m.setCategorie(materiel.getCategorie());
+            m.setResponsable(this.getUser(request));
             m = MaterielService.save(m);
             modelMap.addAttribute("materiel", new DemandeMateriel());
             modelMap.addAttribute("msg", "Demande de materiel enregistrée avec succès");
@@ -198,12 +199,12 @@ public class MaterielController {
 
     @RequestMapping("/showEditMaterielForm")
     public String showEditMaterielForm(ModelMap modelMap, Long id) {
-        modelMap.addAttribute("Materiel", MaterielService.getMaterielById(id));
+        modelMap.addAttribute("materiel", MaterielService.getMaterielById(id));
         modelMap.addAttribute("edit", true);
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
         System.out.println(listCategorieMateriel);
         modelMap.addAttribute("CM", listCategorieMateriel);
-        return "/demandeMateriel/materiel/createMaterielForm";
+        return "/demandeMateriel/materiel/form";
     }
 
     @RequestMapping("/updateMateriel")
@@ -220,13 +221,15 @@ public class MaterielController {
 
             System.out.println(listCategorieMateriel);
             modelMap.addAttribute("CM", listCategorieMateriel);
-            return "/demandeMateriel/materiel/createMaterielForm";
+            return "/demandeMateriel/materiel/form";
         } else {
             Materiel m = MaterielService.getMaterielById(materiel.getId());
             m.setTitre(materiel.getTitre());
             m.setDescription(materiel.getDescription());
             m.setQuantite(materiel.getQuantite());
             m.setCategorie(materiel.getCategorie());
+            m.setResponsable(this.getUser(request));
+
             m = MaterielService.save(m);
             modelMap.addAttribute("materiel", new DemandeMateriel());
             modelMap.addAttribute("msg", "Demande de materiel enregistrée avec succès");
