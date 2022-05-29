@@ -79,9 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login").permitAll()
 				.antMatchers("/logout").permitAll()
 				.antMatchers("/accept", "/decline", "/categorieMateriel", "/listeChefDepartments", "/acceptCD",
-						"/declineCD",
-						"/showListCategories", "/showCreateCategorieForm", "/saveCategorieMateriel",
-						"/showEditCategorieForm", "/updateCategorieMateriel", "/deleteCategorieMateriel")
+						"/declineCD")
 				.hasAnyRole("ADMIN")
 				.antMatchers("/classe", "/deleteClass", "/showCreateClass", "/createClass", "/modifierClass",
 						"/updateClass")
@@ -99,11 +97,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/materiel", "/showMateriel",
 						"/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
 						"/modifierDS", "/listeDm", "/showCreateDm", "/showEditDm",
-						"/updateDmm", "/setQuantite", "/deleteMateriel",
+						"/updateDmm", "/setQuantite", "/deleteMaterielDemande",
 						"/deleteDmm",
 
 						"/deleteDS")
 				.hasAnyRole("RESPONSABLE")
+				.antMatchers("/showListCategories", "/showCreateCategorieForm", "/saveCategorieMateriel",
+						"/showEditCategorieForm", "/updateCategorieMateriel", "/deleteCategorieMateriel",
+						"/showListMateriel", "/showCreateMaterielForm", "/saveMateriel", "/showEditMaterielForm",
+						"/updateMateriel", "/deleteMateriel")
+				.hasAnyRole("ADMIN", "CHEFDEPARTEMENT")
 				.antMatchers("/listeDcc")
 				.hasAnyRole("RESPONSABLE", "STUDENT", "ADMIN")
 				.antMatchers("/login").permitAll()
