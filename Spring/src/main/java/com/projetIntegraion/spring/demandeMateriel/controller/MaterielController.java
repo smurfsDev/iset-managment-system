@@ -96,7 +96,9 @@ public class MaterielController {
             DemandeMaterielMaterielRepository.save(materiel);
             return "/demandeMateriel/list";
         } else {
-            return this.getMaterielParCategorie(modelMap, idMateriel, idDemande);
+            modelMap.addAttribute("type", "danger");
+            modelMap.addAttribute("msg", "Ce materiel est déjà dans la demande");
+            return this.getMaterielParCategorie(modelMap, Mat.getCategorie().getId(), idDemande);
         }
     }
 
