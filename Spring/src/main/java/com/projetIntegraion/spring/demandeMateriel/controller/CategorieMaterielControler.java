@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
+import com.projetIntegraion.spring.demandeMateriel.entity.Materiel;
+import com.projetIntegraion.spring.demandeMateriel.repository.MaterielRepository;
 import com.projetIntegraion.spring.demandeMateriel.service.CategorieMaterielService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CategorieMaterielControler {
     @Autowired
     private CategorieMaterielService CategorieMaterielService;
+
+    @Autowired 
+    private MaterielRepository MaterielRepository;
 
     @RequestMapping("/categorieMateriel")
     public String getCategorieMateriel(ModelMap modelMap) {
@@ -119,10 +124,16 @@ public class CategorieMaterielControler {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         CategorieMateriel categorieMateriel = CategorieMaterielService.getCategorieById(id);
-        CategorieMaterielService.delete(categorieMateriel);
+        List<Materiel> lst = MaterielRepository.findByCategorieId(categorieMateriel.getId());
+        if (lst.size()==0){
+            CategorieMaterielService.delete(categorieMateriel);
+            modelMap.addAttribute("msg", "Categorie materiel supprimée avec succès");
+            modelMap.addAttribute("type", "success");
+        }else{
+            modelMap.addAttribute("msg", "Cette categorie est utilisée par un ou plusieurs materiels");
+            modelMap.addAttribute("type", "danger");
+        }
         modelMap.addAttribute("categorieMateriel", new CategorieMateriel());
-        modelMap.addAttribute("msg", "Categorie materiel supprimée avec succès");
-        modelMap.addAttribute("type", "success");
         modelMap.addAttribute("pages",
                 new int[CategorieMaterielService.getAllCategorieParPage(page, size).getTotalPages()]);
         return this.showListMateriel(modelMap, page, size);
