@@ -30,7 +30,7 @@
                     <thead>
                         <th>ID</th>
                         <th class="text-center">titre</th>
-                        <th sec:authorize="hasRole('RESPONSABLE')||hasRole('ADMIN')" class="text-center">Actions</th>
+                        <th sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')" class="text-center">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(listCategorie.content)}">
 						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
@@ -38,7 +38,7 @@
                         <td th:text="${categorie.id}" ></td>
                         <!-- <td th:text="${categorie.salle.departement.titre}"></td> -->
                         <td th:text="${categorie.titre}"class="text-center"></td>
-						<td  sec:authorize="hasRole('ADMIN')" class="text-center"><a class="btn btn-danger " onclick="confirm('Etes-vous sur ?')" th:href="@{deleteCategorieMateriel(id=${categorie.id},
+						<td  sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('ADMIN')" class="text-center"><a class="btn btn-danger " onclick="confirm('Etes-vous sur ?')" th:href="@{deleteCategorieMateriel(id=${categorie.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{showEditCategorieForm(id=${categorie.id},
 								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
                                 <!-- <span th:if="${demande.status==1}" th:class="${demande.status==1?'btn btn-success disabled ':'' }"><i class="fa fa-check"></i></span>
@@ -58,7 +58,7 @@
 				<ul class="nav nav-pills">
 					<li th:each="page,status:${pages}"><a
 							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
-							th:href="@{ listeDS(page=${status.index}, size=${param.size} ) }" 
+							th:href="@{ showListCategories(page=${status.index}, size=${param.size} ) }" 
 							th:text="${status.index+1 }"></a></li>
 				</ul>
 			</div>

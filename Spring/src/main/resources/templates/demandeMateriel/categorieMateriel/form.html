@@ -24,13 +24,13 @@
 								id="formLogin" name="formLogin" role="form" action="saveCategorieMateriel" method="post">
 								<div class="form-group">
 									<label class="control-label">Titre :</label> <input type="text" name="titre"
-										class="form-control" th:value="${CategorieMateriel.titre}" />
-									<span th:errors=${CategorieMateriel.titre} class="text-danger">
+										class="form-control" th:value="${categorieMateriel.titre}" />
+									<span th:errors=${categorieMateriel.titre} class="text-danger">
 									</span>
 								</div>
 								
 								
-								<input type="hidden" name="id" th:value="${CategorieMateriel.id}" />
+								<input type="hidden" name="id" th:value="${categorieMateriel.id}" />
 								<input type="hidden" name="page" th:value="${param.page}" />
 								<input type="hidden" name="size" th:value="${param.size}" />
 								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
