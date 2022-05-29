@@ -93,7 +93,6 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...demandeEvenementAdmin,
   ...mesDemandesMateriel,
   ...demandeEvenementAdmin,
   ...demandeAdhesionEvent,
