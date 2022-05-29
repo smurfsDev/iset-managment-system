@@ -1,15 +1,11 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
-import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
-import com.projetIntegraion.spring.administrateur.departement.entity.Departement;
-import com.projetIntegraion.spring.administrateur.departement.repository.DepartementRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,31 +19,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ChefDepartmentController {
 
-    @Autowired
-    private DepartementRepository departementRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @GetMapping(value = "/listeChefDepartments")
     public String showAll(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-
-        Page<User> listChefDepartments = userRepository.findByRolesId(4L, PageRequest.of(page, size));
-        Set<Integer> ids = listChefDepartments.stream().map(u -> u.getId())
-                .collect(java.util.stream.Collectors.toSet());
-        List<UserRole> listUserRole = userRoleRepository.findByUserIdInAndRoleId(ids, 4L);
-        List<Departement> listDepartement = departementRepository.findAll();
-
-        
-
+        Page<Object[]> listChefDepartments = userRoleRepository.findAllChefDepartments( PageRequest.of(page, size));
         modelMap.addAttribute("listChefDepartments", listChefDepartments);
-        modelMap.addAttribute("listUserRole", listUserRole);
-        modelMap.addAttribute("listDepartement", listDepartement);
         modelMap.addAttribute("pages", new int[listChefDepartments.getTotalPages()]);
 
         modelMap.addAttribute("currentPage", page);
@@ -62,9 +46,10 @@ public class ChefDepartmentController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(4L, idCD);
+                Role r = roleRepository.findByName("ROLE_CHEFDEPARTEMENT");
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(r.getId(), idCD);
         if (userRole.isPresent()) {
-            Optional<UserRole> userRole1 = userRoleRepository.findByRoleIdAndDepartementAndStatus(4L,userRole.get().getDepartement(), 1);
+            Optional<UserRole> userRole1 = userRoleRepository.findByRoleIdAndDepartementAndStatus(r.getId(),userRole.get().getDepartement(), 1);
             if (userRole1.isPresent()){
                 userRole.get().setStatus(3);
                 userRoleRepository.save(userRole.get());
@@ -91,7 +76,8 @@ public class ChefDepartmentController {
             ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(4L, idCD);
+                Role r = roleRepository.findByName("ROLE_CHEFDEPARTEMENT");
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(r.getId(), idCD);
         if (userRole.isPresent()) {
             userRole.get().setStatus(2);
             userRoleRepository.save(userRole.get());

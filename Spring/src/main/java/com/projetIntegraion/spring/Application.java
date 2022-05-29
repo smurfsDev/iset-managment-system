@@ -1,12 +1,12 @@
 package com.projetIntegraion.spring;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import java.util.Date;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Matiere;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
@@ -16,7 +16,6 @@ import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMaterielMaterie
 import com.projetIntegraion.spring.demandeMateriel.entity.Materiel;
 import com.projetIntegraion.spring.demandeMateriel.repository.CategorieMaterielRepository;
 import com.projetIntegraion.spring.demandeMateriel.repository.MaterielRepository;
-import com.projetIntegraion.spring.demandeSalle.entity.Salle;
 import com.projetIntegraion.spring.demandeSalle.repository.SalleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.MatiereRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
@@ -60,6 +60,9 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	ClasseRepository classeRepository;
+
+	@Autowired
+	MatiereRepository matiereRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -166,7 +169,7 @@ public class Application implements CommandLineRunner {
 
 		UserRole ur4 = userRoleRepository.findFirstByUserId(chefDepartmnet.getId()).get();
 		ur4.setStatus(1);
-		ur4.setDepartement(5);
+		ur4.setDepartement(1);
 		userRoleRepository.save(ur4);
 
 		UserRole ur5 = userRoleRepository.findFirstByUserId(technicien.getId()).get();
@@ -213,11 +216,40 @@ public class Application implements CommandLineRunner {
 		classeRepository.save(ti4);
 		ur2.setClasse(Integer.parseInt(ti1.getId().toString()));
 		ur2.setDepartement(Integer.parseInt(departement.getId().toString()));
-		ur3.setClasse(Integer.parseInt(ti2.getId().toString()));
+		ur3.setClasse(Integer.parseInt(ti1.getId().toString()));
 		ur3.setDepartement(Integer.parseInt(departement.getId().toString()));
 
 		userRoleRepository.save(ur2);
 		userRoleRepository.save(ur3);
+		Role role5 = new Role("ROLE_ENSEIGNANT");
+		role5 = roleRepository.save(role5);
+
+		// new enseignant user
+		User user4 = new User();
+		user4.setUsername("enseignant@example.com");
+		user4.setPassword(new BCryptPasswordEncoder().encode("password"));
+		user4.getRoles().add(role5);
+		user4 = userRepository.save(user4);
+
+		UserRole ur6 =  userRoleRepository.findFirstByUserId(user4.getId()).get();
+		ur6.setStatus(1);
+		ur6.setDepartement(1);
+		userRoleRepository.save(ur6);
+
+
+		Matiere matiere1 = new Matiere();
+		matiere1.setNom("Matiere 1");
+		matiere1.setClasse(ti1);
+		matiere1.setEnseignant(user4);
+		matiereRepository.save(matiere1);
+
+		Matiere matiere2 = new Matiere();
+		matiere2.setNom("Matiere 2");
+		matiere2.setClasse(ti1);
+		matiere2.setEnseignant(user4);
+		matiereRepository.save(matiere2);
+
+		
 
 		CategorieMateriel cat1 = new CategorieMateriel("informatique");
 		CategorieMateriel cat2 = new CategorieMateriel("bureautique");

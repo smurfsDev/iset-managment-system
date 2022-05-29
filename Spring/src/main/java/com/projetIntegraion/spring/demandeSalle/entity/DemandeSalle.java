@@ -1,23 +1,19 @@
 package com.projetIntegraion.spring.demandeSalle.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.demandeMateriel.annotation.myDateConstraint;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @myDateConstraint.List({
@@ -26,17 +22,11 @@ import org.springframework.lang.Nullable;
 @Entity
 public class DemandeSalle {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    // @DateTimeFormat(pattern = "yyyy-MM-dd")
-    // @Temporal(TemporalType.DATE)
-    // @FutureOrPresent
     private String dateEmploi;
     @NotNull
-    // @DateTimeFormat(pattern = "yyyy-MM-dd")
-    // @Temporal(TemporalType.DATE)
-    // @FutureOrPresent
     private String dateDeRemise;
     @OneToOne
     private User responsable;

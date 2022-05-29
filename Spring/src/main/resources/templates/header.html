@@ -144,6 +144,12 @@
                   <span>Liste des cd</span>
                 </a>
               </li>
+              <li sec:authorize="hasRole('ENSEIGNANT')">
+                <a th:href="@{listeClassesEnseignes}">
+                  <i class="fa fa-user"></i>
+                  <span>Liste matieres et classes enseignes</span>
+                </a>
+              </li>
               <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
                 <a th:href="@{classe}">
                   <i class="fa fa-user"></i>
@@ -154,6 +160,12 @@
                 <a th:href="@{listeStudents}" >
                   <i class="fa fa-user"></i>
                   <span>Liste des etudiants</span>
+                </a>
+              </li>
+              <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
+                <a th:href="@{listeEnseignants}" >
+                  <i class="fa fa-user"></i>
+                  <span>Liste des enseignants</span>
                 </a>
               </li>
               <!-- <li >

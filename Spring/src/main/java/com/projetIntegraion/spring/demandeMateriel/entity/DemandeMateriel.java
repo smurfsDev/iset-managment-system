@@ -7,19 +7,17 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.demandeMateriel.annotation.myDateConstraint;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @myDateConstraint.List({
@@ -29,9 +27,9 @@ import org.springframework.lang.Nullable;
 @Entity
 public class DemandeMateriel {
 	@Id
-	@GeneratedValue
-	private Long id;
-	@Nullable
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Nullable
 	private String reponse;
 	private int status = 0;
 	@NotNull
