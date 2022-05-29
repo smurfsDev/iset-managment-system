@@ -116,6 +116,10 @@ public class DemandeSalleController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        if (salle == null) {
+            bindingResult.rejectValue("salle", "error.salle", "Veuillez choisir une salle");
+            modelMap.addAttribute("errorMsg", "Veuillez choisir une salle");
+        }
         if (bindingResult.hasErrors()) {
 
             modelMap.addAttribute("org.springframework.validation.BindingResult.demandeSalle", bindingResult);
@@ -158,20 +162,29 @@ public class DemandeSalleController {
             BindingResult bindingResult,
             HttpServletRequest request,
             Long salle,
+            Long id,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) throws IOException {
+        if (salle == null) {
+            bindingResult.rejectValue("salle", "error.salle", "Veuillez choisir une salle");
+            modelMap.addAttribute("errorMsg", "Veuillez choisir une salle");
+        }
         if (bindingResult.hasErrors()) {
             modelMap.addAttribute("org.springframework.validation.BindingResult.demandeSalle", bindingResult);
             modelMap.addAttribute("demandeSalle", demandeSalle);
+            modelMap.addAttribute("edit", true);
             List<Departement> listDepartement = departementService.getAllDepartement();
             System.out.println(listDepartement);
             modelMap.addAttribute("Departements", listDepartement);
+            List<Salle> salles = salleService.getAllSalle();
+            modelMap.addAttribute("sallesdep", salles);
+            System.out.println(salles);
             return "demandeSalle/form";
         } else {
             DemandeSalle dm = new DemandeSalle();
             DemandeSalleSalle dms = demandeSalleSalleRepository.findByDemandeSalleId(demandeSalle.getId());
             dms.setDemandeSalle(dm);
-            dm.setId(demandeSalle.getId());
+            dm.setId(id);
             dm.setDateEmploi(demandeSalle.getDateEmploi());
             dm.setDateDeRemise(demandeSalle.getDateDeRemise());
             dm.setResponsable(this.getUser(request));
