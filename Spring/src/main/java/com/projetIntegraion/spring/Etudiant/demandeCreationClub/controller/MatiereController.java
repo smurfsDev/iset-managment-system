@@ -272,7 +272,7 @@ public class MatiereController {
         }
     }
 
-    @GetMapping(value="/mesMatieres")
+    @RequestMapping("/mesMatieres")
     public String GetMyMatieres(
         ModelMap modelMap,
         HttpServletRequest request
