@@ -251,7 +251,9 @@ public class Application implements CommandLineRunner {
 		matiere2.setEnseignant(user4);
 		matiereRepository.save(matiere2);
 
-		
+		ur2 = userRoleRepository.findFirstByUserId(student.getId()).get();
+		ur2.setClasse(Integer.parseInt(ti1.getId().toString()));
+		userRoleRepository.save(ur2);
 
 		CategorieMateriel cat1 = new CategorieMateriel("informatique");
 		CategorieMateriel cat2 = new CategorieMateriel("bureautique");

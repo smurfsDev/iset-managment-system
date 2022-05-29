@@ -2,17 +2,20 @@ package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Matiere;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.MatiereRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
@@ -44,6 +47,9 @@ public class MatiereController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private MatiereRepository matiereRepository;
 
     public User getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -265,6 +271,23 @@ public class MatiereController {
 
         }
     }
+
+    @GetMapping(value="/mesMatieres")
+    public String GetMyMatieres(
+        ModelMap modelMap,
+        HttpServletRequest request
+    ) {
+
+        User user = this.getUser(request);
+        UserRole userRole = userRoleRepository.findFirstByUserId(user.getId()).get();
+        Classe classe = classeRepository.findById(Long.parseLong(userRole.getClasse().toString())).get();
+        List<Matiere> matieres = matiereRepository.findByClasseId(classe.getId());
+        System.out.println("AHA"+matieres.get(1).getNom());
+        modelMap.addAttribute("matieres", matieres);
+        return "/studentMatiere";
+    
+    }
+    
 
 
     
