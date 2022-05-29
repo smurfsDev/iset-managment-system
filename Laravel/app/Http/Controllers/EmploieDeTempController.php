@@ -26,6 +26,9 @@ class EmploieDeTempController extends Controller
 
             $EDT = EmploieDeTemp::where('classes_id', $classId)->with("classes")->orderBy('created_at', 'desc')
                 ->first();
+            if (empty($EDT)) {
+                return response()->json([null], 404);
+            }
             return response()->json($EDT, 200);
         }
     }
@@ -36,7 +39,7 @@ class EmploieDeTempController extends Controller
         $EDT->title = $request->input('title');
         $EDT->classes_id = $request->input('classes_id');
         $EDT->idResponsable = $request->user()->id;
-        $EDT->file = $request->input('file')?$request->input('file'):null;
+        $EDT->file = $request->input('file') ? $request->input('file') : null;
 
         $EDT->save();
         return response()->json([
