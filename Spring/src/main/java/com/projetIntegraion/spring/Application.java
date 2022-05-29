@@ -84,12 +84,13 @@ public class Application implements CommandLineRunner {
 		Role role = new Role("ROLE_ADMIN");
 		Role role1 = new Role("ROLE_RESPONSABLE");
 		Role role2 = new Role("ROLE_STUDENT");
-
 		Role role3 = new Role("ROLE_CHEFDEPARTEMENT");
+		Role role4 = new Role("ROLE_TECHNICIEN");
 		role = roleRepository.save(role);
 		role1 = roleRepository.save(role1);
 		role2 = roleRepository.save(role2);
 		role3 = roleRepository.save(role3);
+		role4 = roleRepository.save(role4);
 		Departement departement = new Departement();
 		departement.setTitre("Department Informatique");
 		Departement departement1 = new Departement();
@@ -132,12 +133,18 @@ public class Application implements CommandLineRunner {
 		chefDepartmnet.setPassword(new BCryptPasswordEncoder().encode("password"));
 		chefDepartmnet.getRoles().add(role3);
 
+		User technicien = new User();
+		technicien.setUsername("technicien@example.com");
+		technicien.setPassword(new BCryptPasswordEncoder().encode("password"));
+		technicien.getRoles().add(role4);
+
 		admin = userRepository.save(admin);
 		responsable = userRepository.save(responsable);
 		student = userRepository.save(student);
 		student1 = userRepository.save(student1);
 		student2 = userRepository.save(student2);
 		chefDepartmnet = userRepository.save(chefDepartmnet);
+		technicien = userRepository.save(technicien);
 
 		// set statuses to 1
 
@@ -161,6 +168,11 @@ public class Application implements CommandLineRunner {
 		ur4.setStatus(1);
 		ur4.setDepartement(5);
 		userRoleRepository.save(ur4);
+
+		UserRole ur5 = userRoleRepository.findFirstByUserId(technicien.getId()).get();
+		ur5.setStatus(1);
+		ur5.setDepartement(5);
+		userRoleRepository.save(ur5);
 
 		DemandeCreationClub dcc = new DemandeCreationClub();
 		dcc.setNomClub("Club de l'informatique");
