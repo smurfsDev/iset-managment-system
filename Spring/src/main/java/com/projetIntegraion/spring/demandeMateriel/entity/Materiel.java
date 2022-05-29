@@ -13,6 +13,7 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.demandeMateriel.annotation.uniqueTitre;
 
 @Entity
 public class Materiel {
@@ -21,6 +22,7 @@ public class Materiel {
 	private Long id;
 	@NotNull
 	@Size(min = 3, max = 30)
+	@uniqueTitre
 	private String titre;
 	@NotNull
 	@PositiveOrZero
@@ -97,6 +99,10 @@ public class Materiel {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Materiel() {
