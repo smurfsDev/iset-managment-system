@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -15,49 +16,57 @@ import com.projetIntegraion.spring.administrateur.departement.entity.Departement
 
 @Entity
 public class Salle {
-    @Id @GeneratedValue 
-	private  Long id;
-	@NotNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull
 	@Size(min = 3, max = 30)
 	private String titre;
 	@ManyToOne
     private Departement departement;
-    @OneToMany(mappedBy="salle", cascade = CascadeType.ALL)
-	private List<DemandeSalleSalle> demandeSalle;
+    @OneToMany(mappedBy = "salle", cascade = CascadeType.ALL)
+    private List<DemandeSalleSalle> demandeSalle;
 
     public Salle() {
         super();
     }
-    public Salle(Long id, String titre, Departement departement) {
+
+    public Salle(String titre, Departement departement) {
         super();
-        this.id = id;
         this.titre = titre;
         this.departement = departement;
     }
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getTitre() {
         return titre;
     }
+
     public void setTitre(String titre) {
         this.titre = titre;
     }
+
     public Departement getDepartement() {
         return departement;
     }
+
     public void setDepartement(Departement departement) {
         this.departement = departement;
     }
+
     public List<DemandeSalleSalle> getDemandeSalle() {
         return demandeSalle;
     }
+
     public void setDemandeSalle(List<DemandeSalleSalle> demandeSalle) {
         this.demandeSalle = demandeSalle;
     }
-    
-    
+
 }

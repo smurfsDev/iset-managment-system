@@ -78,9 +78,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/logout").permitAll()
-				.antMatchers("/accept", "/decline", "/categorieMateriel","/listeChefDepartments","/acceptCD","/declineCD")
+				.antMatchers("/accept", "/decline", "/categorieMateriel", "/listeChefDepartments", "/acceptCD",
+						"/declineCD")
 				.hasAnyRole("ADMIN")
-				.antMatchers("/classe","/deleteClass","/showCreateClass","/createClass","/modifierClass","/updateClass")
+				.antMatchers("/classe", "/deleteClass", "/showCreateClass", "/createClass", "/modifierClass",
+						"/updateClass")
 				.hasAnyRole("CHEFDEPARTEMENT")
 				.antMatchers("/showCreateDcc", "/deleteDcc",
 						"/modifierDcc", "/blogClub")
@@ -92,12 +94,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/showManageBlog",
 						"/showCreateBoard", "/createBoard", "/deleteBoard", "/showCreateProject", "/createProject",
 						"/deleteProject", "/modifierProject",
-						"/listeDm", "/showCreateDm", "/showEditDm", "/updateDmm", "/deleteDmm", "/materiel",
-						"/showMateriel",
-						"/deleteMateriel", "/setQuantite", "/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
-						"/modifierDS",
+						"/materiel", "/showMateriel",
+						"/listeDS", "/ShowcreateDS", "/showEditDS", "/updateDS",
+						"/modifierDS", "/listeDm", "/showCreateDm", "/showEditDm",
+						"/updateDmm", "/setQuantite", "/deleteMaterielDemande",
+						"/deleteDmm",
+
 						"/deleteDS")
 				.hasAnyRole("RESPONSABLE")
+				.antMatchers("/showListCategories", "/showCreateCategorieForm", "/saveCategorieMateriel",
+						"/showEditCategorieForm", "/updateCategorieMateriel", "/deleteCategorieMateriel",
+						"/showListMateriel", "/showCreateMaterielForm", "/saveMateriel", "/showEditMaterielForm",
+						"/updateMateriel", "/deleteMateriel")
+				.hasAnyRole("ADMIN", "CHEFDEPARTEMENT", "TECHNICIEN")
 				.antMatchers("/listeDcc")
 				.hasAnyRole("RESPONSABLE", "STUDENT", "ADMIN")
 				.antMatchers("/login").permitAll()
@@ -120,9 +129,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			String username = request.getParameter("username");
 			User user = userRepository.findUserWithName(username).get();
-			UserRole ur = userRoleRepository.findFirstByUserId(user.getId()).isPresent() ? userRoleRepository.findFirstByUserId(user.getId()).get() : null;
-			response.sendRedirect(ur!=null?ur.getStatus()!=1?"/login?error=2":"/listeDcc":"/listeDcc");
-			response.setStatus(ur!=null?ur.getStatus()!=1?HttpServletResponse.SC_UNAUTHORIZED:HttpServletResponse.SC_OK:HttpServletResponse.SC_OK);
+			UserRole ur = userRoleRepository.findFirstByUserId(user.getId()).isPresent()
+					? userRoleRepository.findFirstByUserId(user.getId()).get()
+					: null;
+			response.sendRedirect(ur != null ? ur.getStatus() != 1 ? "/login?error=2" : "/listeDcc" : "/listeDcc");
+			response.setStatus(
+					ur != null ? ur.getStatus() != 1 ? HttpServletResponse.SC_UNAUTHORIZED : HttpServletResponse.SC_OK
+							: HttpServletResponse.SC_OK);
 		}
 
 	}

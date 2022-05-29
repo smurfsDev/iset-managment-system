@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 public class DemandeEvent {
 
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @ManyToOne
 	private User responsableClub;

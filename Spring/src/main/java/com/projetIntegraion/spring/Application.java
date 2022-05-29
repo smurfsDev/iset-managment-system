@@ -1,13 +1,23 @@
 package com.projetIntegraion.spring;
 
+import java.util.ArrayList;
+
 import java.util.Date;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Classe;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Matiere;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
 import com.projetIntegraion.spring.blogClub.service.ActivitiesService;
+import com.projetIntegraion.spring.demandeMateriel.entity.CategorieMateriel;
+import com.projetIntegraion.spring.demandeMateriel.entity.DemandeMaterielMateriel;
+import com.projetIntegraion.spring.demandeMateriel.entity.Materiel;
+import com.projetIntegraion.spring.demandeMateriel.repository.CategorieMaterielRepository;
+import com.projetIntegraion.spring.demandeMateriel.repository.MaterielRepository;
+import com.projetIntegraion.spring.demandeSalle.entity.Salle;
+import com.projetIntegraion.spring.demandeSalle.repository.SalleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.ClasseRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.DemandeCreationClubRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.MatiereRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
@@ -33,9 +44,14 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	UserRepository userRepository;
-
 	@Autowired
 	DepartementRepository departementRepository;
+	@Autowired
+	SalleRepository salleRepository;
+	@Autowired
+	CategorieMaterielRepository categorieMaterielRepository;
+	@Autowired
+	MaterielRepository materielRepository;
 
 	@Autowired
 	DemandeCreationClubRepository demandeCreationClubRepository;
@@ -45,6 +61,10 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	ClasseRepository classeRepository;
+
+	@Autowired
+	MatiereRepository matiereRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -70,10 +90,12 @@ public class Application implements CommandLineRunner {
 		Role role1 = new Role("ROLE_RESPONSABLE");
 		Role role2 = new Role("ROLE_STUDENT");
 		Role role3 = new Role("ROLE_CHEFDEPARTEMENT");
+		Role role4 = new Role("ROLE_TECHNICIEN");
 		role = roleRepository.save(role);
 		role1 = roleRepository.save(role1);
 		role2 = roleRepository.save(role2);
 		role3 = roleRepository.save(role3);
+		role4 = roleRepository.save(role4);
 		Departement departement = new Departement();
 		departement.setTitre("Department Informatique");
 		Departement departement1 = new Departement();
@@ -116,6 +138,10 @@ public class Application implements CommandLineRunner {
 		chefDepartmnet.setPassword(new BCryptPasswordEncoder().encode("password"));
 		chefDepartmnet.getRoles().add(role3);
 
+		User technicien = new User();
+		technicien.setUsername("technicien@example.com");
+		technicien.setPassword(new BCryptPasswordEncoder().encode("password"));
+		technicien.getRoles().add(role4);
 
 		admin = userRepository.save(admin);
 		responsable = userRepository.save(responsable);
@@ -123,32 +149,35 @@ public class Application implements CommandLineRunner {
 		student1 = userRepository.save(student1);
 		student2 = userRepository.save(student2);
 		chefDepartmnet = userRepository.save(chefDepartmnet);
+		technicien = userRepository.save(technicien);
 
 		// set statuses to 1
 
-		UserRole ur =  userRoleRepository.findFirstByUserId(admin.getId()).get();
+		UserRole ur = userRoleRepository.findFirstByUserId(admin.getId()).get();
 		ur.setStatus(1);
 		userRoleRepository.save(ur);
 
-		UserRole ur1 =  userRoleRepository.findFirstByUserId(responsable.getId()).get();
+		UserRole ur1 = userRoleRepository.findFirstByUserId(responsable.getId()).get();
 		ur1.setStatus(1);
 		userRoleRepository.save(ur1);
 
-		UserRole ur2 =  userRoleRepository.findFirstByUserId(student.getId()).get();
+		UserRole ur2 = userRoleRepository.findFirstByUserId(student.getId()).get();
 		ur2.setStatus(1);
 		userRoleRepository.save(ur2);
 
-		UserRole ur3 =  userRoleRepository.findFirstByUserId(student1.getId()).get();
+		UserRole ur3 = userRoleRepository.findFirstByUserId(student1.getId()).get();
 		ur3.setStatus(1);
 		userRoleRepository.save(ur3);
 
-		UserRole ur4 =  userRoleRepository.findFirstByUserId(chefDepartmnet.getId()).get();
+		UserRole ur4 = userRoleRepository.findFirstByUserId(chefDepartmnet.getId()).get();
 		ur4.setStatus(1);
-		ur4.setDepartement(5);
+		ur4.setDepartement(1);
 		userRoleRepository.save(ur4);
-		
-		
 
+		UserRole ur5 = userRoleRepository.findFirstByUserId(technicien.getId()).get();
+		ur5.setStatus(1);
+		ur5.setDepartement(5);
+		userRoleRepository.save(ur5);
 
 		DemandeCreationClub dcc = new DemandeCreationClub();
 		dcc.setNomClub("Club de l'informatique");
@@ -189,12 +218,85 @@ public class Application implements CommandLineRunner {
 		classeRepository.save(ti4);
 		ur2.setClasse(Integer.parseInt(ti1.getId().toString()));
 		ur2.setDepartement(Integer.parseInt(departement.getId().toString()));
-		ur3.setClasse(Integer.parseInt(ti2.getId().toString()));
+		ur3.setClasse(Integer.parseInt(ti1.getId().toString()));
 		ur3.setDepartement(Integer.parseInt(departement.getId().toString()));
-		
 
 		userRoleRepository.save(ur2);
 		userRoleRepository.save(ur3);
+		Role role5 = new Role("ROLE_ENSEIGNANT");
+		role5 = roleRepository.save(role5);
+
+		// new enseignant user
+		User user4 = new User();
+		user4.setUsername("enseignant@example.com");
+		user4.setPassword(new BCryptPasswordEncoder().encode("password"));
+		user4.getRoles().add(role5);
+		user4 = userRepository.save(user4);
+
+		UserRole ur6 =  userRoleRepository.findFirstByUserId(user4.getId()).get();
+		ur6.setStatus(1);
+		ur6.setDepartement(1);
+		userRoleRepository.save(ur6);
+
+
+		Matiere matiere1 = new Matiere();
+		matiere1.setNom("Matiere 1");
+		matiere1.setClasse(ti1);
+		matiere1.setEnseignant(user4);
+		matiereRepository.save(matiere1);
+
+		Matiere matiere2 = new Matiere();
+		matiere2.setNom("Matiere 2");
+		matiere2.setClasse(ti1);
+		matiere2.setEnseignant(user4);
+		matiereRepository.save(matiere2);
+
+		
+
+		CategorieMateriel cat1 = new CategorieMateriel("informatique");
+		CategorieMateriel cat2 = new CategorieMateriel("bureautique");
+		CategorieMateriel cat3 = new CategorieMateriel("robotique");
+		categorieMaterielRepository.save(cat1);
+		categorieMaterielRepository.save(cat2);
+		categorieMaterielRepository.save(cat3);
+
+		Materiel mat1 = new Materiel("ordinateur", 12, "aaaaaaaa", chefDepartmnet, cat1,
+				new ArrayList<DemandeMaterielMateriel>());
+		Materiel mat2 = new Materiel("imprimante", 12, "aaaaaaaa", chefDepartmnet, cat1,
+				new ArrayList<DemandeMaterielMateriel>());
+		Materiel mat3 = new Materiel("scanner", 12, "aaaaaaaa", chefDepartmnet, cat2,
+				new ArrayList<DemandeMaterielMateriel>());
+
+		materielRepository.save(mat1);
+		materielRepository.save(mat2);
+		materielRepository.save(mat3);
+
+		// create 10 salles 
+		for (int i = 0; i < 10; i++) {
+			Salle salle = new Salle();
+			salle.setTitre("I " + i);
+			salle.setDepartement(departement);
+			salleRepository.save(salle);
+		}
+
+		// create 10 salles
+		for (int i = 0; i < 10; i++) {
+			Salle salle = new Salle();
+			salle.setTitre("E " + i);
+			salle.setDepartement(departement1);
+			salleRepository.save(salle);
+		}
+
+		// create 10 salles
+		for (int i = 0; i < 10; i++) {
+			Salle salle = new Salle();
+			salle.setTitre("M " + i);
+			salle.setDepartement(departement2);
+			salleRepository.save(salle);
+		}
+
+		departement.setChefDepartment(chefDepartmnet);
+		departementRepository.save(departement);
 
 	}
 
