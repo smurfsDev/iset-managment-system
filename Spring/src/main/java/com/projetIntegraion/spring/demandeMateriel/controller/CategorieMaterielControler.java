@@ -43,7 +43,7 @@ public class CategorieMaterielControler {
 
     @RequestMapping("/showCreateCategorieForm")
     public String showCretateCategorieForm(ModelMap modelMap) {
-        modelMap.addAttribute("CategorieMateriel", new CategorieMateriel());
+        modelMap.addAttribute("categorieMateriel", new CategorieMateriel());
         modelMap.addAttribute("edit", false);
 
         List<CategorieMateriel> listCategorieMateriel = CategorieMaterielService.getAllCategorie();
