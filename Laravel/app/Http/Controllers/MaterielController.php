@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MaterielEditRequest;
 use App\Http\Requests\MaterielRequest;
 use App\Models\Materiel;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class MaterielController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MaterielEditRequest $request, $id)
     {
         $materiel = Materiel::find($id);
         if (!empty($materiel)) {
