@@ -83,10 +83,6 @@ export default {
             key: "status",
             title: "Status",
 
-          },
-          {
-            'title': 'Action',
-            'key': 'action',
           }
         ]
       };
