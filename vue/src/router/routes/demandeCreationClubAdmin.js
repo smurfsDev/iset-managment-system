@@ -3,7 +3,7 @@ const demandeCreationClub = () =>
 
 export default [
   {
-    path: "/admin/demandeCreationClub",
+    path: "/demandeCreationClub",
     component: demandeCreationClub,
     name: "demandeCreationClubAdmin",
     meta: { requiresAdmin: true },

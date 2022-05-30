@@ -3,7 +3,7 @@ const demandePlannificationEvent = () =>
 
 export default [
   {
-    path: "/admin/demandePlannificationEvent",
+    path: "/demandePlannificationEvent",
     component: demandePlannificationEvent,
     name: "demandePlannificationEventAdmin",
     meta: { requiresAdmin: true },

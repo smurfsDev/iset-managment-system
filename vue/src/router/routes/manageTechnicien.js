@@ -3,7 +3,7 @@ const manageTechnicien = () =>
 
 export default [
   {
-    path: "/cd/manageTechnicien",
+    path: "/manageTechnicien",
     component: manageTechnicien,
     name: "manageTechnicien",
     meta: { requiresChefDepartement: true },

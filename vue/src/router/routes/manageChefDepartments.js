@@ -3,7 +3,7 @@ const manageChefDepartments = () =>
 
 export default [
   {
-    path: "/admin/manageChefDepartments",
+    path: "/manageChefDepartments",
     component: manageChefDepartments,
     name: "manageChefDepartmentsAdmin",
     meta: { requiresAdmin: true },

@@ -43,12 +43,7 @@
                     hidden: !this.isEnseignant
                 },
                 {
-                    href: '/Entreprise',
-                    title: 'Entreprise',
-                    icon: 'fas fa-building',
-                    hidden: !this.isAdmin
-                },{
-                    href: '/cd/manageStudents',
+                    href: '/manageStudents',
                     title: 'Students',
                     icon: 'fas fa-user',
                     hidden: !this.isChefDepartement
@@ -59,25 +54,25 @@
                     hidden: !this.isChefDepartement
                 },
                 {
-                    href: '/cd/manageTechnicien',
+                    href: '/manageTechnicien',
                     title: 'Techniciens',
                     icon: 'fas fa-user',
                     hidden: !this.isChefDepartement
                 },{
-                    href: '/cd/GererClasse',
+                    href: '/GererClasse',
                     title: 'Classes',
                     icon: 'fas fa-building',
                     hidden: !this.isChefDepartement
                 },
                 {
-                    href: '/etudiant/demandeCreationClub',
+                    href: '/demandeCreationClub',
                     title: 'Demande creation club',
                     icon: 'fas fa-plus',
                     hidden: !this.isStudent
                 },
                 
                 {
-                    href: '/admin/manageChefDepartments',
+                    href: '/manageChefDepartments',
                     title: 'chefDepartements',
                     icon: 'fas fa-user',
                     hidden: !this.isAdmin
@@ -155,9 +150,10 @@
                 {
                     title: 'Demandes',
                     icon: 'fa fa-file',
+                    hidden: !isAuth,
                     child: [
                         {
-                            href: '/admin/demandeCreationClub',
+                            href: '/demandeCreationClub',
                             title: 'Demande creation club',
                             icon: 'fas fa-building',
                             hidden: !this.isAdmin
@@ -181,7 +177,7 @@
                             hidden: !this.isResponsableClub
                         },
                         {
-                            href: '/admin/demandePlannificationEvent',
+                            href: '/demandePlannificationEvent',
                             title: 'Demande évenement',
                             icon: 'fas fa-file',
                             hidden: !this.isAdmin
