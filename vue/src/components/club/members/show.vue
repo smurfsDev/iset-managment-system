@@ -16,7 +16,7 @@
     >
       <h3>il y'a aucun member</h3>
     </div>
-  <table class="table table-striped table-hover">
+  <table class="table table-striped table-hover" v-if="members.length != 0">
             <thead>
             <tr>
                 <th>
