@@ -117,18 +117,22 @@ class DocumentController extends Controller
         $class = $request->class ?? "";
         $documents = [];
         if ($search == "" && $categorie == "all" && $class == "all") {
-            $documents = Document::with('class')->with('categorie')->paginate(5);
+            $documents = Document::with('class')->with('categorie')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
         }   else if($search == "" && $categorie == "all" && $class != "all"){
             $documents = Document::
                 where('classes_id', $class)
                 ->with('class')
                 ->with('categorie')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }   else if($search == "" && $categorie != "all" && $class == "all"){
             $documents = Document::
                 where('document_categories_id', $categorie)
                 ->with('class')
                 ->with('categorie')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }   else if($search == "" && $categorie != "all" && $class != "all"){
             $documents = Document::
@@ -136,12 +140,14 @@ class DocumentController extends Controller
                 ->where('classes_id', $class)
                 ->with('class')
                 ->with('categorie')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }   else if($search != "" && $categorie == "all" && $class == "all"){
             $documents = Document::
                 where('nom',"like", "%".$search."%")
                 ->with('class')
                 ->with('categorie')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }   else if($search != "" && $categorie == "all" && $class != "all"){
             $documents = Document::
@@ -149,6 +155,7 @@ class DocumentController extends Controller
                 ->where('classes_id', $class)
                 ->with('class')
                 ->with('categorie')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }   else if($search != "" && $categorie != "all" && $class == "all"){
             $documents = Document::
@@ -156,6 +163,7 @@ class DocumentController extends Controller
                 ->where('document_categories_id', $categorie)
                 ->with('class')
                 ->with('categorie')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }   else if($search != "" && $categorie != "all" && $class != "all"){
             $documents = Document::
@@ -164,6 +172,7 @@ class DocumentController extends Controller
                 ->where('classes_id', $class)
                 ->with('class')
                 ->with('categorie')
+                ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
         if ($documents->isEmpty()) {
