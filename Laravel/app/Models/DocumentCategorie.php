@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class DocumentCategorie extends Model
 {
     use HasFactory;
+
+    protected $table = 'document_categories';
+
+
     protected $fillable = [
         "title",
-        "idresponsable",
+        "idResponsable",
     ];
     // relation this Category has many Materiels
     public function documents(){
