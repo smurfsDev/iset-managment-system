@@ -24,8 +24,8 @@ class MessageController extends Controller
             return response()->json( $messages, 200);
         } else
             return response()->json([
-                "aucune Messages"
-            ], 404);
+                []
+            ], 200);
 
     }
     public function users(Request $request){
