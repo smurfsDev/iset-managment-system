@@ -51,8 +51,12 @@ export default {
             nomClub: this.$route.params.nomClub,
           }});
         }
-
       })
+      .catch((err) => {
+        this.$router.push({ name:"listeClubs", params:{
+          error: err.response.data.message,
+        }});
+      });
       ;
       this.message = "";
     },
