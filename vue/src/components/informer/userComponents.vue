@@ -4,7 +4,7 @@
             <div class="card-header">Users</div>
             <div class="card-body">
                 <div class="users" v-for="user in users" :key="user.id">
-                    <a @click="submitMessage(user.id)">{{ user.name }}</a>
+                    <a @click="fetchMyMessages(user.id)">{{ user.name }}</a>
                 </div>
             </div>
         </div>
@@ -17,9 +17,10 @@
             return {
                 users: [],
                 messages: [],
+                myid: 0,
             }
         },
-        emits: ["messages"],
+        emits: ["messages","fetchMyMessages"],
         mounted() {
             console.log('Component mounted.')
         },
@@ -32,17 +33,11 @@
                     this.users = response.data;
                 })
             },
-            submitMessage(id) {
-                this.$http.get("http://localhost:8000/api/message/M/"+id).then(response => {
-                this.messages = response.data;
-                console.log(id);
-                this.$emit('messages', response.data, id);
-                })
-                .catch(() => {
-                    this.messages = [];
-                    this.$emit('messages', [],id);
-                });
-            },
+            fetchMyMessages(id){
+                this.myid = id;
+                this.$emit("fetchMyMessages",id);
+            }
+            
             
         }
 
