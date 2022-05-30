@@ -15,12 +15,16 @@ import chatMessagesComponent from './chatMessagesComponent';
 import chatFormComponent from "./chatFormComponent";
 
     export default {
+        emits: ["fetchThem"],
         components: {
         chatMessagesComponent,
         chatFormComponent,
         },
         mounted() {
             console.log('Component mounted.')
+        },
+        updated() {
+            this.$emit("fetchThem");
         },
         props: {
             userId: Number,
