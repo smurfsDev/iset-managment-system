@@ -22,7 +22,7 @@
                   </a>
                 </b-col>
               </b-row>
-              <b-row>
+              <b-row v-if="Document.class">
                 <b-col> Class : {{ Document.class.abreviation }} </b-col>
               </b-row>
               <b-row>
