@@ -35,7 +35,6 @@
                 {
                 body:this.body
                 }).then(response => {
-                    this.messages = response.data;
                     this.body = '';
                 })
             }
