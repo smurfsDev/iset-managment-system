@@ -20,8 +20,9 @@
 							<h3 th:text="${edit}?'Modifier Materiel':'Créer Materiel'" class="mb-0"></h3>
 						</div>
 						<div class="card-body">
-							<form th:action="saveMateriel" enctype="multipart/form-data" class="form"
-								id="formLogin" name="formLogin" role="form" action="saveMateriel" method="post">
+							<div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
+							<form th:action="saveMaterielDemande" enctype="multipart/form-data" class="form"
+								id="formLogin" name="formLogin" role="form" action="saveMaterielDemande" method="post">
                                 <input type="hidden" name="idDemande" th:value="${param.idDemande}">
 								<div class="form-group">
 									<label class="control-label"> Materiel :</label> 

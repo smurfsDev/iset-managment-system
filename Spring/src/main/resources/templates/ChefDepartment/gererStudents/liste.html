@@ -22,8 +22,10 @@
                     <h1 class="text-center">Liste des demandes d'etudiants</h1>
                 </div>
             </div>
-            <div th:if="${message}!='vide'" th:class="'my-4 alert alert'+'-'+${typea}" role="alert"
-                th:text="${message}"></div>
+            <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
+            <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
+
             <div class="row my-4">
                 <table class="table table-dark table-striped">
                     <thead>
@@ -33,30 +35,29 @@
                         <th>Abreveation classe</th>
                         <th>Actions</th>
                     </thead>
-                    <tr th:if="${#arrays.isEmpty(listChefDepartments.content)}">
+                    <tr th:if="${#arrays.isEmpty(ListStudent.content)}">
 						<td colspan="4" class="text-center ">Aucune demande etudiants trouvée ! </td></tr>
-                        
-					<tr th:each="demande,iter:${listChefDepartments.content}">
-                            <td th:text="${demande.id}"></td>
-                            <td th:text="${demande.username}"></td>
-                        <td th:text="${listClasse[iter.index][1].nom}"></td>
-                        <td th:text="${listClasse[iter.index][1].abreviation}"></td>
+					<tr th:each="demande,iter:${ListStudent.content}">
+                            <td th:text="${demande[0].id}"></td>
+                            <td th:text="${demande[0].username}"></td>
+                        <td th:text="${demande[1].nom}"></td>
+                        <td th:text="${demande[1].abreviation}"></td>
 
                         <td>
-                            <div th:if="${listClasse[iter.index][2].status!=3}">
-                                <div th:if="${listClasse[iter.index][2].status!=1}">
-                                    <a th:class="${listClasse[iter.index][2].status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{acceptSTD(idSTD=${demande.id},page=${currentPage},size=${param.size})}">
+                            <div th:if="${demande[2].status!=3}">
+                                <div th:if="${demande[2].status!=1}">
+                                    <a th:class="${demande[2].status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{acceptSTD(idSTD=${demande[0].id},page=${currentPage},size=${param.size})}">
                                         <i class="fa fa-check"></i>
                                     </a>
-                                    <a th:class="${listClasse[iter.index][2].status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineSTD(idSTD=${demande.id},page=${currentPage},size=${param.size})}">
+                                    <a th:class="${demande[2].status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{declineSTD(idSTD=${demande[0].id},page=${currentPage},size=${param.size})}">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </div>
-                                <div class="text-success" th:if="${listClasse[iter.index][2].status==1}">
+                                <div class="text-success" th:if="${demande[2].status==1}">
                                     Demande acceptée
                                 </div>
                           </div>
-                            <div th:if="${listClasse[iter.index][2].status==3}" class="text-danger stri">
+                            <div th:if="${demande[2].status==3}" class="text-danger stri">
                                 DEMANDE REJETÉE
                             </div>
 

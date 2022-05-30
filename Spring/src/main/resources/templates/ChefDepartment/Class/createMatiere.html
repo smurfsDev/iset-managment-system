@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template">
+
+<head>
+	<meta charset="utf-8">
+	<title>Create matiere</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container my-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<span class="anchor" id="formLogin"></span>
+					<!-- form card login -->
+					<div class="card card-outline-secondary">
+						<div class="card-header">
+                         <div th:if="${ens}==false" th:class="'my-4 alert alert'+'-'+${typea}" role="alert"
+                          >Pas d'enseignant! Vous ne pouvez pas ajouter une matiere </div>
+                          
+                            
+							<h3 th:text="${edit}?'Modifier Matiere':'Créer Matiere'" class="mb-0"></h3>
+						</div>
+						<div class="card-body">
+							<form th:action="${edit}?'updateMatiere?id='+${matiere.id}+'&idC='+${idC}:'createMatiere'"  class="form"
+								id="formLogin" name="formLogin" role="form"  method="post">
+								<div class="form-group">
+									<label class="control-label">Nom Matiere :</label> <input type="text" name="nom"
+										class="form-control" th:value="${matiere.nom}" />
+									<span th:errors=${matiere.nom} class="text-danger">
+									</span>
+								</div>
+                                <div class="form-group">
+                                    <label class="control-label">Coefficient :</label> <input type="number" step="0.5"
+                                        name="coefficient" class="form-control" th:value="${matiere.coefficient}" /> 
+									<span th:errors=${matiere.coefficient} class="text-danger">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Semestre :</label> <input type="number"
+                                        name="semestre" class="form-control" th:value="${matiere.semestre}" />  
+									<span th:errors=${matiere.semestre} class="text-danger">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label">Enseignant :</label>
+                                    <select name="enseignant" class="form-control">
+                                        <option th:each="enseignant:${enseignants}" th:value="${enseignant.id}" name="enseignant"
+                                            th:text="${enseignant.username}"></option>
+                                    </select>
+                                </div>
+                                
+								<label type="hidden" name="id" th:value="${matiere.id}" />
+								<input type="hidden" name="idC" th:value="${idC}"/>
+
+								<input th:value="${edit}?'Modifier':'Ajouter'" class="btn btn-success my-3 btn-lg float-right"
+								type="submit" >
+							</form>
+							
+						</div>
+						<!--/card-block-->
+					</div>
+					<!-- /form card login -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

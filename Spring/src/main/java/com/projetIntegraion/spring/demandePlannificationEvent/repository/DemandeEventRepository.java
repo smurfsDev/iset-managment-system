@@ -1,6 +1,6 @@
 package com.projetIntegraion.spring.demandePlannificationEvent.repository;
 
-import java.util.Optional;
+
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
 import com.projetIntegraion.spring.demandePlannificationEvent.entity.DemandeEvent;
@@ -24,6 +24,9 @@ public interface DemandeEventRepository extends JpaRepository<DemandeEvent, Long
     Page<DemandeEvent> findByResponsableClub(User responsableClub, Pageable pageable);
 
     Page<DemandeEvent> findByClubId(Long id, Pageable pageable);
+
+    @Query("select e from DemandeEvent e where e.status = 1")
+	Page<DemandeEvent> findApprouvedEvent(Pageable pageable); 
 
 
 }

@@ -17,8 +17,8 @@ class ClassesRequest extends FormRequest
     public function rules()
     {
         return [
-            "nom"=> "required",
-            "abreviation" => "required",
+            "nom"=> "required|string|max:255|unique:classes,nom",
+            "abreviation" => "required|string|unique:classes,abreviation",
         ];
     }
     public function failedValidation(Validator $validator)

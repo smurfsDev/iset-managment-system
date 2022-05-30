@@ -207,6 +207,37 @@
                     ]
                 },
                 {
+                    title:'Documents',
+                    icon: 'fa fa-file',
+                    href: 'GererDocument',
+                    hidden: !this.isChefDepartement && !this.isStudent
+                },
+
+                {
+                    title: 'Reclamation',
+                    href:'GererReclamation',
+                    icon: 'fa fa-file',
+                    hidden: !this.isAuth
+                },
+
+                 {
+                    title: 'DemandeDocument',
+                    href:'Gererdemandedocument',
+                    icon: 'fa fa-file',
+                    hidden: !this.isAuth
+                },
+                
+                {
+                    hidden:!this.isAdmin,
+                    title: 'Catégorie document',
+                    icon: 'fa fa-file',
+                    href:'GererCategorie',
+                },
+                 {
+                    hidden:!this.isAdmin,
+                    title: 'Type Reclamation',
+                    icon: 'fa fa-file',
+                    href:'GererTypeCat',
                     href: '/gererCategorieMateriel',
                     title: 'gererCategorieMateriel',
                     icon: 'fas fa-file',
@@ -224,7 +255,7 @@
                     icon: 'fas fa-file',
                     hidden: !this.isStudent,
                 }
-        
+
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
 </template>

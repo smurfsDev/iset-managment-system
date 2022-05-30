@@ -27,6 +27,7 @@ import demandePlanificationEvent from "./routes/demandePlanificationEvent";
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
+
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
 
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
@@ -45,6 +46,11 @@ import consulterClasseEns from "./routes/consulterClasseEns";
 import mesNotes from "./routes/mesNotes";
 import dashboards from "./routes/dashboard";
 
+import manageDocuments from "./routes/gererDocument";
+import moduleReclamation from "./routes/gererReclamation";
+import manageCategorieDocument from "./routes/gererCategorie";
+import manageDemandeDocument from "./routes/gererDemandeDocument";
+import manageTypeCat from "./routes/gererTypeCat";
 
 Vue.use(VueRouter);
 
@@ -101,9 +107,12 @@ const routes = [
   ...manageEnseignant,
   ...consulterClasseEns,
   ...mesNotes,
-  ...dashboards,
-
-
+...manageDocuments,
+...moduleReclamation,
+...manageCategorieDocument,
+...manageDemandeDocument,
+...manageTypeCat,
+...dashboards,
 
 ];
 
