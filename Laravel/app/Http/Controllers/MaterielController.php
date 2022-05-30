@@ -10,7 +10,11 @@ use App\Models\User;
 
 class MaterielController extends Controller
 {
-
+    /**
+     * Display a listing of the materiels.
+     *
+     * @return \Illuminate\Http\Response containing the list of resources
+     */
     public function get(Request $request)
     {
         $materiel = $request->user()->materiel()->with('categorie')->orderBy('updated_at','desc')->paginate(5);
@@ -23,6 +27,11 @@ class MaterielController extends Controller
         }
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response containing the list of resources
+     */
     public function create(MaterielRequest $request)
     {
         $materiel = new Materiel();
@@ -35,6 +44,12 @@ class MaterielController extends Controller
         return response()->json(["data" => $materiel], 201);
     }
 
+    /**
+     * update an existing resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $materiel = Materiel::find($id);
@@ -53,6 +68,12 @@ class MaterielController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function delete($id)
     {
         $materiel = Materiel::find($id);
@@ -65,6 +86,7 @@ class MaterielController extends Controller
             ], 404);
         }
     }
+
 
     public function show($id)
     {
@@ -85,7 +107,8 @@ class MaterielController extends Controller
         } else
             return response()->json([
                 "aucun materiel"
-            ], 404);
+            ],
+             404);
     }
 
     public function addMateriel($idMateriel, $idDemande)

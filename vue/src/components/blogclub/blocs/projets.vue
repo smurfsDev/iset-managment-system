@@ -7,8 +7,6 @@
         <div class="column"  v-for="(item, index) in projects" :key="index">
           <img :src="item.affiche" alt="...">
           
-            
-         
         </div>
 
         </div>

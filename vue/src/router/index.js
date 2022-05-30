@@ -27,6 +27,7 @@ import demandePlanificationEvent from "./routes/demandePlanificationEvent";
 import manageChefDepartments from "./routes/manageChefDepartments";
 import manageStudents from "./routes/manageStudents";
 import manageClasses from "./routes/gererClasse";
+
 import demandeEvenementAdmin from "./routes/demandeEvenementAdmin";
 
 import mesDemandesMateriel from "./routes/mesDemandesMateriel";
@@ -41,7 +42,16 @@ import gererCategorieMateriel from "./routes/gererCategorieMateriel";
 import gererMateriel from "./routes/gererMateriel";
 import gererMatieres from "./routes/gererMatieres";
 import manageEnseignant from "./routes/manageEnseignant";
+import consulterClasseEns from "./routes/consulterClasseEns";
+import mesNotes from "./routes/mesNotes";
+
+import manageDocuments from "./routes/gererDocument";
+import moduleReclamation from "./routes/gererReclamation";
+import manageCategorieDocument from "./routes/gererCategorie";
+import manageDemandeDocument from "./routes/gererDemandeDocument";
+import manageTypeCat from "./routes/gererTypeCat";
 import chat from "./routes/chat";
+
 
 Vue.use(VueRouter);
 
@@ -96,10 +106,14 @@ const routes = [
   ...gererMateriel,
    ...gererMatieres,
   ...manageEnseignant,
+  ...consulterClasseEns,
+  ...mesNotes,
+  ...manageDocuments,
+  ...moduleReclamation,
+  ...manageCategorieDocument,
+  ...manageDemandeDocument,
+  ...manageTypeCat,
   ...chat,
-
-
-
 ];
 
 const router = new VueRouter({

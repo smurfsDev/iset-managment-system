@@ -21,8 +21,23 @@
                   Nom  : {{ Matiere.nom }}
                 </b-col>
               </b-row>
-              
+              <b-row>
+                <b-col>
+                  Nom  : {{ Matiere.enseignant.name }}
+                </b-col>
+              </b-row>
+               <b-row>
+                <b-col>
+                  Semestre  : {{ Matiere.semestre }}
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col>
+                  Coefficient  : {{ Matiere.coefficient }}
+                </b-col>
+              </b-row>
             </b-row>
+
             <b-button
               variant="danger"
               v-on:click="Delete(Matiere.id)"
@@ -81,6 +96,7 @@
 export default {
   props: {
     Matieres: Array,
+    Enseignant: Array,
     pagination: Object,
   },
   data() {

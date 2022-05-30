@@ -5,7 +5,7 @@
 <head>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Liste des Produits</title>
+    <title>Liste des demande creation club</title>
 </head>
 
 <body>
@@ -47,11 +47,19 @@
                         <td th:text="${demande.activite}"></td>
                         <td th:text="${demande.president}"></td>
                         <td th:text="${demande.vicePresident}"></td>
-						<td  sec:authorize="hasRole('STUDENT')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDcc(id=${demande.id},
-								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierDcc(id=${demande.id},
-								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
-                                <span th:if="${demande.status==1}" th:class="${demande.status==1?'btn btn-success disabled ':'' }"><i class="fa fa-check"></i></span>
-                                <span th:if="${demande.status==2}" th:class="${demande.status==2?'btn btn-danger disabled ':'' }"><i class="fa fa-times"></i></span>
+						<td  sec:authorize="hasRole('STUDENT')" >
+                            <a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{deleteDcc(id=${demande.id},
+								page=${currentPage},size=${param.size})}"
+                                th:class="${demande.status!=0?'btn btn-danger disabled ':'' }">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                            <a class="btn btn-warning " th:href="@{modifierDcc(id=${demande.id},
+								page=${currentPage},size=${param.size})}"
+                                th:class="${demande.status!=0?'btn btn-warning disabled ':'' }">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                                <span th:if="${demande.status==1}" th:class="${demande.status==1?'btn bg-success disabled ':'' }"><i class="fa fa-check"></i></span>
+                                <span th:if="${demande.status==2}" th:class="${demande.status==2?'btn bg-danger disabled ':'' }"><i class="fa fa-times"></i></span>
 
                                 </td>
                         <td  sec:authorize="hasRole('ADMIN')"  >

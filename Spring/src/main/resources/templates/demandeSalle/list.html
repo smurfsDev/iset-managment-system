@@ -5,7 +5,7 @@
 <head>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Liste des Demandes Salle</title>
+    <title>Liste des Produits</title>
 </head>
 
 <body>
@@ -15,8 +15,8 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des Demandes Salle</h1>
-                    <a sec:authorize="hasRole('STUDENT')" th:href="@{ShowcreateDS(
-                    page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
+                    <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{ShowcreateDS(
+                            page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
                             class="fa-solid fa-plus"></i> Ajouter
                     </a>
                 </div>
@@ -25,56 +25,87 @@
             <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
             <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Salle deleted</div>
-            <div class="row my-4">
-                <table class="table table-dark table-striped">
-                    <thead>
-                        <th>ID</th>
-                        <th>Department</th>
-                        <th>Salle</th>
-                        <th>Date d'emploi</th>
-                        <th>Date de remise</th>
-                        <th>reponse</th>
-                        <th sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')">Actions</th>
-                    </thead>
-                    <tr th:if="${#arrays.isEmpty(demandeSalle.content)}">
-						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
-					<tr th:each="demande:${demandeSalle.content}">
-                        <td th:text="${demande.id}"></td>
-                        <!-- <td th:text="${demande.salle.departement.titre}"></td> -->
-                        <div th:each="S:${demande.salle}">
-                            <td th:text="${S.salle.departement.titre}"></td>
-                            <td th:text="${S.salle.titre}"></td>
+            <div class="card card-body my-5 py-5 text-center shadow p-3 mb-5 bg-white rounded " style="color: rgb(76, 14, 14);" th:if="${#arrays.isEmpty(demandeSalle.content)}">
+                <h3>il y'a aucune demande</h3>
+              </div>
+            <div class="card my-2 shadow p-3 mb-5 bg-white rounded" th:each="demande:${demandeSalle.content}">
+                <div class="card-body">
+        
+                    <div class="md-tabs md-alignment-left md-theme-default">
+                        <div class="row col-12">
+                                <div class="col-6">
+                                    <div class="md-button-content">
+                                        <b>demande</b>
+                                    </div> 
+                                </div>
+                                <div class="col-6">
+                                    <button th:if="${demande.status==1}" class="btn btn-success float-right disabled"><i class="fa-solid fa-check"></i></button>
+                                    <button th:if="${demande.status==0}" class="btn btn-warning float-right disabled"><i class="fa-solid fa-check"></i></button>
+                                    <button th:if="${demande.status==2}" class="btn btn-danger float-right disabled"><i class="fa-solid fa-x"></i></button>
+                                </div>
+                        </div> 
+                        <div class="container">
+                            <div class="container" >
+                                <div class="md-tab">
+                                    <div class="bv-example-row text-center">
+                                        <div class="row mb-2"  >
+                                            <div class="col">
+                                                <b>Department :</b>
+                                                <div th:each="S:${demande.salle}">
+                                                    <p th:text="${S.salle.departement.titre}"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <b>Salle : </b>                                               
+                                                <div th:each="S:${demande.salle}">
+                                                    <p th:text="${S.salle.titre}"></p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col">
+                                                <b>Date Emploi :</b>
+                                                <p th:text="${demande.dateDeRemise}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="m-auto">
+                                             <b>Date de remise : </b><p th:text="${demande.dateDeRemise}">
+                                        </div>
+                                        <b>Reponse :</b>
+                                        <p style="color: rgb(169, 0, 0);" th:text="${demande.reponse}"></p>
+                                        <!-- <p th:text="${demande.id}"></p> -->
+                                        <div class=" row ml-auto mr-auto mb-3 text-center" sec:authorize="hasRole('STUDENT')"> 
+                                            <div class="col-4">
+                                                
+                                            </div>
+                                            <div class="col-4">
+                                                <a th:class="${demande.status!=0?'btn btn-danger disabled ml-2':'btn btn-danger ml-2' }" onclick=" confirm('Etes-vous sur ?')" th:href="@{deleteDS(id=${demande.id},
+                                                page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> 
+                                            <a th:class="${demande.status!=0?'btn btn-warning disabled ml-2':'btn btn-warning ml-2' }" th:href="@{showEditDS(id=${demande.id},
+                                                page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
+                                            <!-- <span th:if="${demande.status==1}" th:class="${demande.status==1?'btn btn-success disabled ml-2':'' }"><i class="fa fa-check"></i></span>
+                                            <span th:if="${demande.status==2}" th:class="${demande.status==2?'btn btn-danger disabled ml-2':'' }"><i class="fa fa-times"></i></span> -->
+                                            </div>
+                                            <div class="col-4">
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <td th:text="${#dates.format(demande.dateEmploi, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${#dates.format(demande.dateDeRemise, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${demande.reponse}"></td>
-
-						<td  sec:authorize="hasRole('STUDENT')" ><a class="btn btn-danger " onclick="confirm('Etes-vous sur ?')" th:href="@{deleteDS(id=${demande.id},
-								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{showEditDS(id=${demande.id},
-								page=${currentPage},size=${param.size})}"><i class="fa-solid fa-pen"></i></a>
-                                <!-- <span th:if="${demande.status==1}" th:class="${demande.status==1?'btn btn-success disabled ':'' }"><i class="fa fa-check"></i></span>
-                                <span th:if="${demande.status==2}" th:class="${demande.status==2?'btn btn-danger disabled ':'' }"><i class="fa fa-times"></i></span> -->
-
-                            </td>
-                        <td  sec:authorize="hasRole('ADMIN')" >
-                        <a th:class="${demande.status==1?'btn btn-success disabled ':'btn btn-success' }"  th:href="@{accept(id=${demande.id},page=${currentPage},size=${param.size})}">
-                        <i class="fa fa-check"></i> 
-                        </a>
-                        <a th:class="${demande.status==2?'btn btn-danger disabled ':'btn btn-danger' }" th:href="@{decline(id=${demande.id},page=${currentPage},size=${param.size})}">
-                        <i class="fa fa-times"></i>
-                        </a>
-                        </td>
-					</tr>
-				</table>
-				<ul class="nav nav-pills">
-					<li th:each="page,status:${pages}"><a
-							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
-							th:href="@{ listeDS(page=${status.index}, size=${param.size} ) }" 
-							th:text="${status.index+1 }"></a></li>
-				</ul>
-			</div>
-		</div>
-    </div>
+                    </div>
+                    
+                </div>
+                
+                <ul class="nav nav-pills container" >
+                    <li th:each="page,status:${pages}"><a
+                            th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+                            th:href="@{ listeDm(page=${status.index}, size=${param.size} ) }" 
+                            th:text="${status.index+1 }"></a></li>
+                </ul>
+		
 </body>
 
 </html>

@@ -8,6 +8,11 @@ use App\Models\CategorieMateriel;
 
 class CategorieMaterielController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response containing the list of resources
+     */
     public function show()
     {
         $Categorie = CategorieMateriel::orderBy('updated_at','desc')->get();
@@ -19,6 +24,12 @@ class CategorieMaterielController extends Controller
             ], 404);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response containing the newly created resource
+     */
     public function store(CategorieMatrielRequest $request)
     {
         $Categorie = CategorieMateriel::create(
@@ -29,6 +40,13 @@ class CategorieMaterielController extends Controller
         return response()->json(["data" => $Categorie], 201);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response containing the updated resource
+     */
     public function update(CategorieMatrielRequest $request, $id)
     {
         $Categorie = CategorieMateriel::find($id);
@@ -45,6 +63,12 @@ class CategorieMaterielController extends Controller
         return response()->json(["data" => $Categorie], 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $Categorie = CategorieMateriel::find($id);

@@ -95,6 +95,14 @@ class UserSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ]);
+        // Enseignant
+        \App\Models\User::create([
+            'name' => "enseignant",
+            'email' => "enseignant@example.com",
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
 
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [1, 1]);
         DB::insert('insert into role_user (user_id, role_id,status) values (?, ?,?)', [2, 2,1]);
@@ -108,6 +116,8 @@ class UserSeeder extends Seeder
         DB::insert('insert into role_user (user_id, role_id,department,status) values (?,?, ?,?)', [8, 5,3,1]);
         DB::insert('insert into role_user (user_id, role_id,department,status) values (?,?, ?,?)', [9, 5,4,1]);
         DB::insert('insert into role_user (user_id, role_id,department,status) values (?,?, ?,?)', [10, 5,5,1]);
+        DB::insert('insert into role_user (user_id, role_id,department,status) values (?,?, ?,?)', [11, 7,1,1]);
+        
 
 
 

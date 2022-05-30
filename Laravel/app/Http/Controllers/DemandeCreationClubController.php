@@ -13,31 +13,14 @@ use Illuminate\Http\Request;
 
 class DemandeCreationClubController extends BaseController
 {
-    public function test(Request $request)
-    {
-        $req =  $request->user()->roles()->get();
-        // check if user is admin
-        if ($req->contains('name', "student")) {
-            return response()->json(['message' => 'student'], 200);
-        } else if ($req->contains('name', "admin")) {
-            return response()->json(['message' => 'admin'], 200);
-        } else {
-            return response()->json(['message' => 'not admin'], 200);
-        }
-    }
+
+    /**
+     * Display a listing of the resource, displaying the demandeCreationsClubs of user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function get(Request $request)
     {
-        // return $request->user()->demandeCreationClubs()->create(
-        //     [
-        //         "nomClub"=>"test",
-        //         "logo"=>"test",
-        //         "dateCreation"=>"1980-03-19",
-        //         "activite" => "test",
-        //         "president" => "test",
-        //         "vicePresident" => "test"
-        //     ]
-        // );
-        // return $request->user()->demandeCreationClubs()->find(6)->delete();
         $dccs = $request->user()->demandeCreationClubs()->paginate(5);
         if (empty($dccs)) {
             return response()->json(['message' => 'No demande creation club found'], 404);
@@ -45,6 +28,12 @@ class DemandeCreationClubController extends BaseController
         return response()->json($dccs, 200);
     }
 
+    /**
+     * Display a listing of the resource, displaying the demandeCreationsClubs of user and AllDemandes to admin.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function show(Request $request)
     {
         if ($request->user()->roles()->get()->contains('name', "admin")) {
@@ -70,6 +59,13 @@ class DemandeCreationClubController extends BaseController
             return response()->json($dccs, 200);
         }
     }
+
+    /**
+     * Display a listing of the resource, displaying the demandeCreationsClubs of user and AllDemandes to admin.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function showMyDemandes($id)
     {
         if ($id == "admin") {
@@ -92,6 +88,11 @@ class DemandeCreationClubController extends BaseController
                 return response()->json([], 404);
         }
     }
+    /**
+     * Store a newly created resource in storage. while checking if user have an accept request
+     * @param  \App\Http\Requests\DemandeCreationClubRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function create(DemandeCreationClubRequest $request)
     {
         $user = $request->user();
@@ -131,6 +132,11 @@ class DemandeCreationClubController extends BaseController
         }
     }
 
+    /**
+     * update an existing resource in storage while checking if status ==0
+     * @param  \App\Http\Requests\DemandeCreationClubRequestEdit  $request
+     * @return \Illuminate\Http\Response
+     */
     public function update(DemandeCreationClubRequestEdit $request, $id)
     {
         $DemandeCreationClub = DemandeCreationClub::find($id);
@@ -153,6 +159,13 @@ class DemandeCreationClubController extends BaseController
             ], 404);
         }
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\DemandeCreationClub  $DemandeCreationClub
+     * @return \Illuminate\Http\Response
+     */
     public function delete($id)
     {
         $DemandeCreationClub = DemandeCreationClub::find($id);
@@ -167,6 +180,13 @@ class DemandeCreationClubController extends BaseController
         }
     }
 
+    /**
+     * accept a demandeCreationClub and create a club and add role to user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param Integer $id
+     * @return \Illuminate\Http\Response
+     */
     public function accept(Request $request, $id)
     {
         $dcc = DemandeCreationClub::find($id);
@@ -206,6 +226,14 @@ class DemandeCreationClubController extends BaseController
 
         }
     }
+
+    /**
+     * refuse a demandeCreationClub
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param Integer $id
+     * @return \Illuminate\Http\Response
+     */
     public function decline(Request $request, $id)
     {
         $dcc = DemandeCreationClub::find($id);

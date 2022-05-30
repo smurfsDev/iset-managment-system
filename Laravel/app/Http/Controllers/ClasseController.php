@@ -22,7 +22,7 @@ class ClasseController extends Controller
         // check for the user's role = chefDepartement
         $did = $request->user()->roles()->where('role_id', '5')->first()->pivot->department;
         $classes = Classe::where('departement_id', $did)->paginate(5);
-
+        
         if ($classes->isEmpty()) {
             return response()->json(['message' => 'Aucune classe n\'est disponible pour ce département'], 404);
         }
@@ -69,4 +69,13 @@ class ClasseController extends Controller
         }
         return response()->json(['message' => 'Classe introuvable'], 404);
     }
+
+    public function getAll(){
+        $classes = Classe::all();
+        if (empty($classes)) {
+            return response()->json(['message' => 'Aucune classe n\'est disponible pour ce département'], 404);
+        }
+        return response()->json($classes, 200);
+    }
+
 }

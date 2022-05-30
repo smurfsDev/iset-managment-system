@@ -86,5 +86,18 @@ class User extends Authenticatable
         return $this->hasMany(Message::class);
     }
 
+    public function matiere(){
+        return $this->HasOne('App\Models\Matiere','idEnseignant');
+    }
 
+    public function classe(){
+        return $this->belongsToMany(Role::class)->using(RoleUser::class)->with("RoleUser.class");
+    }
+
+    public function note(){
+        return $this->HasMany('App\Models\Note', 'student_id');
+    }
+     public function Reclamation(){
+        return $this->HasMany('App\Models\Reclamation', 'idResponsable');
+    }
 }

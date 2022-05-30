@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <formMatiere @addMatiere="addMatiere" :oldMatiere="Matiere" />
+    <formMatiere @addMatiere="addMatiere" :oldMatiere="Matiere" :Enseignant="Enseignant" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
         <b-overlay v-if="show" :show="show" class="d-inline-block" style="height: 500px; width: 100%"></b-overlay>
@@ -47,6 +47,7 @@ export default {
     return {
       Matiere: {},
       Matieres: [],
+      Enseignant:[],
       pagination: {},
       edit: false,
       search: "",
@@ -93,6 +94,15 @@ export default {
       .then((res)=> {
        
         this.Matieres = res.data.data.data;
+        // console.log(this.Matieres)
+        
+        // this.$http.get("http://localhost:8000/api/enseignant/approuved")
+        // .then((res)=> {
+        //   console.log(res.data)
+        //   this.Matieres.Enseignant = res.data
+          
+        //   console.log(this.Matieres)
+        // })
         this.show = false;
         vm.makePagination(res.data.data);
       });
@@ -122,9 +132,12 @@ export default {
     resetModal1() {
       this.Matiere = {};
     },
-    addMatiere(Matiere) {
+    addMatiere(Matiere, idEns) {
       
       this.show = true;
+    
+      Matiere.idEnseignant = idEns;
+      
       if (!this.edit) {
        this.$http.post('http://localhost:8000/api/matiere/create/'+this.idC,
         (Matiere))

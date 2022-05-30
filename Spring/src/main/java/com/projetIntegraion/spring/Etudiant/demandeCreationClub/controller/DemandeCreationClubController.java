@@ -1,11 +1,20 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.controller;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Optional;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.DemandeCreationClub;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.Role;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.User;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity.UserRole;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.RoleRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRepository;
+import com.projetIntegraion.spring.Etudiant.demandeCreationClub.repository.UserRoleRepository;
 import com.projetIntegraion.spring.Etudiant.demandeCreationClub.service.DemandeCreationClubService;
 import com.projetIntegraion.spring.blogClub.entity.Club;
 import com.projetIntegraion.spring.blogClub.service.ClubService;
@@ -25,10 +34,34 @@ public class DemandeCreationClubController {
     private DemandeCreationClubService DemandeCreationClubService;
     @Autowired
     private ClubService clubService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
+    public User getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userRepository.findUserWithName(principal.getName()).get();
+        return user;
+    }
+
     @RequestMapping("/listeDcc")
     public String showList(ModelMap modelMap,
+            HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
+        if (request.isUserInRole("ROLE_STUDENT")||request.isUserInRole("ROLE_RESPONSABLE")) {
+            Page<DemandeCreationClub> listDemandeCreationClub = DemandeCreationClubService
+                    .getAuthUserDemandsParPage(this.getUser(request), page, size);
+            System.out.println(listDemandeCreationClub);
+            modelMap.addAttribute("Dccs", listDemandeCreationClub);
+            modelMap.addAttribute("currentPage", page);
+            modelMap.addAttribute("size", size);
+            return "demandeCreationClub/list";
+        }
+
         Page<DemandeCreationClub> listDcc = DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size);
         modelMap.addAttribute("Dccs", listDcc);
         modelMap.addAttribute("pages", new int[listDcc.getTotalPages()]);
@@ -68,19 +101,18 @@ public class DemandeCreationClubController {
             dc.setActivite(Dcc.getActivite());
             dc.setPresident(Dcc.getPresident());
             dc.setVicePresident(Dcc.getVicePresident());
+            dc.setResponsableClub(this.getUser(request));
             dc.setLogo(new String(Base64.encodeBase64(multipartFile.getBytes())));
             dc = DemandeCreationClubService.save(dc);
-            modelMap.addAttribute("Dcc", new DemandeCreationClub());
             modelMap.addAttribute("msg", "Demande de création de club enregistrée avec succès");
             modelMap.addAttribute("type", "success");
-            modelMap.addAttribute("pages",
-                    new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
-            return this.showList(modelMap, page, size);
+            return this.showList(modelMap, request, page, size);
         }
     }
 
     @RequestMapping("/deleteDcc")
     public String deleteDcc(@RequestParam("id") Long id, ModelMap modelMap,
+            HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
 
@@ -91,7 +123,7 @@ public class DemandeCreationClubController {
             modelMap.addAttribute("type", "danger");
             modelMap.addAttribute("msg", "Demande de creation de club non supprimée : Id non trouvé");
         }
-        return this.showList(modelMap, page, size);
+        return this.showList(modelMap, request, page, size);
 
     }
 
@@ -134,18 +166,16 @@ public class DemandeCreationClubController {
                 dc.setLogo(DemandeCreationClubService.getDemandeCreationClub(Dcc.getId()).getLogo());
             }
             dc = DemandeCreationClubService.save(dc);
-            modelMap.addAttribute("Dcc", new DemandeCreationClub());
-            modelMap.addAttribute("pages",
-                    new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
             modelMap.addAttribute("type", "warning");
             modelMap.addAttribute("msg", "Demande de creation de club modifiée avec succès");
-            return this.showList(modelMap, page, size);
+            return this.showList(modelMap, request, page, size);
         }
     }
 
     @RequestMapping("/accept")
     public String acceptDcc(@RequestParam("id") Long id, ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
+            HttpServletRequest request,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         DemandeCreationClub dc = DemandeCreationClubService.getDemandeCreationClub(id);
         dc.setStatus(1);
@@ -157,37 +187,44 @@ public class DemandeCreationClubController {
         c.setVicePresident(dc.getVicePresident());
         c.setResponsableClub(dc.getResponsableClub());
         c.setLogo(dc.getLogo());
-        
+        dc.setAdmin(this.getUser(request));
+
         c = clubService.save(c);
 
-        modelMap.addAttribute("Dcc", new DemandeCreationClub());
-        modelMap.addAttribute("pages",
-                new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
+        Role res = roleRepository.findByName("ROLE_RESPONSABLE");
+        User r = c.getResponsableClub();
+        r.getRoles().add(res);
+        userRepository.save(r);
+
+        Optional<UserRole> userRole = userRoleRepository.findByRoleIdAndUserId(res.getId(), r.getId());
+        if (userRole.isPresent()) {
+            userRole.get().setStatus(1);
+            userRoleRepository.save(userRole.get());
+        }
         modelMap.addAttribute("type", "success");
         modelMap.addAttribute("msg", "Demande de creation de club acceptée avec succès");
-        return this.showList(modelMap, page, size);
+        return this.showList(modelMap, request, page, size);
     }
 
     @RequestMapping("/decline")
     public String declineDcc(@RequestParam("id") Long id, ModelMap modelMap,
+            HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
         DemandeCreationClub dc = DemandeCreationClubService.getDemandeCreationClub(id);
+        dc.setAdmin(this.getUser(request));
         dc.setStatus(2);
         DemandeCreationClubService.save(dc);
-        modelMap.addAttribute("Dcc", new DemandeCreationClub());
-        modelMap.addAttribute("pages",
-                new int[DemandeCreationClubService.getAllDemandeCreationClubParPage(page, size).getTotalPages()]);
         modelMap.addAttribute("type", "success");
         modelMap.addAttribute("msg", "Demande de creation de club refusée avec succès");
-        return this.showList(modelMap, page, size);
+        return this.showList(modelMap, request, page, size);
     }
 
     @RequestMapping("/searchProduit")
     public String searchProduit(@RequestParam("name") String name, ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-                
+
         Page<DemandeCreationClub> prods = DemandeCreationClubService.getDemandeCreationClubParNom(name, page, size);
         modelMap.addAttribute("Dccs", prods);
         modelMap.addAttribute("pages", new int[prods.getTotalPages()]);

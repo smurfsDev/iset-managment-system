@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Contracts\Validation\Validator;
-
 use Illuminate\Foundation\Http\FormRequest;
+
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class MatiereRequest extends FormRequest
 {
@@ -25,7 +26,10 @@ class MatiereRequest extends FormRequest
     public function rules()
     {
         return [
-            "nom"=> "required"
+            "nom"=> "required",
+            "idEnseignant" => "required",
+            "semestre" => "required",
+            "coefficient" => "required|numeric|between:0.1,5.0",
         ];
     }
 

@@ -37,6 +37,12 @@
                     icon: 'fas fa-home',
                 },
                 {
+                    href: '/consulterClasseEns',
+                    title: 'Classes et Matieres',
+                    icon: 'fas fa-home',
+                    hidden: !this.isEnseignant
+                },
+                {
                     href: '/Entreprise',
                     title: 'Entreprise',
                     icon: 'fas fa-building',
@@ -201,6 +207,37 @@
                     ]
                 },
                 {
+                    title:'Documents',
+                    icon: 'fa fa-file',
+                    href: 'GererDocument',
+                    hidden: !this.isChefDepartement && !this.isStudent
+                },
+
+                {
+                    title: 'Reclamation',
+                    href:'GererReclamation',
+                    icon: 'fa fa-file',
+                    hidden: !this.isAuth
+                },
+
+                 {
+                    title: 'DemandeDocument',
+                    href:'Gererdemandedocument',
+                    icon: 'fa fa-file',
+                    hidden: !this.isAuth
+                },
+                
+                {
+                    hidden:!this.isAdmin,
+                    title: 'Catégorie document',
+                    icon: 'fa fa-file',
+                    href:'GererCategorie',
+                },
+                 {
+                    hidden:!this.isAdmin,
+                    title: 'Type Reclamation',
+                    icon: 'fa fa-file',
+                    href:'GererTypeCat',
                     href: '/gererCategorieMateriel',
                     title: 'gererCategorieMateriel',
                     icon: 'fas fa-file',
@@ -218,7 +255,13 @@
                     icon: 'fas fa-file',
                     hidden: !this.isAdmin && !this.isChefDepartement && !this.isTechnicien,
                 },
-        
+                {
+                    href: '/mesNotes',
+                    title: 'Mes notes',
+                    icon: 'fas fa-file',
+                    hidden: !this.isStudent,
+                }
+
             ]
         " :collapsed="false" style="transition: 0.5s max-width ease!important;" />
 </template>
@@ -276,6 +319,7 @@ export default {
             responsable: 'isResponsableClub',
             chefDepartement: 'isChefDepartement',
             technicien: 'isTechnicien',
+            enseignant: 'isEnseignant'
         }),
         isAuth: function () {
             return this.auth;
@@ -295,6 +339,9 @@ export default {
         isTechnicien: function () {
             return this.technicien;
         },
+        isEnseignant: function(){
+            return this.enseignant;
+        }
 
 
     }
