@@ -178,7 +178,7 @@ export default {
       };
     },
     deleteDocument(id) {
-      if (confirm("Delete Document " + id)) {
+      if (confirm("Supprimer Document " + id)) {
         this.show = true;
         this.$http
           .delete("http://localhost:8000/api/Document/" + id)

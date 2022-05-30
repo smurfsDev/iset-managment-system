@@ -108,7 +108,7 @@ export default {
     },
 
     deleteCategorie(id) {
-      if (confirm("Delete Categorie " + id)) {
+      if (confirm("Supprimer Categorie " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/Categorie/" + id)
         .then(() => {

@@ -115,7 +115,7 @@
               v-if="$store.getters.isStudent"
               v-on:click="Delete(DemandeDocument.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               :class="[{ disabled: DemandeDocument.file }]"
@@ -123,7 +123,7 @@
               variant="warning"
               v-on:click="Update(DemandeDocument)"
             >
-              Update</b-button
+              Modifier</b-button
             >
            <b-button
                v-if="$store.getters.isAdmin || $store.getters.isChefDepartement"

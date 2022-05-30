@@ -79,7 +79,7 @@ export default {
       };
     },
     deleteDemande(id) {
-      if (confirm("Delete demande évenement " + id)) {
+      if (confirm("Supprimer demande évenement " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/demandeAdhesionEvent/delete/" + id, {
         },

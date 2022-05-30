@@ -18,11 +18,11 @@
                                 <b-col>President : {{ demande.president }} Vice president : {{ demande.vicePresident }}</b-col>
                             </b-row>
                         </b-row>
-                        <b-button variant="danger" v-on:click="Delete(demande.id)">Delete</b-button>
+                        <b-button variant="danger" v-on:click="Delete(demande.id)">Supprimer</b-button>
                         <b-button
                             variant="warning"
                             v-on:click="Update(demande)"
-                        >Update</b-button>
+                        >Modifier</b-button>
                     </b-container>
                 </md-tab>
             </md-tabs>

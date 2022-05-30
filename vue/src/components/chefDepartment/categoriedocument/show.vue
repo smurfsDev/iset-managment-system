@@ -31,7 +31,7 @@
               :class="[{ disabled: $store.getters.StateUser.id != Categorie.idResponsable }]"
               v-on:click="Delete(Categorie.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
@@ -39,7 +39,7 @@
               variant="warning"
               v-on:click="Update(Categorie)"
             >
-              Update</b-button
+              Modifier</b-button
             >
           </div>
   </md-tab>

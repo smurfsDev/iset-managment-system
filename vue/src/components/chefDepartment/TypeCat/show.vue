@@ -30,14 +30,14 @@
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
               v-on:click="Delete(Typecat.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
               variant="warning"
               v-on:click="Update(Typecat)"
             >
-              Update</b-button
+              Modifier</b-button
             >
           </div>
   </md-tab>

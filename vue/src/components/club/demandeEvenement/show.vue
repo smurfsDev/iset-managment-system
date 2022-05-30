@@ -64,8 +64,8 @@
               </b-row>
               <b-row>
                 <b-col>
-                    <b-button variant="danger" v-on:click="Delete(demande.id)" :class="[demande.status != 0 ? 'disabled' : '']">Delete</b-button>
-                    <b-button variant="warning" v-on:click="Update(demande)" :class="[demande.status != 0 ? 'disabled' : '']">Update</b-button>
+                    <b-button variant="danger" v-on:click="Delete(demande.id)" :class="[demande.status != 0 ? 'disabled' : '']">Supprimer</b-button>
+                    <b-button variant="warning" v-on:click="Update(demande)" :class="[demande.status != 0 ? 'disabled' : '']">Modifier</b-button>
                 </b-col>
               </b-row>
              

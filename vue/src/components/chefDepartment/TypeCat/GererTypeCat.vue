@@ -108,7 +108,7 @@ export default {
     },
 
     deleteTypecat(id) {
-      if (confirm("Delete Typecat " + id)) {
+      if (confirm("Supprimer Typecat " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/reclamationCat/" + id)
         .then(() => {

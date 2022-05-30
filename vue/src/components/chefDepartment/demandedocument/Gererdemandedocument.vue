@@ -107,7 +107,7 @@ export default {
     },
 
     deleteDemandeDocument(id) {
-      if (confirm("Delete DemandeDocument " + id)) {
+      if (confirm("Supprimer DemandeDocument " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/DemandeDocument/" + id)
         .then(() => {

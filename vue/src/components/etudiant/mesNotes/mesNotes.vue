@@ -100,7 +100,7 @@ export default {
       };
     },
     deleteNote(id) {
-      if (confirm("Delete document " + id)) {
+      if (confirm("Supprimer document " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/note/getMyNotes/" + id)
         .then(() => {

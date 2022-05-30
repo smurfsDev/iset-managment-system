@@ -19,41 +19,6 @@
         </md-tab>
       </md-tabs>
     </b-card>
-    <!-- <nav class="row" v-if="Categories.length != 0">
-      <ul class="pagination w-auto mx-auto">
-        <li
-          :class="[{ disabled: !pagination.prev_page_url }]"
-          class="page-item"
-        >
-          <a
-            @click="fetchcategorie(pagination.prev_page_url)"
-            class="btn btun page-link"
-            :class="[
-              !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
-            ]"
-            >Precedent</a
-          >
-        </li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">{{
-            pagination.current_page + "/" + pagination.last_page
-          }}</a>
-        </li>
-        <li
-          :class="[{ disabled: !pagination.next_page_url }]"
-          class="page-item"
-        >
-          <a
-            @click="fetchcategorie(pagination.next_page_url)"
-            :class="[
-              !pagination.next_page_url ? 'disabled' : 'link-primary btun',
-            ]"
-            class="btun btn page-link"
-            >Suivant</a
-          >
-        </li>
-      </ul>
-    </nav> -->
   </div>
 </template>
 
