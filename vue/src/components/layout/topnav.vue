@@ -48,19 +48,19 @@
       },
       {
         href: '/manageStudents',
-        title: 'Students',
+        title: 'Gerer les etudiants',
         icon: 'fas fa-user',
         hidden: !this.isChefDepartement,
       },
       {
         href: '/manageEnseignant',
-        title: 'Enseignant',
+        title: 'Gerer les enseignants',
         icon: 'fas fa-user',
         hidden: !this.isChefDepartement,
       },
       {
         href: '/manageTechnicien',
-        title: 'Techniciens',
+        title: 'Gerer les techniciens',
         icon: 'fas fa-user',
         hidden: !this.isChefDepartement,
       },
@@ -70,13 +70,6 @@
         icon: 'fas fa-building',
         hidden: !this.isChefDepartement,
       },
-      {
-        href: '/demandeCreationClub',
-        title: 'Demande creation club',
-        icon: 'fas fa-plus',
-        hidden: !this.isStudent,
-      },
-
       {
         href: '/manageChefDepartments',
         title: 'Gerer chefs departements',
@@ -157,6 +150,12 @@
         hidden: !isAuth,
         child: [
           {
+            href: '/demandeCreationClub',
+            title: 'Demande creation club',
+            icon: 'fas fa-plus',
+            hidden: !this.isStudent,
+          },
+          {
             href: '/demandeCreationClubAdmin',
             title: 'Demande creation club',
             icon: 'fas fa-building',
@@ -204,12 +203,6 @@
             icon: 'fas fa-building',
             hidden: !this.isResponsableClub,
           },
-          {
-            title: 'Demandes document',
-            href: 'Gererdemandedocument',
-            icon: 'fa fa-file',
-            hidden: !this.isAuth,
-          },
         ],
       },
       {
@@ -227,7 +220,13 @@
             title: 'Catégorie document',
             icon: 'fa fa-file',
             href: 'GererCategorie',
-            hidden: !this.isAdmin,
+            hidden: !this.isAdmin && !this.isChefDepartement,
+          },
+          {
+            title: 'Demandes document',
+            href: 'Gererdemandedocument',
+            icon: 'fa fa-file',
+            hidden: !this.isChefDepartement && !this.isStudent && !this.isAdmin,
           },
         ],
       },
@@ -253,7 +252,7 @@
       {
         title: 'Materiel',
         icon: 'fa fa-file',
-        hidden: !this.isChefDepartement && !this.isStudent && !this.isAdmin,
+        hidden: !this.isChefDepartement  && !this.isAdmin,
         child: [
           {
             href: '/gererCategorieMateriel',
