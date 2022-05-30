@@ -1,5 +1,7 @@
 <template>
-    <div class="message self">
+    <div class="message self"
+    :class="{'messagi': message.user.id == $store.getters.StateUser.id}"
+    >
         <strong class="user">{{ message.user.name }}</strong>
         <p class="body">{{ message.body }}</p>
     </div>
@@ -27,5 +29,8 @@
     .self {
         background-color: #f0f0f0;
         padding: 10px;
+    }
+    .messagi{
+        text-align: right;
     }
 </style>
