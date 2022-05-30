@@ -118,54 +118,104 @@ class DocumentController extends Controller
         $documents = [];
         if ($search == "" && $categorie == "all" && $class == "all") {
             $documents = Document::with('class')->with('categorie')->paginate(5);
-        } else if ($categorie == "all") {
-            if ($search != "") {
-
-                $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
-                    ->where('classes_id', 'like', '%' . $class . '%')
-                    ->orderBy('updated_at', 'desc')
-                    ->paginate(5);
-            } else {
-                $documents = Document::with('class')->with('categorie')->where('classes_id', '=', $class)
-                    ->orderBy('updated_at', 'desc')
-                    ->paginate(5);
-            }
-        } else {
-            if ($search != "") {
-                if ($class == "all") {
-                    $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
-                        ->where('document_categories_id', '=', $categorie)
-                        ->orderBy('updated_at', 'desc')
-                        ->paginate(5);
-                } else {
-                    $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
-                        ->where('document_categories_id', '=', $categorie)
-                        ->where('classes_id', '=',  $class)
-                        ->orderBy('updated_at', 'desc')
-                        ->paginate(5);
-                }
-            } else {
-                if ($class == "all") {
-                    $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
-                        ->orderBy('updated_at', 'desc')
-                        ->paginate(5);
-                } else {
-                    $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
-                        ->where('classes_id', 'like', '%' . $class . '%')
-                        ->orderBy('updated_at', 'desc')
-                        ->paginate(5);
-                }
-            }
+        }   else if($search == "" && $categorie == "all" && $class != "all"){
+            $documents = Document::
+                where('classes_id', $class)
+                ->with('class')
+                ->with('categorie')
+                ->paginate(5);
+        }   else if($search == "" && $categorie != "all" && $class == "all"){
+            $documents = Document::
+                where('document_categories_id', $categorie)
+                ->with('class')
+                ->with('categorie')
+                ->paginate(5);
+        }   else if($search == "" && $categorie != "all" && $class != "all"){
+            $documents = Document::
+                where('document_categories_id', $categorie)
+                ->where('classes_id', $class)
+                ->with('class')
+                ->with('categorie')
+                ->paginate(5);
+        }   else if($search != "" && $categorie == "all" && $class == "all"){
+            $documents = Document::
+                where('nom',"like", "%".$search."%")
+                ->with('class')
+                ->with('categorie')
+                ->paginate(5);
+        }   else if($search != "" && $categorie == "all" && $class != "all"){
+            $documents = Document::
+                where('nom',"like", "%".$search."%")
+                ->where('classes_id', $class)
+                ->with('class')
+                ->with('categorie')
+                ->paginate(5);
+        }   else if($search != "" && $categorie != "all" && $class == "all"){
+            $documents = Document::
+                where('nom',"like", "%".$search."%")
+                ->where('document_categories_id', $categorie)
+                ->with('class')
+                ->with('categorie')
+                ->paginate(5);
+        }   else if($search != "" && $categorie != "all" && $class != "all"){
+            $documents = Document::
+                where('nom',"like", "%".$search."%")
+                ->where('document_categories_id', $categorie)
+                ->where('classes_id', $class)
+                ->with('class')
+                ->with('categorie')
+                ->paginate(5);
         }
 
-        if (sizeof($documents) > 0)
-            return response()->json(
-                $documents,
-                200
-            );
-        else
+
+        // } else if ($categorie == "all") {
+        //     if ($search != "") {
+        //         $documents = Document::with('class')->with('categorie')
+        //             ->where('nom', 'like', '%' . $search . '%')
+        //             ->where('classes_id', '=', $class)
+        //             ->orderBy('updated_at', 'desc')
+        //             ->paginate(5);
+        //     } else {
+        //         $documents = Document::with('class')->with('categorie')->where('classes_id', '=', $class)
+        //             ->orderBy('updated_at', 'desc')
+        //             ->paginate(5);
+        //     }
+        // } else {
+        //     if ($search != "") {
+        //         if ($class == "all") {
+        //             $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
+        //                 ->where('document_categories_id', '=', $categorie)
+        //                 ->orderBy('updated_at', 'desc')
+        //                 ->paginate(5);
+        //         } else {
+        //             $documents = Document::with('class')->with('categorie')->where('nom', 'like', '%' . $search . '%')
+        //                 ->where('document_categories_id', '=', $categorie)
+        //                 ->where('classes_id', '=',  $class)
+        //                 ->orderBy('updated_at', 'desc')
+        //                 ->paginate(5);
+        //         }
+        //     } else {
+        //         if ($class == "all") {
+        //             $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
+        //                 ->orderBy('updated_at', 'desc')
+        //                 ->paginate(5);
+        //         } else {
+        //             $documents = Document::with('class')->with('categorie')->where('document_categories_id', 'like', '%' . $categorie . '%')
+        //                 ->where('classes_id', 'like', '%' . $class . '%')
+        //                 ->orderBy('updated_at', 'desc')
+        //                 ->paginate(5);
+        //         }
+        //     }
+        // }
+
+        if (empty($documents)) {
             return response()->json([
                 null
             ], 404);
+        }
+        return response()->json(
+            $documents,
+            200
+        );
     }
 }
