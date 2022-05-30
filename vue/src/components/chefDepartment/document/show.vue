@@ -33,12 +33,14 @@
             <b-button
               variant="danger"
               v-if=" $store.getters.isChefDepartement"
+              :class="[{ disabled: $store.getters.StateUser.id != Document.idResponsable }]"
               v-on:click="Delete(Document.id)"
             >
               Delete</b-button
             >
             <b-button
               v-if="$store.getters.isChefDepartement"
+              :class="[{ disabled: $store.getters.StateUser.id != Document.idResponsable }]"
               variant="warning"
               v-on:click="Update(Document)"
             >
@@ -53,14 +55,6 @@
         >
           <b-row>
             <b-col>
-              <!-- <div v-if="checkType(Document.file)">
-
-  <button :disabled="currPage <= 1" @click="currPage--">❮</button>
-
-        {{ currPage }} / {{ 10 }}
-
-        <button :disabled="currPage >= 10" @click="currPage++">❯</button>               
-</div> -->
               <pdfs
                 :ref="'pdfRef' + Document.name"
                 v-if="checkType(Document.file)"
