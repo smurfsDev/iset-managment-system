@@ -90,7 +90,9 @@ public class Application implements CommandLineRunner {
 		Role role1 = new Role("ROLE_RESPONSABLE");
 		Role role2 = new Role("ROLE_STUDENT");
 		Role role3 = new Role("ROLE_CHEFDEPARTEMENT");
+
 		Role role4 = new Role("ROLE_TECHNICIEN");
+
 		role = roleRepository.save(role);
 		role1 = roleRepository.save(role1);
 		role2 = roleRepository.save(role2);

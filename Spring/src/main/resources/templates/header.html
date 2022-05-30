@@ -145,22 +145,58 @@
                   </ul>
                 </div>
               </li>
+
               <li sec:authorize="hasRole('ADMIN')">
+
                 <a th:href="@{listeChefDepartments}">
                   <i class="fa fa-user"></i>
                   <span>Liste des cd</span>
                 </a>
               </li>
+
               <li sec:authorize="hasRole('ENSEIGNANT')">
                 <a th:href="@{listeClassesEnseignes}">
                   <i class="fa fa-user"></i>
                   <span>Liste matieres et classes enseignes</span>
                 </a>
               </li>
+       <li>
+                      <li class="sidebar-dropdown">
+                <a  sec:authorize="hasRole('RESPONSABLE')" >
+                  <i class="fa fa-shopping-cart"></i>
+                  <span>Demandes</span>
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li >
+                      <a th:href="@{listeDE}">Demande plannification event</a>
+                    </li>
+                   
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <a th:href="@{listeEvent}">
+                  <i class="fa fa-user"></i>
+                  <span>Liste des evenements</span>
               <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
                 <a th:href="@{classe}">
                   <i class="fa fa-user"></i>
                   <span>Liste des classes</span>
+
+                </a>
+              </li>
+              <li sec:authorize="hasRole('RESPONSABLE')">
+                <a th:href="@{listeDemande}">
+                  <i class="fa fa-user"></i>
+                  <span>Demandes adhesion evenement</span>
+
+                </a>
+              </li><li sec:authorize="hasRole('STUDENT')">
+                <a th:href="@{myDemandes}">
+                  <i class="fa fa-user"></i>
+                  <span>Mes Demandes adhesion evenement</span>
+
                 </a>
               </li>
               <li sec:authorize="hasRole('CHEFDEPARTEMENT')">
