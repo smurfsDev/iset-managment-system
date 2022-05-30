@@ -28,12 +28,14 @@
             <b-button
               variant="danger"
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
+              :class="[{ disabled: $store.getters.StateUser.id != Categorie.idResponsable }]"
               v-on:click="Delete(Categorie.id)"
             >
               Delete</b-button
             >
             <b-button
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
+              :class="[{ disabled: $store.getters.StateUser.id != Categorie.idResponsable }]"
               variant="warning"
               v-on:click="Update(Categorie)"
             >
