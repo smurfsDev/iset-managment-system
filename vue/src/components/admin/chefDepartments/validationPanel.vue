@@ -82,7 +82,7 @@ export default {
         this.fetchChefDepartments();
         this.edit = false;
         this.alert.variant = "warning";
-        this.alert.msg = "ChefDepartement non acceptée avec succès";
+        this.alert.msg = "ChefDepartement non acceptée !";
         this.alert.dismissCountDown = 5;
       });
     },

@@ -118,7 +118,7 @@ export default {
         this.fetchDemandeCreationClub();
         this.edit = false;
         this.alert.variant = "warning";
-        this.alert.msg = "Demande non acceptée avec succès";
+        this.alert.msg = "Demande non acceptée !";
         this.alert.dismissCountDown = 5;
       });
     },
