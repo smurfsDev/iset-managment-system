@@ -85,20 +85,12 @@ public class DemandeAdhesionClubController {
         Boolean c = demandeAdhesionClubService.existsByIds(idClub, this.getUser(request).getId());
         Boolean isThisClubOwner = clubService.isThisClubOwner(idClub, this.getUser(request));
         if (c) {
-            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
-            modelMap.addAttribute("Dacs", Dacs);
-            modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
-            modelMap.addAttribute("currentPage", 0);
             modelMap.addAttribute("exist", 1);
-            return "Club/demandeAdhesionClub/list";
+            return demandeAdhesionClub(modelMap, request, page, size);
         }
         else if(isThisClubOwner){
-            Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
-            modelMap.addAttribute("Dacs", Dacs);
-            modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
-            modelMap.addAttribute("currentPage", 0);
             modelMap.addAttribute("clubOwner", 1);
-            return "Club/demandeAdhesionClub/list";
+            return demandeAdhesionClub(modelMap, request, page, size);
         }
         modelMap.addAttribute("Dac", new DemandeAdhesionClub());
         modelMap.addAttribute("edit", false);
@@ -130,13 +122,8 @@ public class DemandeAdhesionClubController {
         Dac.setClub(clubService.getClub(idClub));
         Dac.setEtudiant(this.getUser(request));
         demandeAdhesionClubService.save(Dac);
-
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), 0, 2);
-        modelMap.addAttribute("Dacs", Dacs);
-        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
-        modelMap.addAttribute("currentPage", 0);
         modelMap.addAttribute("add", 1);
-        return "Club/demandeAdhesionClub/list";
+        return demandeAdhesionClub(modelMap, request, 0, 2);
     }
 
     @GetMapping("/deleteDac")
@@ -147,12 +134,8 @@ public class DemandeAdhesionClubController {
             @RequestParam(name = "size", defaultValue = "2") int size,
             ModelMap modelMap) {
         demandeAdhesionClubService.deleteById(id);
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), page, size);
-        modelMap.addAttribute("Dacs", Dacs);
-        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
-        modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("del", 1);
-        return "Club/demandeAdhesionClub/list";
+        return demandeAdhesionClub(modelMap, request, page, size);
     }
 
     @GetMapping("/editDac")
@@ -194,12 +177,9 @@ public class DemandeAdhesionClubController {
         daac.setMessage(Dac.getMessage());
         demandeAdhesionClubService.save(daac);
 
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageEtudiant(this.getUser(request).getId(), 0, 2);
-        modelMap.addAttribute("Dacs", Dacs);
-        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
-        modelMap.addAttribute("currentPage", 0);
+        
         modelMap.addAttribute("edit", 1);
-        return "Club/demandeAdhesionClub/list";
+        return demandeAdhesionClub(modelMap, request, 0, 2);
     }
 
     @GetMapping("/acceptDac")
@@ -216,18 +196,9 @@ public class DemandeAdhesionClubController {
         m.setEtudiant(Dac.getEtudiant());
         memberService.save(m);
         demandeAdhesionClubService.save(Dac);
-        Principal principal = request.getUserPrincipal();
-        User user = userRepository.findUserWithName(principal.getName()).get();
-        Club club = clubService.getClubParResponsable(user.getId()).get();
 
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageClub(club.getId(),
-                page, size);
-
-        modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("accept", 1);
-        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
-        modelMap.addAttribute("currentPage", page);
-        return "Club/demandeAdhesionClub/listDms";
+        return this.demandeAdhesionClubClub(modelMap, request, page, size);
     }
 
     @GetMapping("/declineDac")
@@ -240,18 +211,8 @@ public class DemandeAdhesionClubController {
         DemandeAdhesionClub Dac = demandeAdhesionClubService.getDemandeAdhesionClub(id);
         Dac.setStatus(2);
         demandeAdhesionClubService.save(Dac);
-        Principal principal = request.getUserPrincipal();
-        User user = userRepository.findUserWithName(principal.getName()).get();
-        Club club = clubService.getClubParResponsable(user.getId()).get();
-
-        Page<DemandeAdhesionClub> Dacs = demandeAdhesionClubService.getAllDemandeAdhesionClubParPageClub(club.getId(),
-                page, size);
-
-        modelMap.addAttribute("Dacs", Dacs);
         modelMap.addAttribute("decline", 1);
-        modelMap.addAttribute("pages", new int[Dacs.getTotalPages()]);
-        modelMap.addAttribute("currentPage", page);
-        return "Club/demandeAdhesionClub/listDms";
+        return this.demandeAdhesionClubClub(modelMap, request, page, size);
     }
 
 }

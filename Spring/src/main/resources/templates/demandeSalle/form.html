@@ -48,7 +48,9 @@
 											th:each="salle:${sallesdep}" th:value="${salle.id}"
 											th:text="${salle.titre}"></option>
 										<!-- <span th:errors=${salle.titre} class="text-danger"> -->
-									</select>
+									</select><br>
+									<span th:text=${errorMsg} class="text-danger">
+
 								</div>
 
 
@@ -75,7 +77,9 @@
 								var options = document.getElementsByClassName('salle');
 
 								for (let i = 0; i < options.length; i++) {
-									options[i].classList.add('d-none');
+									if(options[i].dataset.index !=  1) {
+										options[i].classList.add('d-none');
+									}
 								}
 								// add onchange eventlistener on select having name departement
 								document.getElementsByName('departement')[0].addEventListener('change', function () {

@@ -50,6 +50,8 @@ import moduleReclamation from "./routes/gererReclamation";
 import manageCategorieDocument from "./routes/gererCategorie";
 import manageDemandeDocument from "./routes/gererDemandeDocument";
 import manageTypeCat from "./routes/gererTypeCat";
+import chat from "./routes/chat";
+
 
 Vue.use(VueRouter);
 
@@ -111,7 +113,7 @@ const routes = [
   ...manageCategorieDocument,
   ...manageDemandeDocument,
   ...manageTypeCat,
-
+  ...chat,
 ];
 
 const router = new VueRouter({

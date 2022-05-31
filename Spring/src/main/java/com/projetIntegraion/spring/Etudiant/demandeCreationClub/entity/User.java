@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -28,10 +29,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "USER")
 public class User implements Serializable, UserDetails {
-// @Id
-// @GeneratedValue(strategy = GenerationType.IDENTITY)
-// private Integer id;
-private @Id @GeneratedValue Integer id;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Integer id;
+// private @Id @GeneratedValue Integer id;
 private String username;
 private String password;
 @CreationTimestamp
