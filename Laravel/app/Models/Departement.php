@@ -22,4 +22,9 @@ class Departement extends Model
         return $this->hasOne(User::class,'id','chef_departement_id');
     }
 
+    public function classes(){
+        return $this->hasMany(Classe::class);
+    }
+
+
 }
