@@ -22,7 +22,7 @@ use App\Http\Controllers\DemandeEventController;
 use App\Http\Controllers\DemandeSalleController;
 use App\Http\Controllers\ChefDepartmentController;
 use App\Http\Controllers\DemandeMaterielController;
-
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\CategorieMaterielController;
 
 
@@ -202,9 +202,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [ClasseController::class, 'createClasse']);
         Route::delete('/{id}', [ClasseController::class, 'deleteClass']);
         Route::put('/{id}', [ClasseController::class, 'updateClass']);
-        
+
     });
-    
+
     // documents routes
 Route::group(['prefix' => '/Document'], function () {
 Route::post('/search', [DocumentController::class, 'search']);
@@ -264,6 +264,12 @@ Route::put('/reponse/{id}',[ReclamationController::class,'setReponse']);
         Route::put('/{id}', [MaterielController::class, 'update']);
         Route::delete('/{id}', [MaterielController::class, 'destroy']);
     });
+    Route::group(['prefix' => '/message'], function () {
+        Route::get('/users', [MessageController::class, 'users']);
+        Route::get('/M/{id}', [MessageController::class, 'index']);
+        Route::post('/store/{id}', [MessageController::class, 'store']);
+
+    });
 
     Route::group(['prefix'=>'/note'],function(){
         Route::post('/',[NoteController::class,'setNote']);
@@ -281,6 +287,12 @@ Route::get('/', [DocumentCategorieController::class, 'showDocumentCategorie']);
 Route::post('/', [DocumentCategorieController::class, 'createDocumentCategorie']);
 Route::put('/{id}', [DocumentCategorieController::class, 'updateDocumentCategorie']);
 Route::delete('/{id}', [DocumentCategorieController::class, 'deleteDocumentCategorie']);
+});
+Route::group(['prefix' => '/message'], function () {
+    Route::get('/users', [MessageController::class, 'users']);
+    Route::get('/M/{id}', [MessageController::class, 'index']);
+    Route::post('/store/{id}', [MessageController::class, 'store']);
+
 });
 
 // TypeCat routes

@@ -21,7 +21,7 @@ class DemandeMaterielFactory extends Factory
             "idDestinataire" => User::get('id')->random(),
             "dateEmploi" => $this->faker->date(),
             "dateDeRemise" => $this->faker->date(),
-            "status"  =>$this->faker->numberBetween(1,3),
+            "status"  =>$this->faker->numberBetween(0,2),
             "reponse" =>$this->faker->sentence(),
             "idCategorie" =>CategorieMateriel::get('id')->random(),
 
