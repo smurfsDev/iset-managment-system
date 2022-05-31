@@ -65,7 +65,7 @@
                   @click="initModal()"
                   data-bs-target="#DocumentModal"
                 >
-                  Ajouté Document
+                  Ajouter Document
                 </button>
               </b-col>
               <b-col></b-col>

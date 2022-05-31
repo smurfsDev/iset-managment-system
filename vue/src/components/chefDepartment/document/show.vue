@@ -51,7 +51,7 @@
         <md-tab
           id="tab-homea"
           style="height: auto;!important"
-          md-label="View file"
+          md-label="Fichier"
         >
           <b-row>
             <b-col>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content container">
     <formDemandeMateriel @addDemande="addDemande" :oldDemande="demande" :categories="categories" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">

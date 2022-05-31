@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content container">
       <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
             @dismissed="alert.dismissCountDown = 0">
             <p>{{ alert.msg }}</p>
