@@ -21,12 +21,12 @@
           },
           {
             href: '/login',
-            title: 'Login',
+            title: 'Se connecter',
             hidden: this.isAuth,
           },
           {
             href: '/register',
-            title: 'Register',
+            title: 'S\'inscrire',
             hidden: this.isAuth,
           },
           {
