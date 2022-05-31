@@ -207,16 +207,6 @@ Route::get("/stats", [DashboardController::class, 'get']);
 
 
     });
-
-    // documents routes
-Route::group(['prefix' => '/Document'], function () {
-Route::post('/search', [DocumentController::class, 'search']);
-Route::delete('/{id}', [DocumentController::class, 'show']);
-Route::post('/', [DocumentController::class, 'createDocument']);
-Route::put('/{id}', [DocumentController::class, 'updateDocument']);
-Route::delete('/{id}', [DocumentController::class, 'deleteDocument']);
-
-
     // documents routes
     Route::group(['prefix' => '/Document'], function () {
         Route::post('/search', [DocumentController::class, 'search']);
