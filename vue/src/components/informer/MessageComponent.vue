@@ -24,7 +24,7 @@
         white-space: pre-wrap;
     }
     .message {
-        border-bottom: 1px solid #000000
+        border-bottom: 1px solid #ffffff
     }
     .self {
         background-color: #f0f0f0;

@@ -1,7 +1,7 @@
 <template>
      <div class="col-md-4">
         <div class="card">
-            <div class="card-header">Users</div>
+            <div class="card-header">Contacts</div>
             <div class="card-body">
                 <div class="users" v-for="user in users" :key="user.id">
                     <a @click="fetchMyMessages(user.id)">{{ user.name }}</a>
@@ -45,7 +45,13 @@
 </script>
 <style>
     .users {
-        background-color: #fff;
-        border-radius: 3px;
+        background-color: rgb(227, 227, 227);
+        border-bottom: 1px solid #a9a9a9;
+        padding: 3px;
+        padding-left: 10px;
+    }
+    .users:hover {
+        background-color: #737373;
+        color: white;
     }
 </style>
