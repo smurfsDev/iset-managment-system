@@ -80,6 +80,9 @@
                       <a th:href="@{listeClub}">Liste</a>
                     </li>
                     <li>
+                      <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{mesMembres}">Lister Members</a>
+                    </li>
+                    <li>
                       <a sec:authorize="hasRole('STUDENT')" th:href="@{demandeAdhesionClub}">Mes demandes d'adhesion</a>
                     </li>
                     <li>
@@ -117,7 +120,7 @@
                   <i class="fa fa-shopping-cart"></i>
                   <span>Demande adhesion club</span>
                 </a>
-                
+                 
               </li> -->
               <li class="sidebar-dropdown">
                 <a >
@@ -129,7 +132,6 @@
                   <ul>
                     <li>
                       <a href="#">
-    
                       </a>
                     </li>
                     <li>
@@ -141,6 +143,20 @@
                   </ul>
                 </div>
               </li>
+              <!-- <li class="sidebar-dropdown">
+                <a href="#">
+                  <i class="far fa-file"></i>
+                  <span>Documents</span>
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                   <a sec:authorize="hasRole('CHEFDEPARTEMENT')||hasRole('STUDENT')" th:href="@{listeDoc}">Documents</a>
+                    </li>
+                    </li>
+                  </ul>
+                </div>
+              </li> -->
               <li class="sidebar-dropdown">
                 <a href="#">
                   <i class="far fa-gem"></i>
