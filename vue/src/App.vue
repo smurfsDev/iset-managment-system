@@ -3,8 +3,8 @@
 overflow-y: scroll;">
     <top-nav />
     <div style="
-      margin-top: 5%;
-      margin-bottom: 5%;
+      margin-top: 1%;
+      margin-bottom: 3%;
     "></div>
     <router-view />
   </div>

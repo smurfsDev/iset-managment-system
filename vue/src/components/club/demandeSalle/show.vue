@@ -8,7 +8,7 @@
         class="float-end"
         v-b-tooltip.hover="{
           variant: 'success',
-          title: 'Student accepted',
+          title: 'Demande Acceptée',
           placement: 'topright',
         }"
         v-if="demande.status == 1"
@@ -20,7 +20,7 @@
         class="float-end"
         v-b-tooltip.hover="{
           variant: 'danger',
-          title: 'Student not accepted',
+          title: 'Demande Refusée',
           placement: 'topright',
         }"
         v-if="demande.status == 2"

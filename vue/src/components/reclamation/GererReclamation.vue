@@ -59,13 +59,12 @@
 <script>
 import showReclamations from "./show.vue";
 import formReclamation from "./form.vue";
-// import search from '../search.vue';
 
 export default {
   components: {
     showReclamations,
     formReclamation,
-    //     search
+ 
   },
   data() {
     return {
@@ -85,7 +84,6 @@ export default {
   },
 
   created() {
-    // console.log(typeof $);
     window.title = "Reclamation";
     this.fetchReclamation();
     if (this.$route.params.add == 1) {
