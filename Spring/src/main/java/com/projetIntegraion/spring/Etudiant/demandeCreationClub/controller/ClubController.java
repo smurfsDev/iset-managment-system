@@ -32,12 +32,11 @@ public class ClubController {
 
     @Autowired
     private ClubRepository clubRepository;
-    
+
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private MemberService memberService;
-
 
     public User getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -59,32 +58,32 @@ public class ClubController {
         modelMap.addAttribute("currentPage", page);
 
         return "Club/listmember";
-       
+
     }
 
     @GetMapping(value = "/supprimerMembre")
-    public String supprimerMembre(ModelMap modelMap,long id,
+    public String supprimerMembre(ModelMap modelMap, long id,
             HttpServletRequest request,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
-               if( memberService.deleteById(id)){
-                   modelMap.addAttribute("type", "danger");
-                   modelMap.addAttribute("msg", "Member est supprimée avec succès");
-               } else {
-                   modelMap.addAttribute("type", "danger");
-                   modelMap.addAttribute("msg", "Member non supprimée : Id non trouvé");
-               }
-               modelMap.addAttribute("msg", "Demande de creation de club supprimée avec succès");
-                User user = this.getUser(request);
-                Club club = clubRepository.findByResponsableClub(user).get();
-               
+        if (memberService.deleteById(id)) {
+            modelMap.addAttribute("type", "danger");
+            modelMap.addAttribute("msg", "Member est supprimée avec succès");
+        } else {
+            modelMap.addAttribute("type", "danger");
+            modelMap.addAttribute("msg", "Member non supprimée : Id non trouvé");
+        }
+        modelMap.addAttribute("msg", "Membre supprimée avec succès");
+        User user = this.getUser(request);
+        Club club = clubRepository.findByResponsableClub(user).get();
+
         Page<Member> listmember = memberRepository.findByClub(club, PageRequest.of(page, size));
         modelMap.addAttribute("listmember", listmember);
         modelMap.addAttribute("pages", new int[listmember.getTotalPages()]);
         modelMap.addAttribute("currentPage", page);
 
         return "Club/listmember";
-  
+
     }
 
     @GetMapping("/listeClub")
