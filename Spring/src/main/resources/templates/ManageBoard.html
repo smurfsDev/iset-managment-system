@@ -19,7 +19,7 @@
                 </div>
             </div>
             
-            <h4 class="float-start">Boards</h2>
+            <h4 class="float-start">Membre de bureau</h2>
                        
                 <a sec:authorize="hasRole('RESPONSABLE')" th:href="@{createBoard}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Ajouter
@@ -39,7 +39,7 @@
                         <th sec:authorize="hasRole('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(Board.content)}">
-						<td colspan="4" class="text-center ">No Officer found ! </td></tr>
+						<td colspan="4" class="text-center ">Aucun membre de bureau trouvé ! </td></tr>
 					<tr th:each="b:${Board.content}">
                         <td th:text="${b.id}"></td>
                         <td th:text="${b.name}"></td>

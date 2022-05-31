@@ -62,6 +62,7 @@
                 type="number"
                 class="border-0 m form-control"
                 placeholder="quantité"
+                min="1"
                 v-model="oldMateriel.quantité"
                 required="required"
               />

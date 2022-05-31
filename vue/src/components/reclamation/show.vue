@@ -15,7 +15,7 @@
         class="float-end"
         v-b-tooltip.hover="{
           variant: 'success',
-          title: 'Student accepted',
+          title: '',
           placement: 'topright',
         }"
         v-if="Reclamation.reponse != null"
@@ -27,7 +27,7 @@
         class="float-end"
         v-b-tooltip.hover="{
           variant: 'danger',
-          title: 'Student not accepted',
+          title: '',
           placement: 'topright',
         }"
         v-if="Reclamation.reponse == null"

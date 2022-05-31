@@ -288,10 +288,17 @@
         icon: 'fas fa-calendar-alt',
         hidden: !this.isStudent,
       },
+                {
+                    href: '/chat',
+                    title: 'Chat',
+                    icon: 'fas fa-file',
+                    
+                },
     ]"
     :collapsed="false"
     style="transition: 0.5s max-width ease !important"
   />
+
 </template>
 
 <script>

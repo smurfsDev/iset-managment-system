@@ -15,7 +15,7 @@
             <div class="row my-4">
                 <div class="col">
                     <h1 class="text-center">Liste des DemandeCreationClub</h1>
-                    <a sec:authorize="hasRole('STUDENT')" th:href="@{showCreateDcc(
+                    <a sec:authorize="!hasAnyRole('RESPONSABLE', 'ADMIN')" th:href="@{showCreateDcc(
                     page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
                             class="fa-solid fa-plus"></i> Ajouter
                     </a>
@@ -24,7 +24,7 @@
             <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
-            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Creation Club deleted</div>
+            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Creation Club supprimée !</div>
             <div class="row my-4">
                 <table class="table table-dark table-striped">
                     <thead>

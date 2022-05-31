@@ -34,7 +34,7 @@
                         <th>Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(listChefDepartments.content)}">
-						<td colspan="4" class="text-center ">No demande chef department found ! </td></tr>
+						<td colspan="4" class="text-center ">Pas de demande chef département</td></tr>
 					<tr th:each="demande,iter:${listChefDepartments.content}">
                             <td th:class="${demande[1].status==3}?striked:''" th:text="${demande[0].id}"></td>
                             <td th:class="${demande[1].status==3}?striked:''" th:text="${demande[0].username}"></td>

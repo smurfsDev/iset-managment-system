@@ -58,7 +58,7 @@
                         <th sec:authorize="hasAuthority('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(Dccs.content)}">
-						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
+						<td colspan="4" class="text-center ">Aucune entete trouvée ! </td></tr>
 					<tr th:each="about:${Dccs.content}">
                         <td th:text="${about.id}"></td>
                         <td th:text="${about.longDescription}"></td>

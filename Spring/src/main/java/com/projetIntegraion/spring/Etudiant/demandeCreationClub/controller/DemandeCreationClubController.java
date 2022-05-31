@@ -74,6 +74,7 @@ public class DemandeCreationClubController {
     public String createDcc(ModelMap modelMap,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "2") int size) {
+               
         modelMap.addAttribute("Dcc", new DemandeCreationClub());
         modelMap.addAttribute("edit", false);
         modelMap.addAttribute("pages",

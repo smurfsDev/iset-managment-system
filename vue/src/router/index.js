@@ -51,6 +51,8 @@ import moduleReclamation from "./routes/gererReclamation";
 import manageCategorieDocument from "./routes/gererCategorie";
 import manageDemandeDocument from "./routes/gererDemandeDocument";
 import manageTypeCat from "./routes/gererTypeCat";
+import chat from "./routes/chat";
+
 
 import gererEmploideTemp from "./routes/gererEmploideTemp";
 import monEmploi from "./routes/monEmploi";
@@ -117,6 +119,7 @@ const routes = [
 ...dashboards,
 ...gererEmploideTemp,
   ...monEmploi,
+    ...chat,
 ];
 
 const router = new VueRouter({
