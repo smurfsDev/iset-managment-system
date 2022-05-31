@@ -78,13 +78,13 @@
                                                     <form class="form-inline " method="post" action="setReponse">
                                                         <input type="hidden" name="idDemande" th:value="${demande.id}">
                                                         <textarea name="reponse" class="form-control" th:value="${demande.reponse}" th:text="${demande.reponse}" style="background-color: rgb(236, 239, 241); border: 0px !important;"></textarea>
-                                                        <button type="submit" class="btn btn-warning  ml-2"  th:if="${demande.reponse != null}" >Edit Reponse</button>
-                                                        <button type="submit" class="btn btn-primary  ml-2"  th:if="${demande.reponse == null}" >Add Reponse</button>
+                                                        <button type="submit" class="btn btn-warning  ml-2"  th:if="${demande.reponse != null}" >Modifier Reponse</button>
+                                                        <button type="submit" class="btn btn-primary  ml-2"  th:if="${demande.reponse == null}" >Ajouter Reponse</button>
                                                     </form>
                                                 </div>
                                             </div>
-                                                <a th:href="@{ approveDmm(id=${demande.id}) }" th:class="${demande.status==1?'btn btn-success disabled ml-2':'btn btn-success' }">Approve</a>
-                                                <a th:href="@{ refuseDmm(id=${demande.id}) }" th:class="${demande.status==2?'btn btn-danger disabled ml-2':'btn btn-danger' }">Desapprove</a>
+                                                <a th:href="@{ approveDmm(id=${demande.id}) }" th:class="${demande.status==1?'btn btn-success disabled ml-2':'btn btn-success' }">Accepter</a>
+                                                <a th:href="@{ refuseDmm(id=${demande.id}) }" th:class="${demande.status==2?'btn btn-danger disabled ml-2':'btn btn-danger' }">Refuser</a>
                                             </div>
                                         </div>
                                     </div>

@@ -24,7 +24,7 @@
             <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
-            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande evenement deleted</div>
+            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande evenement suppimée !</div>
             <div class="row my-4">
                 <table class="table table-dark table-striped">
                     <thead>
@@ -37,7 +37,7 @@
                         <th sec:authorize="hasRole('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(DE.content)}">
-						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
+						<td colspan="4" class="text-center ">Aucune demande trouvée !</td></tr>
 					<tr th:each="demande:${DE.content}">
                         <td th:text="${demande.id}"></td>
                         <td th:text="${demande.nomEvent}"></td>

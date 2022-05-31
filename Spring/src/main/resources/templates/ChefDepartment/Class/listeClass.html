@@ -19,10 +19,7 @@
                 page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
                         class="fa-solid fa-plus"></i> Ajouter une classe
                 </a>
-                <a  th:href="@{showCreateMatieres(
-                    page=${currentPage},size=${param.size})}" class="float-start btn btn-success"> <i
-                            class="fa-solid fa-plus"></i> Ajouter une matiere
-                    </a>
+                
             </div>
         </div>
         <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
@@ -41,7 +38,7 @@
 
                     </thead>
                     <tr th:if="${#arrays.isEmpty(pageClasses.content)}">
-						<td colspan="4" class="text-center ">No clase found ! </td></tr>
+						<td colspan="4" class="text-center ">Pas de classe trouvé</td></tr>
 					<tr th:each="Classe:${pageClasses.content}">
                         <td th:text="${Classe.id}"></td>
                         <td th:text="${Classe.abreviation}"></td>

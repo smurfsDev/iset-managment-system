@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <title>Liste des Members</title>
+</head>
+
+<body>
+  <div layout:fragment="Mycontent">
+    <div class="">
+      <div class="row my-4">
+        <div class="col">
+          <h1 class="text-center">Liste des Members</h1>
+        </div>
+      </div>
+      <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">
+        aa
+      </div>
+      <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">
+        aa
+      </div>
+      <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">
+        aa
+      </div>
+      <table class="table table-dark table-striped">
+        <tr>
+          <th>User Name</th>
+          <th>Nom Club</th>
+          <th sec:authorize="hasRole('ROLE_RESPONSABLE')">Actions</th>
+        </tr>
+        <tr>
+        <tr th:if="${#arrays.isEmpty(listmember.content)}">
+          <td colspan="4" class="text-center ">No Member found ! </td>
+        </tr>
+        <tr th:each="membre:${listmember.content}">
+          <td th:text="${membre.etudiant.username}"></td>
+          <td th:text="${membre.club.nomClub}"></td>
+          <td>
+            <a class="btn btn-danger" onclick="confirm('Etes-vous sur de supprimer ce membre ?')" th:href="@{supprimerMembre(id=${membre.id},
+								page=${currentPage},size=${param.size})}">
+              <i class="fa-solid fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+</body>
+
+</html>

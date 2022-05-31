@@ -39,7 +39,7 @@
                         <th sec:authorize="hasRole('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(ListAct.content)}">
-						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
+						<td colspan="4" class="text-center ">Aucune activité trouvée !</td></tr>
 					<tr th:each="activity:${ListAct.content}">
                         <td th:text="${activity.id}"></td>
                         <td th:text="${activity.paragraphe}"></td>
