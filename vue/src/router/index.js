@@ -52,6 +52,9 @@ import manageCategorieDocument from "./routes/gererCategorie";
 import manageDemandeDocument from "./routes/gererDemandeDocument";
 import manageTypeCat from "./routes/gererTypeCat";
 
+import gererEmploideTemp from "./routes/gererEmploideTemp";
+import monEmploi from "./routes/monEmploi";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -91,7 +94,6 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...demandeEvenementAdmin,
   ...mesDemandesMateriel,
   ...demandeEvenementAdmin,
   ...demandeAdhesionEvent,
@@ -113,7 +115,8 @@ const routes = [
 ...manageDemandeDocument,
 ...manageTypeCat,
 ...dashboards,
-
+...gererEmploideTemp,
+  ...monEmploi,
 ];
 
 const router = new VueRouter({

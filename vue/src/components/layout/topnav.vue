@@ -252,7 +252,7 @@
       {
         title: 'Materiel',
         icon: 'fa fa-file',
-        hidden: !this.isChefDepartement  && !this.isAdmin,
+        hidden: !this.isChefDepartement && !this.isAdmin,
         child: [
           {
             href: '/gererCategorieMateriel',
@@ -274,6 +274,18 @@
         href: '/mesNotes',
         title: 'Mes notes',
         icon: 'fas fa-file',
+        hidden: !this.isStudent,
+      },
+      {
+        href: '/GererEmploideTemp',
+        title: 'GererEmploideTemp',
+        icon: 'fas fa-calendar-alt',
+        hidden: !this.isChefDepartement,
+      },
+      {
+        href: '/monEmploi',
+        title: 'Mon emploi',
+        icon: 'fas fa-calendar-alt',
         hidden: !this.isStudent,
       },
     ]"

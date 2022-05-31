@@ -105,7 +105,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [1, 1]);
-        DB::insert('insert into role_user (user_id, role_id,status) values (?, ?,?)', [2, 2,1]);
+        DB::insert('insert into role_user (user_id, role_id,status,classe) values (?, ?,?,?)', [2, 2,1,1]);
         DB::insert('insert into role_user (user_id, role_id,status) values (?, ?,?)', [4, 3,1]);
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [3, 3]);
         DB::insert('insert into role_user (user_id, role_id) values (?, ?)', [4, 2]);
