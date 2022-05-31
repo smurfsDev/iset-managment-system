@@ -101,7 +101,7 @@
     <nav class="row" v-if="demandes.length != 0">
       <ul class="pagination w-auto mx-auto">
         <li :class="[{ disabled: !pagination.prev_page_url }]" class="page-item">
-          <a @click="fetchDemande(pagination.prev_page_url)" class="btn btun page-link" :class="[
+          <a @click="fetchDemandeMateriels(pagination.prev_page_url)" class="btn btun page-link" :class="[
             !pagination.prev_page_url ? 'disabled' : 'link-primary btun',
           ]">Precedent</a>
         </li>
@@ -111,7 +111,7 @@
           }}</a>
         </li>
         <li :class="[{ disabled: !pagination.next_page_url }]" class="page-item">
-          <a @click="fetchDemande(pagination.next_page_url)" :class="[
+          <a @click="fetchDemandeMateriels(pagination.next_page_url)" :class="[
             !pagination.next_page_url ? 'disabled' : 'link-primary btun',
           ]" class="btun btn page-link">Suivant</a>
         </li>
