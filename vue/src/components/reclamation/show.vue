@@ -4,7 +4,7 @@
       class="card card-body my-5 py-5 text-center"
       v-if="Reclamations.length == 0"
     >
-      <h3>il y'a aucune Reclamation</h3>
+      <h3>Il y'a aucune Reclamation</h3>
     </div>
     <b-card
       class="my-2"

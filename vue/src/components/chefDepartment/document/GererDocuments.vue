@@ -10,23 +10,24 @@
           style="height: 500px; width: 100%"
         ></b-overlay>
         <div v-if="!show">
-          <b-container class="bv-example-row py-0">
+          <b-container class=" ">
             <b-row>
               <b-col>
-                <b-form-group
-                  label="Search"
+                <b-form-group 
                   label-for="search"
-                  label-cols="2"
-                  label-align="right"
                 >
-                  <b-form-input
-                    id="search"
+                <label>Search</label>
+                  <b-form-input 
+                    class="form-control "  
                     v-model="search"
                     placeholder="Search"
                     @keyup.enter="fetchDocument()"
-                  />
-                  Categorie
-                  <b-form-select v-model="cat" @change="fetchDocument()">
+                  />   
+                  </b-form-group>
+                  </b-col>
+                  <b-col>
+                  <label > Categorie</label>
+                  <b-form-select class="form-control" v-model="cat" @change="fetchDocument()">
                     <option selected="selected" value="all">Tous</option>
                     <option
                       v-for="option in categories"
@@ -36,8 +37,10 @@
                       {{ option.title }}
                     </option>
                   </b-form-select>
-                  Class
-                  <b-form-select v-model="cla" @change="fetchDocument()">
+                  </b-col>
+                  <b-col>
+                  <label>Class</label>
+                  <b-form-select class="form-control " v-model="cla" @change="fetchDocument()">
                     <option selected value="all">Tous</option>
                     <option
                       v-for="option in classes"
@@ -47,17 +50,16 @@
                       {{ option.nom }}
                     </option>
                   </b-form-select>
-                  <button class="btn btn-info" @click="fetchDocument()">
+                  </b-col>
+                  <button class="btn btn-primary col-2 mb-7 mt-4" @click="fetchDocument()">
                     Search
                   </button>
-                </b-form-group>
-              </b-col>
             </b-row>
             <b-row class="text-center">
               <b-col cols="8">
                 <button
                   v-if="
-                    $store.getters.isChefDepartement || $store.getters.isAdmin  
+                    $store.getters.isChefDepartement || $store.getters.isAdmin
                   "
                   type="button"
                   class="btn btn-primary mx-1 float-start"
@@ -81,7 +83,6 @@
             <p>{{ alert.msg }}</p>
           </b-alert>
 
-          <!-- <b-card> -->
           <showDocuments
             @deleteDocument="deleteDocument"
             :Documents="Documents"
@@ -89,7 +90,6 @@
             @updateDocument="updateDocument"
             :pagination="pagination"
           />
-          <!-- </b-card> -->
         </div>
       </div>
     </div>
