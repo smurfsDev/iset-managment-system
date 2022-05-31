@@ -8,6 +8,7 @@ use App\Models\Matiere;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -17,10 +18,10 @@ class DashboardController extends Controller
 
         if ($request->user()->roles()->get()->contains('name', "chefDepartement")) {
             $classes = $request->user()->department->classes()->count();
-            $lastClass = $request->user()->department->classes()->orderBy('updated_at', 'desc')->first();
+            $lastClass = $request->user()->department->classes()->orderBy('updated_at', 'desc')->first()?$request->user()->department->classes()->orderBy('updated_at', 'desc')->first()->updated_at:date('m/d/Y h:i:s a', time());
             $classes = array([
                 'nbr' => $classes,
-                'date' => $lastClass->updated_at
+                'date' => $lastClass
             ]);
 
             // get number of students in all class of the departement
@@ -31,10 +32,13 @@ class DashboardController extends Controller
             $lastStudent = User::whereHas('roles', function ($query) use ($request) {
                 $query->where('name', 'student');
                 $query->where('department', $request->user()->department->id);
-            })->orderBy('updated_at', 'desc')->first();
+            })->orderBy('updated_at', 'desc')->first()?User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'student');
+                $query->where('department', $request->user()->department->id);
+            })->orderBy('updated_at', 'desc')->first()->updated_at:date('m/d/Y h:i:s a', time());
             $students = array([
                 'nbr' => $students,
-                'date' => $lastStudent->updated_at
+                'date' => $lastStudent
             ]);
 
             $teachers = DB::select("select count(*) from role_user WHERE role_id=7 and department = ?", [$request->user()->department->id]);
@@ -42,8 +46,11 @@ class DashboardController extends Controller
             $teacher = User::whereHas('roles', function ($query) use ($request) {
                 $query->where('name', 'enseignant');
                 $query->where('department', $request->user()->department->id);
-            })->orderBy('updated_at', 'desc')->first();
-            $teachers = ["nbr" => $teachers, "date" => $teacher->updated_at];
+            })->orderBy('updated_at', 'desc')->first()?User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'enseignant');
+                $query->where('department', $request->user()->department->id);
+            })->orderBy('updated_at', 'desc')->first()->updated_at:date('m/d/Y h:i:s a', time());
+            $teachers = ["nbr" => $teachers, "date" => $teacher];
 
             // get list of all classes of this departement
             $classesa = $request->user()->department->classes()->get();
@@ -92,7 +99,7 @@ class DashboardController extends Controller
             $dm = DemandeMateriel::whereIn('idDestinataire', $ids)->count();
 
             // get last DemandeMateriel where idDestinataire in ids
-            $lastDm = DemandeMateriel::whereIn('idDestinataire', $ids)->orderBy('updated_at', 'desc')->first();
+            $lastDm = DemandeMateriel::whereIn('idDestinataire', $ids)->orderBy('updated_at', 'desc')->first()?DemandeMateriel::whereIn('idDestinataire', $ids)->orderBy('updated_at', 'desc')->first()->updated_at: date('m/d/Y h:i:s a', time());
 
 
             // get all salles of this department
@@ -104,16 +111,16 @@ class DashboardController extends Controller
 
             $ds = DemandeSalle::whereIn('idSalle', $ids)->count();
 
-            $last_ds = DemandeSalle::whereIn('idSalle', $ids)->orderBy('updated_at', 'desc')->first();
+            $last_ds = DemandeSalle::whereIn('idSalle', $ids)->orderBy('updated_at', 'desc')->first()?DemandeSalle::whereIn('idSalle', $ids)->orderBy('updated_at', 'desc')->first()->updated_at: date('m/d/Y h:i:s a', time());
 
             $dm = array(
                 'nbr' => $dm,
-                'date' => $lastDm->updated_at
+                'date' => $lastDm
             );
 
             $ds=array(
                 "nbr"=>$ds,
-                "date"=>$last_ds->updated_at,
+                "date"=>$last_ds,
             );
 
             $studentsFemmes = DB::select("select COUNT(*) FROM users JOIN role_user on users.id=role_user.user_id JOIN departements ON role_user.department=departements.id WHERE role_user.role_id=2 and sexe=0 and departements.id=? ; ", [$request->user()->department->id]);

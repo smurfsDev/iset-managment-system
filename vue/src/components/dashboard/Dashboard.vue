@@ -14,7 +14,9 @@
                         <h5 class="card-title text-uppercase text-muted mb-0">
                           Nombre classes
                         </h5>
-                        <span class="h2 font-weight-bold mb-0">{{ classes[0].nbr }}</span>
+                        <span class="h2 font-weight-bold mb-0">{{
+                          classes[0].nbr
+                        }}</span>
                       </div>
                       <div class="col-auto">
                         <div
@@ -34,7 +36,7 @@
                       <span class="text-nowrap">Dernière mise à jour</span>
                       <span class="text-success mr-2">
                         <!-- <i class="fa fa-arrow-up"></i>  -->
-                        {{ classes[0].date.substring(0,10) }}</span
+                        {{ classes[0].date.substring(0, 10) }}</span
                       >
                     </p>
                   </div>
@@ -48,7 +50,9 @@
                         <h5 class="card-title text-uppercase text-muted mb-0">
                           Nombre etudiants
                         </h5>
-                        <span class="h2 font-weight-bold mb-0">{{ students[0].nbr }}</span>
+                        <span class="h2 font-weight-bold mb-0">{{
+                          students[0].nbr
+                        }}</span>
                       </div>
                       <div class="col-auto">
                         <div
@@ -68,7 +72,7 @@
                       <span class="text-nowrap">Dernière mise à jour</span>
                       <span class="text-danger mr-2">
                         <!-- <i class="fas fa-arrow-down"></i>  -->
-                        {{ students[0].date.substring(0,10) }}</span
+                        {{ students[0].date.substring(0, 10) }}</span
                       >
                     </p>
                   </div>
@@ -82,7 +86,9 @@
                         <h5 class="card-title text-uppercase text-muted mb-0">
                           Nombre enseignant
                         </h5>
-                        <span class="h2 font-weight-bold mb-0">{{ teachers.nbr[0]["count(*)"] }}</span>
+                        <span class="h2 font-weight-bold mb-0">{{
+                          teachers.nbr[0]["count(*)"]
+                        }}</span>
                       </div>
                       <div class="col-auto">
                         <div
@@ -102,7 +108,7 @@
                       <span class="text-nowrap">Dernière mise à jour</span>
                       <span class="text-warning mr-2">
                         <!-- <i class="fas fa-arrow-down"></i> -->
-                        {{ teachers.date.substring(0,10) }}</span
+                        {{ teachers.date.substring(0, 10) }}</span
                       >
                     </p>
                   </div>
@@ -116,7 +122,9 @@
                         <h5 class="card-title text-uppercase text-muted mb-0">
                           Moyen general
                         </h5>
-                        <span class="h2 font-weight-bold mb-0">{{ moyennes.nbr[0] }}</span>
+                        <span class="h2 font-weight-bold mb-0">{{
+                          moyennes.nbr[0]
+                        }}</span>
                       </div>
                       <div class="col-auto">
                         <div
@@ -136,7 +144,7 @@
                       <span class="text-nowrap">Dernière mise à jour</span>
                       <span class="text-success mr-2">
                         <!-- <i class="fas fa-arrow-up"></i> -->
-                        {{ moyennes.date.substring(0,10)  }}</span
+                        {{ moyennes.date.substring(0, 10) }}</span
                       >
                     </p>
                   </div>
@@ -150,7 +158,9 @@
                         <h5 class="card-title text-uppercase text-muted mb-0">
                           Demandes materiel en cours
                         </h5>
-                        <span class="h2 font-weight-bold mb-0">{{ demandeMateriels.nbr }}</span>
+                        <span class="h2 font-weight-bold mb-0">{{
+                          demandeMateriels.nbr
+                        }}</span>
                       </div>
                       <div class="col-auto">
                         <div
@@ -170,7 +180,7 @@
                       <span class="text-nowrap">Dernière mise à jour</span>
                       <span class="text-warning mr-2">
                         <!-- <i class="fas fa-arrow-down"></i> -->
-                        {{ demandeMateriels.date.substring(0,10) }}</span
+                        {{ demandeMateriels.date.substring(0, 10) }}</span
                       >
                     </p>
                   </div>
@@ -184,7 +194,9 @@
                         <h5 class="card-title text-uppercase text-muted mb-0">
                           Demandes salles en cours
                         </h5>
-                        <span class="h2 font-weight-bold mb-0">{{demandeSalles.nbr}}</span>
+                        <span class="h2 font-weight-bold mb-0">{{
+                          demandeSalles.nbr
+                        }}</span>
                       </div>
                       <div class="col-auto">
                         <div
@@ -204,7 +216,7 @@
                       <span class="text-nowrap">Dernière mise à jour</span>
                       <span class="text-success mr-2">
                         <!-- <i class="fas fa-arrow-up"></i> -->
-                        {{ demandeSalles.date.substring(0,10) }}</span
+                        {{ demandeSalles.date.substring(0, 10) }}</span
                       >
                     </p>
                   </div>
@@ -275,30 +287,36 @@ export default {
   },
   data() {
     return {
-      classes: {
+      classes: [
+        {
+          nbr: 0,
+          date: null,
+        },
+      ],
+      students: [
+        {
+          nbr: 0,
+          date: null,
+        },
+      ],
+      teachers: [
+        {
+          nbr: 0,
+          date: null,
+        },
+      ],
+      moyennes: [{
         nbr: 0,
         date: null,
-      },
-      students: {
+      }],
+      demandeMateriels: [{
         nbr: 0,
         date: null,
-      },
-      teachers: {
+      }],
+      demandeSalles: [{
         nbr: 0,
         date: null,
-      },
-      moyennes: {
-        nbr: 0,
-        date: null,
-      },
-      demandeMateriels: {
-        nbr: 0,
-        date: null,
-      },
-      demandeSalles: {
-        nbr: 0,
-        date: null,
-      },
+      }],
       hf: {
         h: 0,
         f: 0,
@@ -309,17 +327,17 @@ export default {
     fetchStats() {
       this.$http.get("http://localhost:8000/api/stats").then((res) => {
         this.classes = res.data.classes;
-          
-        this.students=res.data.students;
-        this.teachers=res.data.teachers;
-        this.moyennes=res.data.moyennes;
-        this.demandeMateriels=res.data.demandeMateriels;
-        this.demandeSalles=res.data.demandeSalles;
-        this.hf=res.data.hf;
+
+        this.students = res.data.students;
+        this.teachers = res.data.teachers;
+        this.moyennes = res.data.moyennes;
+        this.demandeMateriels = res.data.demandeMateriels;
+        this.demandeSalles = res.data.demandeSalles;
+        this.hf = res.data.hf;
         let myh = this.hf;
         this.hf = [];
-        this.hf[0] =  myh.h["COUNT(*)"];
-        this.hf[1] =  myh.f["COUNT(*)"];
+        this.hf[0] = myh.h["COUNT(*)"];
+        this.hf[1] = myh.f["COUNT(*)"];
       });
     },
   },
