@@ -3,7 +3,7 @@
     <div class="card card-body my-5 py-5 text-center" v-if="Notes.length == 0">
       <h3>il y'a aucune Note</h3>
     </div>
-    <b-card class="my-2">
+    <b-card class="my-2" v-if="Notes.length != 0">
       <md-tabs style="height: auto;!important">
         <md-tab id="tab-home" style="height: auto;!important" md-label="Note">
           <div class="bv-example-row text-center">
@@ -54,6 +54,7 @@
     </b-card>
 
     <div
+      v-if="Notes.length != 0"
       style="width: 100%; margin-left: 10%"
       class="modal fade"
       id="demandeModal"
@@ -90,6 +91,7 @@
     </div>
 
     <vue-html2pdf
+      v-if="Notes.length != 0"
       :show-layout="false"
       :float-layout="true"
       :enable-download="true"

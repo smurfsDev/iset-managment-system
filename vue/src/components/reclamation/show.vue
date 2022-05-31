@@ -90,14 +90,14 @@
                       variant="warning"
                       v-if="Reclamation.reponse != null"
                       @click="setReponse(Reclamation.id, Reclamation.reponse)"
-                      >Send</b-button
+                      >Envoyer</b-button
                     >
                     <b-button
                       type="button"
                       variant="success"
                       v-else
                       @click="setReponse(Reclamation.id, Reclamation.reponse)"
-                      >Add Reponse</b-button
+                      >Ajouter Reponse</b-button
                     >
                   </div>
                 </div>

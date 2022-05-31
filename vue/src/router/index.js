@@ -54,14 +54,14 @@ import manageTypeCat from "./routes/gererTypeCat";
 
 import gererEmploideTemp from "./routes/gererEmploideTemp";
 import monEmploi from "./routes/monEmploi";
-
+import dashh from "@/components/dashboard/Dashboard.vue";
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: dashh
   },
   {
     path: "/about",

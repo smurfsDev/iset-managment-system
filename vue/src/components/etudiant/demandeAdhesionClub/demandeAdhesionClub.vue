@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container bg-white p-4 card">
     <h1>Mes demande d'adhesion</h1>
     <b-alert class="mt-4" :show="alert.dismissCountDown" dismissible :variant="alert.variant"
       @dismissed="alert.dismissCountDown = 0">

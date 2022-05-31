@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="card card-body my-5 py-5 text-center"
+      class="card card-body bg-white my-5 py-5 text-center"
       v-if="demandes.length == 0"
     >
       <h3>il y'a aucune demande</h3>
