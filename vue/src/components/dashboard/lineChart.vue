@@ -2,7 +2,7 @@
 import { Line } from 'vue-chartjs';
 export default {
     extends: Line,
-    props: ['labels', 'data','label'],
+    props: ['labels', 'data','label','text'],
     mounted() {
         this.renderChart(
             
@@ -25,7 +25,7 @@ export default {
                 title: {
                     display: true,
                     fontColor: 'white',
-                    text: "My Data"
+                    text: this.text
                 }
             }
         );

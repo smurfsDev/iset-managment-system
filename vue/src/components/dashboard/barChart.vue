@@ -2,7 +2,7 @@
 import { Bar } from 'vue-chartjs';
 export default {
     extends: Bar,
-    props: ['labels', 'data','label'],
+    props: ['labels', 'data','label','text'],
     mounted() {
         this.renderChart(
             {
@@ -27,7 +27,7 @@ export default {
                 maintainAspectRatio: false,
                 title: {
                     display: true,
-                    text: "My Data"
+                    text: this.text
                 },
                 fontColor: 'red'
             },

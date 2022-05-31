@@ -2,7 +2,7 @@
 import { Pie } from "vue-chartjs";
 export default {
   extends: Pie,
-  props: ["labels", "data", "label"],
+  props: ["labels", "data", "label", "title"],
   data() {
     return {};
   },
@@ -26,7 +26,7 @@ export default {
         maintainAspectRatio: false,
         title: {
           display: true,
-          text: "My Data",
+          text: this.title,
         },
       }
     );
