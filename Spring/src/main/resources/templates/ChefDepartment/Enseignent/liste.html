@@ -19,7 +19,7 @@
         <div class="">
             <div class="row my-4">
                 <div class="col">
-                    <h1 class="text-center">Liste des enseignents</h1>
+                    <h1 class="text-center">Liste des enseignants</h1>
                 </div>
             </div>
             <div th:if="${message}!='vide'" th:class="'my-4 alert alert'+'-'+${typea}" role="alert"
@@ -33,7 +33,7 @@
                         <th>Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(listEns.content)}">
-						<td colspan="4" class="text-center ">Aucune demande enseignent trouvée ! </td></tr>
+						<td colspan="4" class="text-center ">Aucune demande enseignant trouvée ! </td></tr>
                       
                     
                         

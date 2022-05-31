@@ -32,7 +32,7 @@
                         <th sec:authorize="hasRole('RESPONSABLE')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(DEMANDES.content)}">
-						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
+						<td colspan="4" class="text-center ">Aucune demande trouvée !</td></tr>
 					<tr th:each="d:${DEMANDES.content}">
                         <td th:text="${d.id}"></td>
                         <td th:text="${d.etudiant.username}"></td>

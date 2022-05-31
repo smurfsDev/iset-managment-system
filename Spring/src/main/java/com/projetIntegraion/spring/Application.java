@@ -245,12 +245,16 @@ public class Application implements CommandLineRunner {
 		matiere1.setNom("Matiere 1");
 		matiere1.setClasse(ti1);
 		matiere1.setEnseignant(user4);
+		matiere1.setCoefficient(2.5);
+		matiere1.setSemestre(1);
 		matiereRepository.save(matiere1);
 
 		Matiere matiere2 = new Matiere();
 		matiere2.setNom("Matiere 2");
 		matiere2.setClasse(ti1);
 		matiere2.setEnseignant(user4);
+		matiere2.setCoefficient(1.5);
+		matiere2.setSemestre(2);
 		matiereRepository.save(matiere2);
 
 		ur2 = userRoleRepository.findFirstByUserId(student.getId()).get();

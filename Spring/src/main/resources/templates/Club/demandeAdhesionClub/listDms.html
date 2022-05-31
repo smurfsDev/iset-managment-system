@@ -36,7 +36,7 @@
                         <th  sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(Dacs.content)}">
-						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
+						<td colspan="4" class="text-center ">Aucune demande trouvée </td></tr>
 					<tr th:each="dac:${Dacs.content}">
                         <td th:text="${dac.id}"></td>
                         <td th:text="${dac.etudiant.username}"></td>

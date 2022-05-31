@@ -36,7 +36,7 @@
 
                     </thead>
                     <tr th:if="${#arrays.isEmpty(matieres.content)}">
-						<td colspan="4" class="text-center ">No matiere found ! </td></tr>
+						<td colspan="4" class="text-center ">Pas de matiere ! </td></tr>
 					<tr th:each="m:${matieres.content}">
                         <td th:text="${m.id}"></td>
                         <td th:text="${m.nom}"></td>
