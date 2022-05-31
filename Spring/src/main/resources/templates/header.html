@@ -120,7 +120,7 @@
                   </ul>
                 </div>
               </li>
-              <li>
+              <li sec:authorize="hasRole('RESPONSABLE') || hasRole('STUDENT')" class="sidebar-dropdown">
                 <a >
                   <i class="fa fa-shopping-cart"></i>
                   <span>Clubs</span>
