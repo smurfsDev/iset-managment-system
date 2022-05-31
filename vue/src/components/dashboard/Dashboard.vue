@@ -3,7 +3,7 @@
     <div class="main-content" v-if="$store.getters.isChefDepartement">
       <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
-          <h1 class="mb-5 text-white">DashBoard</h1>
+          <h1 class="mb-5 text-white">Table de bord</h1>
           <div class="header-body">
             <div class="row">
               <div class="mycrd col-xl-3 col-lg-4">
@@ -120,7 +120,7 @@
                     <div class="row">
                       <div class="col">
                         <h5 class="card-title text-uppercase text-muted mb-0">
-                          Moyen general
+                          Moyenne génerale
                         </h5>
                         <span class="h2 font-weight-bold mb-0">{{
                           moyennes.nbr[0]
