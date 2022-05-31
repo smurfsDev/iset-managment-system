@@ -151,6 +151,28 @@
                           mb-4
                         "
                       >
+                        <label for="sexe" class="mr-4"
+                          >Sexe : &nbsp; &nbsp;</label
+                        >
+                        <select
+                          required
+                          class="form-control w-auto"
+                          id="sexe"
+                          v-model="form.sexe"
+                        >
+                          <option value="homme">Homme</option>
+                          <option value="femme">Femme</option>
+                        </select>
+                      </div>
+                      <div
+                        class="
+                          form-group
+                          d-flex
+                          flex-row
+                          align-items-center
+                          mb-4
+                        "
+                      >
                         <label for="department" class="mr-4"
                           >Department : &nbsp; &nbsp;</label
                         >
