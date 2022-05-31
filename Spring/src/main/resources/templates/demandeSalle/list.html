@@ -24,7 +24,7 @@
             <div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
             <div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
-            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Salle deleted</div>
+            <div th:if="${del==1}" class="my-4 alert alert-danger" role="alert">Demande Salle supprimée !</div>
             <div class="card card-body my-5 py-5 text-center shadow p-3 mb-5 bg-white rounded " style="color: rgb(76, 14, 14);" th:if="${#arrays.isEmpty(demandeSalle.content)}">
                 <h3>il y'a aucune demande</h3>
               </div>

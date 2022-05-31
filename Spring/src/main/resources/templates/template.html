@@ -23,54 +23,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<a class="navbar-brand" th:href="@{listeDcc}">PROJECT</a>
-		<ul class="navbar-nav">
-			<li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Demande Creation Club
-				</button>
-				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT')" class="dropdown-item"  th:href="@{showCreateDcc}">Ajouter</a> <a class="dropdown-item"
-						th:href="@{listeDcc}">Lister</a>
-				</div>
-			</li>
-      <li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Blog Club
-				</button>
-				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('RESPONSABLE')" class="dropdown-item"  th:href="@{showManageBlog}">Gérer</a> 
-					<a class="dropdown-item"
-						th:href="@{blogClub}">Consulter</a>
-				</div>
-			</li>
-			<!-- <li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Demande Materiel
-				</button>
-				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" class="dropdown-item"  th:href="@{showCreateDm}">Ajouter</a> 
-					<a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" class="dropdown-item" th:href="@{listeDm}">Lister</a>
-					<a sec:authorize="hasRole('ADMIN') || hasRole('CHEF_DEPARTEMENT')" class="dropdown-item" th:href="@{listeDmDestinataire}">Lister</a>
-				</div>
-			</li><li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Demande Salle
-				</button>
-				<div class="dropdown-menu">
-					<a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" class="dropdown-item"  th:href="@{ShowcreateDS}">Ajouter</a> 
-					<a sec:authorize="hasRole('STUDENT') || hasRole('RESPONSABLE')" class="dropdown-item" th:href="@{listeDS}">Lister</a>
-					<a sec:authorize="hasRole('CHEF_DEPARTEMENT')" class="dropdown-item" th:href="@{listeDsDestinataire}">Lister</a>
-				</div>
-			</li> -->
-			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
-				<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
-		</ul>
+		
 
 		<ul class="navbar-nav ml-auto mr-5">
 			<li class="nav-item dropdown">

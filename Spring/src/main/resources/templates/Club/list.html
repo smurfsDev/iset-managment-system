@@ -35,7 +35,7 @@
                         <th sec:authorize="hasRole('STUDENT')||hasRole('ADMIN')">Actions</th>
                     </thead>
                     <tr th:if="${#arrays.isEmpty(Clubs.content)}">
-						<td colspan="4" class="text-center ">No DCC found ! </td></tr>
+						<td colspan="4" class="text-center ">Aucun club trouvé ! </td></tr>
 					<tr th:each="club:${Clubs.content}">
                         <td th:text="${club.id}"></td>
                         <td th:text="${club.nomClub}"></td>

@@ -15,7 +15,7 @@
             <section class="py-5 text-center container">
                 <div class="row py-lg-5">
                   <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">About Club</h1>
+                    <h1 class="fw-light">About us</h1>
                     <div th:each="About:${Abouts}">
                         <p class="lead text-muted" th:text="${About.longDescription}"></p>
                      
@@ -26,7 +26,7 @@
 
               <div class="row featurette">
                 <div class="col-md-7">
-                  <h2 class="featurette-heading">Club's activities.</h2> 
+                  <h2 class="featurette-heading">Our activities.</h2> 
                  
                    <ul th:each="Activity:${Activities}">
                     <li class="lead" th:text="${Activity.paragraphe}"></li>
@@ -38,7 +38,7 @@
                 </div>
               </div>
               <hr class="featurette-divider">
-              <h2>Club's Board</h2><br>
+              <h2>Our officers</h2><br>
               <div class="row">
                 
                 <div th:each="Board:${Boards}" class="col-lg-4">
@@ -51,7 +51,7 @@
             
 		          </div>
               <hr class="featurette-divider">
-              <h2>Club's projects</h2><br>
+              <h2>Our projects</h2><br>
               <div class="row row-cols-1 row-cols-md-3 g-3">
                 <div th:each="Project:${Projects}" class="col">
                   <div class="card shadow-sm">
