@@ -1,10 +1,15 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\Classe;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Seeder;
+use RoleUser;
 
 class UserSeeder extends Seeder
 {
@@ -117,7 +122,8 @@ class UserSeeder extends Seeder
         DB::insert('insert into role_user (user_id, role_id,department,status) values (?,?, ?,?)', [9, 5,4,1]);
         DB::insert('insert into role_user (user_id, role_id,department,status) values (?,?, ?,?)', [10, 5,5,1]);
         DB::insert('insert into role_user (user_id, role_id,department,status) values (?,?, ?,?)', [11, 7,1,1]);
-        
+
+
 
 
 

@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DemandeEventSeeder::class);
         $this->call(DemandeAdhesionEventSeeder::class);
         $this->call(MatiereSeeder::class);
-        //$this->call(NoteSeeder::class);
+        $this->call(NoteSeeder::class);
         $this->call(EmploieDeTempSeeder::class);
     }
 }

@@ -14,7 +14,7 @@ class DemandeSalleSeeder extends Seeder
      */
     public function run()
     {
-        DemandeSalle::factory(5)->create();
+        DemandeSalle::factory(80)->create();
 
     }
 }
