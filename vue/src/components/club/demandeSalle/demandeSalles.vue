@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100">
+  <div class="container" >
     <ajouterDemandeSalle @addDemande="addDemande" :oldDemande="demande" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">

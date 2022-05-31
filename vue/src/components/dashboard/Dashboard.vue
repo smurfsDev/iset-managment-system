@@ -3,7 +3,7 @@
     <div class="main-content" v-if="$store.getters.isChefDepartement">
       <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
-          <h2 class="mb-5 text-white">Stats Card</h2>
+          <h1 class="mb-5 text-white">DashBoard</h1>
           <div class="header-body">
             <div class="row">
               <div class="mycrd col-xl-3 col-lg-4">
