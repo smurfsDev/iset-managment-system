@@ -3,7 +3,7 @@ const demandeAdhesionForm = () =>
 
 export default [
   {
-    path: "/etudiant/demandeAdhesionForm",
+    path: "/demandeAdhesionForm",
     component: demandeAdhesionForm,
     name: "demandeAdhesionForm",
     meta: { requiresEtudiant: true }

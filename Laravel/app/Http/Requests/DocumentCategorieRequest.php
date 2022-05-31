@@ -25,7 +25,7 @@ class DocumentCategorieRequest extends FormRequest
     public function rules()
     {
         return [
-            "title"=> "required|unique:document_categories.title",
+            "title"=> "required|unique:document_categories",
         ];
     }
     public function failedValidation(Validator $validator)

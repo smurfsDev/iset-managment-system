@@ -99,7 +99,7 @@ export default {
       };
     },
     deleteClasse(id) {
-      if (confirm("Delete Classe " + id)) {
+      if (confirm("Supprimer Classe " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/Classe/" + id)
         .then(() => {

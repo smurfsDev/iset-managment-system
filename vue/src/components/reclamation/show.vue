@@ -90,14 +90,14 @@
                       variant="warning"
                       v-if="Reclamation.reponse != null"
                       @click="setReponse(Reclamation.id, Reclamation.reponse)"
-                      >Send</b-button
+                      >Envoyer</b-button
                     >
                     <b-button
                       type="button"
                       variant="success"
                       v-else
                       @click="setReponse(Reclamation.id, Reclamation.reponse)"
-                      >Add Reponse</b-button
+                      >Ajouter Reponse</b-button
                     >
                   </div>
                 </div>
@@ -115,7 +115,7 @@
               v-if="$store.getters.isAdmin || $store.getters.isChefDepartement"
               v-on:click="Delete(Reclamation.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               v-if="!$store.getters.isAdmin"
@@ -123,7 +123,7 @@
               variant="warning"
               v-on:click="Update(Reclamation)"
             >
-              Update</b-button
+              Modifier</b-button
             >
           </div>
         </md-tab>

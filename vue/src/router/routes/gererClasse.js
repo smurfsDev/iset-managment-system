@@ -4,7 +4,7 @@ const GererClasse = () =>
   );
 export default [
   {
-    path: "/cd/GererClasse",
+    path: "/GererClasse",
     component: GererClasse,
     name: "GererClasse",
     meta: { requiresChefDepartement: true},

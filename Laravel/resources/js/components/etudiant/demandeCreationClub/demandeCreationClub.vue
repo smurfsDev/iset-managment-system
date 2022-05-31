@@ -130,7 +130,7 @@ export default {
         deleteDemande(id) {
             let headersi = new Headers();
             headersi.append('auth', 5);
-            if (confirm('Delete document ' + id)) {
+            if (confirm('Supprimer document d\'id : ' + id)) {
                 this.show = true;
                 fetch('api/dcc/' + id, { method: 'delete', headers: headersi })
                     .then(res => {

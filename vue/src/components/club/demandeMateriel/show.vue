@@ -122,8 +122,8 @@
             
             <b-button :class="[{ disabled: demande.status != 0 }]" @click="ajouterMateriel(demande.id, demande.idCategorie)" variant="success">Ajouter materiels
             </b-button>
-            <b-button variant="danger" v-on:click="Delete(demande.id)">Delete</b-button>
-            <b-button :class="[{ disabled: demande.status != 0 }]" variant="warning" v-on:click="Update(demande)">Update</b-button>
+            <b-button variant="danger" v-on:click="Delete(demande.id)">Supprimer</b-button>
+            <b-button :class="[{ disabled: demande.status != 0 }]" variant="warning" v-on:click="Update(demande)">Modifier</b-button>
           </div>
         </md-tab>
       </md-tabs>

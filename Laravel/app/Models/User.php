@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'sexe',
         'password',
     ];
 
@@ -99,5 +100,8 @@ class User extends Authenticatable
     }
      public function Reclamation(){
         return $this->HasMany('App\Models\Reclamation', 'idResponsable');
+    }
+    public function emploieDeTemp(){
+        return $this->HasOne('App\Models\EmploieDeTemp', 'idResponsable');
     }
 }

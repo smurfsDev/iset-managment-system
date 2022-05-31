@@ -20,13 +20,18 @@ class ClasseController extends Controller
     public function getClasses(Request $request)
     {
         // check for the user's role = chefDepartement
-        $did = $request->user()->roles()->where('role_id', '5')->first()->pivot->department;
-        $classes = Classe::where('departement_id', $did)->paginate(5);
-        
-        if ($classes->isEmpty()) {
-            return response()->json(['message' => 'Aucune classe n\'est disponible pour ce département'], 404);
+        $did = $request->user()->roles()->where('role_id', '5')->first();
+        if ($did) {
+
+            $did = $did->pivot->department;
+            $classes = Classe::where('departement_id', $did)->paginate(5);
+
+            if ($classes->isEmpty()) {
+                return response()->json(['message' => 'Aucune classe n\'est disponible pour ce département'], 404);
+            }
+            return response()->json($classes, 200);
         }
-        return response()->json($classes, 200);
+        return response()->json(['message' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], 403);
     }
 
     public function createClasse(ClassesRequest $request)
@@ -70,12 +75,12 @@ class ClasseController extends Controller
         return response()->json(['message' => 'Classe introuvable'], 404);
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         $classes = Classe::all();
         if (empty($classes)) {
             return response()->json(['message' => 'Aucune classe n\'est disponible pour ce département'], 404);
         }
         return response()->json($classes, 200);
     }
-
 }

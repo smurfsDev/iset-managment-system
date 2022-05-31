@@ -130,7 +130,7 @@ export default {
     },
 
     deleteReclamation(id) {
-      if (confirm("Delete Reclamation " + id)) {
+      if (confirm("Supprimer Reclamation " + id)) {
         this.show = true;
         this.$http
           .delete("http://localhost:8000/api/reclamation/" + id)

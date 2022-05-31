@@ -20,7 +20,11 @@ class MatiereFactory extends Factory
             "idClasse" => Classe::get('id')->random(),
             "semestre" => 1,
             "coefficient" => 1,
-           
+            "idEnseignant"  => User::whereHas('roles', function ($query) {
+                $query->where('name', 'enseignant');
+            })->get()->random()->id,
+
+
         ];
     }
 }

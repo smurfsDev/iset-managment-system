@@ -36,7 +36,7 @@
                     variant="success"
                     :class="[{ disabled: d.status == 1 }]"
                     v-on:click="Accept(d.id)"
-                    >Accept</b-button
+                    >Accepter</b-button
                   >
                 </b-col>
                 <b-col>
@@ -44,7 +44,7 @@
               variant="danger"
               :class="[{ disabled: d.status == 2 }]"
               v-on:click="Decline(d.id)"
-              >Decline</b-button
+              >Refuser</b-button
             >
                 </b-col>
               </b-row>

@@ -29,7 +29,7 @@
                             
                         </b-row>
                         <b-button variant="success" 
-                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.demande_creation_club.nom,event.dateEvent)"
+                            @click="demandeAdhesion(event.id,event.nomEvent,event.club.demande_creation_club.nomClub,event.dateEvent)"
                             
                         >
                             S'inscrire</b-button>

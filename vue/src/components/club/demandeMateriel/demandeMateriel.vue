@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content container">
     <formDemandeMateriel @addDemande="addDemande" :oldDemande="demande" :categories="categories" />
     <div class="content container">
       <div class="pt-3 pb-3 container-fluid">
@@ -108,7 +108,7 @@ export default {
       };
     },
     deleteDemande(id) {
-      if (confirm("Delete demande " + id)) {
+      if (confirm("Supprimer demande " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/dm/" + id)
           .then(() => {

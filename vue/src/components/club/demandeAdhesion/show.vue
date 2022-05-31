@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="card card-body my-5 py-5 text-center"
+      class="card card-body bg-white my-5 py-5 text-center"
       v-if="demandes.length == 0"
     >
       <h3>il y'a aucune demande</h3>
@@ -28,13 +28,13 @@
               variant="success"
               :class="[{ disabled: demande.status == 1 }]"
               v-on:click="Accept(demande.id)"
-              >Accept</b-button
+              >Accepter</b-button
             >
             <b-button
               variant="danger"
               :class="[{ disabled: demande.status == 2 }]"
               v-on:click="Decline(demande.id)"
-              >Decline</b-button
+              >Refuser</b-button
             >
           </div>
         </md-tab>

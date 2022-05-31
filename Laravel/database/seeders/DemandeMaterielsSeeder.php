@@ -14,6 +14,6 @@ class DemandeMaterielsSeeder extends Seeder
      */
     public function run()
     {
-        DemandeMateriel::factory(10)->create();
+        DemandeMateriel::factory(55)->create();
     }
 }

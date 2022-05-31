@@ -81,7 +81,7 @@ export default {
       };
     },
     deleteDemande(id) {
-      if (confirm("Delete document " + id)) {
+      if (confirm("Modifier document " + id)) {
         this.show = true;
         this.$http
           .delete("http://localhost:8000/api/dcc/" + id, {})
@@ -118,7 +118,7 @@ export default {
         this.fetchDemandeCreationClub();
         this.edit = false;
         this.alert.variant = "warning";
-        this.alert.msg = "Demande non acceptée avec succès";
+        this.alert.msg = "Demande non acceptée !";
         this.alert.dismissCountDown = 5;
       });
     },

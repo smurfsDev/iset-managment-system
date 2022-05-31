@@ -72,13 +72,13 @@
               variant="success"
               :class="[{ disabled: demande.status == 1 }]"
               v-on:click="Accept(demande.id)"
-              >Accept</b-button
+              >Accepter</b-button
             >
             <b-button
               variant="danger"
               :class="[{ disabled: demande.status == 2 }]"
               v-on:click="Decline(demande.id)"
-              >Decline</b-button
+              >Refuser</b-button
             >
           </div>
         </md-tab>

@@ -44,6 +44,7 @@ import gererMatieres from "./routes/gererMatieres";
 import manageEnseignant from "./routes/manageEnseignant";
 import consulterClasseEns from "./routes/consulterClasseEns";
 import mesNotes from "./routes/mesNotes";
+import dashboards from "./routes/dashboard";
 
 import manageDocuments from "./routes/gererDocument";
 import moduleReclamation from "./routes/gererReclamation";
@@ -53,13 +54,16 @@ import manageTypeCat from "./routes/gererTypeCat";
 import chat from "./routes/chat";
 
 
+import gererEmploideTemp from "./routes/gererEmploideTemp";
+import monEmploi from "./routes/monEmploi";
+import dashh from "@/components/dashboard/Dashboard.vue";
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: dashh
   },
   {
     path: "/about",
@@ -92,7 +96,6 @@ const routes = [
   ...manageChefDepartments,
   ...manageStudents,
   ...manageClasses,
-  ...demandeEvenementAdmin,
   ...mesDemandesMateriel,
   ...demandeEvenementAdmin,
   ...demandeAdhesionEvent,
@@ -108,12 +111,15 @@ const routes = [
   ...manageEnseignant,
   ...consulterClasseEns,
   ...mesNotes,
-  ...manageDocuments,
-  ...moduleReclamation,
-  ...manageCategorieDocument,
-  ...manageDemandeDocument,
-  ...manageTypeCat,
-  ...chat,
+...manageDocuments,
+...moduleReclamation,
+...manageCategorieDocument,
+...manageDemandeDocument,
+...manageTypeCat,
+...dashboards,
+...gererEmploideTemp,
+  ...monEmploi,
+    ...chat,
 ];
 
 const router = new VueRouter({

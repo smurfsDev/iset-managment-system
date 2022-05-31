@@ -74,14 +74,14 @@
               :class="[demande.status != 0 ? 'disabled' : '']"
               v-on:click="Delete(demande.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               variant="warning"
               :class="[demande.status != 0 ? 'disabled' : '']"
               v-on:click="Update(demande)"
             >
-              Update</b-button
+              Supprimer</b-button
             >
           </div>
         </md-tab>

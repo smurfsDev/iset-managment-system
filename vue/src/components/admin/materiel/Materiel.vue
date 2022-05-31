@@ -25,7 +25,7 @@
                   @click="initModal()"
                   data-bs-target="#MaterielModal"
                 >
-                  Nouvelle Materiel
+                  Nouveau Materiel
                 </button>
               </b-col>
               <b-col></b-col>

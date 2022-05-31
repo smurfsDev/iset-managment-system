@@ -66,13 +66,13 @@
               variant="danger"
               v-on:click="Delete(Classe.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               variant="warning"
               v-on:click="Update(Classe)"
             >
-              Update</b-button
+              Modifier</b-button
             >
           </div>
         </md-tab>

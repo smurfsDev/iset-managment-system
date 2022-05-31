@@ -118,7 +118,7 @@ export default {
       };
     },
     deleteMatiere(id) {
-      if (confirm("Delete Matiere " + id)) {
+      if (confirm("Supprimer Matiere " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/matiere/delete/" + id)
         .then(() => {

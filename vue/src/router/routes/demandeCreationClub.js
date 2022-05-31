@@ -5,7 +5,7 @@ const demandeCreationClub = () =>
 
 export default [
   {
-    path: "/etudiant/demandeCreationClub",
+    path: "/demandeCreationClub",
     component: demandeCreationClub,
     name: "demandeCreationClub",
     meta: { requiresEtudiant: true},

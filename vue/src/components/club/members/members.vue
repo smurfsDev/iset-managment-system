@@ -78,7 +78,7 @@ export default {
       };
     },
     deleteMember(id) {
-      if (confirm("Delete document " + id)) {
+      if (confirm("Supprimer document " + id)) {
         this.show = true;
         this.$http.delete("http://localhost:8000/api/members/" + id)
           .then(() => {

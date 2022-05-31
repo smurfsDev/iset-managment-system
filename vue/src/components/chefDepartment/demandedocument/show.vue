@@ -86,7 +86,7 @@
                       @click="
                         setReponse(DemandeDocument.id, DemandeDocument.reponse)
                       "
-                      >Send</b-button
+                      >Envoyer</b-button
                     >
                     <b-button
                       type="button"
@@ -95,7 +95,7 @@
                       @click="
                         setReponse(DemandeDocument.id, DemandeDocument.reponse)
                       "
-                      >Add Reponse</b-button
+                      >Ajouter Reponse</b-button
                     >
                   </div>
                 </div>
@@ -115,7 +115,7 @@
               v-if="$store.getters.isStudent"
               v-on:click="Delete(DemandeDocument.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               :class="[{ disabled: DemandeDocument.file }]"
@@ -123,14 +123,14 @@
               variant="warning"
               v-on:click="Update(DemandeDocument)"
             >
-              Update</b-button
+              Modifier</b-button
             >
            <b-button
                v-if="$store.getters.isAdmin || $store.getters.isChefDepartement"
               variant="success"
               v-on:click="AddFile(DemandeDocument.id)"
             >
-              File</b-button
+              Fichier</b-button
             >
           </div>
         </md-tab>
@@ -140,6 +140,7 @@
           md-label="Document"
         >
           <div class="bv-example-row text-center">
+            <div v-if="DemandeDocument.file==null">Aucune document disponible</div>
            <pdfs :ref="'pdfRef'+DemandeDocument.titre" v-if="checkType(DemandeDocument.file)" :source="makeFile(DemandeDocument.file)" />
                   	<img v-if="checkType(DemandeDocument.file)==2" :src="(DemandeDocument.file)" />
            </div>

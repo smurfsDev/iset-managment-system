@@ -23,10 +23,10 @@
                     id="search"
                     v-model="search"
                     placeholder="Search"
-                    @keyup.enter="fetchDocument"
+                    @keyup.enter="fetchDocument()"
                   />
                   Categorie
-                  <b-form-select v-model="cat" @change="fetchDocument">
+                  <b-form-select v-model="cat" @change="fetchDocument()">
                     <option selected="selected" value="all">Tous</option>
                     <option
                       v-for="option in categories"
@@ -37,7 +37,7 @@
                     </option>
                   </b-form-select>
                   Class
-                  <b-form-select v-model="cla" @change="fetchDocument">
+                  <b-form-select v-model="cla" @change="fetchDocument()">
                     <option selected value="all">Tous</option>
                     <option
                       v-for="option in classes"
@@ -47,7 +47,7 @@
                       {{ option.nom }}
                     </option>
                   </b-form-select>
-                  <button class="btn btn-info" @click="fetchDocument">
+                  <button class="btn btn-info" @click="fetchDocument()">
                     Search
                   </button>
                 </b-form-group>
@@ -57,7 +57,7 @@
               <b-col cols="8">
                 <button
                   v-if="
-                    $store.getters.isChefDepartement //$store.getters.isAdmin || 
+                    $store.getters.isChefDepartement || $store.getters.isAdmin  
                   "
                   type="button"
                   class="btn btn-primary mx-1 float-start"
@@ -65,7 +65,7 @@
                   @click="initModal()"
                   data-bs-target="#DocumentModal"
                 >
-                  Ajouté Document
+                  Ajouter Document
                 </button>
               </b-col>
               <b-col></b-col>
@@ -121,8 +121,8 @@ export default {
       categories: [],
       classes: [],
       search: "",
-      cat: "",
-      cla: "",
+      cat: "all",
+      cla: "all",
     };
   },
   created() {
@@ -146,15 +146,16 @@ export default {
     }
   },
   methods: {
-    fetchDocument() {
+    fetchDocument(link = "http://127.0.0.1:8000/api/Document/search") {
       let vm = this;
       this.$http
-        .post("http://127.0.0.1:8000/api/Document/search", {
+        .post(link, {
           search: this.search,
           categorie: this.cat,
           class: this.cla,
         })
         .then((res) => {
+          this.Documents = [];
           this.Documents = res.data.data;
           this.show = false;
           vm.makePagination(res.data);
@@ -177,7 +178,7 @@ export default {
       };
     },
     deleteDocument(id) {
-      if (confirm("Delete Document " + id)) {
+      if (confirm("Supprimer Document " + id)) {
         this.show = true;
         this.$http
           .delete("http://localhost:8000/api/Document/" + id)

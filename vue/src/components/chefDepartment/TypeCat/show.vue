@@ -4,7 +4,7 @@
       class="card card-body my-5 py-5 text-center"
       v-if="Typecats.length == 0"
     >
-      <h3>il y'a aucune Typecat</h3>
+      <h3>il y'a aucune type reclamation</h3>
     </div>
     <b-card class="my-2" v-for="Typecat in Typecats" :key="Typecat.id">
      
@@ -12,14 +12,14 @@
         <md-tab
           id="tab-home"
           style="height: auto;!important"
-          md-label="Typecat"
+          md-label="Categorie"
         >
           <div class="bv-example-row text-center">
             <b-row class="mb-2">
         
               <b-row>
                 <b-col>
-                  Title : {{ Typecat.title }} 
+                  Titre : {{ Typecat.title }} 
                 </b-col>
               </b-row>
         
@@ -30,14 +30,14 @@
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
               v-on:click="Delete(Typecat.id)"
             >
-              Delete</b-button
+              Supprimer</b-button
             >
             <b-button
               v-if="$store.getters.isAdmin||$store.getters.isChefDepartement"
               variant="warning"
               v-on:click="Update(Typecat)"
             >
-              Update</b-button
+              Modifier</b-button
             >
           </div>
   </md-tab>
