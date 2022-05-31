@@ -64,13 +64,13 @@
               variant="success"
               :class="[{ disabled: Technicien.roles[0].pivot.status == 1 }]"
               v-on:click="Accept(Technicien.id)"
-              >Accept</b-button
+              >Accepter</b-button
             >
             <b-button
               variant="danger"
               :class="[{ disabled: Technicien.roles[0].pivot.status == 2 }]"
               v-on:click="Decline(Technicien.id)"
-              >Decline</b-button
+              >Refuser</b-button
             >
           </div>
         </md-tab>

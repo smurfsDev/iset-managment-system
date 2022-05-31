@@ -63,13 +63,13 @@
                 variant="success"
                 :class="[{ disabled: status(Student.roles) == 1 }]"
                 v-on:click="Accept(Student.id)"
-                >Accept</b-button
+                >Accepter</b-button
               >
               <b-button
                 variant="danger"
                 :class="[{ disabled: status(Student.roles) == 2 }]"
                 v-on:click="Decline(Student.id)"
-                >Decline</b-button
+                >Refuser</b-button
               >
             </div>
             <div v-else>

@@ -32,14 +32,14 @@
             </b-row>
             <b-button
               variant="danger"
-              v-if=" $store.getters.isChefDepartement"
+              v-if=" $store.getters.isChefDepartement||$store.getters.isAdmin"
               :class="[{ disabled: $store.getters.StateUser.id != Document.idResponsable }]"
               v-on:click="Delete(Document.id)"
             >
               Supprimer</b-button
             >
             <b-button
-              v-if="$store.getters.isChefDepartement"
+              v-if="$store.getters.isChefDepartement||$store.getters.isAdmin"
               :class="[{ disabled: $store.getters.StateUser.id != Document.idResponsable }]"
               variant="warning"
               v-on:click="Update(Document)"
