@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classe;
 use App\Models\DemandeMateriel;
 use App\Models\DemandeSalle;
 use App\Models\Matiere;
@@ -125,6 +126,108 @@ class DashboardController extends Controller
 
             $studentsFemmes = DB::select("select COUNT(*) FROM users JOIN role_user on users.id=role_user.user_id JOIN departements ON role_user.department=departements.id WHERE role_user.role_id=2 and sexe=0 and departements.id=? ; ", [$request->user()->department->id]);
             $studentsHomme = DB::select("select COUNT(*) FROM users JOIN role_user on users.id=role_user.user_id JOIN departements ON role_user.department=departements.id WHERE role_user.role_id=2 and sexe=1 and departements.id=? ; ", [$request->user()->department->id]);
+            $hf = array(
+                "h" => $studentsHomme[0],
+                "f" => $studentsFemmes[0]
+            );
+
+            return response()->json(['classes' => $classes, 'students' => $students, 'teachers' => $teachers, 'moyennes' => $moyennes, "demandeMateriels" => $dm, "demandeSalles"=>$ds,"hf"=>$hf], 200);
+        } else if ($request->user()->roles()->get()->contains('name', "admin")) {
+            $classes = Classe::count();
+            $lastClass = Classe::orderBy("updated_at","desc")->first()?Classe::orderBy("updated_at","desc")->first()->updated_at:date('m/d/Y h:i:s a', time());
+            $classes = array([
+                'nbr' => $classes,
+                'date' => $lastClass
+            ]);
+            // return $classes;
+
+            // get number of students in all class of the departement
+            $students =  $lastStudent = User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'student');
+            })->orderBy('updated_at', 'desc')->count();
+
+            $lastStudent = User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'student');
+            })->orderBy('updated_at', 'desc')->first()?User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'student');
+            })->orderBy('updated_at', 'desc')->first()->updated_at:date('m/d/Y h:i:s a', time());
+
+            $students = array([
+                'nbr' => $students,
+                'date' => $lastStudent
+            ]);
+
+            $teachers = DB::select("select count(*) from role_user WHERE role_id=7");
+            // last inserted teacher of this departement
+            $teacher = User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'enseignant');
+            })->orderBy('updated_at', 'desc')->first()?User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'enseignant');
+            })->orderBy('updated_at', 'desc')->first()->updated_at:date('m/d/Y h:i:s a', time());
+            $teachers = ["nbr" => $teachers, "date" => $teacher];
+
+
+
+            $matieres = Matiere::with("notes")->get();
+
+            // calculer les moyennes des notes
+            $moyennes = $matieres->map(function ($item) {
+                $notes = $item->notes->map(function ($item) {
+                    return $item->note;
+                });
+                $moyenne = $notes->sum() / $notes->count();
+                return $moyenne;
+            });
+
+            $moyennes = $moyennes->sum()/6;
+
+
+            // get all ids of matieres
+            $ids = $matieres->map(function ($item) {
+                return $item->id;
+            });
+
+            $lastNote = Note::orderBy('updated_at', 'desc')->first();
+
+            $moyennes=array(
+                "nbr"=>$moyennes,
+                "date"=>$lastNote->updated_at
+            );
+
+
+            $techniciens = User::whereHas('roles', function ($query) use ($request) {
+                $query->where('name', 'technicien');
+            })->orderBy('updated_at', 'desc')->get();
+
+            //  get all ids of techniciens
+            $ids = $techniciens->map(function ($item) {
+                return $item->id;
+            });
+
+
+            // count all DemandeMateriel where idDestinataire in ids
+            $dm = DemandeMateriel::count();
+
+            // get last DemandeMateriel where idDestinataire in ids
+            $lastDm = DemandeMateriel::orderBy('updated_at', 'desc')->first()?DemandeMateriel::orderBy('updated_at', 'desc')->first()->updated_at: date('m/d/Y h:i:s a', time());
+
+
+            $ds = DemandeSalle::count();
+
+            $last_ds = DemandeSalle::orderBy('updated_at', 'desc')->first()?DemandeSalle::orderBy('updated_at', 'desc')->first()->updated_at: date('m/d/Y h:i:s a', time());
+
+            $dm = array(
+                'nbr' => $dm,
+                'date' => $lastDm
+            );
+
+            $ds=array(
+                "nbr"=>$ds,
+                "date"=>$last_ds,
+            );
+
+            $studentsFemmes = DB::select("select COUNT(*) FROM users JOIN role_user on users.id=role_user.user_id JOIN departements ON role_user.department=departements.id WHERE role_user.role_id=2 and sexe=0; ");
+            $studentsHomme = DB::select("select COUNT(*) FROM users JOIN role_user on users.id=role_user.user_id JOIN departements ON role_user.department=departements.id WHERE role_user.role_id=2 and sexe=1; ");
             $hf = array(
                 "h" => $studentsHomme[0],
                 "f" => $studentsFemmes[0]
