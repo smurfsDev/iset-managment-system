@@ -1,7 +1,7 @@
 package com.projetIntegraion.spring.Etudiant.demandeCreationClub.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.GeneratedValue;    
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
