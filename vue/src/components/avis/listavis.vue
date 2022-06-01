@@ -4,16 +4,16 @@
     
     <div class="card card-body my-5 py-5 text-center" v-if="avis.length==0">
     <div class="mb-3">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#postModal">add post</button>
+      <button class="btn btn-success" v-b-modal.modal-1>add post</button>
     </div>
       <h3>il y'a aucun avis</h3>
 
     </div>
     <div class="add" v-if="avis.length>0">
-     <button style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#postModal" class="btn btn-success">Add Post <i class="fa-solid fa-plus"></i></button>
+    <div v-if="success.length>0" class="alert alert-success">{{success}}</div>
+     <button style="text-decoration: none;" v-b-modal.modal-1 class="btn btn-success">Add Post <i class="fa-solid fa-plus"></i></button>
 
     </div>
-     <div v-if="success.length>0" class="alert alert-success">{{success}}</div>
  <b-card class="my-2 mb-3 ml-3 mr-3" v-for="avi in avis" :key="avi.id">
 
  <div class="head">
@@ -33,17 +33,9 @@
  </b-card>
 
 
-
-
-<!-- Modal -->
-<div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">post avis</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
+<!--modal v2-->
+<div>
+  <b-modal id="modal-1" title="BootstrapVue">
     <div v-if="error.length>0" class="alert alert-danger">{{error}}</div>
      <div v-if="success.length>0" class="alert alert-success">{{success}}</div>
         
@@ -67,15 +59,13 @@
               />
     </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" >Save changes</button>
+        <button type="submit" class="btn btn-primary" >Apply</button>
       </div>
 </form>
-      </div>
     
-    </div>
-  </div>
+  </b-modal>
 </div>
+
 
 </div>
 </template>
@@ -142,7 +132,6 @@ export default {
             });
             this.error=""
             this.success="new post send with successfuly"
-            this.hideModal('postModal');
           }
            
  
@@ -155,7 +144,8 @@ export default {
              this.form.image = reader.result;
       };
       reader.readAsDataURL(file);
-    },     makePagination(meta) {
+    },    
+     makePagination(meta) {
             this.pagination = {
                 current_page: meta.current_page,
                 current_page_url:

@@ -74,7 +74,6 @@
               />
     </div>
          <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" >Save changes</button>
       </div>
 </form>
@@ -158,7 +157,7 @@ export default {
     },
     deleteAvis(){
         this.$http.post('http://localhost:8000/api/avis/delete/'+this.id);
-        this.$router.push({name:'listavis'});
+        // this.$router.push({name:'listavis'});
     },
     convert64(e) {
          var file = e.target.files[0];
