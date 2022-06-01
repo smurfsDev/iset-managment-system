@@ -103,10 +103,10 @@ export default {
           .then(() => {})
           .catch((err) => console.log(err));
     },
-    sendMail(id){
-            this.$http.post("http://127.0.0.1:8000/api/members/mail/"+id,{
-                sujet:this.sujet,
-                message:this.message,
+    sendMail(id,sujet,message){
+  this.$http.post("http://127.0.0.1:8000/api/members/mail/"+id,{
+                sujet:sujet,
+                message:message,
             }).then(res => {
                 this.hideModal('MailModal');
                 this.alert.variant = "success";

@@ -62,12 +62,12 @@ export default {
     },
   methods: {
         sendMail(id){
-            this.$emit("sendMail",id);
+            this.$emit("sendMail",id,this.sujet,this.message);
         },
         send(){
             for(var i=0; i < this.use.length;i++){
 
-                this.sendMail(this.use[i]);
+                this.sendMail(this.use[i],this.sujet,this.message);
             }
         }
   },
