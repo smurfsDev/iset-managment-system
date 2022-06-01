@@ -17,7 +17,7 @@
 
  <div class="head">
    <b style="font-weight:bold">Post #000{{avi.id}}</b>
-    <span class="badge badge-danger p-1 m-2">{{avi.from_id}}</span>
+    <span class="badge badge-danger p-1 m-2">{{avi.from_id}} </span>
     </div>
  <small class="form-text ml-1">&nbspWe'll send At {{avi.created_at}}</small>
    <div class="text-end">
@@ -43,6 +43,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+    <div v-if="error.length>0" class="alert alert-danger">{{error}}</div>
+        
         <form action="" @submit.prevent="postAvis" enctype="multipart/form-data">
     <div>
        <label for="#title" class="mb-3" style="font-weight:bold;">Title</label> <input type="text" name="title" id="title" class="form-control" v-model="form.title" placeholder="Title">
@@ -64,7 +66,7 @@
     </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" @click="hideModal('postModal')">Save changes</button>
+        <button type="submit" class="btn btn-primary" >Save changes</button>
       </div>
 </form>
       </div>
@@ -88,11 +90,13 @@ export default {
      form:{
              title:"",
             content:"",
-            image:""
+            image:"",
+            user:""
             } ,
       id: "",
       avis:[],
       pagination: {},
+      error:""
     };
   },
   methods:{
@@ -111,12 +115,25 @@ export default {
       this.$http.get('http://localhost:8000/api/avis/show').then(response => this.avis= response.data);
     },
         postAvis(){
-            this.$http.post('http://127.0.0.1:8000/api/avis/add',{
+
+          if(this.form.title==""){
+          this.error="field of title required"
+          }
+          else if(this.form.content==""){
+            this.error="field of description required"
+          }
+          else if(this.form.image==""){
+            this.error="choose picture please"
+          }
+          else{
+           this.$http.post('http://127.0.0.1:8000/api/avis/add',{
                'title':this.form.title,
                'content':this.form.content,
                 'image':this.form.image
-                
             });
+            this.hideModal('postModal');
+          }
+           
           //   let id=Number(this.avis[this.avis.length-1].id);
 
           //  alert(this.$router.push({path:'detailsavis/'+id+1}));

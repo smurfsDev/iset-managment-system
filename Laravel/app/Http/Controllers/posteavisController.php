@@ -50,7 +50,18 @@ $user = $request->user();
             $avis->from_id=$user->id;
 
             // $avis->image=$request->file('image')->hashName();
-            $avis->save();
+            if($avis->title!=null && $avis->content!=null && $avis->image!=null)
+            {
+                $avis->save();
+            }
+            else{
+                // return response()->json([
+                //     'data' => [
+                //         'message' => 'all Fields required',
+                //     ]
+                // ], 404);
+                return "error";
+            }
         
  
         //return redirect()->route('/listavis');
