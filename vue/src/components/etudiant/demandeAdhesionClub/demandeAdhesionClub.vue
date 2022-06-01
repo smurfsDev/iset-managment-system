@@ -24,7 +24,8 @@ export default {
     }
   },
   created() {
-    this.getDemandes()
+    this.getDemandes();
+    
     if (this.$route.params.nomClub != null) {
       this.alert.variant = "success";
       this.alert.msg = "Demande d'adhesion envoyée avec succès";
@@ -36,7 +37,7 @@ export default {
       this.$http.get("http://localhost:8000/api/dac/a").then(response => {
         this.demandes = response.data.data
         this.demandes.forEach(demande => {
-          demande.nomClub = demande.club.nom;
+          demande.nomClub = demande.club.demande_creation_club.nomClub;
           demande.status = demande.status == 0 ? "En attente" : demande.status == 1 ? "Acceptée" : "Refusée";
         })
       })

@@ -20,7 +20,9 @@ class StudentsController extends Controller
         // users having roles relation containing 'chefDepartement'
         $users = User::whereHas('roles', function ($query) {
             $query->where('name', 'student');
-        })->with('roles')->paginate(5);
+        })->with('roles')
+       ->orderBy("created_at","desc")
+        ->paginate(5);
 
         return response()->json($users);
     }

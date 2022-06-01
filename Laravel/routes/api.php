@@ -207,6 +207,7 @@ Route::get("/stats", [DashboardController::class, 'get']);
 
 
     });
+
     // documents routes
     Route::group(['prefix' => '/Document'], function () {
         Route::post('/search', [DocumentController::class, 'search']);
@@ -333,7 +334,6 @@ Route::group(['prefix' => '/pc'], function () {
     Route::get('/about/{id}', [AboutController::class, 'show']);
     Route::get('/fondator/{id}', [AboutController::class, 'getFondator']);
 });
-
 
 //materiel Controllers
 Route::get('/responsablesMatt', [MaterielController::class, 'getAllResponsableMateriel']);

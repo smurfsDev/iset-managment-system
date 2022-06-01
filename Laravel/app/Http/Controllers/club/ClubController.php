@@ -82,7 +82,7 @@ class ClubController extends Controller
      */
     public function getDemandeAdhesion(Request $request)
     {
-        $demandes = $request->user()->DemandeAdhesionClub()->with('club')->paginate(5);
+        $demandes = $request->user()->DemandeAdhesionClub()->with('club.demandeCreationClub')->paginate(5);
         if (empty($demandes)) {
             return response()->json(['message' => 'No demande found'], 404);
         } else {

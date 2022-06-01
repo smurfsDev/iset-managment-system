@@ -146,8 +146,8 @@ export default {
                     }
                 }
         },
-         sendMail(id){
-            this.$emit("sendMail",id);
+         sendMail(id,sujet,message){
+            this.$emit("sendMail",id,sujet,message);
         },
     },
 }
