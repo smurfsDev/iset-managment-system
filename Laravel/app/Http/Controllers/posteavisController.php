@@ -126,9 +126,9 @@ class posteavisController extends Controller
     public function destroy($id)
     {
         $avis = avis::find($id);
-        $role_user=RoleUser::where('user_id','=',$avis->from_id);
-        $role=Role::find($role_user->role_id);
-        dd($role->id);
-        // $avis->delete();
+        // $role_user=RoleUser::where('user_id','=',$avis->from_id);
+        // $role=Role::find($role_user->role_id);
+     
+        $avis->delete();
     }
 }
