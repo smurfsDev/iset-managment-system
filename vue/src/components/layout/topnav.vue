@@ -184,10 +184,13 @@
 
                     ]
                 },
-                        {
+                        {  title: 'avis',
+                    icon: 'fas fa-paper-plane',
+                   
                             href: 'listavis',
                             title: 'avis',
                             hidden: !this.isAdmin && !this.isChefDepartement,
+                   
 
                         }
         
