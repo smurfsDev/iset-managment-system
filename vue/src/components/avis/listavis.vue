@@ -44,6 +44,7 @@
       </div>
       <div class="modal-body">
     <div v-if="error.length>0" class="alert alert-danger">{{error}}</div>
+     <div v-if="success.length>0" class="alert alert-success">{{success}}</div>
         
         <form action="" @submit.prevent="postAvis" enctype="multipart/form-data">
     <div>
@@ -96,7 +97,8 @@ export default {
       id: "",
       avis:[],
       pagination: {},
-      error:""
+      error:"",
+      success:""
     };
   },
   methods:{
@@ -117,13 +119,20 @@ export default {
         postAvis(){
 
           if(this.form.title==""){
-          this.error="field of title required"
+          this.error="field of title required";
+          this.success=""
+          }
+          else if(this.form.title.length >50){
+            this.error="title is so long ";
+            this.success=""
           }
           else if(this.form.content==""){
-            this.error="field of description required"
+            this.error="field of description required";
+            this.success=""
           }
           else if(this.form.image==""){
-            this.error="choose picture please"
+            this.error="choose picture please";
+            this.success=""
           }
           else{
            this.$http.post('http://127.0.0.1:8000/api/avis/add',{
@@ -131,12 +140,12 @@ export default {
                'content':this.form.content,
                 'image':this.form.image
             });
+            this.error=""
+            this.success="all data saved with successfuly"
             this.hideModal('postModal');
           }
            
-          //   let id=Number(this.avis[this.avis.length-1].id);
-
-          //  alert(this.$router.push({path:'detailsavis/'+id+1}));
+ 
         },
         convert64(e) {
          var file = e.target.files[0];

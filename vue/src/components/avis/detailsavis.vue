@@ -51,6 +51,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+         <div v-if="error.length>0" class="alert alert-danger">{{error}}</div>
         <form action="" @submit.prevent="updateAvis">
     <div>
        <label for="title" class="mb-3" style="font-weight:bold;">Title</label>
@@ -74,7 +75,7 @@
     </div>
          <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" @click="hideModal('exampleModal')">Save changes</button>
+        <button type="submit" class="btn btn-primary" >Save changes</button>
       </div>
 </form>
       </div>
@@ -129,7 +130,8 @@ export default {
             image:""
             } ,
       id: "",
-      avis:[]
+      avis:[],
+      error:""
     };
   },
   methods:{
@@ -137,7 +139,22 @@ export default {
       this.$http.get('http://localhost:8000/api/avis/details/'+this.id).then(response => this.avis= response.data);
     },
     updateAvis(){
+                if(this.form.title==""){
+          this.error="field of title required"
+          }
+          else if(this.form.title.length >50){
+            this.error="title is so long ";
+          }
+          else if(this.form.content==""){
+            this.error="field of description required"
+          }
+          else if(this.form.image==""){
+            this.error="choose picture please"
+          }
+          else{
       this.$http.post('http://localhost:8000/api/avis/update/'+this.id,this.avis)
+
+          }
     },
     deleteAvis(){
         this.$http.post('http://localhost:8000/api/avis/delete/'+this.id);

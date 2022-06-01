@@ -35,12 +35,6 @@ class posteavisController extends Controller
     public function store(Request $request)
     {
 
-        // $validator = Validator::make($request->all(), [
-        //     'title' => 'required',
-        //     'content'=>'required',
-        //     'image' => 'require',
-        //  ]);
-     
 $user = $request->user();
         $avis= new avis();
 
@@ -55,12 +49,12 @@ $user = $request->user();
                 $avis->save();
             }
             else{
-                // return response()->json([
-                //     'data' => [
-                //         'message' => 'all Fields required',
-                //     ]
-                // ], 404);
-                return "error";
+                return response()->json([
+                 'data' => [
+                'message' => 'all Fields required',
+                    ]
+             ], 404);
+               
             }
         
  
@@ -97,8 +91,18 @@ $user = $request->user();
         $avis->title=$request->get('title');
         $avis->content=$request->get('content');
         $avis->image= $request->image;
-        dd($request->image);
-        $avis->save();
+        if($avis->title!=null && $avis->content!=null && $avis->image!=null)
+        {
+            $avis->save();
+        }
+        else{
+            return response()->json([
+             'data' => [
+            'message' => 'all Fields required',
+                ]
+         ], 404);
+           
+        }
     }
 
     /**
