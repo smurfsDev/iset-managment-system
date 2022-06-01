@@ -9,7 +9,7 @@
       <h3>il y'a aucun avis</h3>
 
     </div>
- <b-card v-else class="my-2" :key="avis.id">
+ <b-card v-else class="my-2" :key="avis.id" style="max-width:800px;margin-left:18%;">
  <div class="head">
     <a href="/listavis" class="badge btn-primary"> <i class="fa-solid fa-list"></i></a> <b style="font-weight:bold">Post #000{{avis.id}}</b>
     <span class="badge btn-danger p-1 m-2">{{avis.from_id}}</span>

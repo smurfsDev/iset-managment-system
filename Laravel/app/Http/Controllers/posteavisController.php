@@ -21,9 +21,12 @@ class posteavisController extends Controller
           $user = auth()->user();
 
         $avis=avis::get();
-
-        // dd($avis);
-        return $avis;
+        for($i=0;$i<count($avis);$i++){
+           $avis[$i]->from_id=$user->name;
+        }
+       
+        
+       return $avis;
     }
 
     /**
@@ -35,7 +38,7 @@ class posteavisController extends Controller
     public function store(Request $request)
     {
 
-$user = $request->user();
+        $user = $request->user();
         $avis= new avis();
 
             $avis->title=$request->get('title');
@@ -57,8 +60,7 @@ $user = $request->user();
                
             }
         
- 
-        //return redirect()->route('/listavis');
+
 
     }
  
@@ -75,6 +77,8 @@ $user = $request->user();
     public function show($id)
     {
         $data = avis::find($id);
+        $user = auth()->user();
+        $data->from_id=$user->name;
         return $data;
     }
 
