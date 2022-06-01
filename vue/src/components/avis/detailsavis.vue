@@ -124,11 +124,6 @@ export default {
 
   data() {
     return {
-     form:{
-             title:"",
-            content:"",
-            image:""
-            } ,
       id: "",
       avis:[],
       error:""
@@ -139,21 +134,26 @@ export default {
       this.$http.get('http://localhost:8000/api/avis/details/'+this.id).then(response => this.avis= response.data);
     },
     updateAvis(){
-                if(this.form.title==""){
+            if(this.avis.title==""){
           this.error="field of title required"
           }
-          else if(this.form.title.length >50){
+          else if(this.avis.title.length >50){
             this.error="title is so long ";
           }
-          else if(this.form.content==""){
+          else if(this.avis.content==""){
             this.error="field of description required"
           }
-          else if(this.form.image==""){
+          else if(this.avis.image==""){
             this.error="choose picture please"
           }
           else{
-      this.$http.post('http://localhost:8000/api/avis/update/'+this.id,this.avis)
+      this.$http.post('http://localhost:8000/api/avis/update/'+this.id,{
 
+              'title':this.avis.title,
+               'content':this.avis.content,
+                'image':this.avis.image
+                })
+          this.hideModal("exampleModal");
           }
     },
     deleteAvis(){
@@ -165,8 +165,9 @@ export default {
            console.log(file);
            var reader = new FileReader();
             reader.onloadend = () => {
-             this.form.image = reader.result;
+             this.avis.image = reader.result;
       };
+
       reader.readAsDataURL(file);
     }, 
 

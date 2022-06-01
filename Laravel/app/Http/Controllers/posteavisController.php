@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Models\avis;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\RoleUser;
 use Validator;
 
 class posteavisController extends Controller
@@ -21,12 +23,16 @@ class posteavisController extends Controller
           $user = auth()->user();
 
         $avis=avis::get();
-        for($i=0;$i<count($avis);$i++){
+        if($avis!=null)
+        {
+            for($i=0;$i<count($avis);$i++){
            $avis[$i]->from_id=$user->name;
         }
+        return $avis;
+    }
        
         
-       return $avis;
+       return "no data found";
     }
 
     /**
@@ -78,6 +84,7 @@ class posteavisController extends Controller
     {
         $data = avis::find($id);
         $user = auth()->user();
+        $role_user=
         $data->from_id=$user->name;
         return $data;
     }
@@ -94,7 +101,8 @@ class posteavisController extends Controller
         $avis = avis::find($id);
         $avis->title=$request->get('title');
         $avis->content=$request->get('content');
-        $avis->image= $request->image;
+       $avis->image=$request->image;
+      
         if($avis->title!=null && $avis->content!=null && $avis->image!=null)
         {
             $avis->save();
@@ -118,6 +126,9 @@ class posteavisController extends Controller
     public function destroy($id)
     {
         $avis = avis::find($id);
-        $avis->delete();
+        $role_user=RoleUser::where('user_id','=',$avis->from_id);
+        $role=Role::find($role_user->role_id);
+        dd($role->id);
+        // $avis->delete();
     }
 }

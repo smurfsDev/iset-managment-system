@@ -93,7 +93,6 @@ export default {
              title:"",
             content:"",
             image:"",
-            user:""
             } ,
       id: "",
       avis:[],
