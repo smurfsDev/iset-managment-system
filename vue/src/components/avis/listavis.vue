@@ -13,6 +13,7 @@
      <button style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#postModal" class="btn btn-success">Add Post <i class="fa-solid fa-plus"></i></button>
 
     </div>
+     <div v-if="success.length>0" class="alert alert-success">{{success}}</div>
  <b-card class="my-2 mb-3 ml-3 mr-3" v-for="avi in avis" :key="avi.id">
 
  <div class="head">
@@ -141,7 +142,7 @@ export default {
                 'image':this.form.image
             });
             this.error=""
-            this.success="all data saved with successfuly"
+            this.success="new post send with successfuly"
             this.hideModal('postModal');
           }
            
